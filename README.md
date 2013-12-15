@@ -1,4 +1,4 @@
-# Social Gradebook
+# BuildEx
 
 ## Installation
 
@@ -22,8 +22,8 @@ $active_record = TRUE;
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'root'; //default username of your database server is "root". Change this accordingly.
 $db['default']['password'] = 'intelleq';//password of your database server. Change this. Leave it blank by default.
-$db['default']['database'] = 'social_gradebook_db';
-$db['default']['dbdriver'] = 'mysql';
+$db['default']['database'] = 'buildex_db';
+$db['default']['dbdriver'] = 'postgres';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
 $db['default']['db_debug'] = TRUE;
