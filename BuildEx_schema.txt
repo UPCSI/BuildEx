@@ -1,0 +1,60 @@
+#Proposed Schema for CS192 Project: Experiment Builder
+
+TABLE Users:
+	uid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	username: varchar(32) UNIQUE
+	password: md5(varchar(32))
+	first_name: varchar(32)
+	last_name: varchar(32)
+	email_ad: varchar(32)
+
+TABLE Admins:
+	uid: references Users.uid
+	aid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+
+TABLE Faculty:
+	uid: references Users.uid
+	fid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+
+TABLE Graduate_Students:
+	uid: references Users.uid
+	gid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+
+TABLE Experiments:
+	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	title: varchar(64)
+	category: varchar(32)
+	target_count: int(5) UNSIGNED
+	current_count: int(5) UNSIGNED
+	status: int[1] UNSIGNED #{COMPLETE[0],ONGOING[1]}
+
+TABLE Respondents:
+	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	#OPTIONAL FIELDS:
+	first_name: varchar(32)
+	last_name: varchar(32)
+	email_ad: varchar(32)
+	age: int(2) UNSIGNED
+	street_addr: varchar(64)
+	barangay_addr: varchar(64)
+	city_addr: varchar(64)
+	nationality: varchar(32)
+	birthdate: Date(10)
+	sex: int[1] UNSIGNED #{MALE[0],FEMALE[1]}
+	gender: varchar(32)
+	civil_status: int[1] UNSIGNED #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
+
+TABLE advise:
+	fid: int(11) references Faculty.fid
+	eid: int(11) references Experiments.eid
+	since: Date(10)
+
+TABLE conduct:
+	uid: int(11) references Researchers.rid
+	eid: int(11) references Experiments.eid
+	since: Date(10)
+
+TABLE answer:
+	rid: int(11) references Respondents.rid
+	eid: int(11) references Experiments.eid
+	since: Date(10)
