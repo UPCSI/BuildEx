@@ -2,9 +2,10 @@
 
 TABLE Users:
 	uid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	username: varchar(32) UNIQUE
-	password: md5(varchar(32))
+	username: varchar(16) UNIQUE
+	password: md5(varchar(64))
 	first_name: varchar(32)
+	middle_name: varchar(32)
 	last_name: varchar(32)
 	email_ad: varchar(32)
 
@@ -16,7 +17,7 @@ TABLE Faculty:
 	uid: references Users.uid
 	fid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 
-TABLE Graduate_Students:
+TABLE Graduates:
 	uid: references Users.uid
 	gid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 
@@ -26,12 +27,13 @@ TABLE Experiments:
 	category: varchar(32)
 	target_count: int(5) UNSIGNED
 	current_count: int(5) UNSIGNED
-	status: int[1] UNSIGNED #{COMPLETE[0],ONGOING[1]}
+	status: boolean #{COMPLETE[True],ONGOING[False]}
 
 TABLE Respondents:
 	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 	#OPTIONAL FIELDS:
 	first_name: varchar(32)
+	middle_name: varchar(32)
 	last_name: varchar(32)
 	email_ad: varchar(32)
 	age: int(2) UNSIGNED
@@ -40,7 +42,7 @@ TABLE Respondents:
 	city_addr: varchar(64)
 	nationality: varchar(32)
 	birthdate: Date(10)
-	sex: int[1] UNSIGNED #{MALE[0],FEMALE[1]}
+	sex: boolean #{MALE[False],FEMALE[True]}
 	gender: varchar(32)
 	civil_status: int[1] UNSIGNED #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
