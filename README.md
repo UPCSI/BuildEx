@@ -4,10 +4,10 @@
 
 ### Requirements
 
-1. Download and Install Bitnami's Stack (LAPP for Linux/MAPP for Mac/WAPP for Windows)
+Download and Install Bitnami's Stack (LAPP for Linux/MAPP for Mac/WAPP for Windows)
 http://www.bitnami.com/article/apache-php-and-postgresql-all-in-one
 
-2. Clone this repository in install/dir/lappstackdir/apache2/htdocs/
+Clone this repository in install/dir/lappstackdir/apache2/htdocs/
 
 In Linux/Mac, permission issues might appear. Use chmod to htdocs folder to fix this.
 
@@ -17,9 +17,9 @@ In Linux/Mac, permission issues might appear. Use chmod to htdocs folder to fix 
 sudo chmod 777 htdocs/ 
 ```
 
-3. Go to the cloned folder. Create a file in BuildEx/application/config and name it database.php
+Go to the cloned folder. Create a file in BuildEx/application/config and name it database.php
 
-4. Copy-paste the following, make sure to supply the correct username and password:
+Copy-paste the following, make sure to supply the correct username and password:
 
 ```php
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
@@ -46,7 +46,7 @@ $db['default']['stricton'] = FALSE;
 ?>
 ```
 
-5. Start LAPP.
+Start LAPP.
 
 In Linux:
 
@@ -55,14 +55,14 @@ cd /opt/lappstackdir/
 sudo ./manager-linux-x64.run #change x64 depending on your installation
 ```
 
-6. On your browser, go to http://localhost/phppgadmin.
+On your browser, go to http://localhost/phppgadmin.
 
-7. Log-in the postgreSQL server with default username "postgres" and your own specified password from the installation of lappstack.
+Log-in the postgreSQL server with default username "postgres" and your own specified password from the installation of lappstack.
 
-8. Create a database and name it buildex_db.
+Create a database and name it buildex_db.
 
-9. Import the exported database file buildex_db.sql to phppgAdmin. It's located in the directory of the cloned project.
+Import the exported database file buildex_db.sql to phppgAdmin. It's located in the directory of the cloned project.
 
-10. On your browser, go to http://localhost/BuildEx/. A welcome page should appear.
+On your browser, go to http://localhost/BuildEx/. A welcome page should appear.
 
 Code.Code.Code. Start!
