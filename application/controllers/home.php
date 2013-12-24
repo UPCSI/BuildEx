@@ -1,8 +1,10 @@
 <?php 
 
-class Home extends CI_Controller{
+class Home extends MY_Controller{
 
 	public function index(){
-		$this->load->view('welcome_message');
+		$this->load->model('admins_model');
+		$data['title'] = 'Home';
+		$this->load->view('templates/home_template',$data);
 	}
 }

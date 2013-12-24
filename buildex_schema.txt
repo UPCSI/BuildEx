@@ -3,7 +3,7 @@
 TABLE Users:
 	uid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 	username: varchar(16) UNIQUE
-	password: md5(varchar(64))
+	password: varchar(128)
 	first_name: varchar(32)
 	middle_name: varchar(32)
 	last_name: varchar(32)
@@ -27,7 +27,7 @@ TABLE Experiments:
 	category: varchar(32)
 	target_count: int(5) UNSIGNED
 	current_count: int(5) UNSIGNED
-	status: boolean #{COMPLETE[True],ONGOING[False]}
+	status: boolean #{COMPLETE[true],ONGOING[false]}
 
 TABLE Respondents:
 	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
@@ -52,7 +52,7 @@ TABLE advise:
 	since: Date(10)
 
 TABLE conduct:
-	uid: int(11) references Researchers.rid
+	resid: int(11) references Researchers.resid
 	eid: int(11) references Experiments.eid
 	since: Date(10)
 
