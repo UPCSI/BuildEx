@@ -5,16 +5,108 @@ class Test extends MY_Controller{
 		parent::__construct();
 		$this->load->model('admins_model');
 		$this->load->model('experiments_model');
-		$this->load->model('faculty_model');
+		//$this->load->model('faculty_model');
 		$this->load->model('graduates_model');
 		$this->load->model('respondents_model');
-		$this->load->model('users_model');
+		//$this->load->model('users_model');
 	}
 
 	public function index(){
-
 		echo '<pre>';
 		var_dump($data);
+		echo '</pre>';
+	}
+
+	public function add_graduate(){
+		$user_info['username'] = 'ebbernardino';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Emmargel';
+		$user_info['middle_name'] = 'Bartolome';
+		$user_info['last_name'] = 'Bernardino';
+		$user_info['email_ad'] = 'ebbernardino@feu.edu.ph';
+		$this->graduates_model->add_graduate($user_info);
+		echo '<pre>';
+		echo 'Graduate added!';
+		echo '</pre>';
+	}
+
+	public function delete_graduate(){
+		$username = 'ebbernardino';
+		$this->graduates_model->delete_graduate($username);
+		echo '<pre>';
+		echo 'Graduate deleted!';
+		echo '</pre>';
+	}
+
+	public function get_graduate(){
+		$username = 'ebbernardino';
+		$data = $this->graduates_model->get_graduate_profile($username);
+		echo '<pre>';
+		var_dump($data);
+		echo '</pre>';
+	}
+
+	public function add_experiment(){
+		$info['title'] = 'My fucking experiment.';
+		$info['category'] = 'Fucking experiment';
+		$info['target_count'] = 50;
+		$uid = 3;
+		$this->experiments_model->add_experiment($uid,$info);
+		echo '<pre>';
+		echo 'Experiment added!';
+		echo '</pre>';
+	}
+
+	public function delete_experiment(){
+		$uid = 3;
+		$eid = 2;
+		$a = $this->experiments_model->delete_experiment($uid,$eid);
+		echo '<pre>';
+		echo 'Experiment deleted!';
+		var_dump($a);
+		echo '</pre>';
+	}
+
+	public function get_experiment(){
+		$uid = 3;
+		$eid = 3;
+		$data = $this->experiments_model->get_experiment($uid,$eid);
+		echo '<pre>';
+		var_dump($data);
+		echo '</pre>';
+	}
+
+	
+	public function answer_experiment(){
+		$info['first_name'] = 'Rajesh';
+		$info['middle_name'] = 'Pakshet';
+		$info['last_name'] = 'Koothrappali';
+		$uid = 3;
+		$eid = 3;
+		$this->respondents_model->add_respondent($info,$eid);
+		$this->experiments_model->increment_count($uid,$eid);
+		echo '<pre>';
+		echo 'Experiment answered!';
+		echo '</pre>';
+	}
+
+	
+	public function delete_respondent(){
+		$rid = 4;
+		$eid = 3;
+		$a = $this->respondents_model->delete_respondent($eid,$rid);
+		echo '<pre>';
+		echo 'Respondent deleted!';
+		var_dump($a);
+		echo '</pre>';
+	}
+
+	public function get_respondent(){
+		$rid = 2;
+		$res = $this->respondents_model->get_respondent($rid);
+		echo '<pre>';
+		echo 'Respondent: ';
+		var_dump($res);
 		echo '</pre>';
 	}
 }

@@ -52,7 +52,7 @@ TABLE advise:
 	since: Date(10)
 
 TABLE conduct:
-	resid: int(11) references Researchers.resid
+	uid: int(11) references Users.uid
 	eid: int(11) references Experiments.eid
 	since: Date(10)
 

@@ -17,22 +17,6 @@ COMMENT ON DATABASE buildex_db IS 'BuildEx Database. University of the Philippin
 
 
 --
--- Name: buildex_schema; Type: SCHEMA; Schema: -; Owner: postgres
---
-
-CREATE SCHEMA buildex_schema;
-
-
-ALTER SCHEMA buildex_schema OWNER TO postgres;
-
---
--- Name: SCHEMA buildex_schema; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON SCHEMA buildex_schema IS 'first draft schema';
-
-
---
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
 --
 
@@ -46,10 +30,10 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = buildex_schema, pg_catalog;
+SET search_path = public, pg_catalog;
 
 --
--- Name: admins_aid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: admins_aid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE admins_aid_seq
@@ -60,14 +44,14 @@ CREATE SEQUENCE admins_aid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.admins_aid_seq OWNER TO postgres;
+ALTER TABLE public.admins_aid_seq OWNER TO postgres;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
 
 --
--- Name: Admins; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Admins; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Admins" (
@@ -76,10 +60,10 @@ CREATE TABLE "Admins" (
 );
 
 
-ALTER TABLE buildex_schema."Admins" OWNER TO postgres;
+ALTER TABLE public."Admins" OWNER TO postgres;
 
 --
--- Name: experiments_eid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: experiments_eid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE experiments_eid_seq
@@ -90,10 +74,10 @@ CREATE SEQUENCE experiments_eid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.experiments_eid_seq OWNER TO postgres;
+ALTER TABLE public.experiments_eid_seq OWNER TO postgres;
 
 --
--- Name: Experiments; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Experiments; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Experiments" (
@@ -101,15 +85,15 @@ CREATE TABLE "Experiments" (
     title character varying(64),
     category character varying(32),
     target_count integer,
-    current_count integer,
+    current_count integer DEFAULT 0,
     status boolean DEFAULT false
 );
 
 
-ALTER TABLE buildex_schema."Experiments" OWNER TO postgres;
+ALTER TABLE public."Experiments" OWNER TO postgres;
 
 --
--- Name: faculty_fid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: faculty_fid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE faculty_fid_seq
@@ -120,10 +104,10 @@ CREATE SEQUENCE faculty_fid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.faculty_fid_seq OWNER TO postgres;
+ALTER TABLE public.faculty_fid_seq OWNER TO postgres;
 
 --
--- Name: Faculty; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Faculty; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Faculty" (
@@ -132,10 +116,10 @@ CREATE TABLE "Faculty" (
 );
 
 
-ALTER TABLE buildex_schema."Faculty" OWNER TO postgres;
+ALTER TABLE public."Faculty" OWNER TO postgres;
 
 --
--- Name: graduates_gid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: graduates_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE graduates_gid_seq
@@ -146,10 +130,10 @@ CREATE SEQUENCE graduates_gid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.graduates_gid_seq OWNER TO postgres;
+ALTER TABLE public.graduates_gid_seq OWNER TO postgres;
 
 --
--- Name: Graduates; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Graduates; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Graduates" (
@@ -158,10 +142,10 @@ CREATE TABLE "Graduates" (
 );
 
 
-ALTER TABLE buildex_schema."Graduates" OWNER TO postgres;
+ALTER TABLE public."Graduates" OWNER TO postgres;
 
 --
--- Name: respondents_rid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: respondents_rid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE respondents_rid_seq
@@ -172,10 +156,10 @@ CREATE SEQUENCE respondents_rid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.respondents_rid_seq OWNER TO postgres;
+ALTER TABLE public.respondents_rid_seq OWNER TO postgres;
 
 --
--- Name: Respondents; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Respondents; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Respondents" (
@@ -196,10 +180,10 @@ CREATE TABLE "Respondents" (
 );
 
 
-ALTER TABLE buildex_schema."Respondents" OWNER TO postgres;
+ALTER TABLE public."Respondents" OWNER TO postgres;
 
 --
--- Name: users_uid_seq; Type: SEQUENCE; Schema: buildex_schema; Owner: postgres
+-- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
 CREATE SEQUENCE users_uid_seq
@@ -210,16 +194,16 @@ CREATE SEQUENCE users_uid_seq
     CACHE 1;
 
 
-ALTER TABLE buildex_schema.users_uid_seq OWNER TO postgres;
+ALTER TABLE public.users_uid_seq OWNER TO postgres;
 
 --
--- Name: Users; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Users" (
     uid integer DEFAULT nextval('users_uid_seq'::regclass) NOT NULL,
     username character varying(16),
-    password character varying(64),
+    password character varying(128),
     first_name character varying(32),
     middle_name character varying(32),
     last_name character varying(32),
@@ -227,17 +211,17 @@ CREATE TABLE "Users" (
 );
 
 
-ALTER TABLE buildex_schema."Users" OWNER TO postgres;
+ALTER TABLE public."Users" OWNER TO postgres;
 
 --
--- Name: TABLE "Users"; Type: COMMENT; Schema: buildex_schema; Owner: postgres
+-- Name: TABLE "Users"; Type: COMMENT; Schema: public; Owner: postgres
 --
 
 COMMENT ON TABLE "Users" IS 'General users table';
 
 
 --
--- Name: advise; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: advise; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE advise (
@@ -247,10 +231,10 @@ CREATE TABLE advise (
 );
 
 
-ALTER TABLE buildex_schema.advise OWNER TO postgres;
+ALTER TABLE public.advise OWNER TO postgres;
 
 --
--- Name: answer; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: answer; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE answer (
@@ -260,10 +244,10 @@ CREATE TABLE answer (
 );
 
 
-ALTER TABLE buildex_schema.answer OWNER TO postgres;
+ALTER TABLE public.answer OWNER TO postgres;
 
 --
--- Name: conduct; Type: TABLE; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: conduct; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE conduct (
@@ -273,106 +257,112 @@ CREATE TABLE conduct (
 );
 
 
-ALTER TABLE buildex_schema.conduct OWNER TO postgres;
+ALTER TABLE public.conduct OWNER TO postgres;
 
 --
--- Data for Name: Admins; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: Admins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
-
---
--- Data for Name: Experiments; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
---
-
+INSERT INTO "Admins" VALUES (1, 1);
 
 
 --
--- Data for Name: Faculty; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+INSERT INTO "Experiments" VALUES (3, 'My fucking experiment.', 'Fucking experiment', 50, 5, false);
 
 
 --
--- Data for Name: Graduates; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: Faculty; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- Data for Name: Respondents; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "Graduates" VALUES (3, 2);
+
+
+--
+-- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- Data for Name: Users; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO "Users" VALUES (1, 'admin', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Neil Francis', 'Muchillas', 'Calabroso', 'nmcalabroso@up.edu.ph');
+INSERT INTO "Users" VALUES (3, 'ebbernardino', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Emmargel', 'Bartolome', 'Bernardino', 'ebbernardino@feu.edu.ph');
+
+
+--
+-- Name: admins_aid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('admins_aid_seq', 1, true);
+
+
+--
+-- Data for Name: advise; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- Name: admins_aid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
---
-
-SELECT pg_catalog.setval('admins_aid_seq', 1, false);
-
-
---
--- Data for Name: advise; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: answer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
 
 --
--- Data for Name: answer; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
+-- Data for Name: conduct; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
-
---
--- Data for Name: conduct; Type: TABLE DATA; Schema: buildex_schema; Owner: postgres
---
-
+INSERT INTO conduct VALUES (3, 3, '2013-12-24');
 
 
 --
--- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
+-- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('experiments_eid_seq', 1, false);
+SELECT pg_catalog.setval('experiments_eid_seq', 3, true);
 
 
 --
--- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
+-- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('faculty_fid_seq', 1, false);
 
 
 --
--- Name: graduates_gid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
+-- Name: graduates_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('graduates_gid_seq', 1, false);
-
-
---
--- Name: respondents_rid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
---
-
-SELECT pg_catalog.setval('respondents_rid_seq', 1, false);
+SELECT pg_catalog.setval('graduates_gid_seq', 2, true);
 
 
 --
--- Name: users_uid_seq; Type: SEQUENCE SET; Schema: buildex_schema; Owner: postgres
+-- Name: respondents_rid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_uid_seq', 1, false);
+SELECT pg_catalog.setval('respondents_rid_seq', 4, true);
 
 
 --
--- Name: Experiments_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('users_uid_seq', 3, true);
+
+
+--
+-- Name: Experiments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Experiments"
@@ -380,7 +370,7 @@ ALTER TABLE ONLY "Experiments"
 
 
 --
--- Name: Respondents_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Respondents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Respondents"
@@ -388,7 +378,7 @@ ALTER TABLE ONLY "Respondents"
 
 
 --
--- Name: Users_email_ad_key; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Users_email_ad_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Users"
@@ -396,7 +386,7 @@ ALTER TABLE ONLY "Users"
 
 
 --
--- Name: Users_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Users"
@@ -404,7 +394,7 @@ ALTER TABLE ONLY "Users"
 
 
 --
--- Name: Users_username_key; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: Users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Users"
@@ -412,7 +402,7 @@ ALTER TABLE ONLY "Users"
 
 
 --
--- Name: aid_ukey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: aid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Admins"
@@ -420,7 +410,7 @@ ALTER TABLE ONLY "Admins"
 
 
 --
--- Name: fid_ukey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: fid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Faculty"
@@ -428,7 +418,7 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
--- Name: gid_ukey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: gid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Graduates"
@@ -436,7 +426,7 @@ ALTER TABLE ONLY "Graduates"
 
 
 --
--- Name: uid_aid_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: uid_aid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Admins"
@@ -444,7 +434,7 @@ ALTER TABLE ONLY "Admins"
 
 
 --
--- Name: uid_fid_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: uid_fid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Faculty"
@@ -452,7 +442,7 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
--- Name: uid_gid_pkey; Type: CONSTRAINT; Schema: buildex_schema; Owner: postgres; Tablespace: 
+-- Name: uid_gid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Graduates"
@@ -460,7 +450,7 @@ ALTER TABLE ONLY "Graduates"
 
 
 --
--- Name: admins_ref_users; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: admins_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Admins"
@@ -468,7 +458,7 @@ ALTER TABLE ONLY "Admins"
 
 
 --
--- Name: advise_ref_experiments; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: advise_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY advise
@@ -476,7 +466,7 @@ ALTER TABLE ONLY advise
 
 
 --
--- Name: advise_ref_faculty; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: advise_ref_faculty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY advise
@@ -484,7 +474,7 @@ ALTER TABLE ONLY advise
 
 
 --
--- Name: answer_ref_experiments; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: answer_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY answer
@@ -492,7 +482,7 @@ ALTER TABLE ONLY answer
 
 
 --
--- Name: answer_ref_respondents; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: answer_ref_respondents; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY answer
@@ -500,7 +490,7 @@ ALTER TABLE ONLY answer
 
 
 --
--- Name: conduct_ref_experiments; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: conduct_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY conduct
@@ -508,7 +498,7 @@ ALTER TABLE ONLY conduct
 
 
 --
--- Name: conduct_ref_users; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: conduct_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY conduct
@@ -516,7 +506,7 @@ ALTER TABLE ONLY conduct
 
 
 --
--- Name: faculty_ref_users; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: faculty_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Faculty"
@@ -524,21 +514,11 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
--- Name: graduates_ref_users; Type: FK CONSTRAINT; Schema: buildex_schema; Owner: postgres
+-- Name: graduates_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT graduates_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --

@@ -11,26 +11,44 @@ class Experiments_model extends MY_Model{
 	}
 
 	public function delete_experiment($uid = 0, $eid = 0){
-		$this->db->join('Users','Users.uid = conduct.uid');
-		$this->db->join('conduct','conduct.eid = Experiments.eid');
-		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Users.uid',$uid);
-		return $this->db->delete('Experiments');
+		$q = "DELETE FROM \"Experiments\" AS e
+			  USING \"Users\" AS u, conduct AS c
+			  WHERE u.uid = c.uid AND
+			  e.eid = c.eid AND
+			  e.eid = ? AND
+			  c.uid = ?";
+
+		$this->db->query($q,array($eid,$uid));
+
+		return $this->is_rows_affected();
 	}
 
-	public function update_count($uid = 0, $eid = 0){
-		$this->db->join('Users','Users.uid = conduct.uid');
-		$this->db->join('conduct','conduct.eid = Experiments.eid');
-		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Users.uid',$uid);
-		$this->db->set('Experiments.current_count','current_count+1',FALSE);
+	public function increment_count($uid = 0, $eid = 0){
+		$q = "UPDATE \"Experiments\" AS e
+			  SET current_count = current_count+1
+			  From \"Users\" AS u, conduct AS c
+			  WHERE u.uid = c.uid AND
+			  e.eid = c.eid AND
+			  e.eid = ? AND
+			  c.uid = ?";
+
+		$this->db->query($q,array($eid,$uid));
+
+		return $this->is_rows_affected();
+	}
+
+	public function decrement_count($eid = 0){
+		$this->db->where('eid', $eid);
+		$this->db->set('current_count','current_count-1',FALSE);
 		$this->db->update('Experiments');
+
+		return $this->is_rows_affected();
 	}
 
 	public function get_experiment($uid = 0, $eid = 0){
 		$this->db->select('*');
-		$this->db->join('Users','Users.uid = conduct.uid');
 		$this->db->join('conduct','conduct.eid = Experiments.eid');
+		$this->db->join('Users','Users.uid = conduct.uid');
 		$this->db->where('Experiments.eid',$eid);
 		$this->db->where('Users.uid',$uid);
 		$q = $this->db->get('Experiments');
@@ -41,7 +59,7 @@ class Experiments_model extends MY_Model{
 	public function is_complete($uid = 0,$eid = 0){
 		$experiment = $this->get_experiment($uid, $eid);
 		if(isset($experiment)){
-			if($experiment->status == 'true'){
+			if($experiment->status == 'TRUE'){
 				return true;
 			}
 		}
@@ -85,14 +103,14 @@ class Experiments_model extends MY_Model{
 
 	public function get_all_active_experiments(){
 		$this->db->select('*');
-		$this->db->where('status','true');
+		$this->db->where('status','TRUE');
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}
 
 	public function get_all_inactive_experiments(){
 		$this->db->select('*');
-		$this->db->where('status','false');
+		$this->db->where('status','FALSE');
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}

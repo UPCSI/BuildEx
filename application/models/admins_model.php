@@ -11,14 +11,12 @@ class Admins_model extends MY_Model{
 		$this->db->insert('Users',$user_info);
 		$uid = $this->db->insert_id();
 		$admin_info['uid'] = $uid;
-		$this->db->insert('Admins',$admin_info);
-		return true;
+		return $this->db->insert('Admins',$admin_info);
 	}
 
 	public function delete_admin($username){
-		$this->db->where('username',$username);
-		$this->db->delete('Users');
-		return true;
+		$this->load->model('users_model');
+		$this->users_model->delete_user($username);
 	}
 
 	public function get_admin_profile($username){ //get the profile of particular admin

@@ -21,4 +21,9 @@ class Users_model extends MY_Model{
 
 		return false;
 	}
+
+	public function delete_user($username){
+		$this->db->where('username',$username);
+		return $this->db->delete('Users');
+	}
 }

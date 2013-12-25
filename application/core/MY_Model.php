@@ -41,4 +41,11 @@ class MY_Model extends CI_Model{
 		return $hash;
 	}
 
+	public function is_rows_affected(){
+		/* return true if the database affected tables' elements base on
+		* its last query 
+		*/
+		return $this->db->affected_rows()!=0;
+	}
+
 }
