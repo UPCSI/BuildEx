@@ -1,5 +1,7 @@
 # BuildEx
 
+Upon creating the commit message, use present tense action words.
+
 ## Installation
 
 ### Requirements
