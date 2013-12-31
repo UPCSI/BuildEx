@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -263,41 +262,55 @@ ALTER TABLE public.conduct OWNER TO postgres;
 -- Data for Name: Admins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Admins" VALUES (1, 1);
+COPY "Admins" (uid, aid) FROM stdin;
+1	1
+\.
 
 
 --
 -- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Experiments" VALUES (3, 'My fucking experiment.', 'Fucking experiment', 50, 5, false);
+COPY "Experiments" (eid, title, category, target_count, current_count, status) FROM stdin;
+3	My fucking experiment.	Fucking experiment	50	5	f
+\.
 
 
 --
 -- Data for Name: Faculty; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY "Faculty" (uid, fid) FROM stdin;
+4	1
+\.
 
 
 --
 -- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Graduates" VALUES (3, 2);
+COPY "Graduates" (uid, gid) FROM stdin;
+3	2
+\.
 
 
 --
 -- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, street_addr, barangay_addr, city_addr, nationality, birthdate, sex, gender, civil_status) FROM stdin;
+\.
 
 
 --
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Users" VALUES (1, 'admin', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Neil Francis', 'Muchillas', 'Calabroso', 'nmcalabroso@up.edu.ph');
-INSERT INTO "Users" VALUES (3, 'ebbernardino', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Emmargel', 'Bartolome', 'Bernardino', 'ebbernardino@feu.edu.ph');
+COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad) FROM stdin;
+1	admin	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil Francis	Muchillas	Calabroso	nmcalabroso@up.edu.ph
+3	ebbernardino	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Emmargel	Bartolome	Bernardino	ebbernardino@feu.edu.ph
+4	meyagen	$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/	Mireya	Perez	Andres	mireyagenandres@gmail.com
+\.
 
 
 --
@@ -311,19 +324,25 @@ SELECT pg_catalog.setval('admins_aid_seq', 1, true);
 -- Data for Name: advise; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY advise (fid, eid, since) FROM stdin;
+\.
 
 
 --
 -- Data for Name: answer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+COPY answer (rid, eid, since) FROM stdin;
+\.
 
 
 --
 -- Data for Name: conduct; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO conduct VALUES (3, 3, '2013-12-24');
+COPY conduct (uid, eid, since) FROM stdin;
+3	3	2013-12-24
+\.
 
 
 --
@@ -337,7 +356,7 @@ SELECT pg_catalog.setval('experiments_eid_seq', 3, true);
 -- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('faculty_fid_seq', 1, false);
+SELECT pg_catalog.setval('faculty_fid_seq', 1, true);
 
 
 --
@@ -358,7 +377,7 @@ SELECT pg_catalog.setval('respondents_rid_seq', 4, true);
 -- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_uid_seq', 3, true);
+SELECT pg_catalog.setval('users_uid_seq', 4, true);
 
 
 --
@@ -519,6 +538,16 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT graduates_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --

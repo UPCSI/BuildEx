@@ -5,6 +5,7 @@ class Home extends MY_Controller{
 	public function index(){
 		$this->load->model('admins_model');
 		$data['title'] = 'Home';
-		$this->load->view('templates/home_template',$data);
+		$data['main_content'] = 'home_body';
+		$this->load->view('_main_layout', $data);
 	}
 }

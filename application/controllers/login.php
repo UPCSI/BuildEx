@@ -1,15 +1,39 @@
 <?php
 
-class Login extends MY_Controller{
-
+class Login extends CI_Controller{
 	public function index(){
-		
+		$this->load->model('admins_model');
+		$data['title'] = 'Login';
+		$data['main_content'] = 'login_body';
+		$this->load->view('_main_layout', $data);		
 	}
 
 	public function validate_user(){
+		$this->load->library('form_validation');
 		$this->load->model('users_model');
+		$rules = $this->users_model->rules;
+		$this->form_validation->set_rules($rules);
 
-		$username = $this->input->post('username');
-		$password = $this->input->post('password');
+		if($this->form_validation->run()) {
+			$username = $this->input->post('username');
+			$password = $this->input->post('password');
+
+			if ($this->users_model->is_valid_user($username, $password)){
+				$this->users_model->set_session_data($username);
+				redirect('site');
+			}
+
+			else
+				echo "Cannot sign in.";
+		}
+
+		else
+			echo "Invalid input.";
 	}
+
+	public function logout() {	
+		$this->session->sess_destroy();
+		redirect('');
+	}
+
 }

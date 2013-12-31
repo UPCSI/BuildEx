@@ -1,6 +1,43 @@
 <?php
 
 class Graduates_model extends MY_Model{
+	public $rules = array(
+		'fname' => array(
+			'field' => 'fname', 
+			'label' => 'fname', 
+			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
+		), 
+		'mname' => array(
+			'field' => 'mname', 
+			'label' => 'mname', 
+			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
+		), 
+		'lname' => array(
+			'field' => 'lname', 
+			'label' => 'lname', 
+			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
+		), 
+		'email' => array(
+			'field' => 'email', 
+			'label' => 'email', 
+			'rules' => 'trim|required|xss_clean|min_length[4]|max_length[32]'
+		), 
+		'username' => array(
+			'field' => 'username', 
+			'label' => 'Username', 
+			'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'
+		), 
+		'password' => array(
+			'field' => 'password', 
+			'label' => 'Password', 
+			'rules' => 'trim|required|min_length[6]|max_length[16]'
+		),
+		'password2' => array(
+			'field' => 'password2', 
+			'label' => 'Password2', 
+			'rules' => 'trim|required|matches[password]'
+		)
+	);
 
 	public function add_graduate($user_info = null, $graduate_info = null){
 		$user_info['password'] = $this->my_hash($user_info['password']);
