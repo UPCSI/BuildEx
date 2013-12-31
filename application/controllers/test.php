@@ -5,7 +5,7 @@ class Test extends MY_Controller{
 		parent::__construct();
 		$this->load->model('admins_model');
 		$this->load->model('experiments_model');
-		//$this->load->model('faculty_model');
+		$this->load->model('faculty_model');
 		$this->load->model('graduates_model');
 		$this->load->model('respondents_model');
 		//$this->load->model('users_model');
@@ -14,6 +14,36 @@ class Test extends MY_Controller{
 	public function index(){
 		echo '<pre>';
 		var_dump($data);
+		echo '</pre>';
+	}
+
+	public function get_faculty(){
+		$username = 'mtcarreon';
+		$data = $this->faculty_model->get_faculty_profile($username);
+		echo '<pre>';
+		var_dump($data);
+		echo '</pre>';
+	}
+
+	public function delete_faculty(){
+		$username = 'mtcarreon';
+		$status = $this->faculty_model->delete_faculty($username);
+		echo '<pre>';
+		echo 'Faculty deleted!';
+		echo 'Status: '.$status;
+		echo '</pre>';	
+	}
+
+	public function add_faculty(){
+		$user_info['username'] = 'mtcarreon';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Mario';
+		$user_info['middle_name'] = 'Brothers';
+		$user_info['last_name'] = 'Carreon';
+		$user_info['email_ad'] = 'mtcarreon@up.edu.ph';
+		$this->faculty_model->add_faculty($user_info);
+		echo '<pre>';
+		echo 'Faculty added!';
 		echo '</pre>';
 	}
 

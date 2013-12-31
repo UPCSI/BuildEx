@@ -7,12 +7,12 @@ class Graduates_model extends MY_Model{
 		$this->db->insert('Users',$user_info);
 		$uid = $this->db->insert_id();
 		$graduate_info['uid'] = $uid;
-		$this->db->insert('Graduates',$graduate_info);
+		return $this->db->insert('Graduates',$graduate_info);
 	}
 
 	public function delete_graduate($username){
 		$this->load->model('users_model');
-		$this->users_model->delete_user($username);
+		return $this->users_model->delete_user($username);
 	}
 
 	public function get_graduate_profile($username){
