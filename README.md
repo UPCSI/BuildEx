@@ -1,6 +1,6 @@
 # BuildEx
 
-Upon creating the commit message, use present tense action words.
+Upon creating the commit message, use present tense verbs.
 
 ## Installation
 
@@ -61,9 +61,16 @@ On your browser, go to http://localhost/phppgadmin.
 
 Log-in the postgreSQL server with default username "postgres" and your own specified password from the installation of lappstack.
 
-Create a database and name it buildex_db.
+Click 'Create database' just below the table 'Actions on multiple lines'.
+
+Name it 'buildex_db', without the ''. Leave all the default settings and click the 'Create' Button.
 
 Import the exported database file buildex_db.sql to phppgAdmin. It's located in the directory of the cloned project.
+
+NOTE: If you can't see the import button, try this:
+  From the side tab, click PostGreSQL
+  Click now the 'buildex_db' database and go to the 'SQL' tab.
+  Click the 'Choose File' and select the buildex_db.sql then click 'Execute'
 
 On your browser, go to http://localhost/BuildEx/. A welcome page should appear.
 
