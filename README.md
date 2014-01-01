@@ -1,6 +1,9 @@
 # BuildEx
 
-Upon creating the commit message, use present tense verbs.
+Upon creating the commit message, 
+"the body should provide a meaningful commit message, which:
+- uses the imperative, present tense: "change", not "changed" or "changes"."
+Git recommends that format. 
 
 ## Installation
 
