@@ -50,9 +50,30 @@ class Users_model extends MY_Model{
 			'mname' => $user->middle_name,
 			'lname' => $user->last_name,
 			'email' => $user->email_ad,
+			'role'	=> $this->check_role($user->uid),
 			'loggedin' => TRUE
 		);
 
 		$this->session->set_userdata($data);
+	}
+
+	public function check_role($uid){
+		$role=array();
+		$query = $this->db->get_where('Admins', array('uid' => $uid));
+		if($query->num_rows == 1){
+			array_push($role, 'Admin');
+		}
+
+		$query = $this->db->get_where('Faculty', array('uid' => $uid));
+		if($query->num_rows == 1){
+			array_push($role, 'Faculty');
+		}
+
+		$query = $this->db->get_where('Graduates', array('uid' => $uid));
+		if($query->num_rows == 1){
+			array_push($role, 'Graduate');
+		}
+
+		return $role;
 	}
 }

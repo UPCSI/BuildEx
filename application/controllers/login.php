@@ -20,7 +20,19 @@ class Login extends CI_Controller{
 
 			if ($this->users_model->is_valid_user($username, $password)){
 				$this->users_model->set_session_data($username);
-				redirect('site');
+				$role = $this->session->userdata('role');
+				if (in_array('Admin',$role)){
+					redirect('admin');
+				}
+				elseif (in_array('Faculty',$role)){
+					redirect('faculty');
+				}
+				elseif (in_array('Graduate',$role)){
+					redirect('graduate');
+				}
+				else{ 
+					redirect('site');
+				}
 			}
 
 			else
