@@ -1,10 +1,10 @@
 <?php
 
-class Admin extends MY_Controller{
+class Faculty extends MY_Controller{
 	
 	public function index() {
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'contents/site_body';
+		$data['main_content'] = 'contents/faculty_body';
 		$this->load->view('_main_layout', $data);
 	}
 }
