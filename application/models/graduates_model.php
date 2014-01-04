@@ -76,8 +76,9 @@ class Graduates_model extends MY_Model{
 
 	public function get_all_graduates(){
 		$this->db->select('*');
+		$this->db->join('Users','Users.uid = Graduates.uid');
 		$q = $this->db->get('Graduates');
-		return $this->queryConversion($q);
+		return $this->query_conversion($q);	
 	}
 	
 }

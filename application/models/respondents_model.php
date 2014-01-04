@@ -34,4 +34,9 @@ class Respondents_model extends MY_Model{
 		$q = $this->db->get('Respondents');
 		return $this->query_row_conversion($q);
 	}
+
+	public function get_all_respondents(){
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);
+	}
 }

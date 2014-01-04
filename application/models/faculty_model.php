@@ -77,7 +77,8 @@ class Faculty_model extends MY_Model{
 
 	public function get_all_faculty(){
 		$this->db->select('*');
+		$this->db->join('Users','Users.uid = Faculty.uid');
 		$q = $this->db->get('Faculty');
-		return $this->queryConversion($q);
+		return $this->query_conversion($q);
 	}
 }
