@@ -50,10 +50,14 @@ TABLE Respondents:
 	gender: varchar(32)
 	civil_status: int[1] UNSIGNED #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
+TABLE request:
+	fid: int(11) references Faculty.fid
+	eid: int(11) references Experiments.eid
+	since: Date(10)
+
 TABLE advise:
 	fid: int(11) references Faculty.fid
 	eid: int(11) references Experiments.eid
-	request_status: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 	since: Date(10)
 
 TABLE conduct:

@@ -19,7 +19,10 @@ class Admins_model extends MY_Model{
 		$this->users_model->delete_user($username);
 	}
 
-	public function get_admin_profile($username){ //get the profile of particular admin
+	public function get_admin_profile($username){ 
+		/*
+		*get the profile of particular admin
+		*/
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		$this->db->where('Users.username',$username);

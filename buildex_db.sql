@@ -230,10 +230,9 @@ COMMENT ON TABLE "Users" IS 'General users table';
 --
 
 CREATE TABLE advise (
-    fid integer,
-    eid integer,
-    since date DEFAULT ('now'::text)::date,
-    request_status boolean DEFAULT false
+    fid integer NOT NULL,
+    eid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
 );
 
 
@@ -244,8 +243,8 @@ ALTER TABLE public.advise OWNER TO postgres;
 --
 
 CREATE TABLE answer (
-    rid integer,
-    eid integer,
+    rid integer NOT NULL,
+    eid integer NOT NULL,
     since date DEFAULT ('now'::text)::date
 );
 
@@ -257,8 +256,8 @@ ALTER TABLE public.answer OWNER TO postgres;
 --
 
 CREATE TABLE conduct (
-    uid integer,
-    eid integer,
+    uid integer NOT NULL,
+    eid integer NOT NULL,
     since date DEFAULT ('now'::text)::date
 );
 
@@ -266,51 +265,52 @@ CREATE TABLE conduct (
 ALTER TABLE public.conduct OWNER TO postgres;
 
 --
+-- Name: request; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE request (
+    fid integer NOT NULL,
+    eid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.request OWNER TO postgres;
+
+--
 -- Data for Name: Admins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Admins" VALUES (1, 1);
 
 
 --
 -- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Experiments" VALUES (6, '2nd Experiment', '0', 0, 0, false, false, '2nd trial', false);
-INSERT INTO "Experiments" VALUES (7, 'Faculty experiment', '0', 10, 0, false, false, '1st trial', false);
-INSERT INTO "Experiments" VALUES (5, '1st Experiment', '0', 10, 0, false, false, 'Trial', false);
 
 
 --
 -- Data for Name: Faculty; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Faculty" VALUES (5, 1, false);
-INSERT INTO "Faculty" VALUES (6, 3, false);
 
 
 --
 -- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Graduates" VALUES (3, 2);
 
 
 --
 -- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Respondents" VALUES (5, 'toff', 'l', 'mendoza', 'toofi@yahoo.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
 --
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Users" VALUES (1, 'admin', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Neil Francis', 'Muchillas', 'Calabroso', 'nmcalabroso@up.edu.ph', NULL);
-INSERT INTO "Users" VALUES (3, 'ebbernardino', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Emmargel', 'Bartolome', 'Bernardino', 'ebbernardino@feu.edu.ph', NULL);
-INSERT INTO "Users" VALUES (5, 'gardevior411', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Earl', 'R.', 'Bunao', 'gardevior_erb411@yahoo.com', NULL);
-INSERT INTO "Users" VALUES (6, 'meyagen', '$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/', 'Mireya', 'Perez', 'Andres', 'mireyagenandres@gmail.com', '$6$rounds=10000$iNt3ll3Q$UK1koMHURRHHMRKfiqtEgto0cWGqS046lYOXPFifHF7d6WqWrH4ffR1GaNDNx.XGO4AU9tKyCmTeudVUyzpfh0');
 
 
 --
@@ -336,45 +336,47 @@ SELECT pg_catalog.setval('admins_aid_seq', 1, true);
 -- Data for Name: conduct; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO conduct VALUES (3, 4, '2014-01-05');
-INSERT INTO conduct VALUES (3, 5, '2014-01-05');
-INSERT INTO conduct VALUES (3, 6, '2014-01-05');
-INSERT INTO conduct VALUES (5, 7, '2014-01-05');
 
 
 --
 -- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('experiments_eid_seq', 7, true);
+SELECT pg_catalog.setval('experiments_eid_seq', 1, true);
 
 
 --
 -- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('faculty_fid_seq', 3, true);
+SELECT pg_catalog.setval('faculty_fid_seq', 1, true);
 
 
 --
 -- Name: graduates_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('graduates_gid_seq', 2, true);
+SELECT pg_catalog.setval('graduates_gid_seq', 1, true);
+
+
+--
+-- Data for Name: request; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
 
 
 --
 -- Name: respondents_rid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('respondents_rid_seq', 4, true);
+SELECT pg_catalog.setval('respondents_rid_seq', 1, true);
 
 
 --
 -- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_uid_seq', 6, true);
+SELECT pg_catalog.setval('users_uid_seq', 1, true);
 
 
 --
@@ -418,11 +420,35 @@ ALTER TABLE ONLY "Users"
 
 
 --
+-- Name: advise_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY advise
+    ADD CONSTRAINT advise_primary PRIMARY KEY (fid, eid);
+
+
+--
 -- Name: aid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Admins"
     ADD CONSTRAINT aid_ukey UNIQUE (aid);
+
+
+--
+-- Name: answer_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT answer_primary PRIMARY KEY (rid, eid);
+
+
+--
+-- Name: conduct_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY conduct
+    ADD CONSTRAINT conduct_primary PRIMARY KEY (uid, eid);
 
 
 --
@@ -439,6 +465,14 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT gid_ukey UNIQUE (gid);
+
+
+--
+-- Name: request_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY request
+    ADD CONSTRAINT request_primary PRIMARY KEY (fid, eid);
 
 
 --
@@ -474,6 +508,14 @@ ALTER TABLE ONLY "Admins"
 
 
 --
+-- Name: advise_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY advise
+    ADD CONSTRAINT advise_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: advise_ref_faculty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -482,11 +524,27 @@ ALTER TABLE ONLY advise
 
 
 --
+-- Name: answer_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY answer
+    ADD CONSTRAINT answer_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: answer_ref_respondents; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT answer_ref_respondents FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: conduct_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY conduct
+    ADD CONSTRAINT conduct_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -511,6 +569,22 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT graduates_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: request_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request
+    ADD CONSTRAINT request_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: request_ref_faculty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY request
+    ADD CONSTRAINT request_ref_faculty FOREIGN KEY (fid) REFERENCES "Faculty"(fid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

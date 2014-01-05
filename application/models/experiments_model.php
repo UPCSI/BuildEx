@@ -2,7 +2,7 @@
 
 class Experiments_model extends MY_Model{
 
-	public function add_experiment($uid = 0, $info = null){
+	public function add_experiment($uid = 0,$info = null){
 		$this->db->insert('Experiments',$info);
 		$conduct_info['uid'] = $uid;
 		$conduct_info['eid'] = $this->db->insert_id();
