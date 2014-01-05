@@ -306,19 +306,10 @@ INSERT INTO "Respondents" VALUES (5, 'toff', 'l', 'mendoza', 'toofi@yahoo.com', 
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-<<<<<<< HEAD
 INSERT INTO "Users" VALUES (1, 'admin', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Neil Francis', 'Muchillas', 'Calabroso', 'nmcalabroso@up.edu.ph', NULL);
 INSERT INTO "Users" VALUES (3, 'ebbernardino', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Emmargel', 'Bartolome', 'Bernardino', 'ebbernardino@feu.edu.ph', NULL);
 INSERT INTO "Users" VALUES (5, 'gardevior411', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Earl', 'R.', 'Bunao', 'gardevior_erb411@yahoo.com', NULL);
 INSERT INTO "Users" VALUES (6, 'meyagen', '$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/', 'Mireya', 'Perez', 'Andres', 'mireyagenandres@gmail.com', '$6$rounds=10000$iNt3ll3Q$UK1koMHURRHHMRKfiqtEgto0cWGqS046lYOXPFifHF7d6WqWrH4ffR1GaNDNx.XGO4AU9tKyCmTeudVUyzpfh0');
-=======
-COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad, temp_password) FROM stdin;
-1	admin	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil Francis	Muchillas	Calabroso	nmcalabroso@up.edu.ph	\N
-3	ebbernardino	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Emmargel	Bartolome	Bernardino	ebbernardino@feu.edu.ph	\N
-5	gardevior411	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Earl	R.	Bunao	gardevior_erb411@yahoo.com	\N
-6	meyagen	$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/	Mireya	Perez	Andres	mireyagenandres@gmail.com	$6$rounds=10000$iNt3ll3Q$JDClD82v431nB1POzpJ1pMeLmyoyAc5wjDAC.yE/RyyuyjQjQdJvS6ea2ljA40VIvLlaLv/mjiSjAooBNaPm3/
-\.
->>>>>>> aeddcf7f09a4bd463c9ca420170acd9dd95479d0
 
 
 --
