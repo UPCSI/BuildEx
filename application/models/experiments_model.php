@@ -72,8 +72,8 @@ class Experiments_model extends MY_Model{
 		* If category is specified, it will filter it further.
 		*/
 		$this->db->select('*');
-		$this->db->join('Users','Users.uid = conduct.uid');
 		$this->db->join('conduct','conduct.eid = Experiments.eid');
+		$this->db->join('Users','Users.uid = conduct.uid');
 		$this->db->where('Users.uid',$uid);
 		if(isset($category)){
 			$this->db->where('Experiments.category',$category);
@@ -81,7 +81,7 @@ class Experiments_model extends MY_Model{
 
 		$q = $this->db->get('Experiments');
 
-		return $this->db->query_conversion($q);
+		return $this->query_conversion($q);
 	}
 
 	/*
