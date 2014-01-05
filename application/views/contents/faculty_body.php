@@ -9,3 +9,5 @@
 		echo '</br>';
 	}
 ?>
+
+<a href = "<?php echo site_url('experiment'); ?>"> Create Experiment </a><br/>
