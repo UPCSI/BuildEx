@@ -88,7 +88,8 @@ CREATE TABLE "Experiments" (
     current_count integer DEFAULT 0,
     status boolean DEFAULT false,
     request_status boolean DEFAULT false,
-    description character varying(256)
+    description character varying(256),
+    is_published boolean DEFAULT false
 );
 
 
@@ -275,9 +276,9 @@ INSERT INTO "Admins" VALUES (1, 1);
 -- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Experiments" VALUES (6, '2nd Experiment', '0', 0, 0, false, false, '2nd trial');
-INSERT INTO "Experiments" VALUES (7, 'Faculty experiment', '0', 10, 0, false, false, '1st trial');
-INSERT INTO "Experiments" VALUES (5, '1st Experiment', '0', 10, 0, false, false, 'Trial');
+INSERT INTO "Experiments" VALUES (6, '2nd Experiment', '0', 0, 0, false, false, '2nd trial', false);
+INSERT INTO "Experiments" VALUES (7, 'Faculty experiment', '0', 10, 0, false, false, '1st trial', false);
+INSERT INTO "Experiments" VALUES (5, '1st Experiment', '0', 10, 0, false, false, 'Trial', false);
 
 
 --
