@@ -77,7 +77,7 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			if(!$this->graduates_model->add_graduate($new_user)){
+			if($this->graduates_model->add_graduate($new_user)) {
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
 				$data['title'] = 'Check your email!';
