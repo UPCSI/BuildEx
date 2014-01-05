@@ -8,6 +8,7 @@ TABLE Users:
 	middle_name: varchar(32)
 	last_name: varchar(32)
 	email_ad: varchar(32)
+	temp_password: varchar(128)
 
 TABLE Admins:
 	uid: references Users.uid
@@ -16,6 +17,7 @@ TABLE Admins:
 TABLE Faculty:
 	uid: references Users.uid
 	fid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
 
 TABLE Graduates:
 	uid: references Users.uid
@@ -25,9 +27,11 @@ TABLE Experiments:
 	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 	title: varchar(64)
 	category: varchar(32)
+	description: varchar(256)
 	target_count: int(5) UNSIGNED
 	current_count: int(5) UNSIGNED
 	status: boolean #{COMPLETE[true],ONGOING[false]}
+	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 
 TABLE Respondents:
 	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
@@ -49,6 +53,7 @@ TABLE Respondents:
 TABLE advise:
 	fid: int(11) references Faculty.fid
 	eid: int(11) references Experiments.eid
+	request_status: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 	since: Date(10)
 
 TABLE conduct:

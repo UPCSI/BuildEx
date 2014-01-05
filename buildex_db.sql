@@ -3,6 +3,7 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -113,7 +114,8 @@ ALTER TABLE public.faculty_fid_seq OWNER TO postgres;
 
 CREATE TABLE "Faculty" (
     uid integer NOT NULL,
-    fid integer DEFAULT nextval('faculty_fid_seq'::regclass) NOT NULL
+    fid integer DEFAULT nextval('faculty_fid_seq'::regclass) NOT NULL,
+    account_status boolean DEFAULT false
 );
 
 
@@ -229,7 +231,8 @@ COMMENT ON TABLE "Users" IS 'General users table';
 CREATE TABLE advise (
     fid integer,
     eid integer,
-    since date DEFAULT ('now'::text)::date
+    since date DEFAULT ('now'::text)::date,
+    request_status boolean DEFAULT false
 );
 
 
@@ -265,60 +268,48 @@ ALTER TABLE public.conduct OWNER TO postgres;
 -- Data for Name: Admins; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Admins" (uid, aid) FROM stdin;
-1	1
-\.
+INSERT INTO "Admins" VALUES (1, 1);
 
 
 --
 -- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Experiments" (eid, title, category, target_count, current_count, status, request_status, description) FROM stdin;
-6	2nd Experiment	0	0	0	f	f	2nd trial
-7	Faculty experiment	0	10	0	f	f	1st trial
-5	1st Experiment	0	10	0	f	f	Trial
-\.
+INSERT INTO "Experiments" VALUES (6, '2nd Experiment', '0', 0, 0, false, false, '2nd trial');
+INSERT INTO "Experiments" VALUES (7, 'Faculty experiment', '0', 10, 0, false, false, '1st trial');
+INSERT INTO "Experiments" VALUES (5, '1st Experiment', '0', 10, 0, false, false, 'Trial');
 
 
 --
 -- Data for Name: Faculty; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Faculty" (uid, fid) FROM stdin;
-5	1
-6	3
-\.
+INSERT INTO "Faculty" VALUES (5, 1, false);
+INSERT INTO "Faculty" VALUES (6, 3, false);
 
 
 --
 -- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Graduates" (uid, gid) FROM stdin;
-3	2
-\.
+INSERT INTO "Graduates" VALUES (3, 2);
 
 
 --
 -- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, street_addr, barangay_addr, city_addr, nationality, birthdate, sex, gender, civil_status) FROM stdin;
-5	toff	l	mendoza	toofi@yahoo.com	\N	\N	\N	\N	\N	\N	\N	\N	\N
-\.
+INSERT INTO "Respondents" VALUES (5, 'toff', 'l', 'mendoza', 'toofi@yahoo.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
 --
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad, temp_password) FROM stdin;
-1	admin	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil Francis	Muchillas	Calabroso	nmcalabroso@up.edu.ph	\N
-3	ebbernardino	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Emmargel	Bartolome	Bernardino	ebbernardino@feu.edu.ph	\N
-5	gardevior411	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Earl	R.	Bunao	gardevior_erb411@yahoo.com	\N
-6	meyagen	$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/	Mireya	Perez	Andres	mireyagenandres@gmail.com	$6$rounds=10000$iNt3ll3Q$UK1koMHURRHHMRKfiqtEgto0cWGqS046lYOXPFifHF7d6WqWrH4ffR1GaNDNx.XGO4AU9tKyCmTeudVUyzpfh0
-\.
+INSERT INTO "Users" VALUES (1, 'admin', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Neil Francis', 'Muchillas', 'Calabroso', 'nmcalabroso@up.edu.ph', NULL);
+INSERT INTO "Users" VALUES (3, 'ebbernardino', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Emmargel', 'Bartolome', 'Bernardino', 'ebbernardino@feu.edu.ph', NULL);
+INSERT INTO "Users" VALUES (5, 'gardevior411', '$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/', 'Earl', 'R.', 'Bunao', 'gardevior_erb411@yahoo.com', NULL);
+INSERT INTO "Users" VALUES (6, 'meyagen', '$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/', 'Mireya', 'Perez', 'Andres', 'mireyagenandres@gmail.com', '$6$rounds=10000$iNt3ll3Q$UK1koMHURRHHMRKfiqtEgto0cWGqS046lYOXPFifHF7d6WqWrH4ffR1GaNDNx.XGO4AU9tKyCmTeudVUyzpfh0');
 
 
 --
@@ -332,28 +323,22 @@ SELECT pg_catalog.setval('admins_aid_seq', 1, true);
 -- Data for Name: advise; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY advise (fid, eid, since) FROM stdin;
-\.
 
 
 --
 -- Data for Name: answer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY answer (rid, eid, since) FROM stdin;
-\.
 
 
 --
 -- Data for Name: conduct; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY conduct (uid, eid, since) FROM stdin;
-3	4	2014-01-05
-3	5	2014-01-05
-3	6	2014-01-05
-5	7	2014-01-05
-\.
+INSERT INTO conduct VALUES (3, 4, '2014-01-05');
+INSERT INTO conduct VALUES (3, 5, '2014-01-05');
+INSERT INTO conduct VALUES (3, 6, '2014-01-05');
+INSERT INTO conduct VALUES (5, 7, '2014-01-05');
 
 
 --
