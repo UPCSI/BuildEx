@@ -20,16 +20,23 @@ class Users_model extends MY_Model{
 	
 	public function is_valid_user($username = null, $password = null){
 		/*returns true if there's an existing user with corresponding username and password*/
+		if(!$this->valid_email($username))
+			return false;
 
 		$this->db->select('username','password');
 		$this->db->where('username',$username);
 		$this->db->where('password',$this->my_hash($password));
-
 		$q = $this->db->get('Users');
 
-		if($this->query_row_conversion($q)){
+		if($this->query_row_conversion($q))
 			return true;
-		}
+
+		$this->db->where('username',$username);
+		$this->db->where('temp_password',$this->my_hash($password));
+		$q = $this->db->get('Users');
+
+		if($this->query_row_conversion($q))
+			return true;
 
 		return false;
 	}
@@ -75,5 +82,15 @@ class Users_model extends MY_Model{
 		}
 
 		return $role;
+	}
+
+	function valid_email($username){
+		$this->db->where('username',$username);
+		$query = $this->db->get('Users');
+		$user = $query->row();
+		$char = substr($user->email_ad, -1);
+		if (strcmp($char, '*') == 0)
+			return false;
+		return true;
 	}
 }

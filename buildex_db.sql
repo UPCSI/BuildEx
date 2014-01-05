@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -209,7 +208,8 @@ CREATE TABLE "Users" (
     first_name character varying(32),
     middle_name character varying(32),
     last_name character varying(32),
-    email_ad character varying(32)
+    email_ad character varying(32),
+    temp_password character varying(128)
 );
 
 
@@ -286,7 +286,8 @@ COPY "Experiments" (eid, title, category, target_count, current_count, status, r
 --
 
 COPY "Faculty" (uid, fid) FROM stdin;
-8	1
+5	1
+6	3
 \.
 
 
@@ -312,10 +313,11 @@ COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, stre
 -- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad) FROM stdin;
-1	admin	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil Francis	Muchillas	Calabroso	nmcalabroso@up.edu.ph
-3	ebbernardino	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Emmargel	Bartolome	Bernardino	ebbernardino@feu.edu.ph
-8	gardevior411	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Earl	R.	Bunao	gardevior_erb411@yahoo.com
+COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad, temp_password) FROM stdin;
+1	admin	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil Francis	Muchillas	Calabroso	nmcalabroso@up.edu.ph	\N
+3	ebbernardino	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Emmargel	Bartolome	Bernardino	ebbernardino@feu.edu.ph	\N
+5	gardevior411	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Earl	R.	Bunao	gardevior_erb411@yahoo.com	\N
+6	meyagen	$6$rounds=10000$iNt3ll3Q$bo5TWo9jkuKntkGHirKH3DnMjl424qMx7KTjIv4AmlThDsbVT.Jjw7tEinIqbt/3lnQKzwmQVdv03pphWDRAq/	Mireya	Perez	Andres	mireyagenandres@gmail.com	$6$rounds=10000$iNt3ll3Q$UK1koMHURRHHMRKfiqtEgto0cWGqS046lYOXPFifHF7d6WqWrH4ffR1GaNDNx.XGO4AU9tKyCmTeudVUyzpfh0
 \.
 
 
@@ -350,7 +352,7 @@ COPY conduct (uid, eid, since) FROM stdin;
 3	4	2014-01-05
 3	5	2014-01-05
 3	6	2014-01-05
-8	7	2014-01-05
+5	7	2014-01-05
 \.
 
 
@@ -365,7 +367,7 @@ SELECT pg_catalog.setval('experiments_eid_seq', 7, true);
 -- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('faculty_fid_seq', 2, true);
+SELECT pg_catalog.setval('faculty_fid_seq', 3, true);
 
 
 --
@@ -386,7 +388,7 @@ SELECT pg_catalog.setval('respondents_rid_seq', 4, true);
 -- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_uid_seq', 5, true);
+SELECT pg_catalog.setval('users_uid_seq', 6, true);
 
 
 --

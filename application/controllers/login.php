@@ -8,7 +8,8 @@ class Login extends CI_Controller{
 		$this->load->view('_main_layout', $data);	
 
 		#Redirect to profile if logged in
-		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
+		$role = $this->session->userdata('role');
+		$this->loggedin() == False || redirect($role[0]);
 	}
 
 	public function validate_user(){
@@ -55,4 +56,28 @@ class Login extends CI_Controller{
 		redirect('');
 	}
 
+	public function reset(){
+		$data['title'] = 'Reset Password';
+		$data['main_content'] = 'reset_body';
+		$this->load->view('_main_layout', $data);			
+	}
+
+	function reset_password() {
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
+		
+		if($this->form_validation->run() == TRUE) {
+			$this->load->model('email_model');
+			$email = $this->input->post('email');
+			$data = $this->email_model->edit_password($email);
+
+			if($data['reset']) {
+				$data['title'] = 'Password Reset!';
+				$data['main_content'] = 'reset_successful';
+				$this->load->view('_main_layout', $data);			
+			}
+		}
+
+		else echo "Invalid input.";
+	}
 }

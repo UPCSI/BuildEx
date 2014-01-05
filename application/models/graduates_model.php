@@ -58,8 +58,10 @@ class Graduates_model extends MY_Model{
 		$this->db->insert('Users',$user_info);
 		$uid = $this->db->insert_id();
 		$graduate_info['uid'] = $uid;
-		return $this->db->insert('Graduates',$graduate_info);
+		$this->db->insert('Graduates',$graduate_info);
+		return true;
 	}
+
 
 	public function delete_graduate($username){
 		$this->load->model('users_model');

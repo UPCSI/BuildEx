@@ -30,11 +30,11 @@ class CI_Email {
 
 	var	$useragent		= "CodeIgniter";
 	var	$mailpath		= "/usr/sbin/sendmail";	// Sendmail path
-	var	$protocol		= "mail";	// mail/sendmail/smtp
-	var	$smtp_host		= "";		// SMTP Server.  Example: mail.earthlink.net
-	var	$smtp_user		= "";		// SMTP Username
-	var	$smtp_pass		= "";		// SMTP Password
-	var	$smtp_port		= "25";		// SMTP Port
+	var	$protocol		= "smtp";	// mail/sendmail/smtp
+	var	$smtp_host		= "ssl://smtp.googlemail.com";		// SMTP Server.  Example: mail.earthlink.net
+	var	$smtp_user		= "buildex.donotreply@gmail.com";		// SMTP Username
+	var	$smtp_pass		= "intelleq";		// SMTP Password
+	var	$smtp_port		= "465";		// SMTP Port
 	var	$smtp_timeout	= 5;		// SMTP Timeout in seconds
 	var	$smtp_crypto	= "";		// SMTP Encryption. Can be null, tls or ssl.
 	var	$wordwrap		= TRUE;		// TRUE/FALSE  Turns word-wrap on/off
@@ -45,7 +45,7 @@ class CI_Email {
 	var $alt_message	= '';		// Alternative message for HTML emails
 	var	$validate		= FALSE;	// TRUE/FALSE.  Enables email validation
 	var	$priority		= "3";		// Default priority (1 - 5)
-	var	$newline		= "\n";		// Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
+	var	$newline		= "\r\n";		// Default newline. "\r\n" or "\n" (Use "\r\n" to comply with RFC 822)
 	var $crlf			= "\n";		// The RFC 2045 compliant CRLF for quoted-printable is "\r\n".  Apparently some servers,
 									// even on the receiving end think they need to muck with CRLFs, so using "\n", while
 									// distasteful, is the only thing that seems to work for all environments.

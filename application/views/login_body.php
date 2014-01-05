@@ -16,3 +16,4 @@
 
 <a href = "<?php echo site_url('signup/faculty'); ?>"> Sign Up (Faculty)</a><br/>
 <a href = "<?php echo site_url('signup/student'); ?>"> Sign Up (Students)</a><br/><br/>
+<a href = "<?php echo site_url('login/reset'); ?>"> Forgot your password?</a><br/><br/>

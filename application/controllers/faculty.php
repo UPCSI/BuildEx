@@ -1,5 +1,4 @@
 <?php
-
 class Faculty extends MY_Controller{
 	
 	public function index() {
@@ -9,18 +8,18 @@ class Faculty extends MY_Controller{
 			$data['experiments'] = $this->get_all_experiments();
 			$this->load->view('_main_layout', $data);
 		}
-		else
-			redirect($this->session->userdata('role')[0]);
+		else{
+			$role = $this->session->userdata('role');
+			redirect($role[0]);
+		}
 	}
 
 	public function get_all_experiments(){
 		$this->load->model('experiments_model');
 		$list = $this->experiments_model->get_users_experiments($this->session->userdata('id'));
-		if($list != NULL){
-			return $list;
-		}
-		else{
-			return $list = [];
-		}
+		if($list == NULL)
+			$list = array();
+		
+		return $list;
 	}
 }

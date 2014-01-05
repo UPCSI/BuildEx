@@ -25,6 +25,7 @@ class Signup extends CI_Controller{
 	function add_faculty(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
+		$email .= '*';
 
 		$this->load->library('form_validation');
 		$this->load->model('faculty_model');
@@ -41,8 +42,13 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			if($this->faculty_model->add_faculty($new_user))
-				redirect('login');
+			if($this->faculty_model->add_faculty($new_user)){
+				$this->load->model('email_model');
+				$this->email_model->send_confirmation_email($email);
+				$data['title'] = 'Check your email!';
+				$data['main_content'] = 'check_email';
+				$this->load->view('_main_layout', $data);
+			}
 			else
 				echo "Cannot create account.";
 		}
@@ -54,6 +60,7 @@ class Signup extends CI_Controller{
 	function add_student(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
+		$email .= '*';
 
 		$this->load->library('form_validation');
 		$this->load->model('graduates_model');
@@ -70,14 +77,37 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			if($this->graduates_model->add_graduate($new_user))
-				redirect('login');
+			if(!$this->graduates_model->add_graduate($new_user)){
+				$this->load->model('email_model');
+				$this->email_model->send_confirmation_email($email);
+				$data['title'] = 'Check your email!';
+				$data['main_content'] = 'check_email';
+				$this->load->view('_main_layout', $data);
+			}
+			
 			else
 				echo "Cannot create account.";
 		}
 
 		else
 			echo "Invalid input.";
+	}
+
+	function confirm_email($email, $email_code){
+		$this->load->model('email_model');
+		$email_code = trim($email_code);
+		if($this->email_model->validate_email($email, $email_code)) {
+			$this->email_model->activate_user($email);
+			$data['title'] = 'Signup successful!';
+			$data['main_content'] = 'signup_successful';
+		}
+
+		else {
+			$data['title'] = 'Invalid Email!';
+			$data['main_content'] = 'invalid_email';
+		}
+		
+		$this->load->view('_main_layout', $data);
 	}
 
 }
