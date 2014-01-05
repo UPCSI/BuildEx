@@ -5,7 +5,10 @@ class Login extends CI_Controller{
 		$this->load->model('admins_model');
 		$data['title'] = 'Login';
 		$data['main_content'] = 'login_body';
-		$this->load->view('_main_layout', $data);		
+		$this->load->view('_main_layout', $data);	
+
+		#Redirect to profile if logged in
+		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 	}
 
 	public function validate_user(){
@@ -21,13 +24,13 @@ class Login extends CI_Controller{
 			if ($this->users_model->is_valid_user($username, $password)){
 				$this->users_model->set_session_data($username);
 				$role = $this->session->userdata('role');
-				if (in_array('Admin',$role)){
+				if (in_array('admin',$role)){
 					redirect('admin');
 				}
-				elseif (in_array('Faculty',$role)){
+				elseif (in_array('faculty',$role)){
 					redirect('faculty');
 				}
-				elseif (in_array('Graduate',$role)){
+				elseif (in_array('graduate',$role)){
 					redirect('graduate');
 				}
 				else{ 
@@ -41,6 +44,10 @@ class Login extends CI_Controller{
 
 		else
 			echo "Invalid input.";
+	}
+
+	public function loggedin(){
+		return (bool) $this->session->userdata('loggedin');
 	}
 
 	public function logout() {	

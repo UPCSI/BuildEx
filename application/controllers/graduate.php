@@ -3,10 +3,14 @@
 class Graduate extends MY_Controller{
 	
 	public function index() {
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'contents/graduate_body';
-		$data['experiments'] = $this->get_all_experiments();
-		$this->load->view('_main_layout', $data);
+		if(in_array('graduate',$this->session->userdata('role'))){
+			$data['title'] = 'Graduate';
+			$data['main_content'] = 'contents/graduate_body';
+			$data['experiments'] = $this->get_all_experiments();
+			$this->load->view('_main_layout', $data);
+		}
+		else
+			redirect($this->session->userdata('role')[0]);
 	}
 
 	public function get_all_experiments(){

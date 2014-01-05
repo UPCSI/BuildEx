@@ -3,10 +3,14 @@
 class Faculty extends MY_Controller{
 	
 	public function index() {
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'contents/faculty_body';
-		$data['experiments'] = $this->get_all_experiments();
-		$this->load->view('_main_layout', $data);
+		if(in_array('faculty',$this->session->userdata('role'))){
+			$data['title'] = 'Faculty';
+			$data['main_content'] = 'contents/faculty_body';
+			$data['experiments'] = $this->get_all_experiments();
+			$this->load->view('_main_layout', $data);
+		}
+		else
+			redirect($this->session->userdata('role')[0]);
 	}
 
 	public function get_all_experiments(){

@@ -61,17 +61,17 @@ class Users_model extends MY_Model{
 		$role=array();
 		$query = $this->db->get_where('Admins', array('uid' => $uid));
 		if($query->num_rows == 1){
-			array_push($role, 'Admin');
+			array_push($role, 'admin');
 		}
 
 		$query = $this->db->get_where('Faculty', array('uid' => $uid));
 		if($query->num_rows == 1){
-			array_push($role, 'Faculty');
+			array_push($role, 'faculty');
 		}
 
 		$query = $this->db->get_where('Graduates', array('uid' => $uid));
 		if($query->num_rows == 1){
-			array_push($role, 'Graduate');
+			array_push($role, 'graduate');
 		}
 
 		return $role;

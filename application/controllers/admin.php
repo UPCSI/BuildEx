@@ -3,13 +3,17 @@
 class Admin extends MY_Controller{
 	
 	public function index() {
-		$data['title'] = 'Admin';
-		$data['main_content'] = 'contents/admin_body';
-		$data['admins'] = $this->get_admin_list();
-		$data['faculty'] = $this->get_faculty_list();
-		$data['graduates'] = $this->get_graduate_list();
-		$data['respondents'] = $this->get_respondent_list();
-		$this->load->view('_main_layout', $data);
+		if(in_array('admin',$this->session->userdata('role'))){
+			$data['title'] = 'Admin';
+			$data['main_content'] = 'contents/admin_body';
+			$data['admins'] = $this->get_admin_list();
+			$data['faculty'] = $this->get_faculty_list();
+			$data['graduates'] = $this->get_graduate_list();
+			$data['respondents'] = $this->get_respondent_list();
+			$this->load->view('_main_layout', $data);
+		}
+		else
+			redirect($this->session->userdata('role')[0]);
 	}
 
 	public function get_admin_list(){
