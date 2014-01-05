@@ -5,7 +5,7 @@
 <h2>My Experiments</h2>
 <?php 
 	foreach ($experiments as $experiment){
-		echo $experiment->title;
+		echo anchor('experiment/update_experiment/' . $experiment->eid, $experiment->title);
 		echo '</br>';
 	}
 ?>

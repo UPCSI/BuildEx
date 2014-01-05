@@ -1,7 +1,7 @@
-<h2>BuildEx: Create Experiment</h2>
+<h2>BuildEx: Experiment</h2>
 
  <fieldset>
-	<legend>Sign Up</legend>
+	<legend>Create Experiment</legend>
 	<?php echo validation_errors();?>
 	<?php echo form_open("experiment/add_experiment") . "<br/>";?>
 

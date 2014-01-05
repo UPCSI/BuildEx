@@ -66,6 +66,11 @@ class Experiments_model extends MY_Model{
 		return false;
 	}
 
+	public function update_experiment($eid = 0, $info = null){
+		$this->db->where('eid', $eid);
+		$this->db->update('Experiments', $info);
+	}
+
 	public function get_users_experiments($uid = 0, $category = null){
 		/*
 		* returns all user's experiments by default. 
