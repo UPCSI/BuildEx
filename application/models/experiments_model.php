@@ -12,7 +12,7 @@ class Experiments_model extends MY_Model{
 		$conduct_info['eid'] = $this->db->insert_id();
 		$conduct_info['since'] = date("Y-m-d H:i:s");
 		$this->db->insert('conduct',$conduct_info);
-		return $conduct_info['eid']
+		return $conduct_info['eid'];
 	}
 
 	public function request_experiment($eid,$fid){
@@ -22,7 +22,7 @@ class Experiments_model extends MY_Model{
 		*/
 		$request_info['eid'] = $eid;
 		$request_info['fid'] = $fid;
-		return $this->db->insert('request',$request_info)
+		return $this->db->insert('request',$request_info);
 	}
 
 	public function delete_experiment($uid = 0, $eid = 0){

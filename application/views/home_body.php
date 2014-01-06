@@ -1,7 +1,20 @@
 <h1> Home </h1>
-<h2> Log-in </h2>
+<h2>BuildEx: Login</h2>
 
-<?php $this->load->view('forms/login_form'); ?>
+ <fieldset>
+	<legend>Sign In</legend>
+	<?php echo validation_errors();?>
+	<?php echo form_open("home/validate_user") . "<br/>";?>
 
-<br>
-<a href = "<?php echo site_url('signup'); ?>"> Sign-up </a>
+	<label>Username</label>
+	<input type="text" id="signInUsername" required name="username" placeholder="Enter username">
+
+	<label>Password</label>
+	<input type="password" id="signInPass" required name="password" placeholder="Password">
+	<input type="submit" value="Login">
+	<?php echo form_close();?>
+</fieldset><br/>
+
+<a href = "<?php echo site_url('signup/faculty'); ?>"> Sign Up (Faculty)</a><br/>
+<a href = "<?php echo site_url('signup/student'); ?>"> Sign Up (Students)</a><br/><br/>
+<a href = "<?php echo site_url('home/reset'); ?>"> Forgot your password?</a><br/><br/>
