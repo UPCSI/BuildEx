@@ -20,16 +20,17 @@ class Users_model extends MY_Model{
 	
 	public function is_valid_user($username = null, $password = null){
 		/*returns true if there's an existing user with corresponding username and password*/
-		if(!$this->valid_email($username))
-			return false;
 
 		$this->db->select('username','password');
 		$this->db->where('username',$username);
 		$this->db->where('password',$this->my_hash($password));
 		$q = $this->db->get('Users');
 
-		if($this->query_row_conversion($q))
+		if($this->query_row_conversion($q)){
+			if(!$this->is_valid_email($username))
+				return false;
 			return true;
+		}
 
 		$this->db->where('username',$username);
 		$this->db->where('temp_password',$this->my_hash($password));
@@ -65,7 +66,7 @@ class Users_model extends MY_Model{
 	}
 
 	public function check_role($uid){
-		$role=array();
+		$role = array();
 		$query = $this->db->get_where('Admins', array('uid' => $uid));
 		if($query->num_rows == 1){
 			array_push($role, 'admin');
@@ -84,12 +85,11 @@ class Users_model extends MY_Model{
 		return $role;
 	}
 
-	function valid_email($username){
-		$this->db->where('username',$username);
+	function is_valid_email($username){
+		$this->db->where('username', $username);
 		$query = $this->db->get('Users');
 		$user = $query->row();
-		$char = substr($user->email_ad, -1);
-		if (strcmp($char, '*') == 0)
+		if(strcmp(substr($user->email_ad, -1), '*') == 0)
 			return false;
 		return true;
 	}

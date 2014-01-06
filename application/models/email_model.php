@@ -4,7 +4,7 @@ class Email_model extends MY_Model{
 
 	public function send_confirmation_email($email){
 		$email = substr($email, 0, -1);
-		$email_code = md5((string)$email);
+		$email_code = $this->my_hash((string)$email);
 		$url = "" .base_url() .'signup/confirm_email/' .$email ."/" .$email_code;
 
 		//send email
@@ -30,7 +30,7 @@ class Email_model extends MY_Model{
 	}
 
 	public function validate_email($email, $email_code) {
-		if(md5((string)$email) === $email_code)
+		if($this->my_hash((string)($email) === $email_code))
 			return true;
 		return false;
 	}
@@ -43,22 +43,12 @@ class Email_model extends MY_Model{
 	}
 
 	public function edit_password($email){
-		$user = false;
-
-		//check if email exists in database
 		$this->db->where('email_ad', $email);
 		$query = $this->db->get('Users');
+		$user = $this->query_row_conversion($query);
 
-		if($query->num_rows == 1)
-			$user = $query->row();
-
-		//if user exists
-		if($user != false){
-			$data = array(
-				'newPassword' => $this->randomizePassword(),
-				'reset' => true
-			);
-
+		if($user){
+			$data = array('newPassword' => $this->randomizePassword());
 			$hashed_pass = $this->my_hash($data['newPassword']);
 			$this->db->where('email_ad', $email);
 			$this->db->update('Users', array('temp_password' => $hashed_pass));
@@ -66,9 +56,9 @@ class Email_model extends MY_Model{
 		}
 
 		else //user does not exist in the database
-			$data['reset'] = false;
+			return false;
 
-		return $data;
+		return true;
 	}
 
 	function randLetter($random) {

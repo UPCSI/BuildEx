@@ -40,11 +40,18 @@ class Graduates_model extends MY_Model{
 	);
 
 	public function is_unique($username, $email){
+		/* checks if username and email are unique */
 		$this->db->where('username', $username);
 		$query = $this->db->get("Users");
 		if($query->num_rows > 0)
 			return false;
 
+		$this->db->where('email_ad', $email);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		$email .= '*';
 		$this->db->where('email_ad', $email);
 		$query = $this->db->get("Users");
 		if($query->num_rows > 0)

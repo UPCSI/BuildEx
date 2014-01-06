@@ -13,8 +13,7 @@ class Home extends CI_Controller{
 		$this->load->view('_main_layout', $data);	
 
 		#Redirect to profile if logged in
-		$role = $this->session->userdata('role');
-		$this->loggedin() == False || redirect($role[0]);
+		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 	}
 
 	public function validate_user(){
@@ -63,7 +62,7 @@ class Home extends CI_Controller{
 
 	public function reset(){
 		$data['title'] = 'Reset Password';
-		$data['main_content'] = 'reset_body';
+		$data['main_content'] = 'forms/reset_password_form';
 		$this->load->view('_main_layout', $data);			
 	}
 
@@ -74,13 +73,12 @@ class Home extends CI_Controller{
 		if($this->form_validation->run() == TRUE) {
 			$this->load->model('email_model');
 			$email = $this->input->post('email');
-			$data = $this->email_model->edit_password($email);
+			$reset = $this->email_model->edit_password($email);
 
-			if($data['reset']) {
-				$data['title'] = 'Password Reset!';
-				$data['main_content'] = 'reset_successful';
-				$this->load->view('_main_layout', $data);			
-			}
+			if($reset)
+				echo "We just sent a temporary password to your email address.";
+			else
+				echo "We don't recognize that email. Please try again.";
 		}
 
 		else echo "Invalid input.";

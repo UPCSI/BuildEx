@@ -25,7 +25,6 @@ class Signup extends CI_Controller{
 	function add_faculty(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-		$email .= '*';
 
 		$this->load->library('form_validation');
 		$this->load->model('faculty_model');
@@ -33,6 +32,7 @@ class Signup extends CI_Controller{
 		$this->form_validation->set_rules($rules);
 
 		if($this->form_validation->run() && $this->faculty_model->is_unique($username, $email)) {
+			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
@@ -45,10 +45,9 @@ class Signup extends CI_Controller{
 			if($this->faculty_model->add_faculty($new_user)){
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
-				$data['title'] = 'Check your email!';
-				$data['main_content'] = 'check_email';
-				$this->load->view('_main_layout', $data);
+				echo "Check your email!";
 			}
+
 			else
 				echo "Cannot create account.";
 		}
@@ -60,7 +59,6 @@ class Signup extends CI_Controller{
 	function add_student(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-		$email .= '*';
 
 		$this->load->library('form_validation');
 		$this->load->model('graduates_model');
@@ -68,6 +66,7 @@ class Signup extends CI_Controller{
 		$this->form_validation->set_rules($rules);
 
 		if($this->form_validation->run() && $this->graduates_model->is_unique($username, $email)) {
+			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
@@ -80,10 +79,9 @@ class Signup extends CI_Controller{
 			if($this->graduates_model->add_graduate($new_user)) {
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
-				$data['title'] = 'Check your email!';
-				$data['main_content'] = 'check_email';
-				$this->load->view('_main_layout', $data);
+				echo "Check your email!";
 			}
+
 			else
 				echo "Cannot create account.";
 		}
@@ -97,16 +95,11 @@ class Signup extends CI_Controller{
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
 			$this->email_model->activate_user($email);
-			$data['title'] = 'Signup successful!';
-			$data['main_content'] = 'signup_successful';
+			echo "You have successfully confirmed your email!";
 		}
 
-		else {
-			$data['title'] = 'Invalid Email!';
-			$data['main_content'] = 'invalid_email';
-		}
-		
-		$this->load->view('_main_layout', $data);
+		else
+			echo "We can't validate your email. Please try again.";
 	}
 
 }
