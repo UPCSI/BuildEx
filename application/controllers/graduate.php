@@ -22,6 +22,5 @@ class Graduate extends MY_Controller{
 			$list = array();
 		
 		return $list;
-
 	}
 }

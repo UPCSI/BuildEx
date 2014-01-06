@@ -14,14 +14,26 @@ TABLE Admins:
 	uid: references Users.uid
 	aid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 
+TABLE LaboratoryHeads:
+	uid: references Users.uid
+	lid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+
 TABLE Faculty:
 	uid: references Users.uid
 	fid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	faculty_num: int(11) UNIQUE
 	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
 
 TABLE Graduates:
 	uid: references Users.uid
 	gid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	student_num: int(11) UNIQUE
+	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
+
+TABLE Laboratories:
+	labid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	name: varchar(32) UNIQUE
+	members_count: int(11)
 
 TABLE Experiments:
 	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
@@ -32,6 +44,7 @@ TABLE Experiments:
 	current_count: int(5) UNSIGNED
 	status: boolean #{COMPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+	path: varchar(64)
 
 TABLE Respondents:
 	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
@@ -68,4 +81,14 @@ TABLE conduct:
 TABLE answer:
 	rid: int(11) references Respondents.rid
 	eid: int(11) references Experiments.eid
+	since: Date(10)
+
+TABLE manages:
+	lid: int(11) references LaboratoryHeads.lid
+	labid: int(11) references Laboratories.labid
+	since: Date(10)
+
+TABLE member_of:
+	uid: references Users.uid
+	labid: references Laboratories.labid
 	since: Date(10)
