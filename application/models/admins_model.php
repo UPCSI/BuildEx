@@ -6,7 +6,10 @@ class Admins_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function add_admin($user_info = null,$admin_info = null){ //insert row in Admins
+	public function add_admin($user_info = null,$admin_info = null){
+		/*
+		* Inserts the admin to the database
+		*/
 		$user_info['password'] = $this->my_hash($user_info['password']);
 		$this->db->insert('Users',$user_info);
 		$uid = $this->db->insert_id();
@@ -15,13 +18,20 @@ class Admins_model extends MY_Model{
 	}
 
 	public function delete_admin($username){
+		/*
+		* Deletes an admin given its username.
+		* Returns true if the actual delete happened,
+		* false otherwise.
+		*/
 		$this->load->model('users_model');
 		$this->users_model->delete_user($username);
+
+		return $this->is_rows_affected();
 	}
 
 	public function get_admin_profile($username){ 
 		/*
-		*get the profile of particular admin
+		* Returns the profile of a particular admin.
 		*/
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
@@ -31,6 +41,9 @@ class Admins_model extends MY_Model{
 	}
 
 	public function get_all_admins(){
+		/*
+		* Returns an array containing all the information for each admin.
+		*/
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		$q = $this->db->get('Admins');

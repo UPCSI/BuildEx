@@ -3,14 +3,35 @@
 class Experiments_model extends MY_Model{
 
 	public function add_experiment($uid = 0,$info = null){
+		/*
+		* Inserts the experiment to the database
+		* Returns the eid of that specific experiment.
+		*/
 		$this->db->insert('Experiments',$info);
 		$conduct_info['uid'] = $uid;
 		$conduct_info['eid'] = $this->db->insert_id();
 		$conduct_info['since'] = date("Y-m-d H:i:s");
 		$this->db->insert('conduct',$conduct_info);
+		return $conduct_info['eid']
+	}
+
+	public function request_experiment($eid,$fid){
+		/*
+		* Inserts a request of an experiment with eid
+		* for a faculty with fid.
+		*/
+		$request_info['eid'] = $eid;
+		$request_info['fid'] = $fid;
+		return $this->db->insert('request',$request_info)
 	}
 
 	public function delete_experiment($uid = 0, $eid = 0){
+		/*
+		* Deletes an experiment given the uid of the user
+		* and the eid of the target experiment.
+		* Returns true if the actual delete happened
+		* false otherwise.
+		*/
 		$q = "DELETE FROM \"Experiments\" AS e
 			  USING \"Users\" AS u, conduct AS c
 			  WHERE u.uid = c.uid AND
@@ -19,11 +40,17 @@ class Experiments_model extends MY_Model{
 			  c.uid = ?";
 
 		$this->db->query($q,array($eid,$uid));
-
 		return $this->is_rows_affected();
 	}
 
 	public function increment_count($uid = 0, $eid = 0){
+		/*
+		* Given the uid of the researcher and eid of 
+		* the experiment, this method will update the 
+		* number of respondents who participated.
+		* Returns true if the actual update happened
+		* false otherwise.
+		*/
 		$q = "UPDATE \"Experiments\" AS e
 			  SET current_count = current_count+1
 			  From \"Users\" AS u, conduct AS c
@@ -37,15 +64,35 @@ class Experiments_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function decrement_count($eid = 0){
-		$this->db->where('eid', $eid);
-		$this->db->set('current_count','current_count-1',FALSE);
-		$this->db->update('Experiments');
+	public function decrement_count($uid = 0, $eid = 0){
+		/*
+		* Given the uid of the researcher and eid of 
+		* the experiment, this method will update the 
+		* number of respondents who participated.
+		*
+		* Can be use if a researcher deletes an obsolete
+		* submission.
+		*
+		* Returns true if the actual update happened
+		* false otherwise.
+		*/
+		$q = "UPDATE \"Experiments\" AS e
+			  SET current_count = current_count-1
+			  From \"Users\" AS u, conduct AS c
+			  WHERE u.uid = c.uid AND
+			  e.eid = c.eid AND
+			  e.eid = ? AND
+			  c.uid = ?";
+
+		$this->db->query($q,array($eid,$uid));
 
 		return $this->is_rows_affected();
 	}
 
 	public function get_experiment($uid = 0, $eid = 0){
+		/*
+		* 
+		*/
 		$this->db->select('*');
 		$this->db->join('conduct','conduct.eid = Experiments.eid');
 		$this->db->join('Users','Users.uid = conduct.uid');
