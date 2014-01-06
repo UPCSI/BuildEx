@@ -89,7 +89,8 @@ CREATE TABLE "Experiments" (
     status boolean DEFAULT false,
     request_status boolean DEFAULT false,
     description character varying(256),
-    is_published boolean DEFAULT false
+    is_published boolean DEFAULT false,
+    path character varying(64)
 );
 
 
@@ -116,7 +117,8 @@ ALTER TABLE public.faculty_fid_seq OWNER TO postgres;
 CREATE TABLE "Faculty" (
     uid integer NOT NULL,
     fid integer DEFAULT nextval('faculty_fid_seq'::regclass) NOT NULL,
-    account_status boolean DEFAULT false
+    account_status boolean DEFAULT false,
+    faculty_num integer
 );
 
 
@@ -142,11 +144,65 @@ ALTER TABLE public.graduates_gid_seq OWNER TO postgres;
 
 CREATE TABLE "Graduates" (
     uid integer NOT NULL,
-    gid integer DEFAULT nextval('graduates_gid_seq'::regclass) NOT NULL
+    gid integer DEFAULT nextval('graduates_gid_seq'::regclass) NOT NULL,
+    student_num integer
 );
 
 
 ALTER TABLE public."Graduates" OWNER TO postgres;
+
+--
+-- Name: laboratories_labid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE laboratories_labid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.laboratories_labid_seq OWNER TO postgres;
+
+--
+-- Name: Laboratories; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Laboratories" (
+    labid integer DEFAULT nextval('laboratories_labid_seq'::regclass) NOT NULL,
+    name character varying(32),
+    members_count integer
+);
+
+
+ALTER TABLE public."Laboratories" OWNER TO postgres;
+
+--
+-- Name: laboratoryheads_lid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE laboratoryheads_lid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.laboratoryheads_lid_seq OWNER TO postgres;
+
+--
+-- Name: LaboratoryHeads; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "LaboratoryHeads" (
+    uid integer NOT NULL,
+    lid integer DEFAULT nextval('laboratoryheads_lid_seq'::regclass) NOT NULL
+);
+
+
+ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
 
 --
 -- Name: respondents_rid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -265,6 +321,32 @@ CREATE TABLE conduct (
 ALTER TABLE public.conduct OWNER TO postgres;
 
 --
+-- Name: manage; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE manage (
+    lid integer NOT NULL,
+    labid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.manage OWNER TO postgres;
+
+--
+-- Name: member_of; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE member_of (
+    uid integer NOT NULL,
+    labid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.member_of OWNER TO postgres;
+
+--
 -- Name: request; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -297,6 +379,18 @@ ALTER TABLE public.request OWNER TO postgres;
 
 --
 -- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Laboratories; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: LaboratoryHeads; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
@@ -356,7 +450,33 @@ SELECT pg_catalog.setval('faculty_fid_seq', 1, true);
 -- Name: graduates_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('graduates_gid_seq', 1, true);
+SELECT pg_catalog.setval('graduates_gid_seq', 2, true);
+
+
+--
+-- Name: laboratories_labid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('laboratories_labid_seq', 1, false);
+
+
+--
+-- Name: laboratoryheads_lid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('laboratoryheads_lid_seq', 1, false);
+
+
+--
+-- Data for Name: manage; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: member_of; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
 
 
 --
@@ -376,7 +496,7 @@ SELECT pg_catalog.setval('respondents_rid_seq', 1, true);
 -- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('users_uid_seq', 1, true);
+SELECT pg_catalog.setval('users_uid_seq', 2, true);
 
 
 --
@@ -385,6 +505,30 @@ SELECT pg_catalog.setval('users_uid_seq', 1, true);
 
 ALTER TABLE ONLY "Experiments"
     ADD CONSTRAINT "Experiments_pkey" PRIMARY KEY (eid);
+
+
+--
+-- Name: Laboratories_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Laboratories"
+    ADD CONSTRAINT "Laboratories_name_key" UNIQUE (name);
+
+
+--
+-- Name: Laboratories_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Laboratories"
+    ADD CONSTRAINT "Laboratories_pkey" PRIMARY KEY (labid);
+
+
+--
+-- Name: LaboratoryHeads_lid_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "LaboratoryHeads"
+    ADD CONSTRAINT "LaboratoryHeads_lid_key" UNIQUE (lid);
 
 
 --
@@ -452,6 +596,14 @@ ALTER TABLE ONLY conduct
 
 
 --
+-- Name: faculty_num_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Faculty"
+    ADD CONSTRAINT faculty_num_ukey UNIQUE (faculty_num);
+
+
+--
 -- Name: fid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -468,11 +620,27 @@ ALTER TABLE ONLY "Graduates"
 
 
 --
+-- Name: lid_labid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY manage
+    ADD CONSTRAINT lid_labid_pkey PRIMARY KEY (lid, labid);
+
+
+--
 -- Name: request_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY request
     ADD CONSTRAINT request_primary PRIMARY KEY (fid, eid);
+
+
+--
+-- Name: student_num_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Graduates"
+    ADD CONSTRAINT student_num_ukey UNIQUE (student_num);
 
 
 --
@@ -497,6 +665,22 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT uid_gid_pkey PRIMARY KEY (uid, gid);
+
+
+--
+-- Name: uid_labid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY member_of
+    ADD CONSTRAINT uid_labid_pkey PRIMARY KEY (uid, labid);
+
+
+--
+-- Name: uid_lid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "LaboratoryHeads"
+    ADD CONSTRAINT uid_lid_pkey PRIMARY KEY (uid, lid);
 
 
 --
@@ -569,6 +753,46 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT graduates_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: laboratoryheads_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "LaboratoryHeads"
+    ADD CONSTRAINT laboratoryheads_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: manage_ref_laboratories; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manage
+    ADD CONSTRAINT manage_ref_laboratories FOREIGN KEY (labid) REFERENCES "Laboratories"(labid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: manage_ref_laboratoryheads; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY manage
+    ADD CONSTRAINT manage_ref_laboratoryheads FOREIGN KEY (lid) REFERENCES "LaboratoryHeads"(lid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: member_of_ref_laboratories; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY member_of
+    ADD CONSTRAINT member_of_ref_laboratories FOREIGN KEY (labid) REFERENCES "Laboratories"(labid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: member_of_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY member_of
+    ADD CONSTRAINT member_of_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

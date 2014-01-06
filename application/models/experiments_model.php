@@ -91,7 +91,7 @@ class Experiments_model extends MY_Model{
 
 	public function get_experiment($uid = 0, $eid = 0){
 		/*
-		* 
+		* Returns all the fields o
 		*/
 		$this->db->select('*');
 		$this->db->join('conduct','conduct.eid = Experiments.eid');

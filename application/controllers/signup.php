@@ -84,7 +84,6 @@ class Signup extends CI_Controller{
 				$data['main_content'] = 'check_email';
 				$this->load->view('_main_layout', $data);
 			}
-			
 			else
 				echo "Cannot create account.";
 		}
