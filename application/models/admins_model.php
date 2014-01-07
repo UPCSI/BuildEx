@@ -29,13 +29,19 @@ class Admins_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_admin_profile($username){ 
+	public function get_admin_profile($aid = 0,$username = null){ 
 		/*
 		* Returns the profile of a particular admin.
 		*/
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
-		$this->db->where('Users.username',$username);
+		if($aid == 0){
+			$this->db->where('Users.username',$username);
+		}
+		else{
+			$this->db->where('Admins.aid',$aid);
+		}
+		
 		$q = $this->db->get('Admins');
 		return $this->query_row_conversion($q);
 	}

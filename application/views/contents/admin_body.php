@@ -5,7 +5,7 @@
 <h3>List of Admins</h3>
 <?php 
 	foreach ($admins as $admin){
-		echo $admin->username;
+		echo anchor('admin/edit_admin/' . $admin->aid, $admin->username);
 		echo '</br>';
 	}
 ?>
@@ -13,7 +13,7 @@
 <h3>List of Faculty</h3>
 <?php 
 	foreach ($faculty as $faculty){
-		echo $faculty->username;
+		echo anchor('faculty/edit_faculty/' . $faculty->fid, $faculty->username);
 		echo '</br>';
 	}
 ?>
@@ -21,7 +21,7 @@
 <h3>List of Graduates</h3>
 <?php 
 	foreach ($graduates as $graduate){
-		echo $graduate->username;
+		echo anchor('graduate/edit_graduate/' . $graduate->gid, $graduate->username);
 		echo '</br>';
 	}
 ?>

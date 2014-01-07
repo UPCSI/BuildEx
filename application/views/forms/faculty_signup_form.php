@@ -1,6 +1,6 @@
 <h2>BuildEx: Create Account (Faculty)</h2>
 
- <fieldset>
+<fieldset>
 	<legend>Sign Up</legend>
 	<?php echo validation_errors();?>
 	<?php echo form_open("signup/add_faculty") . "<br/>";?>

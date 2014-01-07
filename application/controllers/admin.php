@@ -27,6 +27,14 @@ class Admin extends MY_Controller{
 		}
 	}
 
+	public function edit_admin($aid = NULL){
+		$this->load->model('admins_model');
+		$data['title'] = 'Profile';
+		$data['profile'] = $this->admins_model->get_admin_profile($aid);
+		$data['main_content'] = 'contents/profile';
+		$this->load->view('_main_layout', $data);
+	}
+
 	public function get_faculty_list(){
 		$this->load->model('faculty_model');
 		$list = $this->faculty_model->get_all_faculty();

@@ -74,10 +74,15 @@ class Faculty_model extends MY_Model{
 		return $this->users_model->delete_user($username);
 	}
 
-	public function get_faculty_profile($username){
+	public function get_faculty_profile($fid = 0, $username = null){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Faculty.uid');
-		$this->db->where('Users.username',$username);
+		if($fid == 0){
+			$this->db->where('Users.username',$username);
+		}
+		else{
+			$this->db->where('Faculty.fid',$fid);
+		}
 		$q = $this->db->get('Faculty');
 		return $this->query_row_conversion($q);
 	}

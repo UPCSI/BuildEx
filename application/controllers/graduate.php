@@ -23,4 +23,12 @@ class Graduate extends MY_Controller{
 		
 		return $list;
 	}
+
+	public function edit_graduate($gid = NULL){
+		$this->load->model('graduates_model');
+		$data['title'] = 'Profile';
+		$data['profile'] = $this->graduates_model->get_graduate_profile($gid);
+		$data['main_content'] = 'contents/profile';
+		$this->load->view('_main_layout', $data);
+	}
 }

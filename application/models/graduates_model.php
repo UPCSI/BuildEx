@@ -75,10 +75,15 @@ class Graduates_model extends MY_Model{
 		return $this->users_model->delete_user($username);
 	}
 
-	public function get_graduate_profile($username){
+	public function get_graduate_profile($gid = 0, $username = null){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Graduates.uid');
-		$this->db->where('Users.username',$username);
+		if($gid == 0){
+			$this->db->where('Users.username',$username);
+		}
+		else{
+			$this->db->where('Graduates.gid',$gid);
+		}
 		$q = $this->db->get('Graduates');
 		return $this->query_row_conversion($q);
 	}

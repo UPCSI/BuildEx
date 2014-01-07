@@ -22,4 +22,12 @@ class Faculty extends MY_Controller{
 		
 		return $list;
 	}
+
+	public function edit_faculty($fid = NULL){
+		$this->load->model('faculty_model');
+		$data['title'] = 'Profile';
+		$data['profile'] = $this->faculty_model->get_faculty_profile($fid);
+		$data['main_content'] = 'contents/profile';
+		$this->load->view('_main_layout', $data);
+	}
 }
