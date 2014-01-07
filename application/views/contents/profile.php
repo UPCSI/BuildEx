@@ -19,4 +19,17 @@
 	<input type="text" id="signUpUsername" required name="username" value="<?php echo $profile->username; ?>" placeholder="Username"><br/><br/>
 
 </fieldset>
-<?php echo '<pre>'; print_r($profile); echo '</pre>'; ?>
+<?php //echo '<pre>'; print_r($profile); echo '</pre>'; ?>
+<?php
+	if($experiments != -1){
+		echo '<h2>My Experiments</h2>';
+		if($experiments != NULL){
+			foreach ($experiments as $experiment){
+				echo anchor('experiment/view_experiment/' . $profile->uid . '_' . $experiment->eid, $experiment->title);
+				echo '</br>';
+			}
+		}
+		else
+			echo 'None at the moment';
+	}
+?>

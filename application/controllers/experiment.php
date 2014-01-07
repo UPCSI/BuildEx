@@ -55,4 +55,14 @@ class Experiment extends MY_Controller{
 		$role = $this->session->userdata('role')[0];
 		redirect($role);
 	}
+
+	public function view_experiment($id = NULL){
+		$uid = explode('_', $id)[0];
+		$eid = explode('_', $id)[1];
+
+		$data['experiment'] = $this->experiments_model->get_experiment($uid, $eid);
+		$data['title'] = 'Experiment';
+		$data['main_content'] = 'experiment/view_experiment';
+		$this->load->view('_main_layout', $data);
+	}
 }

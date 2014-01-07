@@ -32,6 +32,7 @@ class Admin extends MY_Controller{
 		$data['title'] = 'Profile';
 		$data['profile'] = $this->admins_model->get_admin_profile($aid);
 		$data['main_content'] = 'contents/profile';
+		$data['experiments'] = -1;
 		$this->load->view('_main_layout', $data);
 	}
 
