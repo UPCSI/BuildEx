@@ -309,17 +309,56 @@ CREATE TABLE answer (
 ALTER TABLE public.answer OWNER TO postgres;
 
 --
--- Name: conduct; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: faculty_conduct; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE conduct (
-    uid integer NOT NULL,
+CREATE TABLE faculty_conduct (
+    fid integer NOT NULL,
     eid integer NOT NULL,
     since date DEFAULT ('now'::text)::date
 );
 
 
-ALTER TABLE public.conduct OWNER TO postgres;
+ALTER TABLE public.faculty_conduct OWNER TO postgres;
+
+--
+-- Name: faculty_member_of; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE faculty_member_of (
+    fid integer NOT NULL,
+    labid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.faculty_member_of OWNER TO postgres;
+
+--
+-- Name: graduates_conduct; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE graduates_conduct (
+    gid integer NOT NULL,
+    eid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.graduates_conduct OWNER TO postgres;
+
+--
+-- Name: graduates_member_of; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE graduates_member_of (
+    gid integer NOT NULL,
+    labid integer NOT NULL,
+    since date DEFAULT ('now'::text)::date
+);
+
+
+ALTER TABLE public.graduates_member_of OWNER TO postgres;
 
 --
 -- Name: manage; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -333,19 +372,6 @@ CREATE TABLE manage (
 
 
 ALTER TABLE public.manage OWNER TO postgres;
-
---
--- Name: member_of; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE member_of (
-    uid integer NOT NULL,
-    labid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
-);
-
-
-ALTER TABLE public.member_of OWNER TO postgres;
 
 --
 -- Name: request; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -449,11 +475,11 @@ ALTER TABLE ONLY answer
 
 
 --
--- Name: conduct_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: faculty_conduct_fid_eid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY conduct
-    ADD CONSTRAINT conduct_primary PRIMARY KEY (uid, eid);
+ALTER TABLE ONLY faculty_conduct
+    ADD CONSTRAINT faculty_conduct_fid_eid_pkey PRIMARY KEY (fid, eid);
 
 
 --
@@ -465,6 +491,14 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
+-- Name: fid_labid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY faculty_member_of
+    ADD CONSTRAINT fid_labid_pkey PRIMARY KEY (fid, labid);
+
+
+--
 -- Name: fid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -473,11 +507,27 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
+-- Name: gid_labid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY graduates_member_of
+    ADD CONSTRAINT gid_labid_pkey PRIMARY KEY (gid, labid);
+
+
+--
 -- Name: gid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT gid_ukey UNIQUE (gid);
+
+
+--
+-- Name: graduates_conduct_gid_eid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY graduates_conduct
+    ADD CONSTRAINT graduates_conduct_gid_eid_pkey PRIMARY KEY (gid, eid);
 
 
 --
@@ -526,14 +576,6 @@ ALTER TABLE ONLY "Faculty"
 
 ALTER TABLE ONLY "Graduates"
     ADD CONSTRAINT uid_gid_pkey PRIMARY KEY (uid, gid);
-
-
---
--- Name: uid_labid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY member_of
-    ADD CONSTRAINT uid_labid_pkey PRIMARY KEY (uid, labid);
 
 
 --
@@ -588,16 +630,32 @@ ALTER TABLE ONLY answer
 -- Name: conduct_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY conduct
+ALTER TABLE ONLY faculty_conduct
     ADD CONSTRAINT conduct_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
--- Name: conduct_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: faculty_conduct_fid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY conduct
-    ADD CONSTRAINT conduct_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+ALTER TABLE ONLY faculty_conduct
+    ADD CONSTRAINT faculty_conduct_fid_fkey FOREIGN KEY (fid) REFERENCES "Faculty"(fid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: faculty_member_of_ref_faculty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY faculty_member_of
+    ADD CONSTRAINT faculty_member_of_ref_faculty FOREIGN KEY (fid) REFERENCES "Faculty"(fid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: faculty_member_of_ref_laboratories; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY faculty_member_of
+    ADD CONSTRAINT faculty_member_of_ref_laboratories FOREIGN KEY (labid) REFERENCES "Laboratories"(labid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -606,6 +664,38 @@ ALTER TABLE ONLY conduct
 
 ALTER TABLE ONLY "Faculty"
     ADD CONSTRAINT faculty_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: graduates_conduct_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY graduates_conduct
+    ADD CONSTRAINT graduates_conduct_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: graduates_conduct_ref_graduates; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY graduates_conduct
+    ADD CONSTRAINT graduates_conduct_ref_graduates FOREIGN KEY (gid) REFERENCES "Graduates"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: graduates_member_of_ref_graduates; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY graduates_member_of
+    ADD CONSTRAINT graduates_member_of_ref_graduates FOREIGN KEY (gid) REFERENCES "Graduates"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: graduates_member_of_ref_laboratories; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY graduates_member_of
+    ADD CONSTRAINT graduates_member_of_ref_laboratories FOREIGN KEY (labid) REFERENCES "Laboratories"(labid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -638,22 +728,6 @@ ALTER TABLE ONLY manage
 
 ALTER TABLE ONLY manage
     ADD CONSTRAINT manage_ref_laboratoryheads FOREIGN KEY (lid) REFERENCES "LaboratoryHeads"(lid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: member_of_ref_laboratories; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY member_of
-    ADD CONSTRAINT member_of_ref_laboratories FOREIGN KEY (labid) REFERENCES "Laboratories"(labid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: member_of_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY member_of
-    ADD CONSTRAINT member_of_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

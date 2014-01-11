@@ -73,10 +73,16 @@ TABLE advise:
 	eid: int(11) references Experiments.eid
 	since: Date(10)
 
-TABLE conduct:
-	uid: int(11) references Users.uid
+TABLE faculty_conduct:
+	fid: int(11) references Faculty.fid
 	eid: int(11) references Experiments.eid
 	since: Date(10)
+
+TABLE graduates_conduct:
+	gid: int(11) references Graduates.gid
+	eid: int(11) references Experiments.eid
+	since: Date(10)
+
 
 TABLE answer:
 	rid: int(11) references Respondents.rid
@@ -88,7 +94,12 @@ TABLE manages:
 	labid: int(11) references Laboratories.labid
 	since: Date(10)
 
-TABLE member_of:
-	uid: references Users.uid
+TABLE faculty_member_of:
+	fid: references Faculty.fid
+	labid: references Laboratories.labid
+	since: Date(10)
+
+TABLE graduates_member_of:
+	gid: references Graduates.gid
 	labid: references Laboratories.labid
 	since: Date(10)
