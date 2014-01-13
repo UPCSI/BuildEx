@@ -18,8 +18,9 @@ class Experiment extends MY_Controller{
 		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
-		$uid = $this->session->userdata('id');
-		$this->experiments_model->add_experiment($uid,$info);
+		$info['privacy'] = $this->input->post('privacy');
+		$fid = $this->session->userdata('fid');
+		$this->experiments_model->add_faculty_experiment($fid,$info);
 
 		$role = $this->session->userdata('role')[0];
 		redirect($role);

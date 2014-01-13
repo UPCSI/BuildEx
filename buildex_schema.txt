@@ -30,22 +30,6 @@ TABLE Graduates:
 	student_num: int(11) UNIQUE
 	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
 
-TABLE Laboratories:
-	labid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	name: varchar(32) UNIQUE
-	members_count: int(11)
-
-TABLE Experiments:
-	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	title: varchar(64)
-	category: varchar(32)
-	description: varchar(256)
-	target_count: int(5) UNSIGNED
-	current_count: int(5) UNSIGNED
-	status: boolean #{COMPLETE[true],ONGOING[false]}
-	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
-	path: varchar(64)
-
 TABLE Respondents:
 	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
 	#OPTIONAL FIELDS:
@@ -62,6 +46,23 @@ TABLE Respondents:
 	sex: boolean #{MALE[False],FEMALE[True]}
 	gender: varchar(32)
 	civil_status: int[1] UNSIGNED #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
+
+TABLE Laboratories:
+	labid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	name: varchar(32) UNIQUE
+	members_count: int(11)
+
+TABLE Experiments:
+	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	title: varchar(64)
+	category: varchar(32)
+	description: varchar(256)
+	target_count: int(5) UNSIGNED
+	current_count: int(5) UNSIGNED
+	status: boolean #{COMPLETE[true],ONGOING[false]}
+	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+	privacy: int[1] UNSIGNED #{PRIVATE[0],PUBLIC[1],WITHIN_LAB[2]}
+	path: varchar(64)
 
 TABLE request:
 	fid: int(11) references Faculty.fid
@@ -82,7 +83,6 @@ TABLE graduates_conduct:
 	gid: int(11) references Graduates.gid
 	eid: int(11) references Experiments.eid
 	since: Date(10)
-
 
 TABLE answer:
 	rid: int(11) references Respondents.rid

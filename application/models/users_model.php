@@ -1,6 +1,11 @@
 <?php
 
 class Users_model extends MY_Model{
+
+	public function __construct(){
+		parent::__construct();
+	}
+
 	public $rules = array(
 		'username' => array(
 			'field' => 'username', 
@@ -13,14 +18,12 @@ class Users_model extends MY_Model{
 			'rules' => 'trim|required|min_length[6]|max_length[16]'
 		)
 	);
-
-	public function __construct(){
-		parent::__construct();
-	}
 	
 	public function is_valid_user($username = null, $password = null){
-		/*returns true if there's an existing user with corresponding username and password*/
-
+		/*
+		* Returns true if there's an existing user with corresponding 
+		* username and password
+		*/
 		$this->db->select('username','password');
 		$this->db->where('username',$username);
 		$this->db->where('password',$this->my_hash($password));
@@ -42,17 +45,12 @@ class Users_model extends MY_Model{
 		return false;
 	}
 
-	public function delete_user($username){
-		$this->db->where('username',$username);
-		return $this->db->delete('Users');
-	}
-
 	public function set_session_data($username){
 		$this->db->where('username', $username);
 		$query = $this->db->get('Users');
 		$user = $query->row();
 		$data = array(
-			'id' => $user->uid,
+			'uid' => $user->uid,
 			'username' => $user->username,
 			'fname' => $user->first_name,
 			'mname' => $user->middle_name,
@@ -85,12 +83,72 @@ class Users_model extends MY_Model{
 		return $role;
 	}
 
-	function is_valid_email($username){
+	public function is_unique($username, $email){
+		/* 
+		* Checks if username and email are unique
+		*/
 		$this->db->where('username', $username);
-		$query = $this->db->get('Users');
-		$user = $query->row();
-		if(strcmp(substr($user->email_ad, -1), '*') == 0)
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		$this->db->where('email_ad', $email);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		$email .= '*';
+		$this->db->where('email_ad', $email);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
 			return false;
 		return true;
 	}
+
+	public function is_valid_email($username){
+		$this->db->where('username', $username);
+		$query = $this->db->get('Users');
+		$user = $query->row();
+		if(strcmp(substr($user->email_ad, -1),'*') == 0)
+			return false;
+		return true;
+	}
+
+	public function add_user($user_info){
+		$user_info['password'] = $this->my_hash($user_info['password']);
+		$this->db->insert('Users',$user_info);
+		return $this->db->insert_id();
+	}
+
+	public function update_user($uid, $user_info){
+		$this->db->where('uid', $uid);
+		$this->db->update('Users', $user_info);
+		return $this->is_rows_affected();
+	}
+
+	public function delete_user($uid){
+		$this->db->where('uid',$uid);
+		$this->db->delete('Users');
+		return $this->is_rows_affected();
+	}
+
+	public function get_user_profile($uid = 0, $username = null){
+		/*
+		* Returns the profile of a particular user given its uid or username
+		*/
+		if($uid == 0 && is_null($username)){
+			return false;
+		}
+		$this->db->select('username,first_name,middle_name,last_name,email_ad');
+		if($uid > 0){
+			$this->db->where('Users.uid',$uid);
+		}
+		else{
+			$this->db->where('Users.username',$username);
+		}
+		$q = $this->db->get('Users');
+		return $this->query_row_conversion($q);
+	}
+
+
 }

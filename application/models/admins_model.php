@@ -6,42 +6,55 @@ class Admins_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function add_admin($user_info = null,$admin_info = null){
+	public function add_admin($uid = 0,$admin_info = null){
 		/*
-		* Inserts the admin to the database
+		* Inserts admin to the database
 		*/
-		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		$uid = $this->db->insert_id();
 		$admin_info['uid'] = $uid;
-		return $this->db->insert('Admins',$admin_info);
+		$this->db->insert('Admins',$admin_info);
+		$aid = $this->db->insert_id();
+		return $aid;
 	}
 
-	public function delete_admin($username){
+	public function delete_admin($aid = 0,$username = null){
 		/*
-		* Deletes an admin given its username.
+		* Deletes an admin given its aid or username.
 		* Returns true if the actual delete happened,
 		* false otherwise.
 		*/
-		$this->load->model('users_model');
-		$this->users_model->delete_user($username);
+		if($aid == 0 && is_null($username)){
+			return false;
+		}
 
+		if($aid > 0){
+			$this->db->where('aid',$aid);
+			$this->db->delete('Admins');
+		}
+		else{
+			$q = "DELETE FROM \"Admins\" AS a
+				  USING \"Users\" AS u
+				  WHERE a.uid = u.uid AND
+				  u.username = ?";
+			$this->db->query($q,array($username));
+		}
 		return $this->is_rows_affected();
 	}
 
 	public function get_admin_profile($aid = 0,$username = null){ 
 		/*
-		* Returns the profile of a particular admin.
+		* Returns the profile of a particular admin given its aid or username
 		*/
-		$this->db->select('*');
-		$this->db->join('Users','Users.uid = Admins.uid');
-		if($aid == 0){
-			$this->db->where('Users.username',$username);
+		if($aid == 0 && is_null($username)){
+			return false;
 		}
-		else{
+		$this->db->select('Admins.*');
+		if($aid > 0){
 			$this->db->where('Admins.aid',$aid);
 		}
-		
+		else{
+			$this->db->join('Users','Users.uid = Admins.uid');
+			$this->db->where('Users.username',$username);
+		}
 		$q = $this->db->get('Admins');
 		return $this->query_row_conversion($q);
 	}
@@ -55,5 +68,4 @@ class Admins_model extends MY_Model{
 		$q = $this->db->get('Admins');
 		return $this->query_conversion($q);
 	}
-
 }

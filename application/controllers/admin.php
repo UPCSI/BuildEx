@@ -1,6 +1,11 @@
 <?php
 
 class Admin extends MY_Controller{
+
+	public function __construct(){
+		parent::__construct();
+		$this->load->model('admins_model');
+	}
 	
 	public function index() {
 		if(in_array('admin',$this->session->userdata('role'))){
@@ -12,12 +17,12 @@ class Admin extends MY_Controller{
 			$data['respondents'] = $this->get_respondent_list();
 			$this->load->view('_main_layout', $data);
 		}
-		else
+		else{
 			redirect($this->session->userdata('role')[0]);
+		}
 	}
 
 	public function get_admin_list(){
-		$this->load->model('admins_model');
 		$list = $this->admins_model->get_all_admins();
 		if($list != NULL){
 			return $list;
@@ -27,10 +32,10 @@ class Admin extends MY_Controller{
 		}
 	}
 
-	public function edit_admin($aid = NULL){
-		$this->load->model('admins_model');
+	public function edit_admin($uid = 0, $aid = 0){
 		$data['title'] = 'Profile';
-		$data['profile'] = $this->admins_model->get_admin_profile($aid);
+		$data['user_profile'] = $this->users_model->get_user_profile($uid);
+		$data['admin_profile'] = $this->admins_model->get_admin_profile($aid);
 		$data['main_content'] = 'contents/profile';
 		$data['experiments'] = -1;
 		$this->load->view('_main_layout', $data);

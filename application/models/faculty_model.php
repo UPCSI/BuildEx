@@ -39,54 +39,86 @@ class Faculty_model extends MY_Model{
 		)
 	);
 
-	public function is_unique($username, $email){
-		/* checks if username and email are unique */
-		$this->db->where('username', $username);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		$this->db->where('email_ad', $email);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		$email .= '*';
-		$this->db->where('email_ad', $email);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		return true;
-	}
-
-	public function add_faculty($user_info = null, $faculty_info = null){
-		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		$uid = $this->db->insert_id();
+	public function add_faculty($uid = 0, $faculty_info = null){
+		/*
+		* Inserts faculty to the database
+		*/
 		$faculty_info['uid'] = $uid;
 		$this->db->insert('Faculty',$faculty_info);
-		return true;
+		return $this->db->insert_id();
 	}
 
-	public function delete_faculty($username){
-		$this->load->model('users_model');
-		return $this->users_model->delete_user($username);
+	public function delete_faculty($fid = 0,$username = null){
+		/*
+		* Deletes a faculty member given its fid or username.
+		* Returns true if the actual delete happened,
+		* false otherwise.
+		*/
+		if($fid == 0 && is_null($username)){
+			return false;
+		}
+
+		if($fid > 0){
+			$this->db->where('fid',$fid);
+			$this->db->delete('Faculty');
+		}
+		else{
+			$q = "DELETE FROM \"Faculty\" AS f
+				  USING \"Users\" AS u
+				  WHERE f.uid = u.uid AND
+				  u.username = ?";
+			$this->db->query($q,array($username));
+		}
+		return $this->is_rows_affected();
+	}
+
+	public function update_faculty($fid = 0, $faculty_info){
+		$this->db->where('fid', $fid);
+		$this->db->update('Faculty', $faculty_info);
+		return $this->is_rows_affected();
 	}
 
 	public function get_faculty_profile($fid = 0, $username = null){
-		$this->db->select('*');
-		$this->db->join('Users','Users.uid = Faculty.uid');
-		if($fid == 0){
-			$this->db->where('Users.username',$username);
+		/*
+		* Returns the profile of a particular faculty member 
+		* given its aid or username.
+		*/
+		if($fid == 0 && is_null($username)){
+			return false;
+		}
+		$this->db->select('Faculty.*');
+		if($fid > 0){
+			$this->db->where('Faculty.fid',$fid);
 		}
 		else{
-			$this->db->where('Faculty.fid',$fid);
+			$this->db->join('Users','Users.uid = Faculty.uid');
+			$this->db->where('Users.username',$username);
 		}
 		$q = $this->db->get('Faculty');
 		return $this->query_row_conversion($q);
 	}
 
+	/* Laboratory Heads functionalities*/
+	public function get_all_lab_faculty($lid = 0,$labid = 0){
+		/*
+		* Given the lab head's lid and the labid of the laboratory
+		* it manages, this function will return all the faculty in
+		* that lab.
+		*/
+		$this->db->select('*');
+		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
+		$this->db->join('manages','manages.labid = Laboratories.labid');
+		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
+		$this->db->where('LaboratoryHeads.lid',$lid);
+		$this->db->where('Laboratories.labid',$labid);
+		$q = $this->db->get('Faculty');
+
+		return $this->query_conversion($q);
+	}
+
+	/*Admin functionalities*/
 	public function get_all_faculty(){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Faculty.uid');

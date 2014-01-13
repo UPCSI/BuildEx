@@ -14,6 +14,9 @@
 	<label>Last Name</label><br/>
 	<input type="text" id="signUpLName" required name="lname" placeholder="Last Name"><br/><br/>
 
+	<label>Faculty No.</label><br/>
+	<input type="text" id="signUpFacultyNum" required name="faculty_num" placeholder="201131208"><br/><br/>
+
 	<label>Email</label><br/>
 	<input type="text" id="signUpEmail" required name="email" placeholder="Email"><br/><br/>
 

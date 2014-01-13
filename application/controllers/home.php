@@ -4,7 +4,11 @@ class Home extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('users_model');
 		$this->load->model('admins_model');
+		$this->load->model('faculty_model');
+		$this->load->model('graduates_model');
+		$this->load->model('laboratoryheads_model');
 	}
 
 	public function index(){
@@ -18,7 +22,6 @@ class Home extends CI_Controller{
 
 	public function validate_user(){
 		$this->load->library('form_validation');
-		$this->load->model('users_model');
 		$rules = $this->users_model->rules;
 		$this->form_validation->set_rules($rules);
 
@@ -26,29 +29,29 @@ class Home extends CI_Controller{
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 
-			if ($this->users_model->is_valid_user($username, $password)){
+			if($this->users_model->is_valid_user($username, $password)){
 				$this->users_model->set_session_data($username);
 				$role = $this->session->userdata('role');
 				if (in_array('admin',$role)){
 					redirect('admin');
 				}
-				elseif (in_array('faculty',$role)){
+				else if (in_array('faculty',$role)){
 					redirect('faculty');
 				}
-				elseif (in_array('graduate',$role)){
+				else if (in_array('graduate',$role)){
 					redirect('graduate');
 				}
 				else{ 
 					redirect('');
 				}
 			}
-
-			else
+			else{
 				echo "Cannot sign in.";
+			}
 		}
-
-		else
+		else{
 			echo "Invalid input.";
+		}
 	}
 
 	public function loggedin(){
@@ -80,7 +83,6 @@ class Home extends CI_Controller{
 			else
 				echo "We don't recognize that email. Please try again.";
 		}
-
 		else echo "Invalid input.";
 	}
 }
