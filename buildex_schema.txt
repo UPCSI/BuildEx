@@ -1,105 +1,103 @@
-#Proposed Schema for CS192 Project: Experiment Builder
+#Schema for CS192 Project: Experiment Builder
 
 TABLE Users:
-	uid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	username: varchar(16) UNIQUE
-	password: varchar(128)
-	first_name: varchar(32)
-	middle_name: varchar(32)
-	last_name: varchar(32)
-	email_ad: varchar(32)
-	temp_password: varchar(128)
+	uid: integer PRIMARY AUTOINCREMENT
+	username: character varying(32) UNIQUE
+	password: character varying(128)
+	first_name: character varying(32)
+	middle_name: character varying(32)
+	last_name: character varying(32)
+	email_ad: character varying(32)
+	temp_password: character varying(128)
 
 TABLE Admins:
 	uid: references Users.uid
-	aid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	aid: integer PRIMARY AUTOINCREMENT
 
 TABLE LaboratoryHeads:
 	uid: references Users.uid
-	lid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
+	lid: integer PRIMARY AUTOINCREMENT
 
 TABLE Faculty:
 	uid: references Users.uid
-	fid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	faculty_num: int(11) UNIQUE
+	fid: integer PRIMARY AUTOINCREMENT
+	faculty_num: integer UNIQUE
 	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
 
 TABLE Graduates:
 	uid: references Users.uid
-	gid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	student_num: int(11) UNIQUE
+	gid: integer PRIMARY AUTOINCREMENT
+	student_num: integer UNIQUE
 	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
 
-TABLE Respondents:
-	rid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	#OPTIONAL FIELDS:
-	first_name: varchar(32)
-	middle_name: varchar(32)
-	last_name: varchar(32)
-	email_ad: varchar(32)
-	age: int(2) UNSIGNED
-	street_addr: varchar(64)
-	barangay_addr: varchar(64)
-	city_addr: varchar(64)
-	nationality: varchar(32)
-	birthdate: Date(10)
-	sex: boolean #{MALE[False],FEMALE[True]}
-	gender: varchar(32)
-	civil_status: int[1] UNSIGNED #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
-
 TABLE Laboratories:
-	labid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	name: varchar(32) UNIQUE
-	members_count: int(11)
+	labid: integer PRIMARY AUTOINCREMENT
+	name: character varying(32) UNIQUE
+	members_count: integer
 
 TABLE Experiments:
-	eid: int(11) PRIMARY UNSIGNED AUTOINCREMENT
-	title: varchar(64)
-	category: varchar(32)
-	description: varchar(256)
-	target_count: int(5) UNSIGNED
-	current_count: int(5) UNSIGNED
+	eid: integer PRIMARY AUTOINCREMENT
+	title: character varying(64)
+	category: character varying(32)
+	description: character varying(256)
+	target_count: integer
+	current_count: integer
 	status: boolean #{COMPLETE[true],ONGOING[false]}
-	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
-	privacy: int[1] UNSIGNED #{PRIVATE[0],PUBLIC[1],WITHIN_LAB[2]}
-	path: varchar(64)
+	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]} 
+
+TABLE Respondents:
+	rid: int(11) PRIMARY AUTOINCREMENT
+	#OPTIONAL FIELDS:
+	first_name: character varying(32)
+	middle_name: character varying(32)
+	last_name: character varying(32)
+	email_ad: character varying(32)
+	age: integer
+	street_addr: character varying(64)
+	barangay_addr: character varying(64)
+	city_addr: character varying(64)
+	nationality: character varying(32)
+	birthdate: date
+	sex: boolean #{MALE[false],FEMALE[true]}
+	gender: character varying(32)
+	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
 TABLE request:
-	fid: int(11) references Faculty.fid
-	eid: int(11) references Experiments.eid
-	since: Date(10)
+	fid: integer references Faculty.fid
+	eid: integer references Experiments.eid
+	since: date
 
 TABLE advise:
-	fid: int(11) references Faculty.fid
-	eid: int(11) references Experiments.eid
-	since: Date(10)
+	fid: integer references Faculty.fid
+	eid: integer references Experiments.eid
+	since: date
 
 TABLE faculty_conduct:
-	fid: int(11) references Faculty.fid
-	eid: int(11) references Experiments.eid
-	since: Date(10)
+	fid: integer references Faculty.fid
+	eid: integer references Experiments.eid
+	since: date
 
 TABLE graduates_conduct:
-	gid: int(11) references Graduates.gid
-	eid: int(11) references Experiments.eid
-	since: Date(10)
+	gid: integer references Graduates.gid
+	eid: integer references Experiments.eid
+	since: date
 
 TABLE answer:
-	rid: int(11) references Respondents.rid
-	eid: int(11) references Experiments.eid
-	since: Date(10)
+	rid: integer references Respondents.rid
+	eid: integer references Experiments.eid
+	since: date
 
 TABLE manages:
-	lid: int(11) references LaboratoryHeads.lid
-	labid: int(11) references Laboratories.labid
-	since: Date(10)
+	lid: integer references LaboratoryHeads.lid
+	labid: integer references Laboratories.labid
+	since: date
 
 TABLE faculty_member_of:
 	fid: references Faculty.fid
 	labid: references Laboratories.labid
-	since: Date(10)
+	since: date
 
 TABLE graduates_member_of:
 	gid: references Graduates.gid
 	labid: references Laboratories.labid
-	since: Date(10)
+	since: date
