@@ -16,7 +16,7 @@ class Home extends CI_Controller{
 		$data['main_content'] = 'home_body';
 		$this->load->view('_main_layout', $data);	
 
-		#Redirect to profile if logged in
+		//Redirect to profile if logged in
 		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 	}
 

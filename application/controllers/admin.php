@@ -22,16 +22,6 @@ class Admin extends MY_Controller{
 		}
 	}
 
-	public function get_admin_list(){
-		$list = $this->admins_model->get_all_admins();
-		if($list != NULL){
-			return $list;
-		}
-		else{
-			return $list = [];
-		}
-	}
-
 	public function edit_admin($uid = 0, $aid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
@@ -41,7 +31,17 @@ class Admin extends MY_Controller{
 		$this->load->view('_main_layout', $data);
 	}
 
-	public function get_faculty_list(){
+	private function get_admin_list(){
+		$list = $this->admins_model->get_all_admins();
+		if($list != NULL){
+			return $list;
+		}
+		else{
+			return $list = [];
+		}
+	}
+
+	private function get_faculty_list(){
 		$this->load->model('faculty_model');
 		$list = $this->faculty_model->get_all_faculty();
 		if($list != NULL){
@@ -52,7 +52,7 @@ class Admin extends MY_Controller{
 		}
 	}
 
-	public function get_graduate_list(){
+	private function get_graduate_list(){
 		$this->load->model('graduates_model');
 		$list = $this->graduates_model->get_all_graduates();
 		if($list != NULL){
@@ -63,7 +63,7 @@ class Admin extends MY_Controller{
 		}
 	}
 
-	public function get_respondent_list(){
+	private function get_respondent_list(){
 		$this->load->model('respondents_model');
 		$list = $this->respondents_model->get_all_respondents();
 		if($list != NULL){
