@@ -43,11 +43,31 @@ class Admin extends MY_Controller{
 	}
 
 	public function confirm_faculty($fid = 0){
+		$data['title'] = 'Admin';
+		$this->load->model('faculty_model');
+		$faculty_info['account_status'] = 'true';
+		$status = $this->faculty_model->update_faculty($fid,$faculty_info);
+		if($status){
+			$data['main_content'] = 'message_success';
+		}
+		else{
+			$data['main_content'] = 'message_error';
+		}
 
+		$this->load->view('_main_layout',$data);
 	}
 
 	public function reject_faculty($fid = 0){
-
+		$data['title'] = 'Admin';
+		$this->load->model('faculty_model');
+		$status = $this->faculty_model->delete_faculty($fid);
+		if($status){
+			$data['main_content'] = 'message_success';
+		}
+		else{
+			$data['main_content'] = 'message_error';
+		}
+		$this->load->view('_main_layout',$data);
 	}
 
 	public function laboratories(){

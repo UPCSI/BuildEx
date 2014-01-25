@@ -16,7 +16,13 @@
 ?>
 <br>
 <hr>
-<h3> Faculty Requests </h3>
+<h3> Faculty Requests 
+	<?php
+		if(isset($requests)){
+			echo '('.count($requests.')');
+		}
+	?>
+</h3>
 <?php
 	if(isset($requests)){
 		$count = 0;
