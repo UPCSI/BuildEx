@@ -139,7 +139,7 @@ class Users_model extends MY_Model{
 		if($uid == 0 && is_null($username)){
 			return false;
 		}
-		$this->db->select('username,first_name,middle_name,last_name,email_ad');
+		$this->db->select('uid,username,first_name,middle_name,last_name,email_ad');
 		if($uid > 0){
 			$this->db->where('Users.uid',$uid);
 		}
@@ -149,6 +149,4 @@ class Users_model extends MY_Model{
 		$q = $this->db->get('Users');
 		return $this->query_row_conversion($q);
 	}
-
-
 }

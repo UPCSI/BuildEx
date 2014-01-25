@@ -7,7 +7,7 @@ class Faculty extends MY_Controller{
 		$this->load->model('faculty_model');
 	}
 	
-	public function index() {
+	public function index(){
 		if(in_array('faculty',$this->session->userdata('role'))){
 			$data['title'] = 'Faculty';
 			$data['main_content'] = 'contents/faculty_body';
@@ -25,7 +25,6 @@ class Faculty extends MY_Controller{
 		$list = $this->experiments_model->get_all_faculty_experiments($fid);
 		if($list == NULL)
 			$list = array();
-		
 		return $list;
 	}
 

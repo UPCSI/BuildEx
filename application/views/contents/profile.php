@@ -18,6 +18,8 @@
 	<label>Username</label><br/>
 	<input type="text" id="signUpUsername" required name="username" value="<?php echo $user_profile->username; ?>" placeholder="Username"><br/><br/>
 
+	<!--<label>Faculty Number</label><br/>
+	<input type="text" id="faculty_number" required name="faculty_number" value="<?php echo $faculty_profile->faculty_num; ?>" placeholder="201131208"><br/><br/>-->
 </fieldset>
 <?php //echo '<pre>'; print_r($profile); echo '</pre>'; ?>
 <?php

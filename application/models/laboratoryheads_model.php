@@ -2,6 +2,7 @@
 
 class LaboratoryHeads_model extends MY_Model{
 
+
 	public function add_laboratory_head($labhead_info){
 		$this->db->insert('LaboratoryHeads',$labhead_info);
 		return $this->db->insert_id();

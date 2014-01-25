@@ -87,7 +87,7 @@ TABLE answer:
 	eid: integer references Experiments.eid
 	since: date
 
-TABLE manages:
+TABLE manage:
 	lid: integer references LaboratoryHeads.lid
 	labid: integer references Laboratories.labid
 	since: date

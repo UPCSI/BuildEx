@@ -12,12 +12,11 @@ class Home extends CI_Controller{
 	}
 
 	public function index(){
-		$data['title'] = 'Home';
-		$data['main_content'] = 'home_body';
-		$this->load->view('_main_layout', $data);	
-
 		//Redirect to profile if logged in
 		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
+		$data['title'] = 'Home';
+		$data['main_content'] = 'contents/home_body';
+		$this->load->view('_main_layout',$data);
 	}
 
 	public function validate_user(){
@@ -69,7 +68,7 @@ class Home extends CI_Controller{
 		$this->load->view('_main_layout', $data);			
 	}
 
-	function reset_password() {
+	public function reset_password(){
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		

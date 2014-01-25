@@ -7,11 +7,13 @@ class Laboratories_model extends MY_Model{
 		* Inserts a laboratory to the database given the laboratory info 
 		* Returns the labid of the newly inserted laboratory
 		*/
-		$this->db->insert('Laboratories',$laboratory_info);
-		$labid = $this->db->insert_id();
 		$this->load->model('laboratoryheads_model');
 		$lid = $this->laboratoryheads_model->add_laboratory_head($lab_head_info);
-		$this->db->insert('manages',array('lid'=>$lid,'labid'=>$labid));	
+
+		$this->db->insert('Laboratories',$laboratory_info);
+		$labid = $this->db->insert_id();
+
+		$this->db->insert('manage',array('lid'=>$lid,'labid'=>$labid));	
 		return $labid;
 	}
 

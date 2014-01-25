@@ -8,9 +8,6 @@
 	else if($role == 'faculty'){
 		$this->load->view('forms/faculty_signup_form');
 	}
-	else{
-		$this->load->view('signup_body');
-	}
 
 	$this->load->view('templates/main_footer');
 

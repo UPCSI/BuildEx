@@ -120,7 +120,16 @@ class Faculty_model extends MY_Model{
 
 	/*Admin functionalities*/
 	public function get_all_faculty(){
-		$this->db->select('*');
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
+		$this->db->where('Faculty.account_status','t');
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		$q = $this->db->get('Faculty');
+		return $this->query_conversion($q);
+	}
+
+	public function get_all_account_requests(){
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
+		$this->db->where('Faculty.account_status','f');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$q = $this->db->get('Faculty');
 		return $this->query_conversion($q);
