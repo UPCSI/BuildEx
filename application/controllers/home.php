@@ -4,23 +4,21 @@ class Home extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('users_model');
 		$this->load->model('admins_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('laboratoryheads_model');
 	}
 
 	public function index(){
-		//Redirect to profile if logged in
-		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 		$data['title'] = 'Home';
-		$data['main_content'] = 'contents/home_body';
-		$this->load->view('_main_layout',$data);
+		$data['main_content'] = 'home';
+		$this->load->view('_main_layout', $data);	
+
+		#Redirect to profile if logged in
+		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 	}
 
 	public function validate_user(){
 		$this->load->library('form_validation');
+		$this->load->model('users_model');
 		$rules = $this->users_model->rules;
 		$this->form_validation->set_rules($rules);
 
@@ -28,29 +26,29 @@ class Home extends CI_Controller{
 			$username = $this->input->post('username');
 			$password = $this->input->post('password');
 
-			if($this->users_model->is_valid_user($username, $password)){
+			if ($this->users_model->is_valid_user($username, $password)){
 				$this->users_model->set_session_data($username);
 				$role = $this->session->userdata('role');
 				if (in_array('admin',$role)){
 					redirect('admin');
 				}
-				else if (in_array('faculty',$role)){
+				elseif (in_array('faculty',$role)){
 					redirect('faculty');
 				}
-				else if (in_array('graduate',$role)){
+				elseif (in_array('graduate',$role)){
 					redirect('graduate');
 				}
 				else{ 
 					redirect('');
 				}
 			}
-			else{
+
+			else
 				echo "Cannot sign in.";
-			}
 		}
-		else{
+
+		else
 			echo "Invalid input.";
-		}
 	}
 
 	public function loggedin(){
@@ -68,7 +66,7 @@ class Home extends CI_Controller{
 		$this->load->view('_main_layout', $data);			
 	}
 
-	public function reset_password(){
+	function reset_password() {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		
@@ -82,6 +80,7 @@ class Home extends CI_Controller{
 			else
 				echo "We don't recognize that email. Please try again.";
 		}
+
 		else echo "Invalid input.";
 	}
 }

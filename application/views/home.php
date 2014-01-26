@@ -1,1 +1,18 @@
-<h1> Home </h1>
+<section id="jumbotron">
+
+</section>
+
+
+<section>
+
+</section>
+
+
+<section>
+
+</section>
+
+
+<section>
+
+</section>
