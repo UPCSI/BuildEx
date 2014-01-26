@@ -8,6 +8,25 @@ body {
     height: 100%;
 }
 
+svg {
+	display: block;
+	margin:auto;
+	width:80%;
+	height:80%;
+}
+
+div.row.vcenter10 {
+	margin-top: 10%
+}
+
+div.row.vcenter20 {
+	margin-top: 20%
+}
+
+div.row.vcenter40 {
+	margin-top: 40%
+}
+
 .row.full {
 	max-width:90%;
 }
@@ -19,53 +38,51 @@ body {
 /* top-bar large */
 
 .top-bar {
-	background: #9c59b8;
+	background: #3498db;
 }
 
 .top-bar-section ul {
-	background: #9c59b8;
+	background: #3498db;
 }
 
 .top-bar-section li a:not(.button) {
-	background: #9c59b8;
+	background: #3498db;
 }
 
 .top-bar-section li a:not(.button):hover {
-	background: #8f44ad;
+	background: #2980b9;
 }
 
 .top-bar-section ul li:hover > a {
-	background: #8f44ad;
+	background: #2980b9;
 }
 
 /* top-bar small */
 
 .top-bar.expanded .title-area {
-	background: #8f44ad;
+	background: #2980b9;
 }
 
 .top-bar.expanded .toggle-topbar a {
-	color: #9c59b8;
+	color: #3498db;
 }
 
 /* home content */
+
+.white {
+	color: #fff !important;
+}
+
+.justify {
+	text-align: justify;
+}
 
 section.jumbotron {
 	min-height: 100%;
 	background-image: url("../img/jumbo_bg.jpg");
 	background-position: center center;
 	background-size:cover;
-}
-
-section.jumbotron > div > div > div#biglogo {
-	height: 300px;
-	min-height:150px;
-	margin-left:10px;
-	margin-right: 10px;
-	background-image: url("../img/logo-large.png");
-	background-position: center center;
-	background-size:contain;
-	background-repeat: no-repeat;
+	color:#fff;
 }
 
 section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand {
@@ -88,11 +105,89 @@ section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.exp
   -webkit-appearance: none;
 }
 
-section.showcase {
-	padding-top:3%;
-	padding-bottom:3%;
+section.homesection {
+	padding-bottom: 1%;
 }
 
-section.showcase.odd {
-	background: #ecf0f1;
+section:nth-child(even).homesection {
+	background-color: #34495e;
+}
+
+section:nth-child(odd).homesection {
+	background-color: #2c3e50;
+}
+
+div.titleholder {
+	padding:5px;
+	margin-bottom: 3%;
+	background:linear-gradient(90deg, rgba(52, 152, 219,1.0) 0%, rgba(52, 152, 219,0.0) 100%);
+}
+
+section.sitemap {
+	background-color: #3498db;
+	padding: 1% 0px;
+}
+
+/* credits */
+
+#zurb {
+    background-image: url("../img/credit_zurb.png");
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-bottom:0px;
+    padding-left:31.6px;
+    padding-right: 31.6px; 
+    background-color:rgba(256,256,256,0);
+}
+
+#ellis {
+    background-image: url("../img/credit_ellislab.png");
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-bottom:0px;
+    padding-left:31.6px;
+    padding-right: 31.6px;  
+    background-color:rgba(256,256,256,0);
+}
+
+#tutor {
+    background-image: url("../img/credit_tutorialzine.png");
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-bottom:0px;
+    background-color:rgba(256,256,256,0);
+}
+
+#fontawe {
+    background-image: url("../img/credit_fontawesome.png");
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-bottom:0px;
+    background-color:rgba(256,256,256,0);
+}
+
+#highch {
+    background-image: url("../img/credit_highcharts.png");
+    background-size:contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    display:inline-block;
+    margin-bottom:0px;
+    background-color:rgba(256,256,256,0);
+}
+
+.panel {
+	border-width: 0px
+}
+
+ul {
+	margin-left: 0px;
 }
