@@ -4,22 +4,16 @@ class Signup extends CI_Controller{
 		parent::__construct();
 	}
 
-	public function index(){
-		$data['title'] = "Sign Up";
-		$data['role'] = 'none';
-		$this->load->view('templates/signup_template',$data);
-	}
-
-	public function student(){
-		$data['title'] = "Sign Up";
-		$data['role'] = 'student';
-		$this->load->view('templates/signup_template',$data);
+	public function graduate(){
+		$data['title'] = "Sign Up - Graduate";
+		$data['main_content'] = 'guest/signup_graduate';
+		$this->load->view('_main_layout',$data);
 	}
 
 	public function faculty(){
-		$data['title'] = "Sign Up";
-		$data['role']= 'faculty';
-		$this->load->view('templates/signup_template',$data);
+		$data['title'] = "Sign Up - Faculty";
+		$data['main_content'] = 'guest/signup_faculty';
+		$this->load->view('_main_layout',$data);
 	}
 
 	function add_faculty(){
@@ -45,18 +39,18 @@ class Signup extends CI_Controller{
 			if($this->faculty_model->add_faculty($new_user)){
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
-				echo "Check your email!";
+				echo "To confirm your account, follow the link we've sent to your e-mail address.";
 			}
 
 			else
-				echo "Cannot create account.";
+				echo "A problem was encountered while creating your account. Please try again.";
 		}
 
 		else
 			echo "Invalid input.";
 	}
 
-	function add_student(){
+	function add_graduate(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
 
@@ -79,11 +73,11 @@ class Signup extends CI_Controller{
 			if($this->graduates_model->add_graduate($new_user)) {
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
-				echo "Check your email!";
+				echo "To confirm your account, follow the link we've sent to your e-mail address.";
 			}
 
 			else
-				echo "Cannot create account.";
+				echo "A problem was encountered while creating your account. Please try again.";
 		}
 
 		else
@@ -95,11 +89,11 @@ class Signup extends CI_Controller{
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
 			$this->email_model->activate_user($email);
-			echo "You have successfully confirmed your email!";
+			echo "You have successfully confirmed your e-mail address!";
 		}
 
 		else
-			echo "We can't validate your email. Please try again.";
+			echo "A problem was encountered while validating your e-mail address. Please try again.";
 	}
 
 }
