@@ -5,23 +5,7 @@
 <h3>List of Admins</h3>
 <?php 
 	foreach ($admins as $admin){
-		echo anchor('admin/edit_admin/' . $admin->aid, $admin->username);
-		echo '</br>';
-	}
-?>
-
-<h3>List of Faculty</h3>
-<?php 
-	foreach ($faculty as $faculty){
-		echo anchor('faculty/edit_faculty/' . $faculty->uid . '_' . $faculty->fid, $faculty->username);
-		echo '</br>';
-	}
-?>
-
-<h3>List of Graduates</h3>
-<?php 
-	foreach ($graduates as $graduate){
-		echo anchor('graduate/edit_graduate/' . $graduate->uid . '_' . $graduate->gid, $graduate->username);
+		echo anchor('admin/edit_admin/'.$admin->uid.'/'.$admin->aid, $admin->username);
 		echo '</br>';
 	}
 ?>
@@ -33,3 +17,6 @@
 		echo '</br>';
 	}
 ?>
+
+<h3>Functions</h3>
+<a href = "<?php echo site_url('admin/create_lab'); ?>"> Create Laboratory </a><br/>

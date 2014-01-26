@@ -8,7 +8,7 @@ class Test extends MY_Controller{
 		$this->load->model('faculty_model');
 		$this->load->model('graduates_model');
 		$this->load->model('respondents_model');
-		//$this->load->model('users_model');
+		$this->load->model('users_model');
 	}
 
 	public function index(){
@@ -57,6 +57,21 @@ class Test extends MY_Controller{
 		$this->graduates_model->add_graduate($user_info);
 		echo '<pre>';
 		echo 'Graduate added!';
+		echo '</pre>';
+	}
+
+	public function add_admin(){
+		$user_info['username'] = 'nmcalabroso';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Neil';
+		$user_info['middle_name'] = 'Muchillas';
+		$user_info['last_name'] = 'Calabroso';
+		$user_info['email_ad'] = 'nmcalabroso@up.edu.ph';
+		$uid = $this->users_model->add_user($user_info);
+		$aid = $this->admins_model->add_admin($uid);
+		echo '<pre>';
+		echo 'Admin added!';
+		echo 'aid: '.$aid;
 		echo '</pre>';
 	}
 

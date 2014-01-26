@@ -11,7 +11,7 @@ class Graduates_model extends MY_Model{
 			'field' => 'mname', 
 			'label' => 'mname', 
 			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
-		), 
+		),
 		'lname' => array(
 			'field' => 'lname', 
 			'label' => 'lname', 
@@ -39,55 +39,84 @@ class Graduates_model extends MY_Model{
 		)
 	);
 
-	public function is_unique($username, $email){
-		/* checks if username and email are unique */
-		$this->db->where('username', $username);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		$this->db->where('email_ad', $email);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		$email .= '*';
-		$this->db->where('email_ad', $email);
-		$query = $this->db->get("Users");
-		if($query->num_rows > 0)
-			return false;
-
-		return true;
-	}
-
-	public function add_graduate($user_info = null, $graduate_info = null){
-		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		$uid = $this->db->insert_id();
+	public function add_graduate($uid, $graduate_info = null){
 		$graduate_info['uid'] = $uid;
 		$this->db->insert('Graduates',$graduate_info);
-		return true;
+		return $this->db->insert_id();
 	}
 
 
-	public function delete_graduate($username){
-		$this->load->model('users_model');
-		return $this->users_model->delete_user($username);
+	public function delete_graduate($gid = 0,$username = null){
+		/*
+		* Deletes a graduate student given its fid or username.
+		* Returns true if the actual delete happened,
+		* false otherwise.
+		*/
+		if($gid == 0 && is_null($username)){
+			return false;
+		}
+
+		if($gid > 0){
+			$this->db->where('gid',$gid);
+			$this->db->delete('Graduates');
+		}
+		else{
+			$q = "DELETE FROM \"Graduates\" AS g
+				  USING \"Users\" AS u
+				  WHERE g.uid = u.uid AND
+				  u.username = ?";
+			$this->db->query($q,array($username));
+		}
+		return $this->is_rows_affected();
+	}
+
+	public function update_graduate($gid = 0, $graduate_info){
+		$this->db->where('gid', $gid);
+		$this->db->update('Graduates', $graduates_info);
+		return $this->is_rows_affected();
 	}
 
 	public function get_graduate_profile($gid = 0, $username = null){
-		$this->db->select('*');
-		$this->db->join('Users','Users.uid = Graduates.uid');
-		if($gid == 0){
-			$this->db->where('Users.username',$username);
+		/*
+		* Returns the profile of a particular graduate given its 
+		* gid or username
+		*/
+		if($gid == 0 && is_null($username)){
+			return false;
+		}
+		$this->db->select('Graduates.*');
+		if($gid > 0){
+			$this->db->where('Graduates.gid',$gid);
 		}
 		else{
-			$this->db->where('Graduates.gid',$gid);
+			$this->db->join('Users','Users.uid = Graduates.uid');
+			$this->db->where('Users.username',$username);
 		}
 		$q = $this->db->get('Graduates');
 		return $this->query_row_conversion($q);
 	}
 
+	/*Laboratory Heads Functionalities*/
+	public function get_all_lab_graduates($lid = 0,$labid = 0){
+		/*
+		* Given the lab head's lid and the labid of the laboratory
+		* it manages, this function will return all the graduates in
+		* that lab.
+		*/
+		$this->db->select('*');
+		$this->db->join('graduates_member_of','graduates_member_of.gid = Graduates.gid');
+		$this->db->join('Users','Users.uid = Graduates.uid');
+		$this->db->join('Laboratories','Laboratories.labid = graduates_member_of.labid');
+		$this->db->join('manages','manages.labid = Laboratories.labid');
+		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
+		$this->db->where('LaboratoryHeads.lid',$lid);
+		$this->db->where('Laboratories.labid',$labid);
+		$q = $this->db->get('Graduates');
+
+		return $this->query_conversion($q);
+	}
+
+	/*Admin Functionalities*/
 	public function get_all_graduates(){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Graduates.uid');

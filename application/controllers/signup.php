@@ -2,30 +2,37 @@
 class Signup extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('users_model');
 	}
 
-	public function graduate(){
-		$data['title'] = "Sign Up - Graduate";
-		$data['main_content'] = 'guest/signup_graduate';
-		$this->load->view('_main_layout',$data);
+	public function index(){
+		$data['title'] = "Sign Up";
+		$data['role'] = 'none';
+		$this->load->view('templates/signup_template',$data);
+	}
+
+	public function student(){
+		$data['title'] = "Sign Up";
+		$data['role'] = 'student';
+		$this->load->view('templates/signup_template',$data);
 	}
 
 	public function faculty(){
-		$data['title'] = "Sign Up - Faculty";
-		$data['main_content'] = 'guest/signup_faculty';
-		$this->load->view('_main_layout',$data);
+		$data['title'] = "Sign Up";
+		$data['role']= 'faculty';
+		$this->load->view('templates/signup_template',$data);
 	}
 
 	function add_faculty(){
+		$this->load->model('faculty_model');
+		$this->load->library('form_validation');
+
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-
-		$this->load->library('form_validation');
-		$this->load->model('faculty_model');
 		$rules = $this->faculty_model->rules;
 		$this->form_validation->set_rules($rules);
 
-		if($this->form_validation->run() && $this->faculty_model->is_unique($username, $email)) {
+		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
 			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
@@ -34,23 +41,21 @@ class Signup extends CI_Controller{
 				'email_ad' => $email,
 				'username' => $username,
 				'password' => $this->input->post('password')
-			);	
-
-			if($this->faculty_model->add_faculty($new_user)){
-				$this->load->model('email_model');
-				$this->email_model->send_confirmation_email($email);
-				echo "To confirm your account, follow the link we've sent to your e-mail address.";
-			}
-
-			else
-				echo "A problem was encountered while creating your account. Please try again.";
+			);
+			$uid = $this->users_model->add_user($new_user);
+			$faculty_info['faculty_num'] = $this->input->post('faculty_num');
+			$fid = $this->faculty_model->add_faculty($uid,$faculty_info);
+			/*Commented email function for development purposes*/
+			//$this->load->model('email_model');
+			//$this->email_model->send_confirmation_email($email);
+			echo "Check your email!";
 		}
-
-		else
+		else{
 			echo "Invalid input.";
+		}
 	}
 
-	function add_graduate(){
+	function add_student(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
 
@@ -59,7 +64,7 @@ class Signup extends CI_Controller{
 		$rules = $this->graduates_model->rules;
 		$this->form_validation->set_rules($rules);
 
-		if($this->form_validation->run() && $this->graduates_model->is_unique($username, $email)) {
+		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
 			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
@@ -68,16 +73,15 @@ class Signup extends CI_Controller{
 				'email_ad' => $email,
 				'username' => $username,
 				'password' => $this->input->post('password')
-			);	
+			);
 
-			if($this->graduates_model->add_graduate($new_user)) {
-				$this->load->model('email_model');
-				$this->email_model->send_confirmation_email($email);
-				echo "To confirm your account, follow the link we've sent to your e-mail address.";
-			}
-
-			else
-				echo "A problem was encountered while creating your account. Please try again.";
+			$uid = $this->users_model->add_user($new_user);
+			$graduate_info['student_num'] = $this->input->post('student_num');
+			$gid = $this->graduates_model->add_graduate($uid,$graduate_info);
+			/*Commented email function for development purposes*/
+			//$this->load->model('email_model');
+			//$this->email_model->send_confirmation_email($email);
+			echo "Check your email!";
 		}
 
 		else
@@ -89,11 +93,11 @@ class Signup extends CI_Controller{
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
 			$this->email_model->activate_user($email);
-			echo "You have successfully confirmed your e-mail address!";
+			echo "You have successfully confirmed your email!";
 		}
 
 		else
-			echo "A problem was encountered while validating your e-mail address. Please try again.";
+			echo "We can't validate your email. Please try again.";
 	}
 
 }
