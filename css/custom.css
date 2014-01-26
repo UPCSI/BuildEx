@@ -1,0 +1,98 @@
+/* sizing */
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+.row.full {
+	max-width:90%;
+}
+
+.row.full > .row {
+	max-width:100%;
+}
+
+/* top-bar large */
+
+.top-bar {
+	background: #9c59b8;
+}
+
+.top-bar-section ul {
+	background: #9c59b8;
+}
+
+.top-bar-section li a:not(.button) {
+	background: #9c59b8;
+}
+
+.top-bar-section li a:not(.button):hover {
+	background: #8f44ad;
+}
+
+.top-bar-section ul li:hover > a {
+	background: #8f44ad;
+}
+
+/* top-bar small */
+
+.top-bar.expanded .title-area {
+	background: #8f44ad;
+}
+
+.top-bar.expanded .toggle-topbar a {
+	color: #9c59b8;
+}
+
+/* home content */
+
+section.jumbotron {
+	min-height: 100%;
+	background-image: url("../img/jumbo_bg.jpg");
+	background-position: center center;
+	background-size:cover;
+}
+
+section.jumbotron > div > div > div#biglogo {
+	height: 300px;
+	min-height:150px;
+	margin-left:10px;
+	margin-right: 10px;
+	background-image: url("../img/logo-large.png");
+	background-position: center center;
+	background-size:contain;
+	background-repeat: no-repeat;
+}
+
+section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand {
+  background-color: rgba(255,255,255,0.3);
+  border-width:3px;
+	border-style: solid;
+	border-color: white;
+  color: white;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
+  -webkit-appearance: none;
+}
+
+section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand:hover {
+  background-color: rgba(255,255,255,0);
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
+  -webkit-appearance: none;
+}
+
+section.showcase {
+	padding-top:3%;
+	padding-bottom:3%;
+}
+
+section.showcase.odd {
+	background: #ecf0f1;
+}

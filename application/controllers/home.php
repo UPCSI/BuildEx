@@ -9,7 +9,7 @@ class Home extends CI_Controller{
 
 	public function index(){
 		$data['title'] = 'Home';
-		$data['main_content'] = 'home_body';
+		$data['main_content'] = 'home';
 		$this->load->view('_main_layout', $data);	
 
 		#Redirect to profile if logged in
