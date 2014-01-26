@@ -2,7 +2,7 @@
 <div id="signin" class="reveal-modal tiny" data-reveal>
   <h2>Sign In to BuildEx</h2>
   <?php echo validation_errors();?>
-	<?php echo form_open("login/validate_user") . "<br/>";?>
+	<?php echo form_open("home/validate_user") . "<br/>";?>
   	<fieldset>
 			<legend>Sign In</legend>
 			<label>Username</label>
