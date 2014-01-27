@@ -32,12 +32,11 @@ class Experiment extends MY_Controller{
 	}
 
 	public function update_experiment($eid = NULL){
-		$uid = $this->session->userdata('id');
 		#setsession(eid)
-		$this->session->set_userdata('eid', $eid);
+		$this->session->set_userdata(array('eid' => $eid));
 		#endsession
-
-		$data['experiment'] = $this->experiments_model->get_experiment($uid, $eid);
+		
+		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/update_experiment_form';
 		$this->load->view('_main_layout', $data);
