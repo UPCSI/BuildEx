@@ -27,8 +27,8 @@ class Signup extends CI_Controller{
 		$this->form_validation->set_rules($rules);
 
 		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
-			$zemail .= '*';
-			$new_user = array(
+/*			$email .= '*';
+*/			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
 				'last_name' => $this->input->post('lname'),
@@ -37,7 +37,10 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			if($this->faculty_model->add_faculty($new_user)){
+			$this->faculty_model->add_faculty($new_user);
+			redirect('');
+
+/*			if($this->faculty_model->add_faculty($new_user)){
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
 				echo "To confirm your account, follow the link we've sent to your e-mail address.";
@@ -45,7 +48,7 @@ class Signup extends CI_Controller{
 
 			else
 				echo "A problem was encountered while creating your account. Please try again.";
-		}
+*/		}
 
 		else
 			echo "Invalid input.";
@@ -61,8 +64,8 @@ class Signup extends CI_Controller{
 		$this->form_validation->set_rules($rules);
 
 		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
-			$email .= '*';
-			$new_user = array(
+/*			$email .= '*';
+*/			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
 				'last_name' => $this->input->post('lname'),
@@ -71,7 +74,10 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			if($this->graduates_model->add_graduate($new_user)) {
+			$this->graduates_model->add_graduate($new_user);
+			redirect('');
+
+/*			if($this->graduates_model->add_graduate($new_user)) {
 				$this->load->model('email_model');
 				$this->email_model->send_confirmation_email($email);
 				echo "To confirm your account, follow the link we've sent to your e-mail address.";
@@ -79,7 +85,7 @@ class Signup extends CI_Controller{
 
 			else
 				echo "A problem was encountered while creating your account. Please try again.";
-		}
+*/		}
 
 		else
 			echo "Invalid input.";
