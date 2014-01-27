@@ -39,14 +39,36 @@ class Faculty_model extends MY_Model{
 		)
 	);
 
-	public function add_faculty($uid = 0, $faculty_info = null){
+	public function is_unique($username, $email){
+		/*
+		* Checks if username and email is unique
+		*/
+
+		$this->db->where('username', $username);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		$this->db->where('email_ad', $email);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		return true;
+	}
+
+	public function add_faculty($user_info = null, $faculty_info = null){
 		/*
 		* Inserts faculty to the database
 		*/
+		$user_info['password'] = $this->my_hash($user_info['password']);
+		$this->db->insert('Users',$user_info);
+		$uid = $this->db->insert_id();
 		$faculty_info['uid'] = $uid;
 		$this->db->insert('Faculty',$faculty_info);
-		return $this->db->insert_id();
+		return true;
 	}
+
 
 	public function delete_faculty($fid = 0,$username = null){
 		/*

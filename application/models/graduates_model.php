@@ -39,10 +39,35 @@ class Graduates_model extends MY_Model{
 		)
 	);
 
-	public function add_graduate($uid, $graduate_info = null){
+	public function is_unique($username, $email){
+		/*
+		* Checks if username and email is unique
+		*/
+
+		$this->db->where('username', $username);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		$this->db->where('email_ad', $email);
+		$query = $this->db->get("Users");
+		if($query->num_rows > 0)
+			return false;
+
+		return true;
+	}
+
+	public function add_graduate($user_info = null, $graduate_info = null){
+		/*
+		* Inserts graduate to the database
+		*/
+
+		$user_info['password'] = $this->my_hash($user_info['password']);
+		$this->db->insert('Users',$user_info);
+		$uid = $this->db->insert_id();
 		$graduate_info['uid'] = $uid;
 		$this->db->insert('Graduates',$graduate_info);
-		return $this->db->insert_id();
+		return true;
 	}
 
 
