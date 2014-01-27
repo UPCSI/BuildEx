@@ -185,6 +185,8 @@ class Users_model extends MY_Model{
 		/*
 		* Returns the profile of a particular user given its uid or username
 		*/
+		var_dump($uid);
+		var_dump($username);
 		if($uid == 0 && is_null($username)){
 			return false;
 		}

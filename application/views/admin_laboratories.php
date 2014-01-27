@@ -6,7 +6,7 @@
 		foreach ($laboratories as $laboratory){
 			$count = $count + 1;
 			echo $count.'. ';
-			echo anchor('laboratory/edit_laboratory/'.$laboratory->labid,$laboratory->name);
+			echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name);
 			echo '</br>';
 		}
 	}
@@ -20,7 +20,7 @@
 <fieldset>
 	<legend>Create Laboratory</legend>
 	<?php echo validation_errors();?>
-	<?php echo form_open("admin/add_lab") . "<br/>";?>
+	<?php echo form_open("admin/add_lab")."<br/>";?>
 
 	<label>Lab Name</label><br/>
 	<input type="text" id="labname" required name="lab_name" placeholder="My Laboratory"><br/><br/>

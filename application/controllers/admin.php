@@ -88,6 +88,7 @@ class Admin extends MY_Controller{
 
 	public function add_lab(){
 		$this->load->model('users_model');
+		$this->load->model('faculty_model');
 		$this->load->model('laboratories_model');
 		$username = $this->input->post('lab_head');
 		$data['title'] = 'Admin';
@@ -95,13 +96,16 @@ class Admin extends MY_Controller{
 		if (isset($lab_head_user)){
 			$lab_head_info['uid'] = $lab_head_user->uid;
 			$laboratory_info['name'] = $this->input->post('lab_name');
-			$this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
+			$faculty = $this->faculty_model->get_faculty_profile(0,$username);
+			$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
+			echo $this->laboratories_model->request_faculty_lab($labid,$faculty->fid);
+			echo $this->laboratories_model->accept_faculty($labid,$faculty->fid);
 			$data['main_content'] = 'message_success';
 		}
 		else{
 			$data['main_content'] = 'message_error';
 		}
-		$this->load->view('_main_layout',$data);
+		//$this->load->view('_main_layout',$data);
 	}
 
 	private function get_admin_list(){

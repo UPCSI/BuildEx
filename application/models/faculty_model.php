@@ -114,10 +114,12 @@ class Faculty_model extends MY_Model{
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
 		$this->db->where('Laboratories.labid',$labid);
+		$this->db->where('faculty_member_of.status','t');
 		$q = $this->db->get('Faculty');
 
 		return $this->query_conversion($q);
 	}
+
 	/* Laboratory Heads functionalities*/
 	/*Admin functionalities*/
 	public function get_all_faculty(){
@@ -130,8 +132,8 @@ class Faculty_model extends MY_Model{
 
 	public function get_all_account_requests(){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
-		$this->db->where('Faculty.account_status','f');
 		$this->db->join('Users','Users.uid = Faculty.uid');
+		$this->db->where('Faculty.account_status','f');
 		$q = $this->db->get('Faculty');
 		return $this->query_conversion($q);
 	}

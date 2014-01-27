@@ -61,6 +61,17 @@ class Graduate extends MY_Controller{
 		$this->load->view('_main_layout', $data);
 	}
 
+	public function request_lab($labid = 0){
+		if($labid == 0 || is_null($labid)){
+			redirect('');
+			//implement where to redirect if labid is 0 or none
+		}
+		$this->load->model('laboratories_model');
+		$gid = $this->session->userdata('active_id');
+		$this->laboratories_model->request_graduate_lab($labid,$gid);
+		redirect(''); //implement where to redirect after a faculty request for a lab
+	}
+
 	private function get_all_experiments($gid = 0){
 		$this->load->model('experiments_model');
 		$list = $this->experiments_model->get_all_graduates_experiments($gid);	

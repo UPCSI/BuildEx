@@ -13,9 +13,7 @@ class Laboratories_model extends MY_Model{
 		$this->db->insert('Laboratories',$laboratory_info);
 		$labid = $this->db->insert_id();
 
-		$laboratory_info['members_count'] = 0;
-
-		$this->db->insert('manage',array('lid'=>$lid,'labid'=>$labid));	
+		$this->db->insert('manage',array('lid'=>$lid,'labid'=>$labid));
 		return $labid;
 	}
 
@@ -64,18 +62,62 @@ class Laboratories_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	/*Laboratory Heads Functionalities*/
-
-	public function add_faculty_member($labid,$fid){
+	public function request_faculty_lab($labid,$fid){
 		return $this->db->insert('faculty_member_of',array('labid'=>$labid,'fid'=>$fid));
 	}
 
-	public function add_graduate_member($labid,$gid){
-		return $this->db->insert('graduate_member_of',array('labid'=>$labid,'gid'=>$gid));
+	public function request_graduate_lab($labid,$gid){
+		return $this->db->insert('graduates_member_of',array('labid'=>$labid,'gid'=>$gid));
+	}
+
+	/* Laboratory Heads functionalities*/
+	public function accept_faculty($labid,$fid){
+		$this->db->where('labid', $labid);
+		$this->db->where('fid',$fid);
+		$this->db->update('faculty_member_of',array('status'=>'true'));
+		return $this->is_rows_affected();
+	}
+
+	public function accept_graduate($labid, $gid){
+		$this->db->where('labid', $labid);
+		$this->db->where('gid',$gid);
+		$this->db->update('graduate_member_of',array('status'=>'true'));
+		return $this->is_rows_affected();
+	}
+
+	public function reject_faculty($labid, $fid){
+		$this->db->where('labid', $labid);
+		$this->db->where('fid',$fid);
+		$this->db->delete('faculty_member_of');
+		return $this->is_rows_affected();
+	}
+
+	public function reject_graduate($labid, $gid){
+		$this->db->where('labid', $labid);
+		$this->db->where('gid',$gid);
+		$this->db->delete('graduates_member_of');
+		return $this->is_rows_affected();
+	}
+
+	public function get_all_faculty_request($labid){
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num');
+		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		$this->db->where('faculty_member_of.status','f');
+		$q = $this->db->get('faculty_member_of');
+		return $this->query_conversion($q);
+	}
+
+	public function get_all_graduates_requests($labid){
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num');
+		$this->db->join('Graduates','Graduates.gid = graduates_member_of.gid');
+		$this->db->join('Users','Users.uid = Graduates.uid');
+		$this->db->where('graduates_member_of.status','f');
+		$q = $this->db->get('graduates_member_of');
+		return $this->query_conversion($q);
 	}
 
 	/*Admin Functionalities*/
-
 	public function assign_laboratory_head($labid,$lid){
 		/*
 		* Assigns a lab head with lid to manage the laboratory with labid

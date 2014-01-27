@@ -116,8 +116,8 @@ class Graduates_model extends MY_Model{
 		$this->db->join('Users','Users.uid = Graduates.uid');
 		$this->db->join('Laboratories','Laboratories.labid = graduates_member_of.labid');
 		$this->db->where('Laboratories.labid',$labid);
+		$this->db->where('graduates_member_of.status','t');
 		$q = $this->db->get('Graduates');
-
 		return $this->query_conversion($q);
 	}
 	

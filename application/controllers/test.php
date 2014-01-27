@@ -1,6 +1,6 @@
 <?php
 
-class Test extends MY_Controller{
+class Test extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('admins_model');
@@ -61,7 +61,7 @@ class Test extends MY_Controller{
 	}
 
 	public function add_admin(){
-		$user_info['username'] = 'nmcalabroso';
+		$user_info['username'] = 'buildex.admin';
 		$user_info['password'] = 'password';
 		$user_info['first_name'] = 'Neil';
 		$user_info['middle_name'] = 'Muchillas';

@@ -11,20 +11,23 @@ class Laboratories extends MY_Controller{
 
 	public function view($labid = null){
 		if(is_null($labid)){
-			redirect('');
+			redirect(''); 
 			//implement here where to redirect if $labid is not supplied
 		}
 
+		$data['is_member'] = $this->session->flashdata('is_member');
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory_view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
+		$data['role'] = $this->session->userdata('role')[0]; //this should be changes to active_role
+
 		if(is_null($data['laboratory'])){
 			redirect('');
 			//implement here where to redirect if $labid is an invalid laboratory
 		}
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-
+		//var_dump($data['graduates']);
 		$this->load->view('_main_layout',$data);
 	}
 }

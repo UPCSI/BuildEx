@@ -25,8 +25,6 @@ class Faculty extends MY_Controller{
 	public function get_all_experiments($fid = 0){
 		$this->load->model('experiments_model');
 		$list = $this->experiments_model->get_all_faculty_experiments($fid);
-		if($list == NULL)
-			$list = array();
 		return $list;
 	}
 
@@ -37,5 +35,16 @@ class Faculty extends MY_Controller{
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['main_content'] = 'contents/profile';
 		$this->load->view('_main_layout', $data);
+	}
+
+	public function request_lab($labid = 0){
+		if($labid == 0 || is_null($labid)){
+			redirect('');
+			//implement where to redirect if labid is 0 or none
+		}
+		$this->load->model('laboratories_model');
+		$fid = $this->session->userdata('active_id');
+		$this->laboratories_model->request_faculty_lab($labid,$fid);
+		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 }
