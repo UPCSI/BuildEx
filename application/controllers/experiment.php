@@ -6,12 +6,6 @@ class Experiment extends MY_Controller{
 		parent::__construct();
 		$this->load->model('experiments_model');
 	}
-	
-	public function index() {
-		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/add_experiment_form';
-		$this->load->view('_main_layout', $data);
-	}
 
 	public function add_experiment(){
 		$info['title'] = $this->input->post('title');

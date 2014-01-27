@@ -11,7 +11,6 @@
 ?>
 <br>
 <hr>
-<br>
 
 <fieldset>
 	<legend>Create Laboratory</legend>
@@ -25,5 +24,6 @@
 	<input type="text" id="labhead" required name="lab_head" placeholder="Lab Head"><br/><br/>
 
 	<input type="submit" value="Create">
+
 	<?php echo form_close();?>
 </fieldset>
