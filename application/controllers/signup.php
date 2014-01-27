@@ -27,7 +27,7 @@ class Signup extends CI_Controller{
 		$this->form_validation->set_rules($rules);
 
 		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
-			$zemail .= '*';
+			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
