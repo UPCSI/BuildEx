@@ -1,0 +1,21 @@
+ROLES AND THEIR FUNCTIONS
+
+1. Admin
+	- Create laboratory groups and assign a lab head to each group. Only faculty members can be lab heads.
+	- Change a laboratory's assigned lab head.
+	- Confirm/activate faculty members that sign up.
+	- View all labs, users, and experiments.
+	- Activate/Deactivate user accounts.
+
+2. Lab Head (must have faculty account)
+	- Add/confirm faculty and graduate users to its assigned lab.
+	- View all lab users and their experiments.
+
+3. Faculty
+	- Create experiment.
+	- Publish own experiment any time.
+	- Approve publication of graduate's experiments, given that they belong to the same lab.
+
+4. Graduate/Student
+	- Create experiment.
+	- Must ask permission from faculty member of the same lab before publishing experiment.
