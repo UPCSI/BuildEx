@@ -36,7 +36,17 @@ class Graduate extends MY_Controller{
 	}
 
 	public function laboratories(){
-
+		$this->load->model('laboratories_model');
+		$this->load->model('faculty_model');
+		$gid = $this->session->userdata('active_id');
+		$data['title'] = 'Graduate';
+		$data['main_content'] = 'graduate_laboratories';
+		$data['main_lab'] = $this->laboratories_model->get_graduate_laboratory($gid);
+		if(isset($data['main_lab'])){
+			$labid = $data['main_lab']->labid;
+			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
+		}
+		$this->load->view('_main_layout',$data);
 	}
 
 	public function edit_graduate($uid = 0, $gid = 0){

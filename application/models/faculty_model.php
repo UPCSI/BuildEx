@@ -102,26 +102,23 @@ class Faculty_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	/* Laboratory Heads functionalities*/
-	public function get_all_lab_faculty($lid = 0,$labid = 0){
+	
+	public function get_all_lab_faculty($labid = 0){
 		/*
-		* Given the lab head's lid and the labid of the laboratory
-		* it manages, this function will return all the faculty in
+		* Given the labid of the laboratory
+		* this function will return all the faculty in
 		* that lab.
 		*/
-		$this->db->select('*');
+		$this->db->select('Faculty.*');
 		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
-		$this->db->join('manages','manages.labid = Laboratories.labid');
-		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
-		$this->db->where('LaboratoryHeads.lid',$lid);
 		$this->db->where('Laboratories.labid',$labid);
 		$q = $this->db->get('Faculty');
 
 		return $this->query_conversion($q);
 	}
-
+	/* Laboratory Heads functionalities*/
 	/*Admin functionalities*/
 	public function get_all_faculty(){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
