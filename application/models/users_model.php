@@ -124,6 +124,7 @@ class Users_model extends MY_Model{
 		/* 
 		* Checks if username and email are unique
 		*/
+
 		$this->db->where('username', $username);
 		$query = $this->db->get("Users");
 		if($query->num_rows > 0)
@@ -149,6 +150,17 @@ class Users_model extends MY_Model{
 		if(strcmp(substr($user->email_ad, -1),'*') == 0)
 			return false;
 		return true;
+	}
+
+	public function confirmed_faculty(){
+		/* 
+		* Checks if faculty has been confirmed by an admin.
+		*/
+
+		$this->db->where('fid', $this->session->userdata('active_id'));
+		$query = $this->db->get('Faculty');
+		$user = $query->row();
+		return $user->account_status;		
 	}
 
 	public function add_user($user_info){

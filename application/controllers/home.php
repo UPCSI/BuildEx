@@ -32,13 +32,18 @@ class Home extends CI_Controller{
 				if (in_array('admin',$role)){
 					redirect('admin');
 				}
-				elseif (in_array('faculty',$role)){
+
+				else if (in_array('faculty',$role) && $this->users_model->confirmed_faculty() == "t"){
 					redirect('faculty');
 				}
-				elseif (in_array('graduate',$role)){
+
+				else if (in_array('graduate',$role)){
 					redirect('graduate');
 				}
-				else{ 
+
+				else{
+					$new_session['loggedin'] = FALSE;
+					$this->session->set_userdata($new_session);
 					redirect('');
 				}
 			}
