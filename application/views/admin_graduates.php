@@ -1,4 +1,4 @@
-<h3> Admin: Graduates </h3>
+	<h3> Admin: Graduates </h3>
 <hr>
 <?php 
 	$count = 0;

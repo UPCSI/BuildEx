@@ -2,6 +2,7 @@
 class Signup extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('users_model');
 	}
 
 	public function graduate(){
@@ -25,8 +26,8 @@ class Signup extends CI_Controller{
 		$rules = $this->faculty_model->rules;
 		$this->form_validation->set_rules($rules);
 
-		if($this->form_validation->run() && $this->faculty_model->is_unique($username, $email)) {
-			$email .= '*';
+		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
+			$zemail .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
 				'middle_name' => $this->input->post('mname'),
@@ -59,7 +60,7 @@ class Signup extends CI_Controller{
 		$rules = $this->graduates_model->rules;
 		$this->form_validation->set_rules($rules);
 
-		if($this->form_validation->run() && $this->graduates_model->is_unique($username, $email)) {
+		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
 			$email .= '*';
 			$new_user = array(
 				'first_name' => $this->input->post('fname'),
