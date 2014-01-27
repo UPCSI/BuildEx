@@ -19,7 +19,7 @@
 <h3> Faculty Requests 
 	<?php
 		if(isset($requests)){
-			echo '('.count($requests.')');
+			echo '('.count($requests).')';
 		}
 	?>
 </h3>

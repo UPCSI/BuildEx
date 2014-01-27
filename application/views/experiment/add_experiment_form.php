@@ -1,5 +1,9 @@
 <h2>BuildEx: Experiment</h2>
-
+<?php
+	echo '<pre>';
+	print_r($this->session->userdata);
+	echo '</pre>';
+?>
  <fieldset>
 	<legend>Create Experiment</legend>
 	<?php echo validation_errors();?>

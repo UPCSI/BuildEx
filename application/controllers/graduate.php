@@ -29,7 +29,8 @@ class Graduate extends MY_Controller{
 	}
 
 	public function experiments(){
-		$data['experiments'] = $this->get_all_experiments($this->session->userdata('gid'));
+		$this->load->model('experiments_model');
+		$data['experiments'] = $this->experiments_model->get_all_graduates_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate_experiments';
 		$this->load->view('_main_layout',$data);

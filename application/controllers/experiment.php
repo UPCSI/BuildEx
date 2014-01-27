@@ -7,15 +7,26 @@ class Experiment extends MY_Controller{
 		$this->load->model('experiments_model');
 	}
 
+	public function index() {
+		$data['title'] = 'Experiment';
+ 		$data['main_content'] = 'experiment/add_experiment_form';
+ 		$this->load->view('_main_layout', $data);
+    }
+
 	public function add_experiment(){
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
 		$info['privacy'] = $this->input->post('privacy');
-		$fid = $this->session->userdata('fid');
-		$this->experiments_model->add_faculty_experiment($fid,$info);
-
+		$role = $this->session->userdata('role')[0];
+		$id = $this->session->userdata('active_id');
+		if ($role == 'faculty'){
+			$this->experiments_model->add_faculty_experiment($id,$info);
+		}
+		elseif ($role == 'graduate'){
+			$this->experiments_model->add_graduates_experiment($id,$info);
+		}
 		$role = $this->session->userdata('role')[0];
 		redirect($role);
 	}

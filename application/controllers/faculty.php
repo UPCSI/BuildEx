@@ -5,13 +5,15 @@ class Faculty extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('faculty_model');
+		
 	}
 	
 	public function index(){
 		if(in_array('faculty',$this->session->userdata('role'))){
+			$this->load->model('experiments_model');
 			$data['title'] = 'Faculty';
 			$data['main_content'] = 'contents/faculty_body';
-			$data['experiments'] = $this->get_all_experiments($this->session->userdata('id'));
+			$data['experiments'] = $this->experiments_model->get_all_faculty_experiments($this->session->userdata('active_id'));
 			$this->load->view('_main_layout', $data);
 		}
 		else{

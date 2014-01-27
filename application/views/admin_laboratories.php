@@ -2,11 +2,16 @@
 <hr>
 <?php 
 	$count = 0;
-	foreach ($laboratories as $laboratory){
-		$count = $count + 1;
-		echo $count.'. ';
-		echo anchor('laboratory/edit_laboratory/'.$laboratory->labid,$laboratory->name);
-		echo '</br>';
+	if (isset($laboratories)){
+		foreach ($laboratories as $laboratory){
+			$count = $count + 1;
+			echo $count.'. ';
+			echo anchor('laboratory/edit_laboratory/'.$laboratory->labid,$laboratory->name);
+			echo '</br>';
+		}
+	}
+	else{
+		echo 'No Existing Laboratories';
 	}
 ?>
 <br>
