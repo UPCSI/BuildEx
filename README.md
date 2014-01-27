@@ -1,9 +1,16 @@
 # BuildEx
 
+##Important!
+
 Upon creating the commit message, 
 "the body should provide a meaningful commit message, which:
 - uses the imperative, present tense: "change", not "changed" or "changes"."
-Git recommends that format. 
+Git recommends that format.
+
+buildex_db_struct.sql is the real schema and structure of our database.
+buildex_db_data.sql is the dump data of our database. This will serve as out test case(s) source.
+
+Import first the structure before getting on the data.
 
 ## Installation
 
