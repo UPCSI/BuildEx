@@ -109,7 +109,7 @@ class Faculty_model extends MY_Model{
 		* this function will return all the faculty in
 		* that lab.
 		*/
-		$this->db->select('Faculty.*');
+		$this->db->select('Users.*,Faculty.*');
 		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');

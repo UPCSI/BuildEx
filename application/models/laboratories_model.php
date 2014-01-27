@@ -13,6 +13,8 @@ class Laboratories_model extends MY_Model{
 		$this->db->insert('Laboratories',$laboratory_info);
 		$labid = $this->db->insert_id();
 
+		$laboratory_info['members_count'] = 0;
+
 		$this->db->insert('manage',array('lid'=>$lid,'labid'=>$labid));	
 		return $labid;
 	}

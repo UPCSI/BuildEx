@@ -33,7 +33,6 @@ class Experiment extends MY_Controller{
 
 	public function update_experiment($eid = NULL){
 		$uid = $this->session->userdata('id');
-
 		#setsession(eid)
 		$this->session->set_userdata('eid', $eid);
 		#endsession

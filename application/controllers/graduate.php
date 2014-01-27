@@ -46,7 +46,9 @@ class Graduate extends MY_Controller{
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
 			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
+			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 		}
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
 		$this->load->view('_main_layout',$data);
 	}
 
