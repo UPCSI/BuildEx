@@ -62,15 +62,12 @@ TABLE Respondents:
 	gender: character varying(32)
 	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
-TABLE request:
-	fid: integer references Faculty.fid
-	eid: integer references Experiments.eid
-	since: date
-
 TABLE advise:
 	fid: integer references Faculty.fid
 	eid: integer references Experiments.eid
 	since: date
+	status: boolean #{Faculty
+	confirmed[true],not confirmed[false]}
 
 TABLE faculty_conduct:
 	fid: integer references Faculty.fid
@@ -96,8 +93,10 @@ TABLE faculty_member_of:
 	fid: references Faculty.fid
 	labid: references Laboratories.labid
 	since: date
+	status: boolean #{LabHead confirmed[true],not confirmed[false]}
 
 TABLE graduates_member_of:
 	gid: references Graduates.gid
 	labid: references Laboratories.labid
 	since: date
+	status: boolean #{LabHead confirmed[true],not confirmed[false]}

@@ -1,38 +1,4 @@
 --
--- PostgreSQL database cluster dump
---
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-
---
--- Roles
---
-
-CREATE ROLE neil;
-ALTER ROLE neil WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN NOREPLICATION PASSWORD 'md5fc46aae55862a64d237ebe51da87e3b7' VALID UNTIL 'infinity';
-CREATE ROLE postgres;
-ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION PASSWORD 'md567a79697d2c1eb7d79b92bc7a2eb54e5';
-
-
-
-
-
-
---
--- Database creation
---
-
-CREATE DATABASE buildex_db WITH TEMPLATE = template0 OWNER = postgres;
-REVOKE ALL ON DATABASE template1 FROM PUBLIC;
-REVOKE ALL ON DATABASE template1 FROM postgres;
-GRANT ALL ON DATABASE template1 TO postgres;
-GRANT CONNECT ON DATABASE template1 TO PUBLIC;
-
-
-\connect buildex_db
-
---
 -- PostgreSQL database dump
 --
 
@@ -118,7 +84,7 @@ CREATE TABLE "Experiments" (
     eid integer DEFAULT nextval('experiments_eid_seq'::regclass) NOT NULL,
     title character varying(64),
     category character varying(32),
-    target_count integer,
+    target_count integer DEFAULT 1,
     current_count integer DEFAULT 0,
     status boolean DEFAULT false,
     request_status boolean DEFAULT false,
@@ -208,7 +174,7 @@ ALTER TABLE public.laboratories_labid_seq OWNER TO postgres;
 CREATE TABLE "Laboratories" (
     labid integer DEFAULT nextval('laboratories_labid_seq'::regclass) NOT NULL,
     name character varying(32),
-    members_count integer
+    members_count integer DEFAULT 0
 );
 
 
@@ -324,7 +290,8 @@ COMMENT ON TABLE "Users" IS 'General users table';
 CREATE TABLE advise (
     fid integer NOT NULL,
     eid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
+    since date DEFAULT ('now'::text)::date,
+    status boolean DEFAULT false
 );
 
 
@@ -363,7 +330,8 @@ ALTER TABLE public.faculty_conduct OWNER TO postgres;
 CREATE TABLE faculty_member_of (
     fid integer NOT NULL,
     labid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
+    since date DEFAULT ('now'::text)::date,
+    status boolean DEFAULT false
 );
 
 
@@ -389,7 +357,8 @@ ALTER TABLE public.graduates_conduct OWNER TO postgres;
 CREATE TABLE graduates_member_of (
     gid integer NOT NULL,
     labid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
+    since date DEFAULT ('now'::text)::date,
+    status boolean DEFAULT false
 );
 
 
@@ -407,205 +376,6 @@ CREATE TABLE manage (
 
 
 ALTER TABLE public.manage OWNER TO postgres;
-
---
--- Name: request; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE request (
-    fid integer NOT NULL,
-    eid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
-);
-
-
-ALTER TABLE public.request OWNER TO postgres;
-
---
--- Data for Name: Admins; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Admins" (uid, aid) FROM stdin;
-2	2
-\.
-
-
---
--- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Experiments" (eid, title, category, target_count, current_count, status, request_status, description, is_published, path, privacy) FROM stdin;
-\.
-
-
---
--- Data for Name: Faculty; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Faculty" (uid, fid, account_status, faculty_num) FROM stdin;
-\.
-
-
---
--- Data for Name: Graduates; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Graduates" (uid, gid, student_num, account_status) FROM stdin;
-\.
-
-
---
--- Data for Name: Laboratories; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Laboratories" (labid, name, members_count) FROM stdin;
-\.
-
-
---
--- Data for Name: LaboratoryHeads; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "LaboratoryHeads" (uid, lid) FROM stdin;
-\.
-
-
---
--- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, street_addr, barangay_addr, city_addr, nationality, birthdate, sex, gender, civil_status) FROM stdin;
-\.
-
-
---
--- Data for Name: Users; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY "Users" (uid, username, password, first_name, middle_name, last_name, email_ad, temp_password) FROM stdin;
-2	nmcalabroso	$6$rounds=10000$iNt3ll3Q$vL7JO/sjCHyaL6HLfT3217UDZbvV5dTbGCPdDLYvzzQ73xyo362LP0dbZ6I2QUu29YvLCvfnlSmYApJq0DlFa/	Neil	Muchillas	Calabroso	nmcalabroso@up.edu.ph	\N
-\.
-
-
---
--- Name: admins_aid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('admins_aid_seq', 2, true);
-
-
---
--- Data for Name: advise; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY advise (fid, eid, since) FROM stdin;
-\.
-
-
---
--- Data for Name: answer; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY answer (rid, eid, since) FROM stdin;
-\.
-
-
---
--- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('experiments_eid_seq', 1, true);
-
-
---
--- Data for Name: faculty_conduct; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY faculty_conduct (fid, eid, since) FROM stdin;
-\.
-
-
---
--- Name: faculty_fid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('faculty_fid_seq', 1, true);
-
-
---
--- Data for Name: faculty_member_of; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY faculty_member_of (fid, labid, since) FROM stdin;
-\.
-
-
---
--- Data for Name: graduates_conduct; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY graduates_conduct (gid, eid, since) FROM stdin;
-\.
-
-
---
--- Name: graduates_gid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('graduates_gid_seq', 1, true);
-
-
---
--- Data for Name: graduates_member_of; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY graduates_member_of (gid, labid, since) FROM stdin;
-\.
-
-
---
--- Name: laboratories_labid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('laboratories_labid_seq', 1, true);
-
-
---
--- Name: laboratoryheads_lid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('laboratoryheads_lid_seq', 1, true);
-
-
---
--- Data for Name: manage; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY manage (lid, labid, since) FROM stdin;
-\.
-
-
---
--- Data for Name: request; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-COPY request (fid, eid, since) FROM stdin;
-\.
-
-
---
--- Name: respondents_rid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('respondents_rid_seq', 1, true);
-
-
---
--- Name: users_uid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('users_uid_seq', 2, true);
-
 
 --
 -- Name: Experiments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
@@ -757,14 +527,6 @@ ALTER TABLE ONLY graduates_conduct
 
 ALTER TABLE ONLY manage
     ADD CONSTRAINT lid_labid_pkey PRIMARY KEY (lid, labid);
-
-
---
--- Name: request_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_primary PRIMARY KEY (fid, eid);
 
 
 --
@@ -952,22 +714,6 @@ ALTER TABLE ONLY manage
 
 
 --
--- Name: request_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: request_ref_faculty; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY request
-    ADD CONSTRAINT request_ref_faculty FOREIGN KEY (fid) REFERENCES "Faculty"(fid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
 
@@ -979,105 +725,5 @@ GRANT ALL ON SCHEMA public TO PUBLIC;
 
 --
 -- PostgreSQL database dump complete
---
-
-\connect postgres
-
---
--- PostgreSQL database dump
---
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- Name: postgres; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE postgres IS 'default administrative connection database';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- PostgreSQL database dump complete
---
-
-\connect template1
-
---
--- PostgreSQL database dump
---
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- Name: template1; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE template1 IS 'default template for new databases';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: public; Type: ACL; Schema: -; Owner: postgres
---
-
-REVOKE ALL ON SCHEMA public FROM PUBLIC;
-REVOKE ALL ON SCHEMA public FROM postgres;
-GRANT ALL ON SCHEMA public TO postgres;
-GRANT ALL ON SCHEMA public TO PUBLIC;
-
-
---
--- PostgreSQL database dump complete
---
-
---
--- PostgreSQL database cluster dump complete
 --
 
