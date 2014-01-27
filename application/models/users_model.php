@@ -60,6 +60,20 @@ class Users_model extends MY_Model{
 			'loggedin' => TRUE
 		);
 
+		if($data['role'][0] == 'faculty'){
+			$this->db->where('uid', $data['uid']);
+			$query = $this->db->get('Faculty');
+			$user = $query->row();
+			$data['active_id'] = $user->fid;
+		}
+
+		else if($data['role'][0] == 'graduate'){
+			$this->db->where('uid', $data['uid']);
+			$query = $this->db->get('Graduates');
+			$user = $query->row();
+			$data['active_id'] = $user->gid;
+		}
+
 		$this->session->set_userdata($data);
 	}
 
