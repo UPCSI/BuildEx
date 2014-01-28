@@ -57,40 +57,58 @@ class Users_model extends MY_Model{
 			'lname' => $user->last_name,
 			'email' => $user->email_ad,
 			'role'	=> $this->check_role($user->uid),
+			'aid' => NULL,
+			'lid' => NULL,
+			'fid' => NULL,
+			'gid' => NULL,
 			'loggedin' => TRUE
 		);
 
-		/* get active_id */
-
-		$role = $data['role'][0];
-
-		if($role == 'admin'){
+		/* get other id */
+		$role = $data['role'];
+		if(in_array('admin',$role)){
 			$this->db->where('uid', $data['uid']);
 			$query = $this->db->get('Admins');
 			$user = $query->row();
-			$data['active_id'] = $user->aid;
+			$data['aid'] = $user->aid;
 		}
 
-		else if($role == 'lab head'){
+		if(in_array('labhead',$role)){
 			$this->db->where('uid', $data['uid']);
 			$query = $this->db->get('LaboratoryHeads');
 			$user = $query->row();
-			$data['active_id'] = $user->lid;
+			$data['lid'] = $user->lid;
 		}		
 
-		else if($role == 'faculty'){
+		if(in_array('faculty',$role)){
 			$this->db->where('uid', $data['uid']);
 			$query = $this->db->get('Faculty');
 			$user = $query->row();
-			$data['active_id'] = $user->fid;
+			$data['fid'] = $user->fid;
 		}
 
-		else if($role == 'graduate'){
+		if(in_array('graduate',$role)){
 			$this->db->where('uid', $data['uid']);
 			$query = $this->db->get('Graduates');
 			$user = $query->row();
-			$data['active_id'] = $user->gid;
+			$data['gid'] = $user->gid;
 		}		
+
+		/* get active_id */
+		$role = $data['role'][0];
+		if($role == 'admin')
+			$data['active_id'] = $data['aid'];
+
+		else if($role == 'labhead')
+			$data['active_id'] = $data['lid'];
+
+		else if($role == 'faculty')
+			$data['active_id'] = $data['fid'];
+
+		else if($role == 'graduate')
+			$data['active_id'] = $data['gid'];
+
+
 
 		$this->session->set_userdata($data);
 	}
@@ -104,7 +122,7 @@ class Users_model extends MY_Model{
 
 		$query = $this->db->get_where('LaboratoryHeads', array('uid' => $uid));
 		if($query->num_rows == 1){
-			array_push($role, 'lab head');
+			array_push($role, 'labhead');
 		}
 
 		$query = $this->db->get_where('Faculty', array('uid' => $uid));

@@ -33,6 +33,10 @@ class Home extends CI_Controller{
 					redirect('admin');
 				}
 
+				else if (in_array('labhead',$role)){
+					redirect('labhead');
+				}
+
 				else if (in_array('faculty',$role) && $this->users_model->confirmed_faculty() == "t"){
 					redirect('faculty');
 				}
