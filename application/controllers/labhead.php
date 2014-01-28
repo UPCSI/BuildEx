@@ -8,6 +8,9 @@ class Labhead extends MY_Controller{
 	}
 	
 	public function index(){
+		$fid = $this->session->userdata('fid');
+		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
+		$data['lab_name'] = $lab->name;
 		if(in_array('labhead',$this->session->userdata('role'))){
 			$data['title'] = 'Lab Head';
 			$data['main_content'] = 'labhead/main';
@@ -39,6 +42,7 @@ class Labhead extends MY_Controller{
 		$labid = $lab->labid;
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
 		$data['role'] = 'labhead';
+		$data['lab_name'] = $lab->name;
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 
@@ -46,7 +50,6 @@ class Labhead extends MY_Controller{
 		$data['main_content'] = 'labhead/lab';
 		$this->load->view('_main_layout',$data);
 	}
-
 
 	public function faculty_requests(){
 		$labid = $this->session->userdata('labid');

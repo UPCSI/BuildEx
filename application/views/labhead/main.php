@@ -10,7 +10,7 @@
 <a href = "<?php echo site_url('labhead/graduates_requests'); ?>"> Confirm Graduates </a><br/>
 
 <br/>
-<a href = "<?php echo site_url('labhead/laboratory'); ?>"> Lab Profile </a><br/>
+<a href = "<?php echo site_url('labhead/laboratory'); ?>"> <? echo $lab_name; ?> </a><br/>
 
 <br/>
 <a href = "<?php echo site_url('home/logout'); ?>"> Logout</a><br/>
