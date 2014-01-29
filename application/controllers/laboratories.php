@@ -14,8 +14,10 @@ class Laboratories extends MY_Controller{
 			redirect(''); 
 			//implement here where to redirect if $labid is not supplied
 		}
-
-		$data['is_member'] = $this->session->flashdata('is_member');
+		$role = $this->session->userdata('active_role');
+		if($role == 'student' || $role == 'faculty'){
+			$data['is_member'] = $this->session->flashdata('is_member');
+		}
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory_view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
@@ -27,7 +29,6 @@ class Laboratories extends MY_Controller{
 		}
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		//var_dump($data['graduates']);
 		$this->load->view('_main_layout',$data);
 	}
 }
