@@ -22,12 +22,6 @@ class Faculty extends MY_Controller{
 		}
 	}
 
-	public function get_all_experiments($fid = 0){
-		$this->load->model('experiments_model');
-		$list = $this->experiments_model->get_all_faculty_experiments($fid);
-		return $list;
-	}
-
 	public function edit_faculty($uid = 0, $fid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
@@ -46,5 +40,20 @@ class Faculty extends MY_Controller{
 		$fid = $this->session->userdata('active_id');
 		$this->laboratories_model->request_faculty_lab($labid,$fid);
 		redirect(''); //implement where to redirect after a faculty request for a lab
+	}
+
+	public function view($uid = 0, $fid = 0){
+		$data['title'] = 'Faculty';
+		$data['user'] = $this->users_model->get_user_profile($uid);
+		$data['faculty'] = $this->faculty_model->get_faculty_profile($fid);
+		$data['experiments'] = $this->get_all_experiments($fid);
+		$data['main_content'] = 'faculty_view';
+		$this->load->view('_main_layout', $data);
+	}
+	
+	private function get_all_experiments($fid = 0){
+		$this->load->model('experiments_model');
+		$list = $this->experiments_model->get_all_faculty_experiments($fid);
+		return $list;
 	}
 }

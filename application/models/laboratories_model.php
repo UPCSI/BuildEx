@@ -62,6 +62,14 @@ class Laboratories_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
+	public function get_laboratory_head_laboratory($labid){
+		$this->db->select('Laboratories.*');
+		$this->db->join('faculty_member_of','faculty_member_of.labid = Laboratories.labid');
+		$this->db->where('faculty_member_of.fid',$fid);
+		$q = $this->db->get('Laboratories');
+		return $this->query_row_conversion($q);
+	}
+
 	public function request_faculty_lab($labid,$fid){
 		return $this->db->insert('faculty_member_of',array('labid'=>$labid,'fid'=>$fid));
 	}

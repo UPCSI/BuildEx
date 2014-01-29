@@ -72,6 +72,19 @@ class Graduate extends MY_Controller{
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 
+	public function view($uid = 0, $gid =0){
+		$data['title'] = 'Graduate';
+		$data['user'] = $this->users_model->get_user_profile($uid);
+		if(is_null($data['user'])){
+			redirect('');
+			//implement where to redirect if user doesn't exist
+		}
+		$data['graduate'] = $this->graduates_model->get_graduate_profile($gid);
+		$data['experiments'] = $this->get_all_experiments($gid);
+		$data['main_content'] = 'graduate_view';
+		$this->load->view('_main_layout', $data);
+	}
+
 	private function get_all_experiments($gid = 0){
 		$this->load->model('experiments_model');
 		$list = $this->experiments_model->get_all_graduates_experiments($gid);	

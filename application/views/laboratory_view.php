@@ -9,7 +9,7 @@
 	<? endif; ?>
 <? endif; ?>
 
-<? if(isset($laboratory)): ?> 
+<? if(isset($laboratory)): ?>
 	<h4> <?= $laboratory->name ?> </h4>
 	<strong> No. of members: </strong> <?= $laboratory->members_count ?>
 	<br> <br>
