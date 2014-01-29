@@ -89,7 +89,7 @@ class Laboratories_model extends MY_Model{
 	public function accept_graduate($labid, $gid){
 		$this->db->where('labid', $labid);
 		$this->db->where('gid',$gid);
-		$this->db->update('graduate_member_of',array('status'=>'true'));
+		$this->db->update('graduates_member_of',array('status'=>'true'));
 		return $this->is_rows_affected();
 	}
 
@@ -107,7 +107,7 @@ class Laboratories_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_all_faculty_request($labid){
+	public function get_all_faculty_requests($labid){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num');
 		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
