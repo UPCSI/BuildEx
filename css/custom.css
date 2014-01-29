@@ -1,3 +1,23 @@
+/*default version*/
+@font-face {
+    font-family: 'Din';
+    src: 
+        url('../fonts/DINPro-Light.ttf') 
+        format('opentype');
+}
+/*bold version*/
+@font-face {
+    font-family: 'Din';
+    src: 
+        url('../fonts/DINPro-Medium.ttf') 
+        format('opentype');
+    font-weight: bold;
+}
+
+h1, h2, h3, h4, h5, h6, p, a, li {
+  font-family: 'Din' !important;
+}
+
 /* sizing */
 
 html {
@@ -38,33 +58,33 @@ div.row.vcenter40 {
 /* top-bar large */
 
 .top-bar {
-	background: #3498db;
+	background: #252525;
 }
 
 .top-bar-section ul {
-	background: #3498db;
+	background: #252525;
 }
 
 .top-bar-section li a:not(.button) {
-	background: #3498db;
+	background: #252525;
 }
 
 .top-bar-section li a:not(.button):hover {
-	background: #2980b9;
+	background: #555555;
 }
 
 .top-bar-section ul li:hover > a {
-	background: #2980b9;
+	background: #555555;
 }
 
 /* top-bar small */
 
 .top-bar.expanded .title-area {
-	background: #2980b9;
+	background: #555555;
 }
 
 .top-bar.expanded .toggle-topbar a {
-	color: #3498db;
+	color: #252525;
 }
 
 /* home content */
@@ -79,17 +99,26 @@ div.row.vcenter40 {
 
 section.jumbotron {
 	min-height: 100%;
-	background-image: url("../img/jumbo_bg.jpg");
-	background-position: center center;
-	background-size:cover;
+	background: #45A7F3;
 	color:#fff;
 }
 
+section.jumbotron:after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: url('http://localhost/BuildEx/img/jumbotron_bg.png') repeat center center;
+  opacity: .1;
+}
+
 section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand {
-  background-color: rgba(255,255,255,0.3);
-  border-width:3px;
-	border-style: solid;
-	border-color: white;
+  margin-top: 5px;
+  z-index:5;
+  background-color: rgba(255,255,255,0.13);
   color: white;
   -webkit-transition: background-color 300ms ease-out;
   -moz-transition: background-color 300ms ease-out;
@@ -98,7 +127,7 @@ section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.exp
 }
 
 section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand:hover {
-  background-color: rgba(255,255,255,0);
+  background-color: rgba(255,255,255,0.3);
   -webkit-transition: background-color 300ms ease-out;
   -moz-transition: background-color 300ms ease-out;
   transition: background-color 300ms ease-out;
@@ -110,11 +139,11 @@ section.homesection {
 }
 
 section:nth-child(even).homesection {
-	background-color: #34495e;
+	background-color: #ecf0f1;
 }
 
 section:nth-child(odd).homesection {
-	background-color: #2c3e50;
+	background-color: #ecf0f1;
 }
 
 div.titleholder {
