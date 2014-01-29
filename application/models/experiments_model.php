@@ -191,6 +191,19 @@ class Experiments_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
+	public function get_all_advisory_experiments($fid = 0){
+		$this->db->select('Users.uid,Users.first_name,Users.middle_name,Users.last_name,Graduates.gid,Experiments.*');
+		$this->db->join('advise','advise.eid = Experiments.eid');
+		$this->db->join('Faculty','Faculty.fid = advise.fid');
+		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates','Graduates.gid = graduates_conduct.gid');
+		$this->db->join('Users','Users.uid = Graduates.uid');
+		$this->db->where('Faculty.fid', $fid);
+		$q = $this->db->get('Experiments');
+
+		return $this->query_conversion($q);
+	}
+
 	public function get_all_graduates_experiments($gid = 0, $category = null){
 		/*
 		* Returns all graduate experiments by default. 

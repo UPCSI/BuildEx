@@ -22,6 +22,7 @@ class Graduate extends MY_Controller{
 	public function profile(){
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
+		$data['graduate'] = $this->graduates_model->get_graduate_profile($this->session->userdata('active_id'));
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate_profile';
@@ -29,8 +30,7 @@ class Graduate extends MY_Controller{
 	}
 
 	public function experiments(){
-		$this->load->model('experiments_model');
-		$data['experiments'] = $this->experiments_model->get_all_graduates_experiments($this->session->userdata('active_id'));
+		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate_experiments';
 		$this->load->view('_main_layout',$data);

@@ -1,8 +1,8 @@
-<h3> Graduate: Profile </h3>
+<h3> Faculty: Profile </h3>
 <hr>
 Name: <?php echo strtoupper($user->last_name).', '.ucwords($user->first_name).', '.ucfirst($user->middle_name); ?> <br>
 Email Address: <?php echo $user->email_ad; ?> <br>
-Student No: <?php echo $graduate->student_num; ?> <br>
+Faculty No: <?php echo $faculty->faculty_num; ?> <br>
 <br>
 Roles: <br>
 <?php 

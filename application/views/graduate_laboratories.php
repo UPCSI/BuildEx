@@ -1,6 +1,6 @@
 <h3>Graduate: My Laboratory</h3>
 <hr>
-<?php 
+<?php
 	if (isset($main_lab)){ 
 		echo '<h4>'.$main_lab->name.'</h4>';
 		echo '<p><strong> No. of members: </strong>'.$main_lab->members_count.'</p>';

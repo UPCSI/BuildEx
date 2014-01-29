@@ -1,4 +1,4 @@
-<h3> Graduate: Experiments </h3>
+<h3> Faculty: Experiments </h3>
 <hr>
 <h2>My Experiments</h2>
 <?php
