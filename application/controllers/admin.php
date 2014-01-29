@@ -73,7 +73,7 @@ class Admin extends MY_Controller{
 	public function laboratories(){
 		$data['laboratories'] = $this->get_laboratories_list();
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin_laborat5ories';
+		$data['main_content'] = 'admin_laboratories';
 		$this->load->view('_main_layout',$data);
 	}
 
