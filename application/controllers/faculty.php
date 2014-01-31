@@ -15,8 +15,13 @@ class Faculty extends MY_Controller{
 		}
 		else{
 			$role = $this->session->userdata('active_role');
-			redirect($role[0]);
+			redirect($this->session->userdata('active_role'));
 		}
+	}
+
+	public function redirect($role){
+		$this->session->set_userdata(array('active_role' => $role));
+		redirect($role);
 	}
 
 	public function profile(){
