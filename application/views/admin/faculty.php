@@ -6,7 +6,7 @@
 		foreach ($faculty as $faculty){
 			$count = $count + 1;
 			echo $count.'. ';
-			echo anchor('faculty/view/'.$faculty->uid.'/'.$faculty->fid,$faculty->username);
+			echo anchor('faculty/view/'.$faculty->username,$faculty->username);
 			echo '</br>';
 		}
 	}
@@ -29,7 +29,7 @@
 		foreach($requests as $request){
 			$count = $count + 1;
 			echo $count.'. ';
-			echo anchor('faculty/view/'.$request->uid.'/'.$request->fid,$request->username);
+			echo anchor('faculty/view/'.$request->username,$request->username);
 			echo ' : '.strtoupper($request->last_name).', '.ucwords($request->first_name).', '.ucfirst($request->middle_name).' : '.$request->faculty_num;
 			echo form_open('admin/confirm_faculty/'.$request->fid);
 			echo form_submit('submit','Confirm');

@@ -14,7 +14,7 @@ class Graduates_model extends MY_Model{
 		),
 		'lname' => array(
 			'field' => 'lname', 
-			'label' => 'lname', 
+			'label' => 'lname',
 			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
 		), 
 		'email' => array(

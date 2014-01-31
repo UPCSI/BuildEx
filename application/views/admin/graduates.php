@@ -5,7 +5,7 @@
 	foreach ($graduates as $graduate){
 		$count = $count + 1;
 		echo $count.'. ';
-		echo anchor('graduate/view/'.$graduate->uid.'/'.$graduate->gid, $graduate->username);
+		echo anchor('graduate/view/'.$graduate->username, $graduate->username);
 		echo '</br>';
 	}
 ?>

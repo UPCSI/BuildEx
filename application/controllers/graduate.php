@@ -77,14 +77,21 @@ class Graduate extends MY_Controller{
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 
-	public function view($uid = 0, $gid =0){
-		$data['title'] = 'Graduate';
-		$data['user'] = $this->users_model->get_user_profile($uid);
+	public function view($username = null){
+		if(is_null($username)){
+			redirect('');
+			//implement where to redirect if username is non-existent
+		}
+
+		$data['user'] = $this->users_model->get_user_profile(0,$username);
+
 		if(is_null($data['user'])){
 			redirect('');
 			//implement where to redirect if user doesn't exist
 		}
-		$data['graduate'] = $this->graduates_model->get_graduate_profile($gid);
+		$data['graduate'] = $this->graduates_model->get_graduate_profile(0,$username);
+		$gid = $data['graduate']->gid;
+		$data['title'] = 'Graduate';
 		$data['experiments'] = $this->get_all_experiments($gid);
 		$data['main_content'] = 'graduate/view';
 		$this->load->view('_main_layout', $data);

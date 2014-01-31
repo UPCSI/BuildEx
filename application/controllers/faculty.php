@@ -89,11 +89,23 @@ class Faculty extends MY_Controller{
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 
-	public function view($uid = 0, $fid = 0){
-		$data['title'] = 'Faculty';
-		$data['user'] = $this->users_model->get_user_profile($uid);
-		$data['faculty'] = $this->faculty_model->get_faculty_profile($fid);
+	public function view($username = null){
+		if(is_null($username)){
+			redirect('');
+			//implement where to redirect if username is non-existent
+		}
+
+		$data['user'] = $this->users_model->get_user_profile(0,$username);
+
+		if(is_null($data['user'])){
+			redirect('');
+			//implement where to redirect if user is non-existent
+		}
+
+		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
+		$fid = $data['faculty']->fid;
 		$data['experiments'] = $this->get_all_experiments($fid);
+		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty_view';
 		$this->load->view('_main_layout', $data);
 	}
