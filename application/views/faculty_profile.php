@@ -9,6 +9,6 @@ Roles: <br>
 	$count = 0;
 	foreach ($roles as $role) {
 		$count = $count + 1;
-		echo $count.'. '.ucfirst($role).'<br>';
+		echo '<a href ="redirect/' .$role .'">' .$count .'. '.ucfirst($role) .'</a><br/>';
 	}
 ?>
