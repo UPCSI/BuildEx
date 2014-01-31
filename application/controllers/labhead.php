@@ -18,7 +18,7 @@ class Labhead extends MY_Controller{
 		}
 
 		else
-			redirect($this->session->userdata('role')[0]);
+			redirect($this->session->userdata('active_role'));
 	}
 
 	public function profile(){

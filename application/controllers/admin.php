@@ -14,7 +14,7 @@ class Admin extends MY_Controller{
 			$this->load->view('_main_layout', $data);
 		}
 		else{
-			redirect($this->session->userdata('role')[0]);
+			redirect($this->session->userdata('active_role'));
 		}
 	}
 

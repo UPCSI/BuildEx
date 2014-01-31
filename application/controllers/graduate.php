@@ -14,7 +14,7 @@ class Graduate extends MY_Controller{
 			$this->load->view('_main_layout', $data);
 		}
 		else{
-			$role = $this->session->userdata('role');
+			$role = $this->session->userdata('active_role');
 			redirect($role[0]);
 		}
 	}
