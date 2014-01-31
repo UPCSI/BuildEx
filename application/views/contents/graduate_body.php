@@ -1,2 +1,0 @@
-<?php echo "BuildEx: You (". $this->session->userdata('username') .") are logged in with a role of ". ucfirst($this->session->userdata('role')[0]); ?>
-<br/><br/><a href = "<?php echo site_url('home/logout'); ?>"> Logout</a><br/>

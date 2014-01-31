@@ -26,6 +26,9 @@
 				<label>Email</label>
 				<input type="text" id="signUpEmail" required name="email" placeholder="Email">
 
+				<label>Student no.</label>
+				<input type="text" id="student_num" required name="student_num" placeholder="201131208">
+
 				<label>Username</label>
 				<input type="text" id="signUpUsername" required name="username" placeholder="Username">
 

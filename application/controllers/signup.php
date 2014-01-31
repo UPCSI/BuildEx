@@ -17,7 +17,7 @@ class Signup extends CI_Controller{
 		$this->load->view('_main_layout',$data);
 	}
 
-	function add_faculty(){
+	public function add_faculty(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
 
@@ -37,7 +37,9 @@ class Signup extends CI_Controller{
 				'password' => $this->input->post('password')
 			);	
 
-			$this->faculty_model->add_faculty($new_user);
+			$faculty_info = array('faculty_num' =>$this->input->post('faculty_num'));
+
+			$this->faculty_model->add_faculty($new_user,$faculty_info);
 			redirect('');
 
 /*			if($this->faculty_model->add_faculty($new_user)){
@@ -54,7 +56,7 @@ class Signup extends CI_Controller{
 			echo "Invalid input.";
 	}
 
-	function add_graduate(){
+	public function add_graduate(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
 
@@ -72,9 +74,11 @@ class Signup extends CI_Controller{
 				'email_ad' => $email,
 				'username' => $username,
 				'password' => $this->input->post('password')
-			);	
+			);
 
-			$this->graduates_model->add_graduate($new_user);
+			$graduate_info = array('student_num'=>$this->input->post('student_num'));
+
+			$this->graduates_model->add_graduate($new_user,$graduate_info);
 			redirect('');
 
 /*			if($this->graduates_model->add_graduate($new_user)) {
@@ -91,7 +95,7 @@ class Signup extends CI_Controller{
 			echo "Invalid input.";
 	}
 
-	function confirm_email($email, $email_code){
+	public function confirm_email($email, $email_code){
 		$this->load->model('email_model');
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
