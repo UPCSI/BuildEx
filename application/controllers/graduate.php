@@ -8,9 +8,9 @@ class Graduate extends MY_Controller{
 	}
 	
 	public function index() {
-		if($this->session->userdata('active_role') == 'graduate'){
+		if(in_array('graduate',$this->session->userdata('role'))){
 			$data['title'] = 'Graduate';
-			$data['main_content'] = 'graduate_index';
+			$data['main_content'] = 'graduate/index';
 			$this->load->view('_main_layout', $data);
 		}
 		else{
@@ -25,14 +25,14 @@ class Graduate extends MY_Controller{
 		$data['graduate'] = $this->graduates_model->get_graduate_profile($this->session->userdata('active_id'));
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate_profile';
+		$data['main_content'] = 'graduate/profile';
 		$this->load->view('_main_layout',$data);
 	}
 
 	public function experiments(){
 		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate_experiments';
+		$data['main_content'] = 'graduate/experiments';
 		$this->load->view('_main_layout',$data);
 	}
 
@@ -41,7 +41,7 @@ class Graduate extends MY_Controller{
 		$this->load->model('faculty_model');
 		$gid = $this->session->userdata('active_id');
 		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate_laboratories';
+		$data['main_content'] = 'graduate/laboratories';
 		$data['main_lab'] = $this->laboratories_model->get_graduate_laboratory($gid);
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
@@ -81,7 +81,7 @@ class Graduate extends MY_Controller{
 		}
 		$data['graduate'] = $this->graduates_model->get_graduate_profile($gid);
 		$data['experiments'] = $this->get_all_experiments($gid);
-		$data['main_content'] = 'graduate_view';
+		$data['main_content'] = 'graduate/view';
 		$this->load->view('_main_layout', $data);
 	}
 

@@ -31,12 +31,15 @@
 		echo '<p> You do not belong to any laboratory. </p>';
 		echo '<hr>';
 		echo '<h4> Apply to Laboratory </h4>';
-		foreach ($laboratories as $laboratory) {
-			echo '<a href = "'.site_url('laboratories/view/'.$laboratory->labid).'">';
-			echo $laboratory->name;
-			echo '</a>';
-			echo '<br>';
+		if (isset($laboratories)) {
+			foreach ($laboratories as $laboratory) {
+				echo '<a href = "'.site_url('laboratories/view/'.$laboratory->labid).'">';
+				echo $laboratory->name;
+				echo '</a>';
+				echo '<br>';
+			}
 		}
+		else echo '<p>There are no laboratories. Poor you. :(</p>';
 	}
 ?>
 <br>

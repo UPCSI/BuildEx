@@ -8,9 +8,9 @@ class Admin extends MY_Controller{
 	}
 	
 	public function index(){
-		if($this->session->userdata('active_role') == 'admin'){
+		if(in_array('admin',$this->session->userdata('role'))){
 			$data['title'] = 'Admin';
-			$data['main_content'] = 'admin_index';
+			$data['main_content'] = 'admin/index';
 			$this->load->view('_main_layout', $data);
 		}
 		else{
@@ -23,14 +23,14 @@ class Admin extends MY_Controller{
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin_profile';
+		$data['main_content'] = 'admin/profile';
 		$this->load->view('_main_layout',$data);
 	}
 
 	public function graduates(){
 		$data['graduates'] = $this->get_graduate_list();
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin_graduates';
+		$data['main_content'] = 'admin/graduates';
 		$this->load->view('_main_layout',$data);
 	}
 
@@ -38,7 +38,7 @@ class Admin extends MY_Controller{
 		$data['faculty'] = $this->get_faculty_list();
 		$data['requests'] = $this->get_faculty_account_requests();
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin_faculty';
+		$data['main_content'] = 'admin/faculty';
 		$this->load->view('_main_layout',$data);
 	}
 
@@ -73,7 +73,7 @@ class Admin extends MY_Controller{
 	public function laboratories(){
 		$data['laboratories'] = $this->get_laboratories_list();
 		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin_laboratories';
+		$data['main_content'] = 'admin/laboratories';
 		$this->load->view('_main_layout',$data);
 	}
 
