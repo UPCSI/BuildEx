@@ -11,7 +11,7 @@ class Labhead extends MY_Controller{
 		$fid = $this->session->userdata('fid');
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
 		$data['lab_name'] = $lab->name;
-		if(in_array('labhead',$this->session->userdata('role'))){
+		if($this->session->userdata('active_role') == 'labhead'){
 			$data['title'] = 'Lab Head';
 			$data['main_content'] = 'labhead/main';
 			$this->load->view('_main_layout', $data);

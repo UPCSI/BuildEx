@@ -29,21 +29,13 @@ class Home extends CI_Controller{
 			if ($this->users_model->is_valid_user($username, $password)){
 				$this->users_model->set_session_data($username);
 				$role = $this->session->userdata('role');
-				if (in_array('admin',$role)){
-					redirect('admin');
-				}
+				$active_role = $this->session->userdata('active_role');
 
-				else if (in_array('labhead',$role)){
-					redirect('labhead');
-				}
-
-				else if (in_array('faculty',$role) && $this->users_model->confirmed_faculty() == "t"){
+				if($active_role == 'faculty' && $this->users_model->confirmed_faculty() == "t")
 					redirect('faculty');
-				}
 
-				else if (in_array('graduate',$role)){
-					redirect('graduate');
-				}
+				else if($active_role != 'faculty')
+					redirect($active_role);
 
 				else{
 					$new_session['loggedin'] = FALSE;

@@ -8,7 +8,7 @@ class Graduate extends MY_Controller{
 	}
 	
 	public function index() {
-		if(in_array('graduate',$this->session->userdata('role'))){
+		if($this->session->userdata('active_role') == 'graduate'){
 			$data['title'] = 'Graduate';
 			$data['main_content'] = 'graduate_index';
 			$this->load->view('_main_layout', $data);

@@ -8,7 +8,7 @@ class Admin extends MY_Controller{
 	}
 	
 	public function index(){
-		if(in_array('admin',$this->session->userdata('role'))){
+		if($this->session->userdata('active_role') == 'admin'){
 			$data['title'] = 'Admin';
 			$data['main_content'] = 'admin_index';
 			$this->load->view('_main_layout', $data);

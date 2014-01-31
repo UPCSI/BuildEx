@@ -8,7 +8,7 @@ class Faculty extends MY_Controller{
 	}
 	
 	public function index(){
-		if(in_array('faculty',$this->session->userdata('role'))){
+		if($this->session->userdata('active_role') == 'faculty'){
 			$data['title'] = 'Faculty';
 			$data['main_content'] = 'faculty_index';
 			$this->load->view('_main_layout', $data);

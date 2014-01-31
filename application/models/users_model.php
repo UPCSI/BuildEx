@@ -71,6 +71,7 @@ class Users_model extends MY_Model{
 			$query = $this->db->get('Admins');
 			$user = $query->row();
 			$data['aid'] = $user->aid;
+			$data['active_role'] = 'admin';
 		}
 
 		if(in_array('labhead',$role)){
@@ -85,6 +86,7 @@ class Users_model extends MY_Model{
 			$query = $this->db->get('Faculty');
 			$user = $query->row();
 			$data['fid'] = $user->fid;
+			$data['active_role'] = 'faculty';
 		}
 
 		if(in_array('graduate',$role)){
@@ -92,6 +94,7 @@ class Users_model extends MY_Model{
 			$query = $this->db->get('Graduates');
 			$user = $query->row();
 			$data['gid'] = $user->gid;
+			$data['active_role'] = 'graduate';
 		}		
 
 		/* get active_id */
