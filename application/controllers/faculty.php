@@ -35,6 +35,7 @@ class Faculty extends MY_Controller{
 	}
 
 	public function experiments(){
+		$data['username'] = $this->session->userdata('username');
 		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty_experiments';

@@ -6,7 +6,7 @@
 	<h5> Faculty Members </h5>
 	<?php if(isset($faculty_members)): ?>
 		<?php foreach ($faculty_members as $member): ?>
-			<a href = "<?php echo site_url('faculty/view/'.$member->uid.'/'.$member->fid); ?>"><?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
+			<a href = "<?php echo site_url('faculty/view/'.$member->username); ?>"><?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
 			<br>
 		<?php endforeach; ?>
 	<?php else: ?>
@@ -16,13 +16,12 @@
 	<h5> Graduates </h5>
 		<?php if(isset($graduates)): ?>
 			<?php foreach ($graduates as $graduate): ?>
-				<a href = "<?php echo site_url('graduate/view/'.$graduate->uid.'/'.$graduate->fid); ?>"><?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
+				<a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>"><?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
 				<br>
 			<?php endforeach; ?>
 		<?php else: ?>
 			<p>There are no students.</p>
 		<? endif; ?>
-	}
 <? else: ?>
 	<?php $this->session->set_flashdata('is_member',false); ?>
 	<p> You do not belong to any laboratory. </p>

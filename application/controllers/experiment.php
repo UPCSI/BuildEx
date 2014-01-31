@@ -60,10 +60,10 @@ class Experiment extends MY_Controller{
 		redirect($role);
 	}
 
-	public function view_experiment($uid = 0, $eid = 0){
-		$data['experiment'] = $this->experiments_model->get_experiment($uid, $eid);
+	public function view($eid = 0){
+		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/view_experiment';
+		$data['main_content'] = 'experiment_view';
 		$this->load->view('_main_layout', $data);
 	}
 }

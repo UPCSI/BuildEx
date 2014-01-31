@@ -13,7 +13,7 @@
 	<? $count = 0; ?>
 	<? foreach ($experiments as $exp): ?>
 		<? $count+=1; ?>
-		<h5> <?=$count.'. '; ?> <a href = "<?= site_url('experiment/faculty_view/'.$exp->eid.'/'.$graduate->gid); ?>" ><?= $exp->title; ?> </a> </h5>
+		<h5> <?=$count.'. '; ?> <a href = "<?= site_url('experiment/view/'.$exp->eid); ?>" ><?= $exp->title; ?> </a> </h5>
 	<? endforeach; ?>
 <? else: ?>
 	<p> There are no experiments. </p>

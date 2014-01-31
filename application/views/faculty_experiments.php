@@ -1,17 +1,15 @@
 <h3> Faculty: Experiments </h3>
 <hr>
 <h2>My Experiments</h2>
-<?php
-	if(isset($experiments)){
-		foreach ($experiments as $experiment){
-			echo anchor('experiment/update_experiment/' . $experiment->eid, $experiment->title);
-			echo '</br>';
-		}	
-	}
-	else{
-		echo 'You have no experiments';
-	}
-?>
+<?php if(isset($experiments)): ?>
+	<?php foreach ($experiments as $experiment): ?>
+		<?php echo anchor('experiment/view/'.$experiment->eid, $experiment->title); ?>
+		</br>
+	<?php endforeach; ?>	
+<?php else: ?>
+		<p> You have no experiments. </p>
+<?php endif; ?>
+
 <br>
 <hr>
 

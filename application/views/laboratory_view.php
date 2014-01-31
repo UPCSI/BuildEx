@@ -16,7 +16,7 @@
 	<h5> Faculty Members </h5>
 	<? if(isset($faculty_members)): ?>
 		<? foreach($faculty_members as $member): ?>
-			<a href = "<?= site_url('faculty/view/'.$member->uid.'/'.$member->fid); ?>"><?= strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
+			<a href = "<?= site_url('faculty/view/'.$member->username); ?>"><?= strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
 			<br>
 		<? endforeach; ?>
 	<? else: ?>
@@ -26,7 +26,7 @@
 	<h5> Graduates </h5>
 	<? if(isset($graduates)): ?>
 		<? foreach ($graduates as $graduate): ?>
-			<a href = "<?= site_url('graduate/view/'.$graduate->uid.'/'.$graduate->gid); ?>"><?= strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
+			<a href = "<?= site_url('graduate/view/'.$graduate->username); ?>"><?= strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
 			<br>
 		<? endforeach; ?>
 	<? else: ?>
