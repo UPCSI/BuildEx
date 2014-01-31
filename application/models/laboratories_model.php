@@ -64,8 +64,8 @@ class Laboratories_model extends MY_Model{
 
 	public function get_laboratory_head_laboratory($labid){
 		$this->db->select('Laboratories.*');
-		$this->db->join('faculty_member_of','faculty_member_of.labid = Laboratories.labid');
-		$this->db->where('faculty_member_of.fid',$fid);
+		$this->db->join('manages','manages.labid = Laboratories.labid');
+		$this->db->where('manages.labid',$labid);
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
@@ -76,6 +76,26 @@ class Laboratories_model extends MY_Model{
 
 	public function request_graduate_lab($labid,$gid){
 		return $this->db->insert('graduates_member_of',array('labid'=>$labid,'gid'=>$gid));
+	}
+
+	public function is_graduate_member($gid,$labid){
+		$this->db->where('gid',$gid);
+		$this->db->where('labid',$labid);
+		$q = $this->db->get('graduates_member_of');
+		if($q->num_rows() > 0){
+			return true;
+		}
+		return false;
+	}
+
+	public function is_faculty_member($fid,$labid){
+		$this->db->where('fid',$fid);
+		$this->db->where('labid',$labid);
+		$q = $this->db->get('faculty_member_of');
+		if($q->num_rows() > 0){
+			return true;
+		}
+		return false;
 	}
 
 	/* Laboratory Heads functionalities*/

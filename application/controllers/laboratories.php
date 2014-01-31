@@ -14,10 +14,18 @@ class Laboratories extends MY_Controller{
 			redirect(''); 
 			//implement here where to redirect if $labid is not supplied
 		}
+
 		$role = $this->session->userdata('active_role');
-		if($role == 'student' || $role == 'faculty'){
-			$data['is_member'] = $this->session->flashdata('is_member');
+		$role_id = $this->session->userdata('active_id');
+
+		$data['is_member'] = null;
+		if($role == 'graduate'){
+			$data['is_member'] = $this->laboratories_model->is_graduate_member($role_id,$labid);
 		}
+		else if($role == 'faculty'){
+			$data['is_member'] = $this->laboratories_model->is_faculty_member($role_id,$labid);
+		}
+
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory_view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);

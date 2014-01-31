@@ -10,7 +10,7 @@
 <? endif; ?>
 
 <? if(isset($laboratory)): ?>
-	<h4> <?= $laboratory->name ?> </h4>
+	<h3> <?= $laboratory->name ?> </h3>
 	<strong> No. of members: </strong> <?= $laboratory->members_count ?>
 	<br> <br>
 	<h5> Faculty Members </h5>
