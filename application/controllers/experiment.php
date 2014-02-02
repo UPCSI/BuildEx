@@ -53,32 +53,35 @@ class Experiment extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
-	public function update_experiment($eid = NULL){
-		#setsession(eid)
-		$this->session->set_userdata(array('eid' => $eid));
-		#endsession
-		
+	public function edit_experiment($eid = 0){
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/update_experiment_form';
+		$data['main_content'] = 'experiment/edit_experiment_form';
 		$this->load->view('_main_layout', $data);
 	}
 
-	public function insert_update(){
-		$info['title'] = $this->input->post('title');
-		$info['category'] = $this->input->post('category');
-		$info['description'] = $this->input->post('description');
-		$info['target_count'] = $this->input->post('target_count');
+	public function update_experiment($eid = 0){
+		if($eid == 0){
+			$msg = 'Experiment does not exist!';
+		}
+		else{
+			$info['title'] = $this->input->post('title');
+			$info['category'] = $this->input->post('category');
+			$info['description'] = $this->input->post('description');
+			$info['target_count'] = $this->input->post('target_count');
 
-		$eid = $this->session->userdata('eid');
-		#unsetsession(eid)
-		$this->session->unset_userdata('eid');
-		#endsession
-
-		$this->experiments_model->update_experiment($eid, $info);
-
-		$role = $this->session->userdata('role')[0];
-		redirect($role);
+			$status = $this->experiments_model->update_experiment($eid, $info);
+			if($status){
+				$msg = 'Experiment updated!';
+			}
+			else{
+				$msg = 'Failed to update!';
+			}
+		}
+		
+		$role = $this->session->userdata('active_role');
+		$this->session->set_flashdata('notification',$msg);
+		redirect($role.'/experiments');
 	}
 
 	public function view($eid = 0){

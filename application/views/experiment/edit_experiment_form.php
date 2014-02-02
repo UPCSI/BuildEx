@@ -2,9 +2,8 @@
 
 <fieldset>
 	<legend>Edit Experiment</legend>
-
 	<?php echo validation_errors();?>
-	<?php echo form_open('experiment/insert_update') . "<br/>";?>
+	<?php echo form_open('experiment/update_experiment/'.$experiment->eid) . "<br/>";?>
 
 	<label>Title</label><br/>
 	<input type="text" id="title" required name="title" value="<?php echo $experiment->title; ?>" placeholder="Title"><br/><br/>

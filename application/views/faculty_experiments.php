@@ -16,13 +16,11 @@
 		<?php echo form_submit('submit','Delete'); ?>
 		<?php echo form_close(); ?>
 
-		<?php echo form_open('experiment/edit_experiment/'.$experiment->eid); ?>
-		<?php echo form_submit('submit','Edit'); ?>
-		<?php echo form_close(); ?>
+		<a href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> <!--Change to button please.-->
 		</p>
 	<?php endforeach; ?>	
 <?php else: ?>
-		<p> You have no experiments. </p>
+	<p> You have no experiments. </p>
 <?php endif; ?>
 
 <br>
