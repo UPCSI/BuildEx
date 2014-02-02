@@ -7,7 +7,7 @@ class Experiment extends MY_Controller{
 		$this->load->model('experiments_model');
 	}
 
-	public function index() {
+	public function add_experiment() {
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
@@ -22,20 +22,36 @@ class Experiment extends MY_Controller{
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
 
-		$role = $this->session->userdata('role')[0];
-		// redirect($role);
-		$this->add_experiment();
-		// $success = 'You have successfully created an experiment!';
-		// $this->session->set_flashdata('notification',$success);
-		// redirect($role.'/experiments');
-
-	}
-
-	public function add_experiment() {
-		$data['title'] = 'Experiment';
- 		$data['main_content'] = 'experiment/add_experiment_form';
- 		$this->load->view('_main_layout', $data);
+		$success = 'You have successfully created an experiment!';
+		$this->session->set_flashdata('notification',$success);
+		redirect($role.'/experiments');
     }
+
+	public function delete_experiment($eid = 0){
+		if($eid == 0){
+			$success = 'Experiment does not exist!';
+		}
+		else{
+			$role = $this->session->userdata('active_role');
+			$id = $this->session->userdata('active_id');
+			if ($role == 'faculty'){
+				$status = $this->experiments_model->delete_faculty_experiment($id,$eid);
+			}
+			elseif ($role == 'graduate'){
+				$status = $this->experiments_model->delete_graduates_experiment($id,$eid);
+			}
+
+			if($status){
+				$success = 'You have successfully deleted an experiment!';
+			}
+			else{
+				$sucess = 'Error in deleting experiment. Please try again later.';
+			}
+		}
+		
+		$this->session->set_flashdata('notification',$success);
+		redirect($role.'/experiments');
+	}
 
 	public function update_experiment($eid = NULL){
 		#setsession(eid)

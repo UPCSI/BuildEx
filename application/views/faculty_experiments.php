@@ -9,8 +9,17 @@
 <h2>My Experiments</h2>
 <?php if(isset($experiments)): ?>
 	<?php foreach ($experiments as $experiment): ?>
+		<p>
 		<?php echo anchor('experiment/view/'.$experiment->eid, $experiment->title); ?>
-		</br>
+		
+		<?php echo form_open('experiment/delete_experiment/'.$experiment->eid); ?>
+		<?php echo form_submit('submit','Delete'); ?>
+		<?php echo form_close(); ?>
+
+		<?php echo form_open('experiment/edit_experiment/'.$experiment->eid); ?>
+		<?php echo form_submit('submit','Edit'); ?>
+		<?php echo form_close(); ?>
+		</p>
 	<?php endforeach; ?>	
 <?php else: ?>
 		<p> You have no experiments. </p>
@@ -23,7 +32,7 @@
 <div id="createExperiment" class="reveal-modal tiny" data-reveal>
   <h2>Create an Experiment</h2>
 	<?php echo validation_errors();?>
-	<?php echo form_open("experiment");?>
+	<?php echo form_open("experiment/add_experiment");?>
 
 	<label>Title</label>
 	<input type="text" id="title" required name="title" placeholder="Title">
