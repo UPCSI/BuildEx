@@ -100,7 +100,7 @@ class Experiments_model extends MY_Model{
 		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
 		$this->db->join('Graduates','Graduates.gid = graduates_conduct.gid');
 		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Graduates.fid',$gid);
+		$this->db->where('Graduates.gid',$gid);
 		$q = $this->db->get('Experiments');
 
 		return $this->query_row_conversion($q);

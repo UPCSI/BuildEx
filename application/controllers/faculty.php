@@ -19,11 +19,6 @@ class Faculty extends MY_Controller{
 		}
 	}
 
-	public function redirect($role){
-		$this->session->set_userdata(array('active_role' => $role));
-		redirect($role);
-	}
-
 	public function profile(){
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
@@ -38,6 +33,10 @@ class Faculty extends MY_Controller{
 		$data['username'] = $this->session->userdata('username');
 		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Faculty';
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
 		$data['main_content'] = 'faculty_experiments';
 		$this->load->view('_main_layout',$data);
 	}
@@ -86,7 +85,7 @@ class Faculty extends MY_Controller{
 		}
 		$this->load->model('laboratories_model');
 		$fid = $this->session->userdata('active_id');
-		$this->laboratories_model->request_faculty_lab($labid,$fid);
+		$status = $this->laboratories_model->request_faculty_lab($labid,$fid);
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 

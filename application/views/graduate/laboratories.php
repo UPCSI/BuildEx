@@ -1,45 +1,38 @@
 <h3>Graduate: My Laboratory</h3>
 <hr>
-<?php
-	if (isset($main_lab)){ 
-		echo '<h4>'.$main_lab->name.'</h4>';
-		echo '<p><strong> No. of members: </strong>'.$main_lab->members_count.'</p>';
-		echo '<h5> Faculty Members </h5>';
-		if(isset($faculty_members)){
-			foreach ($faculty_members as $member) {
-				echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name);
-				echo '<br>';
-			}
-		}
-		else{
-			echo '<p>There are no faculty members.</p>';
-		}
-
-	echo '<h5> Graduates </h5>';
-		if(isset($graduates)){
-			foreach ($graduates as $graduate) {
-				echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name);
-				echo '<br>';
-			}
-		}
-		else{
-			echo '<p>There are no students.</p>';
-		}
-	}
-	else {
-		$this->session->set_flashdata('is_member',false);
-		echo '<p> You do not belong to any laboratory. </p>';
-		echo '<hr>';
-		echo '<h4> Apply to Laboratory </h4>';
-		if (isset($laboratories)) {
-			foreach ($laboratories as $laboratory) {
-				echo '<a href = "'.site_url('laboratories/view/'.$laboratory->labid).'">';
-				echo $laboratory->name;
-				echo '</a>';
-				echo '<br>';
-			}
-		}
-		else echo '<p>There are no laboratories. Poor you. :(</p>';
-	}
-?>
+<?php if (isset($main_lab)): ?>
+	<h4><?php echo $main_lab->name; ?></h4>
+	<p><strong> No. of members: </strong><?php echo $main_lab->members_count; ?></p>
+	<h5> Faculty Members </h5>
+	<?php if(isset($faculty_members)): ?>
+		<?php foreach ($faculty_members as $member): ?>
+			<a href = "<?php echo site_url('faculty/view/'.$member->username); ?>" ><?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
+			<br>
+		<? endforeach; ?>
+	<?php else: ?>
+		<p>There are no faculty members.</p>
+	<?php endif; ?>
+	<br>
+	<h5> Graduates </h5>
+		<?php if(isset($graduates)): ?>
+			<?php foreach ($graduates as $graduate): ?>
+				<a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>"><?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
+				<br>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<p>There are no students.</p>
+		<? endif; ?>
+	<?php else: ?>
+		<p> You do not belong to any laboratory. </p>
+		<hr>
+	<h4> Apply to Laboratory </h4>
+		<?php if (isset($laboratories)): ?>
+			<?php foreach ($laboratories as $laboratory): ?>
+				<a href = "'.<?php echo site_url('laboratories/view/'.$laboratory->labid); ?>.'">'; <?php echo $laboratory->name; ?> </a>
+				<br>
+			<?php endforeach; ?>
+		<?php else: ?>
+			<p>There are no laboratories. Poor you. :( </p>
+		<?php endif; ?>
+<?php endif; ?>
 <br>

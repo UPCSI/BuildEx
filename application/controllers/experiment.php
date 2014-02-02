@@ -13,7 +13,7 @@ class Experiment extends MY_Controller{
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
 		$info['privacy'] = $this->input->post('privacy');
-		$role = $this->session->userdata('role')[0];
+		$role = $this->session->userdata('active_role');
 		$id = $this->session->userdata('active_id');
 		if ($role == 'faculty'){
 			$this->experiments_model->add_faculty_experiment($id,$info);
@@ -21,9 +21,14 @@ class Experiment extends MY_Controller{
 		elseif ($role == 'graduate'){
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
+
 		$role = $this->session->userdata('role')[0];
 		// redirect($role);
 		$this->add_experiment();
+		// $success = 'You have successfully created an experiment!';
+		// $this->session->set_flashdata('notification',$success);
+		// redirect($role.'/experiments');
+
 	}
 
 	public function add_experiment() {
@@ -50,7 +55,6 @@ class Experiment extends MY_Controller{
 		$info['target_count'] = $this->input->post('target_count');
 
 		$eid = $this->session->userdata('eid');
-
 		#unsetsession(eid)
 		$this->session->unset_userdata('eid');
 		#endsession
@@ -62,6 +66,10 @@ class Experiment extends MY_Controller{
 	}
 
 	public function view($eid = 0){
+		if($eid == 0){
+			redirect('');
+			//implement where to redirect if eid is non-existent
+		}
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment_view';
