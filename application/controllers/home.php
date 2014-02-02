@@ -16,6 +16,11 @@ class Home extends CI_Controller{
 		$this->loggedin() == False || redirect($this->session->userdata('role')[0]);
 	}
 
+	public function redirect($role){
+		$this->session->set_userdata(array('active_role' => $role));
+		redirect($role);
+	}
+
 	public function validate_user(){
 		$this->load->library('form_validation');
 		$this->load->model('users_model');

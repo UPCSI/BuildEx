@@ -21,11 +21,6 @@ class Labhead extends MY_Controller{
 			redirect($this->session->userdata('active_role'));
 	}
 
-	public function redirect($role){
-		$this->session->set_userdata(array('active_role' => $role));
-		redirect($role);
-	}
-
 	public function profile(){
 		$fid = $this->session->userdata('fid');
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
