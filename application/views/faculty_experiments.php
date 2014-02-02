@@ -1,5 +1,11 @@
 <h3> Faculty: Experiments </h3>
 <hr>
+
+<!-- Notification Handling Part-->
+<?php if(isset($notification)): ?>
+	<pre> <?php echo $notification; ?> </pre>
+<?php endif; ?>
+
 <h2>My Experiments</h2>
 <?php if(isset($experiments)): ?>
 	<?php foreach ($experiments as $experiment): ?>

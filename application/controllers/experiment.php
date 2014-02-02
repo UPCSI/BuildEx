@@ -19,7 +19,7 @@ class Experiment extends MY_Controller{
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
 		$info['privacy'] = $this->input->post('privacy');
-		$role = $this->session->userdata('role')[0];
+		$role = $this->session->userdata('active_role');
 		$id = $this->session->userdata('active_id');
 		if ($role == 'faculty'){
 			$this->experiments_model->add_faculty_experiment($id,$info);
@@ -27,8 +27,9 @@ class Experiment extends MY_Controller{
 		elseif ($role == 'graduate'){
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
-		$role = $this->session->userdata('role')[0];
-		redirect($role);
+		$success = 'You have successfully created an experiment!';
+		$this->session->set_flashdata('notification',$success);
+		redirect($role.'/experiments');
 	}
 
 	public function update_experiment($eid = NULL){

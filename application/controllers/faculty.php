@@ -38,6 +38,10 @@ class Faculty extends MY_Controller{
 		$data['username'] = $this->session->userdata('username');
 		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
 		$data['title'] = 'Faculty';
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
 		$data['main_content'] = 'faculty_experiments';
 		$this->load->view('_main_layout',$data);
 	}
