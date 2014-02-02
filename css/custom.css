@@ -111,7 +111,7 @@ section.jumbotron:after {
   right: 0;
   bottom: 0;
   left: 0;
-  background: url('../img/jumbotron_bg.png') repeat center center;
+  background: url('../images/jumbotron_bg.png') repeat center center;
   opacity: .1;
 }
 
@@ -160,7 +160,7 @@ section.sitemap {
 /* credits */
 
 #zurb {
-    background-image: url("../img/credit_zurb.png");
+    background-image: url("../images/credit_zurb.png");
     background-size:contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -172,7 +172,7 @@ section.sitemap {
 }
 
 #ellis {
-    background-image: url("../img/credit_ellislab.png");
+    background-image: url("../images/credit_ellislab.png");
     background-size:contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -184,7 +184,7 @@ section.sitemap {
 }
 
 #tutor {
-    background-image: url("../img/credit_tutorialzine.png");
+    background-image: url("../images/credit_tutorialzine.png");
     background-size:contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -194,7 +194,7 @@ section.sitemap {
 }
 
 #fontawe {
-    background-image: url("../img/credit_fontawesome.png");
+    background-image: url("../images/credit_fontawesome.png");
     background-size:contain;
     background-position: center center;
     background-repeat: no-repeat;
@@ -204,7 +204,7 @@ section.sitemap {
 }
 
 #highch {
-    background-image: url("../img/credit_highcharts.png");
+    background-image: url("../images/credit_highcharts.png");
     background-size:contain;
     background-position: center center;
     background-repeat: no-repeat;
