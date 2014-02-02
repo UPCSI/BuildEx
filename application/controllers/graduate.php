@@ -35,7 +35,8 @@ class Graduate extends MY_Controller{
 	}
 
 	public function experiments(){
-		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
+		$data['gid'] = $this->session->userdata('active_id');
+		$data['experiments'] = $this->get_all_experiments($data['gid']);
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate/experiments';
 		$this->load->view('_main_layout',$data);
@@ -97,9 +98,34 @@ class Graduate extends MY_Controller{
 		$this->load->view('_main_layout', $data);
 	}
 
+	public function view_experiment($gid = 0, $eid = 0){
+		if($eid == 0 || $gid == 0){
+			redirect('');
+			//implement where to redirect if eid or gid is non-existent
+		}
+		$this->load->model('experiments_model');
+		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
+		$data['title'] = 'Graduate';
+		$data['main_content'] = 'graduate/view_experiment';
+		$this->load->view('_main_layout', $data);
+	}
+
+	public function request_advise($eid = 0){
+		if($eid == 0 || $gid == 0){
+			redirect('');
+			//implement where to redirect if eid or gid is non-existent
+		}
+		$this->load->model('faculty_model');
+		$gid = $this->session->userdata('active_id');
+		$faculty_uname = $this->input->post('faculty_uname');
+		$faculty = $this->faculty_model->get_faculty_profile(0,$faculty_uname);
+		$status = $this->faculty_model->request_advise($gid,$eid,$faculty->fid);
+
+		redirect(''); //implement where to redirect after sending a request for advise
+	}
+
 	private function get_all_experiments($gid = 0){
 		$this->load->model('experiments_model');
-		$list = $this->experiments_model->get_all_graduates_experiments($gid);	
-		return $list;
+		return $this->experiments_model->get_all_graduates_experiments($gid);	
 	}
 }

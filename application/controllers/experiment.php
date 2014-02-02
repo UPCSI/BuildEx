@@ -49,7 +49,6 @@ class Experiment extends MY_Controller{
 		$info['target_count'] = $this->input->post('target_count');
 
 		$eid = $this->session->userdata('eid');
-
 		#unsetsession(eid)
 		$this->session->unset_userdata('eid');
 		#endsession
@@ -61,6 +60,10 @@ class Experiment extends MY_Controller{
 	}
 
 	public function view($eid = 0){
+		if($eid == 0){
+			redirect('');
+			//implement where to redirect if eid is non-existent
+		}
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment_view';

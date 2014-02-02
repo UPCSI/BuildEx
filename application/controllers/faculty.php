@@ -86,7 +86,7 @@ class Faculty extends MY_Controller{
 		}
 		$this->load->model('laboratories_model');
 		$fid = $this->session->userdata('active_id');
-		$this->laboratories_model->request_faculty_lab($labid,$fid);
+		$status = $this->laboratories_model->request_faculty_lab($labid,$fid);
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 

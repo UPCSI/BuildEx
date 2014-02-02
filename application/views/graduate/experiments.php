@@ -3,7 +3,7 @@
 <h2>My Experiments</h2>
 <?php if(isset($experiments)): ?>
 	<?php foreach ($experiments as $experiment):?>
-		<?php echo anchor('experiment/view/' . $experiment->eid, $experiment->title); ?>
+		<?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?>
 		</br>
 	<?php endforeach; ?>	
 <?php else: ?>
