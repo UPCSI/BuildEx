@@ -8,12 +8,6 @@ class Experiment extends MY_Controller{
 	}
 
 	public function index() {
-		$data['title'] = 'Experiment';
- 		$data['main_content'] = 'experiment/add_experiment_form';
- 		$this->load->view('_main_layout', $data);
-    }
-
-	public function add_experiment(){
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
@@ -28,8 +22,15 @@ class Experiment extends MY_Controller{
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
 		$role = $this->session->userdata('role')[0];
-		redirect($role);
+		// redirect($role);
+		$this->add_experiment();
 	}
+
+	public function add_experiment() {
+		$data['title'] = 'Experiment';
+ 		$data['main_content'] = 'experiment/add_experiment_form';
+ 		$this->load->view('_main_layout', $data);
+    }
 
 	public function update_experiment($eid = NULL){
 		#setsession(eid)

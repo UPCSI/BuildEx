@@ -13,4 +13,25 @@
 <br>
 <hr>
 
-<a href = "<?php echo site_url('experiment'); ?>">Create Experiment</a><br/>
+<!-- Modal - Create Experiment -->
+<div id="createExperiment" class="reveal-modal tiny" data-reveal>
+  <h2>Create an Experiment</h2>
+	<?php echo validation_errors();?>
+	<?php echo form_open("experiment");?>
+
+	<label>Title</label>
+	<input type="text" id="title" required name="title" placeholder="Title">
+
+	<label>Description</label>
+	<input type="text" id="description" required name="description" placeholder="Description">
+
+	<label>Target Count</label><br/>
+	<input type="text" id="targetCount" required name="target_count" placeholder="Target Count"><br/><br/>
+
+	<input type="submit" class="button" value="Create Experiment">
+
+	<?php echo form_close();?>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<a href="#" data-reveal-id="createExperiment">Create Experiment</a>
+<!-- <a href = "<?php echo site_url('experiment'); ?>">Create Experiment</a><br/> -->
