@@ -1,5 +1,11 @@
 <h3>Experiment</h3>
 <hr>
+
+<!-- Notification Handling Part-->
+<?php if(isset($notification)): ?>
+	<pre> <?php echo $notification; ?> </pre>
+<?php endif; ?>
+
 <a href = "<?php echo site_url('experiment_builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
 <h2> <?php echo $experiment->title; ?></h2>
 <p> Category: <?php echo $experiment->category; ?> </p>

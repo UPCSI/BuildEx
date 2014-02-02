@@ -120,6 +120,10 @@ class Faculty_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
+	public function request_advise($fid,$eid){
+		return $this->db->insert('advise',array('fid'=>$fid,'eid'=>$eid));
+	}
+
 	/* Laboratory Heads functionalities*/
 	/*Admin functionalities*/
 	public function get_all_faculty(){

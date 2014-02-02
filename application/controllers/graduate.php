@@ -102,6 +102,12 @@ class Graduate extends MY_Controller{
 			redirect('');
 			//implement where to redirect if eid or gid is non-existent
 		}
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
 		$this->load->model('experiments_model');
 		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
 		$data['title'] = 'Graduate';
@@ -110,17 +116,28 @@ class Graduate extends MY_Controller{
 	}
 
 	public function request_advise($eid = 0){
-		if($eid == 0 || $gid == 0){
+		if($eid == 0){
 			redirect('');
-			//implement where to redirect if eid or gid is non-existent
+			//implement where to redirect if eid is non-existent
 		}
 		$this->load->model('faculty_model');
 		$gid = $this->session->userdata('active_id');
 		$faculty_uname = $this->input->post('faculty_uname');
 		$faculty = $this->faculty_model->get_faculty_profile(0,$faculty_uname);
-		$status = $this->faculty_model->request_advise($gid,$eid,$faculty->fid);
-
-		redirect(''); //implement where to redirect after sending a request for advise
+		if(isset($faculty)){
+			$status = $this->faculty_model->request_advise($faculty->fid,$eid);
+			if($status){
+				$msg = 'Request sent!';
+			}
+			else{
+				$msg = 'Failed to request advise. Please try again later.';
+			}
+		}
+		else{
+			$msg = 'Faculty member does not exists.';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('graduate/view_experiment/'.$gid.'/'.$eid); //implement where to redirect after sending a request for advise
 	}
 
 	private function get_all_experiments($gid = 0){
