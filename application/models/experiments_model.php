@@ -58,7 +58,7 @@ class Experiments_model extends MY_Model{
 		$q = "DELETE FROM \"Experiments\" AS e
 			  USING \"Graduates\" AS g, graduates_conduct AS gc
 			  WHERE g.gid = gc.gid AND
-			  e.eid = gc.gid AND
+			  e.eid = gc.eid AND
 			  gc.gid = ? AND
 			  e.eid = ?";
 

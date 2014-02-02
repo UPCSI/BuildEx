@@ -33,6 +33,10 @@ class Graduate extends MY_Controller{
 		$data['gid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['gid']);
 		$data['title'] = 'Graduate';
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
 		$data['main_content'] = 'graduate/experiments';
 		$this->load->view('_main_layout',$data);
 	}

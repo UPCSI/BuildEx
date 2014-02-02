@@ -15,10 +15,11 @@ class Experiment extends MY_Controller{
 		$info['privacy'] = $this->input->post('privacy');
 		$role = $this->session->userdata('active_role');
 		$id = $this->session->userdata('active_id');
+		
 		if ($role == 'faculty'){
 			$this->experiments_model->add_faculty_experiment($id,$info);
 		}
-		elseif ($role == 'graduate'){
+		else if ($role == 'graduate'){
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
 
@@ -28,16 +29,17 @@ class Experiment extends MY_Controller{
     }
 
 	public function delete_experiment($eid = 0){
+		$success = null;
 		if($eid == 0){
 			$success = 'Experiment does not exist!';
 		}
 		else{
 			$role = $this->session->userdata('active_role');
 			$id = $this->session->userdata('active_id');
-			if ($role == 'faculty'){
+			if($role == 'faculty'){
 				$status = $this->experiments_model->delete_faculty_experiment($id,$eid);
 			}
-			elseif ($role == 'graduate'){
+			else if ($role == 'graduate'){
 				$status = $this->experiments_model->delete_graduates_experiment($id,$eid);
 			}
 
@@ -45,10 +47,9 @@ class Experiment extends MY_Controller{
 				$success = 'You have successfully deleted an experiment!';
 			}
 			else{
-				$sucess = 'Error in deleting experiment. Please try again later.';
+				$success = 'Error in deleting experiment. Please try again later.';
 			}
 		}
-		
 		$this->session->set_flashdata('notification',$success);
 		redirect($role.'/experiments');
 	}

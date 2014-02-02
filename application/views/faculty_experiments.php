@@ -9,15 +9,12 @@
 <h2>My Experiments</h2>
 <?php if(isset($experiments)): ?>
 	<?php foreach ($experiments as $experiment): ?>
-		<p>
-		<?php echo anchor('experiment/view/'.$experiment->eid, $experiment->title); ?>
-		
+		<?php echo anchor('faculty/view_experiment/'.$fid.'/'.$experiment->eid, $experiment->title); ?>
 		<?php echo form_open('experiment/delete_experiment/'.$experiment->eid); ?>
 		<?php echo form_submit('submit','Delete'); ?>
 		<?php echo form_close(); ?>
-
 		<a href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> <!--Change to button please.-->
-		</p>
+		<br>
 	<?php endforeach; ?>	
 <?php else: ?>
 	<p> You have no experiments. </p>

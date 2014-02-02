@@ -30,8 +30,8 @@ class Faculty extends MY_Controller{
 	}
 
 	public function experiments(){
-		$data['username'] = $this->session->userdata('username');
-		$data['experiments'] = $this->get_all_experiments($this->session->userdata('active_id'));
+		$data['fid'] = $this->session->userdata('active_id');
+		$data['experiments'] = $this->get_all_experiments($data['fid']);
 		$data['title'] = 'Faculty';
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
@@ -107,6 +107,18 @@ class Faculty extends MY_Controller{
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty_view';
+		$this->load->view('_main_layout', $data);
+	}
+
+	public function view_experiment($fid = 0, $eid = 0){
+		if($eid == 0 || $fid == 0){
+			redirect('');
+			//implement where to redirect if eid or gid is non-existent
+		}
+		$this->load->model('experiments_model');
+		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'faculty_view_experiment';
 		$this->load->view('_main_layout', $data);
 	}
 	
