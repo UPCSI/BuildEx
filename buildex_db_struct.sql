@@ -9,27 +9,6 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
---
--- Name: buildex_db; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE buildex_db IS 'BuildEx Database. University of the Philippines Diliman. Department of Psychology.';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
 SET search_path = public, pg_catalog;
 
 --
@@ -83,14 +62,13 @@ ALTER TABLE public.experiments_eid_seq OWNER TO postgres;
 CREATE TABLE "Experiments" (
     eid integer DEFAULT nextval('experiments_eid_seq'::regclass) NOT NULL,
     title character varying(64),
-    category character varying(32),
+    category character varying(32) DEFAULT NULL::character varying,
     target_count integer DEFAULT 1,
     current_count integer DEFAULT 0,
     status boolean DEFAULT false,
     request_status boolean DEFAULT false,
     description character varying(256),
     is_published boolean DEFAULT false,
-    path character varying(64),
     privacy integer DEFAULT 0
 );
 
@@ -147,7 +125,7 @@ CREATE TABLE "Graduates" (
     uid integer NOT NULL,
     gid integer DEFAULT nextval('graduates_gid_seq'::regclass) NOT NULL,
     student_num integer,
-    account_status boolean DEFAULT false
+    account_status boolean DEFAULT true
 );
 
 
@@ -205,6 +183,95 @@ CREATE TABLE "LaboratoryHeads" (
 
 
 ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
+
+--
+-- Name: options_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE options_oid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.options_oid_seq OWNER TO postgres;
+
+--
+-- Name: Options; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Options" (
+    qid integer,
+    oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
+    label character varying
+);
+
+
+ALTER TABLE public."Options" OWNER TO postgres;
+
+--
+-- Name: pages_pid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE pages_pid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.pages_pid_seq OWNER TO postgres;
+
+--
+-- Name: Pages; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Pages" (
+    eid integer,
+    pid integer DEFAULT nextval('pages_pid_seq'::regclass) NOT NULL,
+    "order" integer,
+    template integer DEFAULT 0,
+    "row" integer DEFAULT 1,
+    "column" integer DEFAULT 1
+);
+
+
+ALTER TABLE public."Pages" OWNER TO postgres;
+
+--
+-- Name: questions_qid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE questions_qid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.questions_qid_seq OWNER TO postgres;
+
+--
+-- Name: Questions; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Questions" (
+    pid integer,
+    qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
+    label integer,
+    type integer,
+    is_required boolean DEFAULT false,
+    "order" integer,
+    time_started timestamp without time zone DEFAULT ('now'::text)::date,
+    time_ended timestamp without time zone
+);
+
+
+ALTER TABLE public."Questions" OWNER TO postgres;
 
 --
 -- Name: respondents_rid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -466,6 +533,14 @@ ALTER TABLE ONLY answer
 
 
 --
+-- Name: eid_pid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Pages"
+    ADD CONSTRAINT eid_pid_ukey UNIQUE (eid, pid);
+
+
+--
 -- Name: faculty_conduct_fid_eid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -527,6 +602,46 @@ ALTER TABLE ONLY graduates_conduct
 
 ALTER TABLE ONLY manage
     ADD CONSTRAINT lid_labid_pkey PRIMARY KEY (lid, labid);
+
+
+--
+-- Name: oid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT oid_pkey PRIMARY KEY (oid);
+
+
+--
+-- Name: pid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Pages"
+    ADD CONSTRAINT pid_pkey PRIMARY KEY (pid);
+
+
+--
+-- Name: pid_qid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT pid_qid_ukey UNIQUE (pid, qid);
+
+
+--
+-- Name: qid_oid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT qid_oid_ukey UNIQUE (qid, oid);
+
+
+--
+-- Name: qid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT qid_pkey PRIMARY KEY (qid);
 
 
 --
@@ -711,6 +826,30 @@ ALTER TABLE ONLY manage
 
 ALTER TABLE ONLY manage
     ADD CONSTRAINT manage_ref_laboratoryheads FOREIGN KEY (lid) REFERENCES "LaboratoryHeads"(lid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: options_ref_questions_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT options_ref_questions_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: pages_ref_experiments_eid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Pages"
+    ADD CONSTRAINT pages_ref_experiments_eid FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: questions_ref_pages_pid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT questions_ref_pages_pid FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

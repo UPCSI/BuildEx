@@ -45,11 +45,13 @@ TABLE Experiments:
 	status: boolean #{COMPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 
-TABLE Page:
+TABLE Pages:
 	eid: integer references Experiments.eid
 	pid: integer PRIMARY AUTOINCREMENT
 	order: integer
-	template: integer #{Form maker[1],Text-only,[2],Comparison Stimulus[3]}
+	template: integer #{Form maker[0],Text-only,[1],Comparison Stimulus[2]}
+	row: integer #only significant if template is text and images
+	column: integer #only significant if template is text and images
 
 TABLE Questions:
 	pid: integer references Page.pid
