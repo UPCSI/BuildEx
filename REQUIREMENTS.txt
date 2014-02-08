@@ -1,0 +1,18 @@
+Feb 3 12:44
+
+Notes:
+	Per page if timed.
+	Everything will be timed.
+	One question per page.
+	6 quadrant grid. 1 object. Automatic resize.
+	They will be giving unique experiments for testing. At least 10.
+	Cold and warm example. When warm population is complete assign the experiment
+	Flexible quadrant.
+	Keyboard input. Not priority. Mouse pointer is more accurate.
+	Grid part: Dedicated top bar for instructions.
+	Instruction can appear before the grid templated.
+	3 new templates: Form maker. Text only. Grid base for stimulus comparison.
+	Image Stimulus
+	Audio Stimulus
+	Finalize the input buttons.
+	"Never make them come back."

@@ -43,7 +43,28 @@ TABLE Experiments:
 	target_count: integer
 	current_count: integer
 	status: boolean #{COMPLETE[true],ONGOING[false]}
-	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]} 
+	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+
+TABLE Page:
+	eid: integer references Experiments.eid
+	pid: integer PRIMARY AUTOINCREMENT
+	order: integer
+	template: integer #{Form maker[1],Text-only,[2],Comparison Stimulus[3]}
+
+TABLE Questions:
+	pid: integer references Page.pid
+	qid: integer PRIMARY AUTOINCREMENT
+	label: character varying(256)
+	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
+	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
+	order: integer
+	time_started: time
+	time_ended: time
+
+TABLE Options:
+	qid: integer references Questions.qid
+	oid: integer PRIMARY AUTOINCREMENT
+	label: character varying(32)
 
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
