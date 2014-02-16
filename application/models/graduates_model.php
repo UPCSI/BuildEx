@@ -128,5 +128,4 @@ class Graduates_model extends MY_Model{
 		$q = $this->db->get('Graduates');
 		return $this->query_conversion($q);	
 	}
-	
 }

@@ -27,9 +27,13 @@
 	<p> You do not belong to any laboratory. </p>
 	<hr>
 	<h4> Apply to Laboratory </h4>
-	<?php foreach ($laboratories as $laboratory): ?>
-		<a href = "<?php echo site_url('laboratories/view/'.$laboratory->labid); ?>"> <?php echo $laboratory->name; ?> </a>
-		<br>
-	<?php endforeach; ?>
+	<?php if(isset($laboratories)): ?>
+		<?php foreach ($laboratories as $laboratory): ?>
+			<a href = "<?php echo site_url('laboratories/view/'.$laboratory->labid); ?>"> <?php echo $laboratory->name; ?> </a>
+			<br>
+		<?php endforeach; ?>
+	<?php else: ?>
+		<p> There are no created laboratories yet. </p>
+	<?php endif; ?>
 <?php endif; ?>
 <br>
