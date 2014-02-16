@@ -2,16 +2,16 @@
 <hr>
 <? if(isset($is_member)): ?>
 	<? if(!$is_member): ?>
-		<?= form_open($role.'/request_lab/'.$laboratory->labid); ?>
-		<?= form_submit('submit','Apply'); ?>
-		<?= form_close(); ?>
+		<? echo form_open($role.'/request_lab/'.$laboratory->labid); ?>
+		<? echo form_submit('submit','Apply'); ?>
+		<? echo form_close(); ?>
 	<? endif; ?>
 <? endif; ?>
 
 <? if(isset($laboratory)): ?>
-	<h3> <?= $laboratory->name ?> </h3>
-	<strong> No. of members: </strong> <?= $laboratory->members_count ?>
-	<br> <br>
+	<h3> <?echo $laboratory->name ?> </h3>
+	<p> <strong> Laboratory Head: </strong> <a href = "<?= site_url('faculty/view/'.$lab_head->username); ?>"><?= strtoupper($lab_head->last_name).', '.ucwords($lab_head->first_name).', '.ucfirst($lab_head->middle_name); ?> </a> </p>
+	<p> <strong> No. of members: </strong> <? echo $laboratory->members_count; ?> </p>
 	<h5> Faculty Members </h5>
 	<? if(isset($faculty_members)): ?>
 		<? foreach($faculty_members as $member): ?>

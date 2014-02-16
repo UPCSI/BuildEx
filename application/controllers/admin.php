@@ -103,13 +103,18 @@ class Admin extends MY_Controller{
 			$lab_head_info['uid'] = $lab_head_user->uid;
 			$laboratory_info['name'] = $this->input->post('lab_name');
 			$faculty = $this->faculty_model->get_faculty_profile(0,$username);
-			$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
-			$msg = 'You have successfully created a laboratory!';
+			var_dump($faculty);
+			if($faculty->account_status == 't'){
+				$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
+				$msg = 'You have successfully created a laboratory!';				
+			}
+			else{
+				$msg = 'You have selected a non-faculty member.';
+			}
 		}
 		else{
 			$msg = 'Error creating laboratory!';
 		}
-		$success = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification',$msg);
 		redirect('admin/laboratories');
 	}

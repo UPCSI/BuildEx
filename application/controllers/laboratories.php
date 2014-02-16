@@ -5,6 +5,7 @@ class Laboratories extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('laboratories_model');
+		$this->load->model('laboratoryheads_model');
 		$this->load->model('faculty_model');
 		$this->load->model('graduates_model');
 	}
@@ -29,6 +30,7 @@ class Laboratories extends MY_Controller{
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory_view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
+		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 		$data['role'] = $this->session->userdata('role')[0]; //this should be changes to active_role
 
 		if(is_null($data['laboratory'])){

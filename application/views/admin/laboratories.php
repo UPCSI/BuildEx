@@ -2,7 +2,7 @@
 <hr>
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
-	<pre> <?php echo $notification; ?> </pre>
+	<pre> <?php echo $notification; ?> </pre> <br>
 <?php endif; ?>
 
 <?php $count = 0;
