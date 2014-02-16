@@ -1,6 +1,5 @@
 <h3>Laboratory</h3>
 <hr>
-
 <? if(isset($is_member)): ?>
 	<? if(!$is_member): ?>
 		<?= form_open($role.'/request_lab/'.$laboratory->labid); ?>
@@ -22,7 +21,6 @@
 	<? else: ?>
 		<p> There are no faculty members.</p>
 	<? endif; ?>
-	<br>
 	<h5> Graduates </h5>
 	<? if(isset($graduates)): ?>
 		<? foreach ($graduates as $graduate): ?>

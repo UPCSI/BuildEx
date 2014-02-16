@@ -74,6 +74,12 @@ class Admin extends MY_Controller{
 		$data['laboratories'] = $this->get_laboratories_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'admin/laboratories';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
 		$this->load->view('_main_layout',$data);
 	}
 
@@ -98,14 +104,14 @@ class Admin extends MY_Controller{
 			$laboratory_info['name'] = $this->input->post('lab_name');
 			$faculty = $this->faculty_model->get_faculty_profile(0,$username);
 			$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
-			echo $this->laboratories_model->request_faculty_lab($labid,$faculty->fid);
-			echo $this->laboratories_model->accept_faculty($labid,$faculty->fid);
-			$data['main_content'] = 'message_success';
+			$msg = 'You have successfully created a laboratory!';
 		}
 		else{
-			$data['main_content'] = 'message_error';
+			$msg = 'Error creating laboratory!';
 		}
-		//$this->load->view('_main_layout',$data);
+		$success = 'You have successfully created an experiment!';
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/laboratories');
 	}
 
 	private function get_admin_list(){
