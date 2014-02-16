@@ -38,6 +38,12 @@ class Admin extends MY_Controller{
 		$data['faculty'] = $this->get_faculty_list();
 		$data['requests'] = $this->get_faculty_account_requests();
 		$data['title'] = 'Admin';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+		
 		$data['main_content'] = 'admin/faculty';
 		$this->load->view('_main_layout',$data);
 	}
@@ -48,13 +54,13 @@ class Admin extends MY_Controller{
 		$faculty_info['account_status'] = 'true';
 		$status = $this->faculty_model->update_faculty($fid,$faculty_info);
 		if($status){
-			$data['main_content'] = 'message_success';
+			$msg = 'Confirmation successful!';
 		}
 		else{
-			$data['main_content'] = 'message_error';
+			$msg = 'Confirmation failed!';
 		}
-
-		$this->load->view('_main_layout',$data);
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
 	}
 
 	public function reject_faculty($fid = 0){

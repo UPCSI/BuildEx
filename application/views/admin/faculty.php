@@ -1,5 +1,10 @@
 <h3>Admin: Faculty</h3>
 <hr>
+<!-- Notification Handling Part-->
+<?php if(isset($notification)): ?>
+	<pre> <?php echo $notification; ?> </pre> <br>
+<?php endif; ?>
+
 <?php
 	if(isset($faculty)){
 		$count = 0;
