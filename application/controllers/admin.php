@@ -68,10 +68,10 @@ class Admin extends MY_Controller{
 		$this->load->model('faculty_model');
 		$status = $this->faculty_model->delete_faculty($fid);
 		if($status){
-			$data['main_content'] = 'message_success';
+			$msg = 'Rejection complete!';
 		}
 		else{
-			$data['main_content'] = 'message_error';
+			$msg = 'Rejection failed!';
 		}
 		$this->load->view('_main_layout',$data);
 	}
