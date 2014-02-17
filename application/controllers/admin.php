@@ -73,7 +73,8 @@ class Admin extends MY_Controller{
 		else{
 			$msg = 'Rejection failed!';
 		}
-		$this->load->view('_main_layout',$data);
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
 	}
 
 	public function laboratories(){
