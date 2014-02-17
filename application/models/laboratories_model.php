@@ -100,10 +100,17 @@ class Laboratories_model extends MY_Model{
 
 	/* Laboratory Heads functionalities*/
 	public function accept_faculty($labid,$fid){
-		$this->db->where('labid', $labid);
+		$this->db->where('labid',$labid);
 		$this->db->where('fid',$fid);
 		$this->db->update('faculty_member_of',array('status'=>'true'));
+		$this->increment_member_count($labid);
 		return $this->is_rows_affected();
+	}
+
+	private function increment_member_count($labid){
+		$this->db->set('members_count', 'members_count+1', FALSE);
+		$this->db->where('labid', $labid);
+		$this->db->update('Laboratories');
 	}
 
 	public function accept_graduate($labid, $gid){

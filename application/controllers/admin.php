@@ -112,6 +112,8 @@ class Admin extends MY_Controller{
 			$faculty = $this->faculty_model->get_faculty_profile(0,$username);
 			if($faculty->account_status == 't'){
 				$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
+				$this->laboratories_model->request_faculty_lab($labid,$faculty->fid);
+				$this->laboratories_model->accept_faculty($labid,$faculty->fid);
 				$msg = 'You have successfully created a laboratory!';				
 			}
 			else{

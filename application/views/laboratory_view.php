@@ -15,12 +15,12 @@
 	<h5> Faculty Members </h5>
 	<? if(isset($faculty_members)): ?>
 		<? foreach($faculty_members as $member): ?>
-			<a href = "<?= site_url('faculty/view/'.$member->username); ?>"><?= strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
-			<br>
+			<p> <a href = "<?= site_url('faculty/view/'.$member->username); ?>"><?= strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a> </p>
 		<? endforeach; ?>
 	<? else: ?>
 		<p> There are no faculty members.</p>
 	<? endif; ?>
+	
 	<h5> Graduates </h5>
 	<? if(isset($graduates)): ?>
 		<? foreach ($graduates as $graduate): ?>
