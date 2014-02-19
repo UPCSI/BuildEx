@@ -43,8 +43,20 @@ div.row.vcenter20 {
 	margin-top: 20%
 }
 
-div.row.vcenter40 {
-	margin-top: 40%
+div.row.vcenter30 {
+	margin-top: 30%
+}
+
+@media only screen and (min-width: 64.063em) {
+.large-offset-0pt5 {
+    position: relative;
+    margin-left: 4.16667%; }
+svg {
+  display: block;
+  margin:auto;
+  width:80%;
+  height:80%;
+}
 }
 
 .row.full {
@@ -58,29 +70,90 @@ div.row.vcenter40 {
 /* top-bar large */
 
 .top-bar {
-	background: #252525;
+	background: linear-gradient( 90deg, #2F96D8, #47AEF0 25%, #238ACC);
+  height: 55px;
+  line-height: 55px;
 }
 
-.top-bar-section ul {
-	background: #252525;
+.top-bar .name h1 {
+  line-height: 55px;
+}
+
+@media only screen and (min-width: 40.063em) {
+  .top-bar-section li a:not(.button) {
+    line-height: 55px;
+  }
+  .top-bar-section .has-dropdown > a:after {
+    top: 27.5px;
+  }
+}
+
+@media only screen and (max-width: 40.063em) {
+  .top-bar-section ul {
+  	background: #238ACC;
+    -webkit-transition: background-color 300ms ease-out;
+    -moz-transition: background-color 300ms ease-out;
+    transition: background-color 300ms ease-out;
+  }
+}
+
+@media only screen and (min-width: 40.063em) {
+  .top-bar-section ul {
+    background: rgba(0,0,0,0);
+  }
+  .top-bar-section>ul>li>ul>li>a:not(.button) {
+    line-height: 25px;
+  }
+}
+
+.top-bar .title-area {
+  height:55px;
+}
+
+.top-bar.expanded .toggle-topbar a span {
+  box-shadow: 0 10px 0 1px #238ACC, 0 16px 0 1px #238ACC, 0 22px 0 1px #238ACC;
 }
 
 .top-bar-section li a:not(.button) {
-	background: #252525;
+	background: rgba(0,0,0,0);
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
+}
+
+.top-bar-section>ul>li>ul>li>a:not(.button) {
+  background: #238ACC;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
+}
+
+.top-bar-section>ul>li>ul>li>a:not(.button):hover {
+  background: #53b3f0;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
 }
 
 .top-bar-section li a:not(.button):hover {
-	background: #555555;
+	background: #53b3f0;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
 }
 
 .top-bar-section ul li:hover > a {
-	background: #555555;
+	background: #53b3f0;
+  -webkit-transition: background-color 300ms ease-out;
+  -moz-transition: background-color 300ms ease-out;
+  transition: background-color 300ms ease-out;
 }
+
 
 /* top-bar small */
 
 .top-bar.expanded .title-area {
-	background: #555555;
+	background: #53b3f0;
 }
 
 .top-bar.expanded .toggle-topbar a {
@@ -99,20 +172,27 @@ div.row.vcenter40 {
 
 section.jumbotron {
 	min-height: 100%;
-	background: #45A7F3;
+	background: #000000;
+  background-image: url('../images/jumbo_grad.jpg');
+  background-size: cover;
 	color:#fff;
 }
 
-section.jumbotron:after {
-  content: '';
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: url('../images/jumbotron_bg.png') repeat center center;
-  opacity: .1;
+@media only screen and (min-width: 64.063em) {
+  section.jumbotron:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: url('../images/flat_psych.png') left bottom no-repeat;
+    background-size: contain;
+    /*background: url('../images/jumbotron_bg.png') left bottom no-repeat;
+    background-size: cover;
+    opacity: .05;*/
+  }
 }
 
 section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.expand {
@@ -153,7 +233,7 @@ div.titleholder {
 }
 
 section.sitemap {
-	background-color: #3498db;
+	background-color: #252525;
 	padding: 1% 0px;
 }
 
@@ -221,6 +301,22 @@ ul {
 	margin-left: 0px;
 }
 
-.sidebar{
-  position: relative;
+.icon > span{
+    vertical-align: text-top;
+    padding-left:55px;
+    padding-right:0px;
+    padding-top:45px;
+    padding-bottom:0px;
+    border-top: 5px;
+    border-bottom: 5px;
+    background-image: url("../images/logo_blue.svg");
+    background-position: 50% 75%;
+    background-size: 45px 45px;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    margin-right: 10px;
+}
+
+.top-bar .name h1 a {
+  padding:0px;
 }

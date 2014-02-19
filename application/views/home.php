@@ -1,8 +1,8 @@
 <section class="jumbotron">
 <div class="row full">
-	<div class="large-6 columns">
-		<div class="row vcenter20 show-for-large-up"></div>
-		<div class="row vcenter10 hide-for-large-up"></div>
+	<div class="large-5 large-offset-0pt5 columns">
+		<!--div class="row vcenter20 show-for-large-up"></div>
+		<div class="row vcenter10 hide-for-large-up"></div-->
 		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" viewBox="0 0 100 100">
 			<!-- mid top (left) -->
 			<circle cx="50" cy="43" r="10" fill="white">
@@ -398,16 +398,16 @@
 		</svg>
 	</div>
 	<div class="large-6 columns">
-		<div class="row vcenter40 show-for-large-up"></div>
-		<div class="row vcenter10 hide-for-large-up"></div>
-		<h1 class="white"><strong>Have it your way.</strong></h1>
+		<div class="row vcenter30 show-for-large-up"></div>
+		<!--div class="row vcenter10 hide-for-large-up"></div-->
+		<h1 class="white"><strong>Psych psych stuff here.</strong><!--img src="<?php echo site_url('images/logo.svg'); ?>" style="width: 60px;display: inline;vertical-align: text-bottom;margin-left:10px"--></h1>
 		<div style="background-color:rgba(255, 255, 255,0.13);padding:0px 10px 10px">
 			<h3 class="white" style="line-height:110%">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</h3>
 			<p class="justify" style="margin-bottom:0px">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 		</div>
 		<div class="row">
-			<div class="large-4 push-8 columns">
-				<a class="button expand" style="" href="#">Start now!</a>
+			<div class="large-4 small-12 large-offset-8 columns">
+				<a class="button expand" style="" href="#"><h4 class="white"><strong>Start now!</strong></h4></a>
 			</div>
 		</div>
 		<div class="row vcenter10 hide-for-large-up"></div>
