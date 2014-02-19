@@ -1,13 +1,30 @@
-<h3> Admin: Graduates </h3>
+<h1> Graduates </h1>
 <hr>
 <?php if(isset($graduates)): ?>
-	<?php $count = 0; ?>
+	<table>
+		<thead>
+			<tr>
+				<th width="200">Name</th>
+				<th width="150">Username</th>
+			    <th width="150">Student No.</th>
+			    <th width="150">Joined</th>
+			</tr>
+		</thead>
+		<tbody>
 	<?php foreach ($graduates as $graduate):?>
-		<?php $count = $count + 1;?>
-		<p> <?php echo $count.'. '; ?>
-			<?php echo anchor('graduate/view/'.$graduate->username, $graduate->username); ?>
-		</p>
-	<?php endforeach; ?>	
+		<tr>
+			<td>
+				<a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>">
+					<?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name)[0].'.'; ?> 
+				</a>
+			</td>
+			<td><?php echo $graduate->username; ?></td>
+			<td><?php echo $graduate->student_num;?></td>
+			<td>mm-dd-yyyy</td>
+  		</tr>
+	<?php endforeach; ?>
+		</tbody>
+	</table>	
 <?php else: ?>
 	<p> There are no graduates. </p>
 <?php endif; ?>

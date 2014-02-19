@@ -162,7 +162,10 @@ class Laboratories_model extends MY_Model{
 	}
 
 	public function get_all_laboratories(){
-		$this->db->select('Laboratories.*');
+		$this->db->select('*');
+		$this->db->join('manage','manage.labid = Laboratories.labid');
+		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = manage.lid');
+		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');
 		$q = $this->db->get('Laboratories');
 		return $this->query_conversion($q);
 	}
