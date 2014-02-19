@@ -262,7 +262,7 @@ ALTER TABLE public.questions_qid_seq OWNER TO postgres;
 CREATE TABLE "Questions" (
     pid integer,
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
-    label integer,
+    label character varying,
     type integer,
     is_required boolean DEFAULT false,
     "order" integer,
