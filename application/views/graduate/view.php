@@ -8,7 +8,7 @@
 	<?php endif; ?>
 <?php endif; ?>
 <hr>
-<h4> My Experiments </h4>
+<h4> Experiments </h4>
 <?php if(isset($experiments)): ?>
 	<?php $count = 0; ?>
 	<?php foreach ($experiments as $exp): ?>

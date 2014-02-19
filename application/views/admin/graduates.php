@@ -7,7 +7,7 @@
 		<p> <?php echo $count.'. '; ?>
 			<?php echo anchor('graduate/view/'.$graduate->username, $graduate->username); ?>
 		</p>
-	<? endforeach; ?>	
-<? else: ?>
+	<?php endforeach; ?>	
+<?php else: ?>
 	<p> There are no graduates. </p>
-<? endif; ?>
+<?php endif; ?>

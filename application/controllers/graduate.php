@@ -93,6 +93,7 @@ class Graduate extends MY_Controller{
 			redirect('');
 			//implement where to redirect if user doesn't exist
 		}
+		$data['modules'] = array('home','profile','experiments','laboratories');
 		$data['graduate'] = $this->graduates_model->get_graduate_profile(0,$username);
 		$gid = $data['graduate']->gid;
 		$data['title'] = 'Graduate';

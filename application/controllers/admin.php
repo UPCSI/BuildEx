@@ -81,6 +81,7 @@ class Admin extends MY_Controller{
 	}
 
 	public function laboratories(){
+		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$data['laboratories'] = $this->get_laboratories_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'admin/laboratories';

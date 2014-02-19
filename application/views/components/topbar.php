@@ -1,6 +1,6 @@
 <!-- Modal - Sign In -->
 <!-- Disabled if already loggedin -->
-<? if(!$this->session->userdata('loggedin')): ?>
+<?php if(!$this->session->userdata('loggedin')): ?>
 	<div id="signin" class="reveal-modal tiny" data-reveal>
 	  <h2>Sign In to BuildEx</h2>
 	  <?php echo validation_errors();?>
@@ -13,7 +13,7 @@
 		<?php echo form_close();?>
 	  <a class="close-reveal-modal">&#215;</a>
 	</div>
-<? endif; ?>
+<?php endif; ?>
 
 <!-- Navigation Bar (Fixed) -->
 <div class="fixed">
@@ -27,7 +27,7 @@
 		<section class="top-bar-section">
 			<!-- Right Nav Section -->
 			<ul class="right">
-				<? if(!$this->session->userdata('loggedin')): ?>
+				<?php if(!$this->session->userdata('loggedin')): ?>
 					<li><a href="#" data-reveal-id="signin">Sign In</a></li>
 					<li class="has-dropdown">
 						<a href="#">Sign Up</a>
@@ -36,10 +36,10 @@
 							<li><a href="<?php echo site_url('signup/faculty'); ?>">Sign Up as Faculty</a></li>
 						</ul>
 					</li>
-				<? else: ?>
-					<li><a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" ><? echo $this->session->userdata('username'); ?></a></li>
+				<?php else: ?>
+					<li><a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" ><?php echo $this->session->userdata('username'); ?></a></li>
 					<li><a href="<?php echo site_url('home/logout') ?>"> Logout </a></li>
-				<? endif; ?>
+				<?php endif; ?>
 			</ul>
 			<!-- Left Nav Section 
 			<ul class="left">

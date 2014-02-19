@@ -222,5 +222,5 @@ ul {
 }
 
 .sidebar{
-  position: fixed;
+  position: relative;
 }
