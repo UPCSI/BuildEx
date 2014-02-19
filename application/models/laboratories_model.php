@@ -50,6 +50,7 @@ class Laboratories_model extends MY_Model{
 		$this->db->select('Laboratories.*');
 		$this->db->join('graduates_member_of','graduates_member_of.labid = Laboratories.labid');
 		$this->db->where('graduates_member_of.gid',$gid);
+		$this->db->where('graduates_member_of.status','true');
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
@@ -138,7 +139,7 @@ class Laboratories_model extends MY_Model{
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num');
 		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
-		$this->db->where('faculty_member_of.status','f');
+		$this->db->where('faculty_member_of.status','false');
 		$q = $this->db->get('faculty_member_of');
 		return $this->query_conversion($q);
 	}
@@ -147,7 +148,7 @@ class Laboratories_model extends MY_Model{
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num');
 		$this->db->join('Graduates','Graduates.gid = graduates_member_of.gid');
 		$this->db->join('Users','Users.uid = Graduates.uid');
-		$this->db->where('graduates_member_of.status','f');
+		$this->db->where('graduates_member_of.status','false');
 		$q = $this->db->get('graduates_member_of');
 		return $this->query_conversion($q);
 	}

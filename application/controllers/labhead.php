@@ -13,8 +13,8 @@ class Labhead extends MY_Controller{
 		$data['lab_name'] = $lab->name;
 		if($this->session->userdata('active_role') == 'labhead'){
 			$data['title'] = 'Lab Head';
-			$data['main_content'] = 'labhead/main';
-			$this->load->view('_main_layout', $data);
+			$data['main_content'] = 'labhead/index';
+			$this->load->view('_main_layout_internal', $data);
 		}
 
 		else
@@ -30,7 +30,7 @@ class Labhead extends MY_Controller{
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/profile';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function laboratory(){
@@ -48,7 +48,7 @@ class Labhead extends MY_Controller{
 
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/lab';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function faculty_requests(){
@@ -56,7 +56,7 @@ class Labhead extends MY_Controller{
 		$data['requests'] = $this->laboratories_model->get_all_faculty_requests($labid);
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/faculty_requests';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function confirm_faculty($fid=0){
@@ -71,7 +71,7 @@ class Labhead extends MY_Controller{
 			$data['main_content'] = 'message_error';
 
 		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function reject_faculty($fid=0){
@@ -86,7 +86,7 @@ class Labhead extends MY_Controller{
 			$data['main_content'] = 'message_error';
 
 		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout',$data);		
+		$this->load->view('_main_layout_internal',$data);		
 	}
 
 	public function graduates_requests(){
@@ -94,7 +94,7 @@ class Labhead extends MY_Controller{
 		$data['requests'] = $this->laboratories_model->get_all_graduates_requests($labid);
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/graduates_requests';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function confirm_graduate($gid=0){
@@ -109,7 +109,7 @@ class Labhead extends MY_Controller{
 			$data['main_content'] = 'message_error';
 
 		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function reject_graduate($gid=0){
@@ -124,7 +124,7 @@ class Labhead extends MY_Controller{
 			$data['main_content'] = 'message_error';
 
 		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout',$data);		
+		$this->load->view('_main_layout_internal',$data);		
 	}
 
 }

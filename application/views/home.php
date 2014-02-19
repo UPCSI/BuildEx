@@ -395,8 +395,6 @@
             	keyTimes="0;0.04;0.16;0.24;0.36;0.44;0.56;0.64;0.76;0.84;0.96;1.0"
             	calcMode="spline" repeatCount="indefinite" />
 			</circle>
-
-
 		</svg>
 	</div>
 	<div class="large-6 columns">

@@ -220,3 +220,7 @@ section.sitemap {
 ul {
 	margin-left: 0px;
 }
+
+.sidebar{
+  position: fixed;
+}

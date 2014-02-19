@@ -3,7 +3,7 @@
 <?php if(isset($graduates)): ?>
 	<?php $count = 0; ?>
 	<?php foreach ($graduates as $graduate):?>
-		<?php echo $count = $count + 1;?>
+		<?php $count = $count + 1;?>
 		<p> <?php echo $count.'. '; ?>
 			<?php echo anchor('graduate/view/'.$graduate->username, $graduate->username); ?>
 		</p>

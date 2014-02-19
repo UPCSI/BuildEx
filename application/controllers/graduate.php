@@ -8,10 +8,11 @@ class Graduate extends MY_Controller{
 	}
 	
 	public function index() {
+		$data['modules'] = array('home','profile','experiments','laboratories');
 		if(in_array('graduate',$this->session->userdata('role'))){
 			$data['title'] = 'Graduate';
 			$data['main_content'] = 'graduate/index';
-			$this->load->view('_main_layout', $data);
+			$this->load->view('_main_layout_internal', $data);
 		}
 		else{
 			$role = $this->session->userdata('active_role');
@@ -20,16 +21,18 @@ class Graduate extends MY_Controller{
 	}
 
 	public function profile(){
+		$data['modules'] = array('home','profile','experiments','laboratories');
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
 		$data['graduate'] = $this->graduates_model->get_graduate_profile($this->session->userdata('active_id'));
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate/profile';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function experiments(){
+		$data['modules'] = array('home','profile','experiments','laboratories');
 		$data['gid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['gid']);
 		$data['title'] = 'Graduate';
@@ -38,10 +41,11 @@ class Graduate extends MY_Controller{
 			$data['notification'] = null;
 		}
 		$data['main_content'] = 'graduate/experiments';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function laboratories(){
+		$data['modules'] = array('home','profile','experiments','laboratories');
 		$this->load->model('laboratories_model');
 		$this->load->model('faculty_model');
 		$gid = $this->session->userdata('active_id');
@@ -54,7 +58,7 @@ class Graduate extends MY_Controller{
 			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 		}
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function edit_graduate($uid = 0, $gid = 0){
@@ -63,7 +67,7 @@ class Graduate extends MY_Controller{
 		$data['graduate_profile'] = $this->graduates_model->get_graduate_profile($gid);
 		$data['experiments'] = $this->get_all_experiments($gid);
 		$data['main_content'] = 'contents/profile';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function request_lab($labid = 0){
@@ -94,7 +98,7 @@ class Graduate extends MY_Controller{
 		$data['title'] = 'Graduate';
 		$data['experiments'] = $this->get_all_experiments($gid);
 		$data['main_content'] = 'graduate/view';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function view_experiment($gid = 0, $eid = 0){
@@ -112,7 +116,7 @@ class Graduate extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate/view_experiment';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function request_advise($eid = 0){

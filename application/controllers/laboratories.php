@@ -28,7 +28,7 @@ class Laboratories extends MY_Controller{
 		}
 
 		$data['title'] = 'Laboratories';
-		$data['main_content'] = 'laboratory_view';
+		$data['main_content'] = 'laboratory/view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
 		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 		$data['role'] = $this->session->userdata('role')[0]; //this should be changes to active_role

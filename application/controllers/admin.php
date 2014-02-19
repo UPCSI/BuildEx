@@ -8,10 +8,11 @@ class Admin extends MY_Controller{
 	}
 	
 	public function index(){
+		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		if(in_array('admin',$this->session->userdata('role'))){
 			$data['title'] = 'Admin';
 			$data['main_content'] = 'admin/index';
-			$this->load->view('_main_layout', $data);
+			$this->load->view('_main_layout_internal',$data);
 		}
 		else{
 			redirect($this->session->userdata('active_role'));
@@ -19,33 +20,35 @@ class Admin extends MY_Controller{
 	}
 
 	public function profile(){
+		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'admin/profile';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function graduates(){
+		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$data['graduates'] = $this->get_graduate_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'admin/graduates';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function faculty(){
+		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$data['faculty'] = $this->get_faculty_list();
 		$data['requests'] = $this->get_faculty_account_requests();
 		$data['title'] = 'Admin';
-
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
 		
 		$data['main_content'] = 'admin/faculty';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function confirm_faculty($fid = 0){
@@ -87,7 +90,7 @@ class Admin extends MY_Controller{
 			$data['notification'] = null;
 		}
 
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function edit_admin($uid = 0, $aid = 0){
@@ -96,7 +99,7 @@ class Admin extends MY_Controller{
 		$data['admin_profile'] = $this->admins_model->get_admin_profile($aid);
 		$data['main_content'] = 'contents/profile';
 		$data['experiments'] = -1;
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function add_lab(){
