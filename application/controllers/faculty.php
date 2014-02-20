@@ -123,8 +123,8 @@ class Faculty extends MY_Controller{
 		$this->load->model('experiments_model');
 		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty_view_experiment';
-		$this->load->view('_main_layout_internal', $data);
+		$data['main_content'] = 'faculty/view_experiment';
+		$this->load->view('_main_layout', $data);
 	}
 	
 	private function get_all_experiments($fid = 0){

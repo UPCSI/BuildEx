@@ -6,18 +6,36 @@
 	<pre> <?php echo $notification; ?> </pre>
 <?php endif; ?>
 
-<h2>My Experiments</h2>
+<h3>My Experiments</h3>
 <?php if(isset($experiments)): ?>
-	<?php foreach ($experiments as $experiment): ?>
-		<?php echo anchor('faculty/view_experiment/'.$fid.'/'.$experiment->eid, $experiment->title); ?>
-		<?php echo form_open('experiment/delete_experiment/'.$experiment->eid); ?>
-		<?php echo form_submit('submit','Delete'); ?>
-		<?php echo form_close(); ?>
-		<a href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> <!--Change to button please.-->
-		<br>
-	<?php endforeach; ?>	
+	<table>
+		<thead>
+			<tr>
+				<td width = "250"> Experiment </td>
+				<td width = "125"> Respondents </td>
+				<td width = "125"> Quota </td>
+				<td width = "125"> Status </td>
+				<td width = "125"> Published </td>
+				<td width = "150"> Delete </td>
+				<td width = "150"> Edit </td>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($experiments as $experiment):?>
+			<tr>
+				<td> <?php echo anchor('faculty/view_experiment/'.$fid.'/'.$experiment->eid, $experiment->title); ?> </td>
+				<td> <?php echo $experiment->current_count; ?> </td>
+				<td> <?php echo $experiment->target_count; ?> </td>
+				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
+				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> </td>
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 <?php else: ?>
-	<p> You have no experiments. </p>
+	<p> You have no experiments </p>
 <?php endif; ?>
 <a class = "button small" href="#" data-reveal-id="create_experiment_modal">Create Experiment</a>
 

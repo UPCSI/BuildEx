@@ -99,7 +99,7 @@ class Graduate extends MY_Controller{
 		$data['title'] = 'Graduate';
 		$data['experiments'] = $this->get_all_experiments($gid);
 		$data['main_content'] = 'graduate/view';
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('_main_layoutz', $data);
 	}
 
 	public function view_experiment($gid = 0, $eid = 0){
