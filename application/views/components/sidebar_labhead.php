@@ -8,5 +8,6 @@
 
 <ul id="laboratories_dropdown" class="f-dropdown" data-dropdown-content>
 	<li> <a href = "<?php echo site_url('labhead/laboratory'); ?>"> My Laboratory </a></li>
-	<li> <a href = "<?php echo site_url('labhead/requests'); ?>"> Requests </a></li>	
+	<li> <a href = "<?php echo site_url('labhead/requests'); ?>"> Requests </a></li>
+	<li> <a href = "<?php echo site_url('labhead/laboratories'); ?>"> Other Laboratories </a></li>	
 </ul>

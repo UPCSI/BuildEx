@@ -54,6 +54,14 @@ class Labhead extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
+	public function laboratories(){
+		$this->load->model('laboratories_model');
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'laboratory/all';
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
+		$this->load->view("_main_layout_internal",$data);
+	}
+
 	public function faculty_requests(){
 		$labid = $this->session->userdata('labid');
 		$data['requests'] = $this->laboratories_model->get_all_faculty_requests($labid);

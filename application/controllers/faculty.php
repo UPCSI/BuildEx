@@ -64,7 +64,7 @@ class Faculty extends MY_Controller{
 		$this->load->model('graduates_model');
 		$fid = $this->session->userdata('active_id');
 		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/laboratories';
+		$data['main_content'] = 'faculty/my_laboratory';
 		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
@@ -73,6 +73,14 @@ class Faculty extends MY_Controller{
 		}
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
 		$this->load->view('_main_layout_internal',$data);
+	}
+
+	public function laboratories(){
+		$this->load->model('laboratories_model');
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'laboratory/all';
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
+		$this->load->view("_main_layout_internal",$data);
 	}
 
 	public function confirm_experiment($eid = 0){

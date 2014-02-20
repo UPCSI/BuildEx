@@ -47,6 +47,19 @@ class Admin extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
+	public function laboratories(){
+		$data['laboratories'] = $this->get_laboratories_list();
+		$data['title'] = 'Admin';
+		$data['main_content'] = 'admin/laboratories';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
+		$this->load->view('_main_layout_internal',$data);
+	}
+
 	public function confirm_faculty($fid = 0){
 		$data['title'] = 'Admin';
 		$this->load->model('faculty_model');
@@ -74,20 +87,6 @@ class Admin extends MY_Controller{
 		}
 		$this->session->set_flashdata('notification',$msg);
 		redirect('admin/faculty');
-	}
-
-	public function laboratories(){
-		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
-		$data['laboratories'] = $this->get_laboratories_list();
-		$data['title'] = 'Admin';
-		$data['main_content'] = 'admin/laboratories';
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = null;
-		}
-
-		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function edit_admin($uid = 0, $aid = 0){
@@ -160,7 +159,6 @@ class Admin extends MY_Controller{
 
 	private function get_laboratories_list(){
 		$this->load->model('laboratories_model');
-		$list = $this->laboratories_model->get_all_laboratories();
-		return $list;
+		return $this->laboratories_model->get_all_laboratories();
 	}
 }
