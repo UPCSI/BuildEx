@@ -117,7 +117,7 @@ class Graduate extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate/view_experiment';
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('_main_layout', $data);
 	}
 
 	public function request_advise($eid = 0){

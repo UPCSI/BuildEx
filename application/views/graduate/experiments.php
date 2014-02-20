@@ -1,5 +1,6 @@
 <h1> Experiments </h1>
 <hr>
+
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
 	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
@@ -10,7 +11,7 @@
 	<table>
 		<thead>
 			<tr>
-				<td width = "250"> Experiment </td>
+				<td width = "200"> Experiment </td>
 				<td width = "125"> Respondents </td>
 				<td width = "125"> Quota </td>
 				<td width = "125"> Status </td>
@@ -25,8 +26,8 @@
 				<td> <?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?> </td>
 				<td> <?php echo $experiment->current_count; ?> </td>
 				<td> <?php echo $experiment->target_count; ?> </td>
-				<td> <?php echo $experiment->status; ?> </td>
-				<td> <?php echo $experiment->is_published; ?> </td>
+				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
+				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
 				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> </td>
 				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
 			</tr>

@@ -192,7 +192,7 @@ class Experiments_model extends MY_Model{
 	}
 
 	public function get_all_advisory_experiments($fid = 0){
-		$this->db->select('Users.uid,Users.first_name,Users.middle_name,Users.last_name,Graduates.gid,Experiments.*');
+		$this->db->select('Users.uid,Users.username,Users.first_name,Users.middle_name,Users.last_name,Graduates.gid,advise.status as advise_status,Experiments.*');
 		$this->db->join('advise','advise.eid = Experiments.eid');
 		$this->db->join('Faculty','Faculty.fid = advise.fid');
 		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
@@ -202,6 +202,21 @@ class Experiments_model extends MY_Model{
 		$q = $this->db->get('Experiments');
 
 		return $this->query_conversion($q);
+	}
+
+	public function advise_experiment($fid,$eid){
+		$info['status'] = "true";
+		$this->db->where('fid', $fid);
+		$this->db->where('eid', $eid);
+		$this->db->update('advise', $info);
+		return $this->is_rows_affected();
+	}
+
+	public function reject_experiment($fid,$eid){
+		$this->db->where('fid', $fid);
+		$this->db->where('eid', $eid);
+		$this->db->delete('advise');
+		return $this->is_rows_affected();
 	}
 
 	public function get_all_graduates_experiments($gid = 0, $category = null){

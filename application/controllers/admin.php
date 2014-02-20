@@ -8,7 +8,6 @@ class Admin extends MY_Controller{
 	}
 	
 	public function index(){
-		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		if(in_array('admin',$this->session->userdata('role'))){
 			$data['title'] = 'Admin';
 			$data['main_content'] = 'admin/index';
@@ -20,7 +19,6 @@ class Admin extends MY_Controller{
 	}
 
 	public function profile(){
-		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
 		$data['roles'] = $this->session->userdata('role');
@@ -30,7 +28,6 @@ class Admin extends MY_Controller{
 	}
 
 	public function graduates(){
-		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$data['graduates'] = $this->get_graduate_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'admin/graduates';
@@ -38,7 +35,6 @@ class Admin extends MY_Controller{
 	}
 
 	public function faculty(){
-		$data['modules'] = array('home','profile','graduates','faculty','laboratories');
 		$data['faculty'] = $this->get_faculty_list();
 		$data['requests'] = $this->get_faculty_account_requests();
 		$data['title'] = 'Admin';

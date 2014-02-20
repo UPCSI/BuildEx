@@ -3,7 +3,7 @@
 
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
-	<pre> <?php echo $notification; ?> </pre>
+	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
 <h3>My Experiments</h3>
@@ -11,7 +11,7 @@
 	<table>
 		<thead>
 			<tr>
-				<td width = "250"> Experiment </td>
+				<td width = "200"> Experiment </td>
 				<td width = "125"> Respondents </td>
 				<td width = "125"> Quota </td>
 				<td width = "125"> Status </td>
@@ -58,4 +58,3 @@
 	<?php echo form_close();?>
   <a class="close-reveal-modal">&#215;</a>
 </div>
-<!-- <a href = "<?php echo site_url('experiment'); ?>">Create Experiment</a><br/> -->
