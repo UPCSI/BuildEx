@@ -1,4 +1,4 @@
-<h3> Faculty: Experiments </h3>
+<h1> Experiments </h1>
 <hr>
 
 <!-- Notification Handling Part-->
@@ -19,16 +19,13 @@
 <?php else: ?>
 	<p> You have no experiments. </p>
 <?php endif; ?>
-
-<br>
-<hr>
+<a class = "button small" href="#" data-reveal-id="create_experiment_modal">Create Experiment</a>
 
 <!-- Modal - Create Experiment -->
-<div id="createExperiment" class="reveal-modal tiny" data-reveal>
+<div id="create_experiment_modal" class="reveal-modal tiny" data-reveal>
   <h2>Create an Experiment</h2>
 	<?php echo validation_errors();?>
 	<?php echo form_open("experiment/add_experiment");?>
-
 	<label>Title</label>
 	<input type="text" id="title" required name="title" placeholder="Title">
 
@@ -43,5 +40,4 @@
 	<?php echo form_close();?>
   <a class="close-reveal-modal">&#215;</a>
 </div>
-<a href="#" data-reveal-id="createExperiment">Create Experiment</a>
 <!-- <a href = "<?php echo site_url('experiment'); ?>">Create Experiment</a><br/> -->

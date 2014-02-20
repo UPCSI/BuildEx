@@ -1,6 +1,6 @@
-<h3> Faculty: Advisory Experiments </h3>
+<h1> Advisory Experiments </h1>
 <hr>
-<h2>Graduates' Experiments</h2>
+<h3>Graduates' Experiments</h3>
 <?php if(isset($experiments)): ?>
 		<?php foreach ($experiments as $experiment): ?>
 			<?php if($experiment->status == 't'): ?>
@@ -9,10 +9,10 @@
 			<?php endif; ?>
 		<?php endforeach; ?>
 	<?php else: ?>
-		<p> There are no experiments. </p>
+		<p> You're not advising any experiment. </p>
 	<?php endif; ?>
 <hr>
-<h2> Experiments to be advised </h2>
+<h3> Experiments to be advised </h3>
 <?php if(isset($requests)): ?>
 		<?php $count = 0 ?>
 		<?php foreach ($requests as $request): ?>

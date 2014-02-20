@@ -1,26 +1,42 @@
-<h3> Graduate: Experiments </h3>
+<h1> Experiments </h1>
 <hr>
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
-	<pre> <?php echo $notification; ?> </pre>
+	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
-<h2>My Experiments</h2>
-<?php if(isset($experiments)):
- ?>
-	<?php foreach ($experiments as $experiment):?>
-		<?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?>
-		<?php echo form_open('experiment/delete_experiment/'.$experiment->eid); ?>
-		<?php echo form_submit('submit','Delete'); ?>
-		<?php echo form_close(); ?>
-		<a href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> <!--Change to button please.-->
-		</br>
-	<?php endforeach; ?>	
+<h3>My Experiments</h3>
+<?php if(isset($experiments)): ?>
+	<table>
+		<thead>
+			<tr>
+				<td width = "250"> Experiment </td>
+				<td width = "125"> Respondents </td>
+				<td width = "125"> Quota </td>
+				<td width = "125"> Status </td>
+				<td width = "125"> Published </td>
+				<td width = "150"> Delete </td>
+				<td width = "150"> Edit </td>
+			</tr>
+		</thead>
+		<tbody>
+		<?php foreach ($experiments as $experiment):?>
+			<tr>
+				<td> <?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?> </td>
+				<td> <?php echo $experiment->current_count; ?> </td>
+				<td> <?php echo $experiment->target_count; ?> </td>
+				<td> <?php echo $experiment->status; ?> </td>
+				<td> <?php echo $experiment->is_published; ?> </td>
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> </td>
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
+			</tr>
+		<?php endforeach; ?>
+		</tbody>
+	</table>
 <?php else: ?>
 	<p> You have no experiments </p>
 <?php endif; ?>
-<br>
-<hr>
+<a class = "button small" href="#" data-reveal-id="createExperiment">Create Experiment</a>
 <!-- Modal - Create Experiment -->
 <div id="createExperiment" class="reveal-modal tiny" data-reveal>
   <h2>Create an Experiment</h2>
@@ -41,5 +57,4 @@
 	<?php echo form_close();?>
   <a class="close-reveal-modal">&#215;</a>
 </div>
-<a href="#" data-reveal-id="createExperiment">Create Experiment</a>
 <!-- <a href = "<?php echo site_url('experiment'); ?>">Create Experiment</a><br/> -->

@@ -1,7 +1,6 @@
-<h1> Graduate </h1>
-
-<?php echo "BuildEx: You (". $this->session->userdata('username') .") are logged in with a role of ". ucfirst($this->session->userdata('role')[0]); ?></br>
+<h1> Welcome! </h1>
+<p> You are currently logged in as <strong> <?php echo $this->session->userdata('username'); ?> </strong> with a role of <strong> <?php echo ucfirst($this->session->userdata('active_role')); ?> </strong> </p>
 <hr>
-<h3> Summary </h3>
-<h4> Homepage Details for a Graduate </h4>
-<p> This is a chart.. or not. </p>
+<h2> Notifications </h2>
+<h3> Users </h3>
+	<p> There are 20 newly registered users for this week. </p>

@@ -113,6 +113,7 @@ class Admin extends MY_Controller{
 		if (isset($lab_head_user)){
 			$lab_head_info['uid'] = $lab_head_user->uid;
 			$laboratory_info['name'] = $this->input->post('lab_name');
+			$laboratory_info['description'] = $this->input->post('description');
 			$faculty = $this->faculty_model->get_faculty_profile(0,$username);
 			if($faculty->account_status == 't'){
 				$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);

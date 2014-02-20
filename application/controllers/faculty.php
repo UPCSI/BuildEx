@@ -111,8 +111,8 @@ class Faculty extends MY_Controller{
 		$fid = $data['faculty']->fid;
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty_view';
-		$this->load->view('_main_layout_internal', $data);
+		$data['main_content'] = 'faculty/view';
+		$this->load->view('_main_layout', $data);
 	}
 
 	public function view_experiment($fid = 0, $eid = 0){

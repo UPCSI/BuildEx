@@ -2,7 +2,7 @@
 <hr>
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
-	<pre> <?php echo $notification; ?> </pre> <br>
+	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
 <?php if (isset($laboratories)): ?>
@@ -21,7 +21,7 @@
 					<td> <?php echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name); ?> </td>
 					<td> <?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name)[0].'.'); ?>
 					<td> <?php echo $laboratory->members_count; ?></td>
-					<td> mm-dd--yyyy </td>
+					<td> <?php echo $laboratory->since; ?> </td>
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
@@ -39,6 +39,9 @@
 	<?php echo form_open("admin/add_lab");?> <br/>
 		<label>Lab Name</label><br/>
 		<input type="text" id="labname" required name="lab_name" placeholder="My Laboratory"><br/><br/>
+
+		<label>Description</label><br/>
+		<input type="text" id="description" required name="description" placeholder="This lab is..."><br/><br/>
 
 		<label>Lab Head</label><br/>
 		<input type="text" id="labhead" required name="lab_head" placeholder="Lab Head"><br/><br/>
