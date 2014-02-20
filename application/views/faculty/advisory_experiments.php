@@ -22,7 +22,7 @@
 			<?php foreach ($experiments as $experiment): ?>
 				<tr>
 					<td><?php echo anchor('experiment/view/' . $experiment->eid, $experiment->title); ?></td>
-					<td><a href = "graduate/view/<?php echo $experiment->username; ?>"><?php echo strtoupper($experiment->last_name).', '.ucwords($experiment->first_name).', '.ucfirst($experiment->middle_name); ?></a></td> 
+					<td><a href = "<?php echo site_url('graduate/view/'.$experiment->username); ?>"><?php echo strtoupper($experiment->last_name).', '.ucwords($experiment->first_name).', '.ucfirst($experiment->middle_name); ?></a></td> 
 					<td><?php echo $experiment->current_count; ?></td>
 					<td><?php echo $experiment->target_count; ?></td>
 					<td><?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>

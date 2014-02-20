@@ -59,6 +59,7 @@ class Laboratories_model extends MY_Model{
 		$this->db->select('Laboratories.*');
 		$this->db->join('faculty_member_of','faculty_member_of.labid = Laboratories.labid');
 		$this->db->where('faculty_member_of.fid',$fid);
+		$this->db->where('faculty_member_of.status',"true");
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}

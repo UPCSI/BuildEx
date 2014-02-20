@@ -8,7 +8,6 @@ class Faculty extends MY_Controller{
 	}
 	
 	public function index(){
-		$data['modules'] = array('home','profile','experiments','advisory','laboratories');
 		if($this->session->userdata('active_role') == 'faculty'){
 			$data['title'] = 'Faculty';
 			$data['main_content'] = 'faculty/index';
@@ -21,7 +20,6 @@ class Faculty extends MY_Controller{
 	}
 
 	public function profile(){
-		$data['modules'] = array('home','profile','experiments','advisory','laboratories');
 		$username = $this->session->userdata('username');
 		$data['user'] = $this->users_model->get_user_profile(0,$username);
 		$data['faculty'] = $this->faculty_model->get_faculty_profile($this->session->userdata('active_id'));
@@ -32,7 +30,6 @@ class Faculty extends MY_Controller{
 	}
 
 	public function experiments(){
-		$data['modules'] = array('home','profile','experiments','advisory','laboratories');
 		$data['fid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['fid']);
 		$data['title'] = 'Faculty';
@@ -45,7 +42,6 @@ class Faculty extends MY_Controller{
 	}
 
 	public function advisory(){
-		$data['modules'] = array('home','profile','experiments','advisory','laboratories');
 		$fid = $this->session->userdata('active_id');
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/advisory_experiments';
@@ -63,8 +59,7 @@ class Faculty extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
-	public function laboratories(){
-		$data['modules'] = array('home','profile','experiments','advisory','laboratories');
+	public function laboratory(){
 		$this->load->model('laboratories_model');
 		$this->load->model('graduates_model');
 		$fid = $this->session->userdata('active_id');
@@ -115,15 +110,6 @@ class Faculty extends MY_Controller{
 		//Warning: Update of experiment happened before assigning it to be advised by the faculty
 	}
 
-	public function edit_faculty($uid = 0, $fid = 0){
-		$data['title'] = 'Profile';
-		$data['user_profile'] = $this->users_model->get_user_profile($uid);
-		$data['faculty_profile'] = $this->faculty_model->get_faculty_profile($fid);
-		$data['experiments'] = $this->get_all_experiments($fid);
-		$data['main_content'] = 'contents/profile';
-		$this->load->view('_main_layout_internal', $data);
-	}
-
 	public function request_lab($labid = 0){
 		if($labid == 0 || is_null($labid)){
 			redirect('');
@@ -132,6 +118,13 @@ class Faculty extends MY_Controller{
 		$this->load->model('laboratories_model');
 		$fid = $this->session->userdata('active_id');
 		$status = $this->laboratories_model->request_faculty_lab($labid,$fid);
+		if($status){
+			$msg = "Request sent!";
+		}
+		else{
+			$msg = "Error sending the request";
+		}	
+		$this->session->set_flashdata('notification',$msg);
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 
@@ -154,6 +147,15 @@ class Faculty extends MY_Controller{
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view';
 		$this->load->view('_main_layout', $data);
+	}
+
+	public function edit_faculty($uid = 0, $fid = 0){
+		$data['title'] = 'Profile';
+		$data['user_profile'] = $this->users_model->get_user_profile($uid);
+		$data['faculty_profile'] = $this->faculty_model->get_faculty_profile($fid);
+		$data['experiments'] = $this->get_all_experiments($fid);
+		$data['main_content'] = 'contents/profile';
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function view_experiment($fid = 0, $eid = 0){
