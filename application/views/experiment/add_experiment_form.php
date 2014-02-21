@@ -1,12 +1,24 @@
 <h2>BuildEx: Experiment</h2>
 <script>
   $(function() {
+  	$.count = 1;
     $('#object1').click(function(){
-        var htmlData='<div class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px"><p>Object</p></div>';
+        var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px"><p>Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
         $('.demo').append(htmlData);
-        $( ".draggable" ).draggable();
+        $('.draggable').draggable({
+        	drag: function(){
+	            var offset = $(this).offset();
+	            var xPos = offset.left;
+	            var yPos = offset.top;
+	            var element = $(this).attr('id');
+	            $('#pos'+element+'X').text('x: ' + xPos);
+	            $('#pos'+element+'Y').text('y: ' + yPos);
+	        }
         });
-   });
+        $.count++;
+    });
+
+   }); 
 </script>
 <div id="builder" class="row full">
 	
@@ -15,9 +27,11 @@
 		<div style="color:white">
 			<p>Toolbar</p>
 		</div>
-		<!-- <div id="draggable" class="ui-widget-content">
+		<!-- 
+		<div id="draggable" class="ui-widget-content">
 		  <p>Object</p>
-		</div> -->
+		</div> 
+		-->
 		<a id="object1"class = "button small">Create Object1</a>
 	</div>
 
