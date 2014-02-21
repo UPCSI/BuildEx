@@ -1,23 +1,32 @@
 <h2>BuildEx: Experiment</h2>
 <script>
   $(function() {
-    $( "#draggable" ).draggable();
-  });
-</script>
-<script>
-  $(function() {
-    $( "#draggable1" ).draggable();
-  });
+    $('#object1').click(function(){
+        var htmlData='<div class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px"><p>Object</p></div>';
+        $('.demo').append(htmlData);
+        $( ".draggable" ).draggable();
+        });
+   });
 </script>
 <div id="builder" class="row full">
-	<div id="pane" class="large-3 column">
-		<div id="draggable" class="ui-widget-content">
-		  <p>Tool</p>
+	
+	<!-- Toolbar -->
+	<div id="pane" class="large-3 column" style="height:500px; background:gray">
+		<div style="color:white">
+			<p>Toolbar</p>
 		</div>
+		<!-- <div id="draggable" class="ui-widget-content">
+		  <p>Object</p>
+		</div> -->
+		<a id="object1"class = "button small">Create Object1</a>
 	</div>
-	<div id="workspace" class="large-9 column">
-		<div id="draggable1" class="ui-widget-content">
-		  <p>Workspace</p>
+
+	<!-- Workspace -->
+	<div id="workspace" class="large-9 column" style="height:500px; background:black;">
+		<div style="color:white">
+			<p>Workspace</p>
 		</div>
+		<div class='demo'></div>
 	</div>
+
 </div>
