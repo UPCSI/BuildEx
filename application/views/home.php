@@ -1,6 +1,6 @@
 <section class="jumbotron">
 <div class="row full">
-	<div class="large-5 large-offset-0pt5 columns">
+	<div class="large-6 columns">
 		<!--div class="row vcenter20 show-for-large-up"></div>
 		<div class="row vcenter10 hide-for-large-up"></div-->
 		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100" viewBox="0 0 100 100">
@@ -406,7 +406,7 @@
 			<p class="justify" style="margin-bottom:0px">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 		</div>
 		<div class="row">
-			<div class="large-4 small-12 large-offset-8 columns">
+			<div class="large-4 small-12 large-push-8 columns">
 				<a class="button expand" style="" href="#"><h4 class="white"><strong>Start now!</strong></h4></a>
 			</div>
 		</div>
@@ -421,23 +421,24 @@
 	<div class="titleholder">
 		<div class="row full">
 			<div class="large-12 columns">
-				<h2 class="white">What is <span style="color:#f1c40f">Build</span><span style="color:#e67e22">Ex</span>?</h2>
+				<h2 class="white"><strong>What is <span style="color:#3498db">CS 192</span>?</strong></h2>
 			</div>
 		</div>
 	</div>
 	<div class="row full">
 		<div class="large-5 columns"></div>
 		<div class="large-7 columns">
-			<h3 style="color:#f1c40f">Take full control of your experiments.</h3>
+			<h3 style="color:#3498db"><strong>Take full control of your experiments.</strong></h3>
 			<p class="justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 		</div>
 	</div>
 </section>
+
 <section class="homesection" id="features">
 	<div class="titleholder">
 		<div class="row full">
 			<div class="large-12 columns">
-				<h2 class="white">Features</h2>
+				<h2 class="white"><strong>Features</strong></h2>
 			</div>
 		</div>
 	</div>
@@ -448,7 +449,7 @@
 				<div class="large-12 medium-6 small-12 columns">
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
-					<h3 style="color:#f1c40f">All in one place</h3>
+					<h3 style="color:#3498db">All in one place</h3>
 					<p class>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
 				</div>
 			</div>
@@ -458,7 +459,7 @@
 				<div class="large-12 medium-6 small-12 columns">
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
-					<h3 style="color:#e67e22">User-friendly interface</h3>
+					<h3 style="color:#1abc9c">User-friendly interface</h3>
 					<p class>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
 				</div>
 			</div>
@@ -468,7 +469,7 @@
 				<div class="large-12 medium-6 small-12 columns">
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
-					<h3 style="color:#f1c40f">Have it your way</h3>
+					<h3 style="color:#3498db">Have it your way</h3>
 					<p class>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
 				</div>
 			</div>
@@ -478,7 +479,7 @@
 				<div class="large-12 medium-6 small-12 columns">
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
-					<h3 style="color:#e67e22">Connect with friends</h3>
+					<h3 style="color:#1abc9c">Connect with friends</h3>
 					<p class>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</p>
 				</div>
 			</div>
@@ -490,7 +491,7 @@
 	<div class="titleholder">
 		<div class="row full">
 			<div class="large-12 columns">
-				<h2 class="white">See It in Action</h2>
+				<h2 class="white"><strong>In Action</strong></h2>
 			</div>
 		</div>
 	</div>
@@ -504,16 +505,22 @@
 	<div class="titleholder">
 		<div class="row full">
 			<div class="large-12 columns">
-				<h2 class="white">About <span style="color:#f1c40f">Build</span><span style="color:#e67e22">Ex</span></h2>
+				<h2 class="white"><strong>About <span style="color:#3498db">CS 192</span></strong></h2>
 			</div>
 		</div>
 	</div>
 	<div class="row full">
 		<div class="large-12 columns">
 			<div class="row">
-				<div class="large-3 columns"></div>
-				<div class="large-3 push-6 columns"></div>
-				<div class="large-6 pull-3 columns">
+				<div class="large-3 small-6 columns">
+					<center>
+					<img src="<?php echo site_url('images/up_logo.svg'); ?>" style="width: 75%;display: inline;vertical-align: text-bottom;"></center>
+				</div>
+				<div class="large-3 small-6 large-push-6 columns">
+					<center>
+					<img src="<?php echo site_url('images/cssp_logo.svg'); ?>" style="width: 75%;display: inline;vertical-align: text-bottom;"></center>
+				</div>
+				<div class="large-6 large-pull-3 columns">
 					<p class>
 						Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
 					</p>

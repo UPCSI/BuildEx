@@ -54,9 +54,14 @@ div.row.vcenter30 {
 svg {
   display: block;
   margin:auto;
+  margin-top: 15%;
   width:80%;
   height:80%;
 }
+}
+
+p {
+  color: white;
 }
 
 .row.full {
@@ -70,7 +75,7 @@ svg {
 /* top-bar large */
 
 .top-bar {
-	background: linear-gradient( 90deg, #2F96D8, #47AEF0 25%, #238ACC);
+	background: #252525;
   height: 55px;
   line-height: 55px;
 }
@@ -187,8 +192,8 @@ section.jumbotron {
     right: 0;
     bottom: 0;
     left: 0;
-    background: url('../images/flat_psych.png') left bottom no-repeat;
-    background-size: contain;
+    /*background: url('../images/flat_psych.png') left bottom no-repeat;
+    background-size: contain;*/
     /*background: url('../images/jumbotron_bg.png') left bottom no-repeat;
     background-size: cover;
     opacity: .05;*/
@@ -219,17 +224,17 @@ section.homesection {
 }
 
 section:nth-child(even).homesection {
-	background-color: #ecf0f1;
+	background-color: #141414;
 }
 
 section:nth-child(odd).homesection {
-	background-color: #ecf0f1;
+	background-color: #141414;
 }
 
 div.titleholder {
 	padding:5px;
 	margin-bottom: 3%;
-	background:linear-gradient(90deg, rgba(52, 152, 219,1.0) 0%, rgba(52, 152, 219,0.0) 100%);
+	background:#252525;
 }
 
 section.sitemap {
@@ -301,14 +306,6 @@ ul {
 	margin-left: 0px;
 }
 
-.sidebar{
-  position: relative;
-}
-
-#builder {
-  margin-left: 20px;
-}
-
 .icon > span{
     vertical-align: text-top;
     padding-left:55px;
@@ -326,5 +323,5 @@ ul {
 }
 
 .top-bar .name h1 a {
-  padding:0;
+  padding:0px;
 }
