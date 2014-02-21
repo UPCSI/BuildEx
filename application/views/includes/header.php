@@ -20,9 +20,9 @@
   #draggable { width: 150px; height: 150px; padding: 0.5em; }
 </style>
 <script>
-  $(function() {
-    $( "#draggable" ).draggable();
-  });
+//   $(function() {
+//     $( "#draggable" ).draggable();
+//   });
 </script>
 </head>
 

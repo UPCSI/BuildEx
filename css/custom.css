@@ -224,3 +224,7 @@ ul {
 .sidebar{
   position: relative;
 }
+
+#builder {
+  margin-left: 20px;
+}

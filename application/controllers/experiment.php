@@ -23,9 +23,10 @@ class Experiment extends MY_Controller{
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
 
-		$success = 'You have successfully created an experiment!';
-		$this->session->set_flashdata('notification',$success);
-		redirect($role.'/experiments');
+		// $success = 'You have successfully created an experiment!';
+		// $this->session->set_flashdata('notification',$success);
+		// redirect($role.'/experiments');
+		redirect('builder');
     }
 
 	public function delete_experiment($eid = 0){
@@ -54,10 +55,13 @@ class Experiment extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
+	/*
+		Temporary Edit function
+	*/
 	public function edit_experiment($eid = 0){
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
-		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/edit_experiment_form';
+		$data['title'] = '\Temporary Edit\ Experiment';
+		$data['main_content'] = 'experiment/add_experiment_form';
 		$this->load->view('_main_layout', $data);
 	}
 

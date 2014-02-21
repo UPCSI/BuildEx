@@ -433,7 +433,6 @@
 		</div>
 	</div>
 </section>
-
 <section class="homesection" id="features">
 	<div class="titleholder">
 		<div class="row full">
