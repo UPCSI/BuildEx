@@ -154,7 +154,7 @@ class Faculty extends MY_Controller{
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function edit_faculty($uid = 0, $fid = 0){

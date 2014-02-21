@@ -39,6 +39,6 @@ class Laboratories extends MY_Controller{
 		}
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		$this->load->view('_main_layout',$data);
+		$this->load->view('_main_layout_internal',$data);
 	}
 }

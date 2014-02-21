@@ -58,7 +58,7 @@ class Experiment extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/edit_experiment_form';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function update_experiment($eid = 0){
@@ -93,6 +93,6 @@ class Experiment extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/view';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 }

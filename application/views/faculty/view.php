@@ -11,7 +11,7 @@
 <h3> Experiments </h3>
 <?php if(isset($experiments)): ?>
 	<?php foreach ($experiments as $exp): ?>
-		<h5> <a href = "<?php site_url('experiment/view/'.$exp->eid); ?>" ><?php echo $exp->title; ?> </a> </h5>
+		<h5> <a href = "<?php echo site_url('experiment/view/'.$exp->eid); ?>" ><?php echo $exp->title; ?> </a> </h5>
 	<?php endforeach; ?>
 <?php else: ?>
 	<p> There are no experiments. </p>
