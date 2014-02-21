@@ -40,21 +40,23 @@
 <a class = "button small" href="#" data-reveal-id="create_experiment_modal">Create Experiment</a>
 
 <!-- Modal - Create Experiment -->
-<div id="create_experiment_modal" class="reveal-modal tiny" data-reveal>
+<div id="create_experiment_modal" class="reveal-modal small" data-reveal>
   <h2>Create an Experiment</h2>
 	<?php echo validation_errors();?>
 	<?php echo form_open("experiment/add_experiment");?>
-	<label>Title</label>
-	<input type="text" id="title" required name="title" placeholder="Title">
+	<fieldset>
+		<legend> Create Experiment </legend>
+		<label>Title</label>
+		<input type="text" id="title" required name="title" placeholder="Title">
 
-	<label>Description</label>
-	<input type="text" id="description" required name="description" placeholder="Description">
+		<label>Description</label>
+		<input type="text" id="description" required name="description" placeholder="Description">
 
-	<label>Target Count</label><br/>
-	<input type="text" id="targetCount" required name="target_count" placeholder="Target Count"><br/><br/>
+		<label>Target Count</label><br/>
+		<input type="text" id="targetCount" required name="target_count" placeholder="Target Count"><br/><br/>
 
-	<input type="submit" class="button" value="Create Experiment">
-
+		<input type="submit" class="button small" value="Create Experiment">
+	</fieldset>
 	<?php echo form_close();?>
   <a class="close-reveal-modal">&#215;</a>
 </div>

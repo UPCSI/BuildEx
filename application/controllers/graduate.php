@@ -46,7 +46,7 @@ class Graduate extends MY_Controller{
 		$this->load->model('faculty_model');
 		$gid = $this->session->userdata('active_id');
 		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate/laboratories';
+		$data['main_content'] = 'graduate/my_laboratory';
 		$data['main_lab'] = $this->laboratories_model->get_graduate_laboratory($gid);
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
@@ -81,8 +81,15 @@ class Graduate extends MY_Controller{
 		}
 		$this->load->model('laboratories_model');
 		$gid = $this->session->userdata('active_id');
-		$this->laboratories_model->request_graduate_lab($labid,$gid);
-		redirect(''); //implement where to redirect after a faculty request for a lab
+		$status = $this->laboratories_model->request_graduate_lab($labid,$gid);
+		if($status){
+			$msg = "Request sent!";
+		}
+		else{
+			$msg = "Error sending the request";
+		}	
+		$this->session->set_flashdata('notification',$msg);
+		redirect('graduate/laboratory');
 	}
 
 	public function view($username = null){

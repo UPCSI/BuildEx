@@ -1,7 +1,7 @@
 <h1>Laboratory</h1>
 <hr>
 <?php if (isset($main_lab)): ?>
-	<h4><?php echo $main_lab->name; ?></h4>
+	<h2><?php echo $main_lab->name; ?></h2>
 	<p><strong> No. of members: </strong><?php echo $main_lab->members_count; ?></p>
 	<h5> Faculty Members </h5>
 	<?php if(isset($faculty_members)): ?>

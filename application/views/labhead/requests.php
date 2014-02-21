@@ -21,7 +21,7 @@
 		<tbody>
 		<?php foreach($fac_requests as $request): ?>
 			<tr>
-				<td> <?php echo strtoupper($request->last_name).', ' .ucwords($request->first_name).' ' .ucfirst($request->middle_name); ?> </td>
+				<td> <a href = "<?php echo site_url('faculty/view/'.$request->username); ?>"> <?php echo strtoupper($request->last_name).', ' .ucwords($request->first_name).' ' .ucfirst($request->middle_name); ?> </a> </td>
 				<td> <?php echo $request->username; ?> </td>
 				<td> <?php echo $request->faculty_num; ?> </td>
 				<td> <?php echo $request->since; ?> </td>
@@ -53,7 +53,7 @@
 		<tbody>
 		<?php foreach($grad_requests as $request): ?>
 			<tr>
-				<td> <?php echo strtoupper($request->last_name).', ' .ucwords($request->first_name).' ' .ucfirst($request->middle_name); ?> </td>
+				<td> <a href = "<?php echo site_url('graduate/view/'.$request->username); ?>"><?php echo strtoupper($request->last_name).', ' .ucwords($request->first_name).' ' .ucfirst($request->middle_name); ?> </a></td>
 				<td> <?php echo $request->username; ?> </td>
 				<td> <?php echo $request->student_num; ?> </td>
 				<td> <?php echo $request->since; ?> </td>

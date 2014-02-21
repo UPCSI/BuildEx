@@ -1,5 +1,10 @@
 <h3>Laboratory</h3>
 <hr>
+
+<?php if(isset($notification)): ?>
+	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
+<?php endif; ?>
+
 <? if(isset($laboratory)): ?>
 	<h3> <?echo $laboratory->name ?> </h3>
 	<p> <strong> Laboratory Head: </strong> <a href = "<?= site_url('faculty/view/'.$lab_head->username); ?>"><?= strtoupper($lab_head->last_name).', '.ucwords($lab_head->first_name).', '.ucfirst($lab_head->middle_name); ?> </a> </p>
@@ -24,6 +29,7 @@
 		<p> There are no students </p>
 	<? endif; ?>
 <? endif; ?>
+</br>
 <? if(isset($is_member)): ?>
 	<? if(!$is_member): ?>
 		<a class = "button small" href = "<?php echo site_url($role.'/request_lab/'.$laboratory->labid); ?>"> Apply </a>
