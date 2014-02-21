@@ -6,7 +6,7 @@
 	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
-<a href = "<?php echo site_url('experiment_builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
+<a href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
 <h2> <?php echo $experiment->title; ?></h2>
 <p> Category: <?php echo $experiment->category; ?> </p>
 <p> Description: <?php echo $experiment->description; ?> </p>

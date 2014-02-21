@@ -21,7 +21,9 @@ class Builder_model extends MY_Model{
 		$query = $this->db->get('Questions');
 		$question = $query->row();
 		$type = $question->type;
-		echo $type;
+
+		$this->db->insert('Options',$data);
+		return $this->db->insert_id();
 
 		if($type > 0){
 			$this->db->insert('Options',$data);
