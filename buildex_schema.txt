@@ -34,6 +34,8 @@ TABLE Laboratories:
 	labid: integer PRIMARY AUTOINCREMENT
 	name: character varying(32) UNIQUE
 	members_count: integer
+	description: character varying
+	since: date
 
 TABLE Experiments:
 	eid: integer PRIMARY AUTOINCREMENT

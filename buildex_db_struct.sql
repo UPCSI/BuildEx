@@ -9,6 +9,27 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
+--
+-- Name: buildex_db; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE buildex_db IS 'BuildEx Database. University of the Philippines Diliman. Department of Psychology.';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -152,7 +173,9 @@ ALTER TABLE public.laboratories_labid_seq OWNER TO postgres;
 CREATE TABLE "Laboratories" (
     labid integer DEFAULT nextval('laboratories_labid_seq'::regclass) NOT NULL,
     name character varying(32),
-    members_count integer DEFAULT 0
+    members_count integer DEFAULT 0,
+    since date DEFAULT ('now'::text)::date,
+    description character varying
 );
 
 
@@ -262,7 +285,7 @@ ALTER TABLE public.questions_qid_seq OWNER TO postgres;
 CREATE TABLE "Questions" (
     pid integer,
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
-    label character varying,
+    label character varying(256),
     type integer,
     is_required boolean DEFAULT false,
     "order" integer,

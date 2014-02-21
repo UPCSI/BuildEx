@@ -46,28 +46,31 @@ class Laboratories_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_graduate_laboratory($gid){
+	public function get_graduate_laboratory($gid,$cond = "true"){
 		$this->db->select('Laboratories.*');
 		$this->db->join('graduates_member_of','graduates_member_of.labid = Laboratories.labid');
 		$this->db->where('graduates_member_of.gid',$gid);
-		$this->db->where('graduates_member_of.status','true');
+		$this->db->where('graduates_member_of.status', $cond);
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_faculty_laboratory($fid){
+	public function get_faculty_laboratory($fid,$cond = "true"){
 		$this->db->select('Laboratories.*');
 		$this->db->join('faculty_member_of','faculty_member_of.labid = Laboratories.labid');
 		$this->db->where('faculty_member_of.fid',$fid);
+		$this->db->where('faculty_member_of.status',$cond);
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_laboratory_head_laboratory($labid){
+	public function get_labhead_laboratory($lid){
 		$this->db->select('Laboratories.*');
-		$this->db->join('manages','manages.labid = Laboratories.labid');
-		$this->db->where('manages.labid',$labid);
-		$q = $this->db->get('Laboratories');
+		$this->db->join('manage','manage.lid = LaboratoryHeads.lid');
+		$this->db->join('Laboratories','Laboratories.labid = manage.labid');
+		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');
+		$this->db->where('LaboratoryHeads.lid',$lid);
+		$q = $this->db->get('LaboratoryHeads');
 		return $this->query_row_conversion($q);
 	}
 
@@ -108,12 +111,6 @@ class Laboratories_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	private function increment_member_count($labid){
-		$this->db->set('members_count', 'members_count+1', FALSE);
-		$this->db->where('labid', $labid);
-		$this->db->update('Laboratories');
-	}
-
 	public function accept_graduate($labid, $gid){
 		$this->db->where('labid', $labid);
 		$this->db->where('gid',$gid);
@@ -135,19 +132,27 @@ class Laboratories_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
+	private function increment_member_count($labid){
+		$this->db->set('members_count', 'members_count+1', FALSE);
+		$this->db->where('labid', $labid);
+		$this->db->update('Laboratories');
+	}
+
 	public function get_all_faculty_requests($labid){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num');
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num,since,labid');
 		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
+		$this->db->where('labid',$labid);
 		$this->db->where('faculty_member_of.status','false');
 		$q = $this->db->get('faculty_member_of');
 		return $this->query_conversion($q);
 	}
 
 	public function get_all_graduates_requests($labid){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num');
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num,since,labid');
 		$this->db->join('Graduates','Graduates.gid = graduates_member_of.gid');
 		$this->db->join('Users','Users.uid = Graduates.uid');
+		$this->db->where('labid',$labid);
 		$this->db->where('graduates_member_of.status','false');
 		$q = $this->db->get('graduates_member_of');
 		return $this->query_conversion($q);
@@ -162,7 +167,10 @@ class Laboratories_model extends MY_Model{
 	}
 
 	public function get_all_laboratories(){
-		$this->db->select('Laboratories.*');
+		$this->db->select('*');
+		$this->db->join('manage','manage.labid = Laboratories.labid');
+		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = manage.lid');
+		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');
 		$q = $this->db->get('Laboratories');
 		return $this->query_conversion($q);
 	}

@@ -1,15 +1,11 @@
-<h3> <? echo "Head of " .$lab_name ." Lab";?> </h3>
-
-Name: <?php echo strtoupper($user->last_name).', '.ucwords($user->first_name).', '.ucfirst($user->middle_name); ?> <br/>
-Email Address: <?php echo $user->email_ad; ?> <br/><br/>
-Roles: <br/>
-
-<?php 
-	$count = 0;
-	foreach ($roles as $role) {
-		$count = $count + 1;
-		echo '<a href ="' .site_url('home/redirect')  .'/' .$role .'">' .$count .'. '.ucfirst($role) .'</a><br/>';
-	}
-?>
-
-<br/>
+<h1> Profile </h1>
+<hr>
+<p> <strong> Name: </strong> <?php echo strtoupper($user->last_name).', '.ucwords($user->first_name).', '.ucfirst($user->middle_name); ?> </p>
+<p> <strong> Email Address: </strong> <?php echo $user->email_ad; ?> </p>
+<p> <strong> Laboratory Head Of: </strong> <h3> <? echo $lab_name ?> Lab </p>
+Roles:
+<ol>
+	<?php foreach ($roles as $role): ?>
+		<li> <a href ="<?php echo site_url('home/redirect')  .'/' .$role?>"> <?php echo ucfirst($role); ?> </a> </li>
+	<?php endforeach; ?>
+</ol>

@@ -8,6 +8,7 @@ class Labhead extends MY_Controller{
 	}
 	
 	public function index(){
+		$data['modules'] = array('home','profile','laboratory','confirm_faculty');
 		$fid = $this->session->userdata('fid');
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
 		$data['lab_name'] = $lab->name;
@@ -16,12 +17,13 @@ class Labhead extends MY_Controller{
 			$data['main_content'] = 'labhead/index';
 			$this->load->view('_main_layout_internal', $data);
 		}
-
-		else
+		else{
 			redirect($this->session->userdata('active_role'));
+		}
 	}
 
 	public function profile(){
+		$data['modules'] = array('home','profile','laboratory');
 		$fid = $this->session->userdata('fid');
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
 		$data['lab_name'] = $lab->name;
@@ -34,6 +36,7 @@ class Labhead extends MY_Controller{
 	}
 
 	public function laboratory(){
+		$data['modules'] = array('home','profile','laboratory');
 		$this->load->model('faculty_model');
 		$this->load->model('graduates_model');
 
@@ -47,84 +50,88 @@ class Labhead extends MY_Controller{
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 
 		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/lab';
+		$data['main_content'] = 'labhead/laboratory';
 		$this->load->view('_main_layout_internal',$data);
 	}
 
-	public function faculty_requests(){
-		$labid = $this->session->userdata('labid');
-		$data['requests'] = $this->laboratories_model->get_all_faculty_requests($labid);
+	public function laboratories(){
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'laboratory/all';
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
+		$this->load->view("_main_layout_internal",$data);
+	}
+
+	public function requests(){
+		$lab = $this->laboratories_model->get_labhead_laboratory($this->session->userdata('lid'));
+		$labid = $lab->labid;
+		$data['fac_requests'] = $this->laboratories_model->get_all_faculty_requests($labid);
+		$data['grad_requests'] = $this->laboratories_model->get_all_graduates_requests($labid);
 		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/faculty_requests';
+		$data['main_content'] = 'labhead/requests';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
 		$this->load->view('_main_layout_internal',$data);
 	}
 
-	public function confirm_faculty($fid=0){
-		$query = $this->laboratories_model->get_faculty_laboratory($fid);
+	public function confirm_faculty($labid = 0,$fid=0){
+		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
 		$labid = $query->labid;
-
 		$status = $this->laboratories_model->accept_faculty($labid,$fid);
-		if($status)
-			$data['main_content'] = 'message_success';
-
-		else
-			$data['main_content'] = 'message_error';
-
-		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout_internal',$data);
+		if($status){
+			$this->laboratories_model->increment_member_count($labid);
+			$msg = "You have successfully added a faculty member to your lab.";
+		}
+		else{
+			$msg = "Error accepting faculty.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('labhead/requests');
 	}
 
-	public function reject_faculty($fid=0){
-		$query = $this->laboratories_model->get_faculty_laboratory($fid);
+	public function reject_faculty($labid = 0,$fid=0){
+		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
 		$labid = $query->labid;
 
 		$status = $this->laboratories_model->reject_faculty($labid,$fid);
-		if($status)
-			$data['main_content'] = 'message_success';
-
-		else
-			$data['main_content'] = 'message_error';
-
-		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout_internal',$data);		
+		if($status){
+			$msg = "You have successfully rejected a faculty member from your lab.";
+		}
+		else{
+			$msg = "Error rejecting a faculty member.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('labhead/requests');	
 	}
 
-	public function graduates_requests(){
-		$labid = $this->session->userdata('labid');
-		$data['requests'] = $this->laboratories_model->get_all_graduates_requests($labid);
-		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/graduates_requests';
-		$this->load->view('_main_layout_internal',$data);
-	}
-
-	public function confirm_graduate($gid=0){
-		$query = $this->laboratories_model->get_graduate_laboratory($gid);
-		$labid = $query->labid;
-
+	public function confirm_graduate($labid = 0,$gid=0){
 		$status = $this->laboratories_model->accept_graduate($labid,$gid);
-		if($status)
-			$data['main_content'] = 'message_success';
-
-		else
-			$data['main_content'] = 'message_error';
-
-		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout_internal',$data);
+		if($status){
+			$this->laboratories_model->increment_member_count($labid);
+			$msg = "You have successfully added a graduate student to your lab.";
+		}
+		else{
+			$msg = "Error accepting a graduate student.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('labhead/requests');
 	}
 
-	public function reject_graduate($gid=0){
-		$query = $this->laboratories_model->get_graduate_laboratory($gid);
+	public function reject_graduate($labid = 0,$gid=0){
+		$query = $this->laboratories_model->get_graduate_laboratory($gid,$cond = "false");
 		$labid = $query->labid;
 
 		$status = $this->laboratories_model->reject_graduate($labid,$gid);
-		if($status)
-			$data['main_content'] = 'message_success';
-
-		else
-			$data['main_content'] = 'message_error';
-
-		$data['title'] = 'Lab Head';
-		$this->load->view('_main_layout_internal',$data);		
+		if($status){
+			$msg = "You have successfully rejected a graduate student from your lab.";
+		}
+		else{
+			$msg = "Error rejecting a graduate student.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('labhead/requests');		
 	}
-
 }

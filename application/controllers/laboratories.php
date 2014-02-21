@@ -31,7 +31,7 @@ class Laboratories extends MY_Controller{
 		$data['main_content'] = 'laboratory/view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
 		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
-		$data['role'] = $this->session->userdata('role')[0]; //this should be changes to active_role
+		$data['role'] = $this->session->userdata('active_role');
 
 		if(is_null($data['laboratory'])){
 			redirect('');
@@ -39,6 +39,12 @@ class Laboratories extends MY_Controller{
 		}
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		$this->load->view('_main_layout',$data);
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+		
+		$this->load->view('_main_layout_internal',$data);
 	}
 }

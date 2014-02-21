@@ -96,7 +96,7 @@ class Experiment extends MY_Controller{
 		}
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment_view';
-		$this->load->view('_main_layout', $data);
+		$data['main_content'] = 'experiment/view';
+		$this->load->view('_main_layout_internal', $data);
 	}
 }

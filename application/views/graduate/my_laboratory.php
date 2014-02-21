@@ -1,7 +1,7 @@
-<h3>Graduate: My Laboratory</h3>
+<h1>Laboratory</h1>
 <hr>
 <?php if (isset($main_lab)): ?>
-	<h4><?php echo $main_lab->name; ?></h4>
+	<h2><?php echo $main_lab->name; ?></h2>
 	<p><strong> No. of members: </strong><?php echo $main_lab->members_count; ?></p>
 	<h5> Faculty Members </h5>
 	<?php if(isset($faculty_members)): ?>
@@ -27,10 +27,11 @@
 	<hr>
 	<h4> Apply to Laboratory </h4>
 	<?php if (isset($laboratories)): ?>
+		<ol>
 		<?php foreach ($laboratories as $laboratory): ?>
-			<a href = "<?php echo site_url('laboratories/view/'.$laboratory->labid); ?>"><?php echo $laboratory->name; ?> </a>
-			<br>
+			<li><a href = "<?php echo site_url('laboratories/view/'.$laboratory->labid); ?>"><?php echo $laboratory->name; ?> </a></li>
 		<?php endforeach; ?>
+		</ol>
 	<?php else: ?>
 		<p>There are no laboratories. Poor you. :( </p>
 	<?php endif; ?>

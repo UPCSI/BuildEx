@@ -3,7 +3,7 @@
 
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
-	<pre> <?php echo $notification; ?> </pre>
+	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
 <a href = "<?php echo site_url('experiment_builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>

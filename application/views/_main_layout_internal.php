@@ -5,7 +5,7 @@
 <div class = "main_body">
 	<div class = "row full"> 
 		<div class = "large-2 column">
-			<?php $this->load->view('components/sidebar'); ?>
+			<?php $this->load->view('components/sidebar'.'_'.$this->session->userdata('active_role')); ?>
 		</div>
 		<div class ="large-10 column">
 			<div class = "main_content">
