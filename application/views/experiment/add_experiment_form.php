@@ -19,11 +19,11 @@
     });
     $("#getObjectValues").click(function () {
 		var msg = '';
-		for(i=1; i<($.count-1); i++){
-			var offset = $('').offset();
+		for(i=1; i<$.count; i++){
+			var offset = $('#'+i).offset();
 	        var xPos = offset.left;
 	        var yPos = offset.top;
-	   		msg += "\n Object #" + i + " : " + $('#' + i).();
+	   		msg += "\n Object #" + i + " : x " + xPos + "y " + yPos;
 		}
 	   	alert(msg);
 	});
