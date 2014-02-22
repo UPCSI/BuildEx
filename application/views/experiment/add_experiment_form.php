@@ -3,7 +3,7 @@
   $(function() {
   	$.count = 1;
     $('#object1').click(function(){
-        var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px"><p>Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+        var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px"><p style="color:black">Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
         $('.demo').append(htmlData);
         $('.draggable').draggable({
         	drag: function(){
@@ -17,6 +17,13 @@
         });
         $.count++;
     });
+    $("#getObjectValues").click(function () {
+		var msg = '';
+		for(i=1; i<($.count-1); i++){
+	   	  msg += "\n Object #" + i + " : " + $('#' + i).();
+		}
+	   	alert(msg);
+	});
 
    }); 
 </script>
@@ -33,6 +40,7 @@
 		</div> 
 		-->
 		<a id="object1"class = "button small">Create Object1</a>
+		<a id="getObjectValues"class = "button small">Save Environment</a>
 	</div>
 
 	<!-- Workspace -->
