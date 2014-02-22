@@ -83,6 +83,7 @@ class Labhead extends MY_Controller{
 		$status = $this->laboratories_model->accept_faculty($labid,$fid);
 		if($status){
 			$this->laboratories_model->increment_member_count($labid);
+			$this->laboratories_model->delete_other_faculty_requests($fid);
 			$msg = "You have successfully added a faculty member to your lab.";
 		}
 		else{
@@ -111,6 +112,7 @@ class Labhead extends MY_Controller{
 		$status = $this->laboratories_model->accept_graduate($labid,$gid);
 		if($status){
 			$this->laboratories_model->increment_member_count($labid);
+			$this->laboratories_model->delete_other_graduate_requests($gid);
 			$msg = "You have successfully added a graduate student to your lab.";
 		}
 		else{

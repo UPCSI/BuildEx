@@ -51,7 +51,7 @@ class Faculty extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view_experiment';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function advisory(){

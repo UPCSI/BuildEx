@@ -137,6 +137,18 @@ class Laboratories_model extends MY_Model{
 		$this->db->update('Laboratories');
 	}
 
+	public function delete_other_faculty_requests($fid){
+		$this->db->where('faculty_member_of.fid',$fid);
+		$this->db->where('faculty_member_of.status',"false");
+		$this->db->delete('faculty_member_of');
+	}
+
+	public function delete_other_graduate_requests($gid){
+		$this->db->where('graduates_member_of.gid',$gid);
+		$this->db->where('graduates_member_of.status',"false");
+		$this->db->delete('graduates_member_of');
+	}
+
 	public function get_all_faculty_requests($labid){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num,since,labid');
 		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');

@@ -38,14 +38,6 @@
 					<li><a href="<?php echo site_url('home/logout') ?>"> Logout </a></li>
 				<? endif; ?>
 			</ul>
-			<!-- Left Nav Section 
-			<ul class="left">
-				<li><a href="#">What is BuildEx?</a></li>
-				<li><a href="#">Features</a></li>
-				<li><a href="#">In Action</a></li>
-				<li><a href="#">About</a></li>
-			</ul>
-			-->
 		</section>
 	</nav>
 </div>

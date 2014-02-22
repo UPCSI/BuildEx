@@ -80,16 +80,16 @@ class Graduate extends MY_Controller{
 			//implement where to redirect if labid is 0 or none
 		}
 		$this->load->model('laboratories_model');
-		$gid = $this->session->userdata('active_id');
+		$gid = $this->session->userdata('gid');
 		$status = $this->laboratories_model->request_graduate_lab($labid,$gid);
 		if($status){
 			$msg = "Request sent!";
 		}
 		else{
 			$msg = "Error sending the request";
-		}	
+		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('graduate/laboratory');
+		redirect('laboratories/view/'.$labid);
 	}
 
 	public function view($username = null){
