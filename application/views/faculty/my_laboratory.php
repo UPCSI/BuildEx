@@ -6,7 +6,8 @@
 		<p> <?php echo $main_lab->description; ?> </p>
 	<?php endif; ?>
 	<p><strong> No. of members: </strong><?php echo $main_lab->members_count; ?> </p>
-	<p><strong> Created: </strong> <?php echo $main_lab->since; ?> </p>
+	<p> <strong> Description: </strong><? if(isset($main_lab->description)){echo $main_lab->description;}else{echo "None";}?> </p>
+	<p><strong> Since: </strong> <?php echo $main_lab->since; ?> </p>
 	<h4> Faculty Members </h4>
 	<?php if(isset($faculty_members)): ?>
 		<ol>

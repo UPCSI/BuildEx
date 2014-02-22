@@ -41,6 +41,19 @@ class Faculty extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
+	public function view_experiment($eid = 0){
+		if($eid == 0){
+			redirect('');
+			//implement where to redirect if eid or gid is non-existent
+		}
+		$this->load->model('experiments_model');
+		$fid = $this->session->userdata('fid');
+		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'faculty/view_experiment';
+		$this->load->view('_main_layout', $data);
+	}
+
 	public function advisory(){
 		$fid = $this->session->userdata('active_id');
 		$data['title'] = 'Faculty';
@@ -81,6 +94,28 @@ class Faculty extends MY_Controller{
 		$data['main_content'] = 'laboratory/all';
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
 		$this->load->view("_main_layout_internal",$data);
+	}
+
+
+	public function view($username = null){
+		if(is_null($username)){
+			redirect('');
+			//implement where to redirect if username is non-existent
+		}
+
+		$data['user'] = $this->users_model->get_user_profile(0,$username);
+
+		if(is_null($data['user'])){
+			redirect('');
+			//implement where to redirect if user is non-existent
+		}
+
+		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
+		$fid = $data['faculty']->fid;
+		$data['experiments'] = $this->get_all_experiments($fid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'faculty/view';
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function confirm_experiment($eid = 0){
@@ -136,27 +171,6 @@ class Faculty extends MY_Controller{
 		redirect(''); //implement where to redirect after a faculty request for a lab
 	}
 
-	public function view($username = null){
-		if(is_null($username)){
-			redirect('');
-			//implement where to redirect if username is non-existent
-		}
-
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-
-		if(is_null($data['user'])){
-			redirect('');
-			//implement where to redirect if user is non-existent
-		}
-
-		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
-		$fid = $data['faculty']->fid;
-		$data['experiments'] = $this->get_all_experiments($fid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view';
-		$this->load->view('_main_layout_internal', $data);
-	}
-
 	public function edit_faculty($uid = 0, $fid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
@@ -164,18 +178,6 @@ class Faculty extends MY_Controller{
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['main_content'] = 'contents/profile';
 		$this->load->view('_main_layout_internal', $data);
-	}
-
-	public function view_experiment($fid = 0, $eid = 0){
-		if($eid == 0 || $fid == 0){
-			redirect('');
-			//implement where to redirect if eid or gid is non-existent
-		}
-		$this->load->model('experiments_model');
-		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view_experiment';
-		$this->load->view('_main_layout', $data);
 	}
 	
 	private function get_all_experiments($fid = 0){

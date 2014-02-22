@@ -3,22 +3,25 @@
 <?php if (isset($main_lab)): ?>
 	<h2><?php echo $main_lab->name; ?></h2>
 	<p><strong> No. of members: </strong><?php echo $main_lab->members_count; ?></p>
+	<p> <strong> Description: </strong><? if(isset($main_lab->description)){echo $main_lab->description;}else{echo "None";}?> </p>
+	<p><strong> Since: </strong><?php echo $main_lab->since; ?></p>
 	<h5> Faculty Members </h5>
 	<?php if(isset($faculty_members)): ?>
+		<ol>
 		<?php foreach ($faculty_members as $member): ?>
-			<a href = "<?php echo site_url('faculty/view/'.$member->username); ?>" ><?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a>
-			<br>
+			<li> <a href = "<?php echo site_url('faculty/view/'.$member->username); ?>" ><?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name); ?> </a></li>
 		<? endforeach; ?>
+		</ol>
 	<?php else: ?>
 		<p>There are no faculty members.</p>
 	<?php endif; ?>
-	<br>
 	<h5> Graduates </h5>
 		<?php if(isset($graduates)): ?>
+			<ol>
 			<?php foreach ($graduates as $graduate): ?>
-				<a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>"><?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a>
-				<br>
+				<li><a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>"><?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name); ?> </a></li>
 			<?php endforeach; ?>
+			</ol>
 		<?php else: ?>
 			<p>There are no students.</p>
 		<? endif; ?>

@@ -4,7 +4,7 @@
 	<h2> <? echo $laboratory->name ?> </h2>
 	<p> <strong> No. of members: </strong> <? echo $laboratory->members_count ?> </p>
 	<p> <strong> Since: </strong> <? echo $laboratory->since; ?> </p>
-	<p> <strong> Description: </strong> <?if(isset($laboratory->description)){echo $laboratory->description;}{ echo "None";} ?> </p>
+	<p> <strong> Description: </strong> <?if(isset($laboratory->description)){echo $laboratory->description;}else{ echo "None";} ?> </p>
 	<h3> Faculty Members </h3>
 	<? if(isset($faculty_members)): ?>
 		<ol>

@@ -16,20 +16,18 @@
 				<td width = "125"> Quota </td>
 				<td width = "125"> Status </td>
 				<td width = "125"> Published </td>
-				<td width = "150"> Delete </td>
-				<td width = "150"> Edit </td>
+				<td width = "200"> Actions </td>
 			</tr>
 		</thead>
 		<tbody>
 		<?php foreach ($experiments as $experiment):?>
 			<tr>
-				<td> <?php echo anchor('faculty/view_experiment/'.$fid.'/'.$experiment->eid, $experiment->title); ?> </td>
+				<td> <?php echo anchor('faculty/view_experiment/'.$experiment->eid, $experiment->title); ?> </td>
 				<td> <?php echo $experiment->current_count; ?> </td>
 				<td> <?php echo $experiment->target_count; ?> </td>
 				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
 				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
-				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> </td>
-				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

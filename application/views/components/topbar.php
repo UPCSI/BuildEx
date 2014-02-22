@@ -12,7 +12,6 @@
   <a class="close-reveal-modal">&#215;</a>
 </div>
 
-<!-- Navigation Bar (Fixed) -->
 <div class="fixed">
 	<nav class="top-bar" data-topbar>
 		<ul class="title-area">
@@ -25,17 +24,20 @@
 		<section class="top-bar-section">
 			<!-- Right Nav Section -->
 			<ul class="right">
-				<li><a href="#" data-reveal-id="signin">Sign In</a></li>
-				<li class="has-dropdown">
-					<a href="#">Sign Up</a>
-					<ul class="dropdown">
-						<li><a href="<?php echo site_url('signup/graduate'); ?>">Sign Up as Student</a></li>
-						<li><a href="<?php echo site_url('signup/faculty'); ?>">Sign Up as Faculty</a></li>
-					</ul>
-				</li>
+				<? if(!$this->session->userdata('loggedin')): ?>
+					<li><a href="#" data-reveal-id="signin">Sign In</a></li>
+					<li class="has-dropdown">
+						<a href="#">Sign Up</a>
+						<ul class="dropdown">
+							<li><a href="<?php echo site_url('signup/graduate'); ?>">Sign Up as Student</a></li>
+							<li><a href="<?php echo site_url('signup/faculty'); ?>">Sign Up as Faculty</a></li>
+						</ul>
+					</li>
+				<? else: ?>
+					<li><a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" ><? echo $this->session->userdata('username'); ?></a></li>
+					<li><a href="<?php echo site_url('home/logout') ?>"> Logout </a></li>
+				<? endif; ?>
 			</ul>
-			
-
 			<!-- Left Nav Section 
 			<ul class="left">
 				<li><a href="#">What is BuildEx?</a></li>
