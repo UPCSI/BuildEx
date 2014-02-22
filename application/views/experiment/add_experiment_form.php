@@ -20,7 +20,10 @@
     $("#getObjectValues").click(function () {
 		var msg = '';
 		for(i=1; i<($.count-1); i++){
-	   	  msg += "\n Object #" + i + " : " + $('#' + i).();
+			var offset = $('').offset();
+	        var xPos = offset.left;
+	        var yPos = offset.top;
+	   		msg += "\n Object #" + i + " : " + $('#' + i).();
 		}
 	   	alert(msg);
 	});
