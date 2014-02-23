@@ -18,14 +18,24 @@
         $.count++;
     });
     $("#getObjectValues").click(function () {
-		var msg = '';
+		var msg = '[';
 		for(i=1; i<$.count; i++){
+			if (i!=1) {msg+=","}
 			var offset = $('#'+i).offset();
 	        var xPos = offset.left;
 	        var yPos = offset.top;
-	   		msg += "\n Object #" + i + " : x " + xPos + "y " + yPos;
+	   		msg += "("+xPos+","+yPos+")";
 		}
-	   	alert(msg);
+		msg += ']';
+	   	//alert("Check");
+	   	$.ajax({
+	   		url:"experiment/save",
+	   		type:"POST",
+	   		data:{'msg':msg},
+	   		success: function(s) {
+	   			
+	   		}
+	   	});
 	});
 
    }); 
