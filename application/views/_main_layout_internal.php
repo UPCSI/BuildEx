@@ -1,16 +1,48 @@
 <?php $this->load->view('includes/header',$title); ?>
+<body class="internal">
+<?php $this->load->view('components/topbar_internal'); ?>
 
-<?php $this->load->view('components/topbar'); ?>
-
-<div class = "main_body">
-	<div class = "row full"> 
-		<div class = "large-2 column">
+<div class = "main-body">
+	<div class = "row full legit">
+		<div class = "large-2 medium-3 columns sidebar show-for-medium-up">
 			<?php $this->load->view('components/sidebar'.'_'.$this->session->userdata('active_role')); ?>
 		</div>
-		<div class ="large-10 column">
-			<div class = "main_content">
-				<?php $this->load->view($main_content); ?>
+
+
+		<div class ="large-10 medium-9 columns full">
+
+			<div class="off-canvas-wrap docs-wrap">
+			  <div class="inner-wrap">
+			    <nav class="tab-bar hide-for-medium-up">
+			      <section class="left-small">
+			        <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+			      </section>
+
+			      <section class="right tab-bar-section">
+			        <h1 class="title">Foundation</h1>
+			      </section>
+
+			    </nav>
+
+			    <aside class="left-off-canvas-menu hide-for-medium-up">
+			      <?php $this->load->view('components/sidebar'.'_'.$this->session->userdata('active_role')); ?>
+			    </aside>
+
+			    <section class="main-section">
+			      	<div class="row">
+			      		<div class="large-12 columns">
+							<?php $this->load->view($main_content); ?>
+						</div>
+					</div>
+			    </section>
+
+			  <a class="exit-off-canvas"></a>
+
+			  </div>
 			</div>
+
+
+			
 		</div>
 	</div>
 </div>

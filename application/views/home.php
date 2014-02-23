@@ -403,7 +403,7 @@
 		<h1 class="white"><strong>Psych psych stuff here.</strong><!--img src="<?php echo site_url('images/logo.svg'); ?>" style="width: 60px;display: inline;vertical-align: text-bottom;margin-left:10px"--></h1>
 		<div style="background-color:rgba(255, 255, 255,0.13);padding:0px 10px 10px">
 			<h3 class="white" style="line-height:110%">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy.</h3>
-			<p class="justify" style="margin-bottom:0px">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+			<p class="white justify" style="margin-bottom:0px">Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 		</div>
 		<div class="row">
 			<div class="large-4 small-12 large-push-8 columns">
@@ -429,7 +429,7 @@
 		<div class="large-5 columns"></div>
 		<div class="large-7 columns">
 			<h3 style="color:#3498db"><strong>Take full control of your experiments.</strong></h3>
-			<p class="justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
+			<p class="white justify">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>
 		</div>
 	</div>
 </section>
@@ -450,7 +450,7 @@
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
 					<h3 style="color:#3498db">All in one place</h3>
-					<p class>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
+					<p class="white">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
 				</div>
 			</div>
 		</div>
@@ -460,7 +460,7 @@
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
 					<h3 style="color:#1abc9c">User-friendly interface</h3>
-					<p class>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
+					<p class="white">Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.</p>
 				</div>
 			</div>
 		</div>
@@ -470,7 +470,7 @@
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
 					<h3 style="color:#3498db">Have it your way</h3>
-					<p class>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
+					<p class="white">Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
 				</div>
 			</div>
 		</div>
@@ -480,7 +480,7 @@
 				</div>
 				<div class="large-12 medium-6 small-12 columns">
 					<h3 style="color:#1abc9c">Connect with friends</h3>
-					<p class>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</p>
+					<p class="white">Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</p>
 				</div>
 			</div>
 		</div>
@@ -521,7 +521,7 @@
 					<img src="<?php echo site_url('images/cssp_logo.svg'); ?>" style="width: 75%;display: inline;vertical-align: text-bottom;"></center>
 				</div>
 				<div class="large-6 large-pull-3 columns">
-					<p class>
+					<p class="white justify">
 						Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
 					</p>
 				</div>

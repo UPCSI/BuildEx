@@ -1,5 +1,5 @@
 <?php $this->load->view('includes/header',$title); ?>
-
+<body>
 <?php $this->load->view('components/topbar'); ?>
 
 <?php $this->load->view($main_content); ?>
