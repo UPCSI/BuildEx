@@ -7,14 +7,6 @@ class Experiment extends MY_Controller{
 		$this->load->model('experiments_model');
 	}
 
-	public function save() {
-		$this->load->helper('url');
-		//echo $this->input->post('msg');
-		// $data['main_content'] = 'experiment/test';
-		// $this->load->view('_main_layout', $data);
-		redirect('graduate');
-	}
-
 	public function add_experiment() {
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');

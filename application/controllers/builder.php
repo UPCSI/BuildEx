@@ -6,9 +6,19 @@ class Builder extends MY_Controller{
 	}
 
 	public function index(){
+		//temp values
+		$data['var'] = array(array(400,200),array(56,78));
+
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/add_experiment_form';
 		$this->load->view('_main_layout', $data);
+	}
+
+	public function save() {
+		$message = $this->input->post('msg');
+		echo $message;
+		// $data['main_content'] = 'experiment/test';
+		// $this->load->view('_main_layout', $data);
 	}
 
 	public function app($eid = 0){
