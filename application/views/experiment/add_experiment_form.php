@@ -3,8 +3,32 @@
 <script>
 	$.count = 1;
 	$(function() {
-	    $('#object1').click(function(){
-	    	newObj();
+	    $('#object1').click(function(eventClick, posX, posY){
+	    	posX = typeof posX !== 'undefined' ? posX : null;
+			posY = typeof posY !== 'undefined' ? posY : null;
+
+			var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
+			if (posX != null && posY != null){
+				alert('x' + posX);
+				alert('y' + posY);
+				htmlData += ' left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+			}
+			else{
+				htmlData += '"';
+			}
+
+			htmlData += '><p style="color:black">Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+	        $('.demo').append(htmlData);
+	        $('.draggable').draggable({
+	        	drag: function(){
+		            var offset1 = $(this).offset();
+		            var xPos1 = offset1.left;
+		            var yPos1 = offset1.top;
+		            var element = $(this).attr('id');
+		            $('#pos'+element+'X').text('x: ' + xPos1);
+		            $('#pos'+element+'Y').text('y: ' + yPos1);
+		        }
+	        });
 	        $.count++;
 	    });
 	    $("#getObjectValues").click(function () {
@@ -17,13 +41,13 @@
 		   		msg += "("+xPos+","+yPos+")";
 			}
 			msg += ']';
-
+			
 		   	$.ajax({
 		   		url:"builder/save",
 		   		type:"POST",
 		   		data:{'msg':msg},
 		   		success: function(s) {
-		   			alert(s);
+		   			alert('success'+s);
 		   			if("<?php echo $this->session->userdata('role')[0]; ?>" != 'labhead'){
 		   				window.location.href = "<?php echo $this->session->userdata('role')[1]; ?>"+"/experiments";
 		   			}
@@ -33,36 +57,8 @@
 		   		}
 		   	});
 		});
+
 	});
-
-	function newObj(posX, posY) {
-		posX = typeof posX !== 'undefined' ? posX : null;
-		posY = typeof posY !== 'undefined' ? posY : null;
-
-		var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
-		if (posX != null && posY != null){
-			alert(posX);
-			alert(posY);
-			htmlData += ' left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
-		}
-		else{
-			htmlData += '"';
-		}
-
-		htmlData += '><p style="color:black">Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
-        $('.demo').append(htmlData);
-        $('.draggable').draggable({
-        	drag: function(){
-	            var offset = $(this).offset();
-	            var xPos = offset.left;
-	            var yPos = offset.top;
-	            var element = $(this).attr('id');
-	            $('#pos'+element+'X').text('x: ' + xPos);
-	            $('#pos'+element+'Y').text('y: ' + yPos);
-	        }
-        });
-        $.count++;
-	}
 
 </script>
 <div id="builder" class="row full">
@@ -94,7 +90,9 @@
 	if(isset($var)){
 		foreach ($var as $obj){
 			echo '<script>';
-			echo 'newObj('.$obj[0].','.$obj[1].');';
+			echo '$(function() {';
+			echo '$("#object1").trigger("click",['.$obj[0].','.$obj[1].']);';
+			echo '})';
 			echo '</script>';
 		}
 	}
