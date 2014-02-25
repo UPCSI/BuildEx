@@ -1,5 +1,5 @@
 <h2>BuildEx: Experiment</h2>
-<? //echo '<pre>'; print_r($this->session->userdata('role')); echo '</pre>'; ?>
+<? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
 <script>
 	$.count = 1;
 	$(function() {
@@ -48,12 +48,7 @@
 		   		data:{'msg':msg},
 		   		success: function(s) {
 		   			alert('success'+s);
-		   			if("<?php echo $this->session->userdata('role')[0]; ?>" != 'labhead'){
-		   				window.location.href = "<?php echo $this->session->userdata('role')[1]; ?>"+"/experiments";
-		   			}
-		   			else{
-		   				window.location.href = "<?php echo $this->session->userdata('role')[1]; ?>"+"/experiments";
-		   			}
+		   			window.location.href = "<?php echo $this->session->userdata('active_role'); ?>"+"/experiments";
 		   		}
 		   	});
 		});
