@@ -90,7 +90,8 @@ CREATE TABLE "Experiments" (
     request_status boolean DEFAULT false,
     description character varying(256),
     is_published boolean DEFAULT false,
-    privacy integer DEFAULT 0
+    privacy integer DEFAULT 0,
+    url character varying(128)
 );
 
 
@@ -705,6 +706,14 @@ ALTER TABLE ONLY "Graduates"
 
 ALTER TABLE ONLY "LaboratoryHeads"
     ADD CONSTRAINT uid_lid_pkey PRIMARY KEY (uid, lid);
+
+
+--
+-- Name: url_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Experiments"
+    ADD CONSTRAINT url_ukey UNIQUE (url);
 
 
 --

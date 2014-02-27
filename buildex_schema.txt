@@ -46,6 +46,7 @@ TABLE Experiments:
 	current_count: integer
 	status: boolean #{COMPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+	url: character varying(128)
 
 TABLE Pages:
 	eid: integer references Experiments.eid
