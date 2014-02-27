@@ -230,8 +230,9 @@ SET default_with_oids = true;
 CREATE TABLE "OptionGroups" (
     ogid integer DEFAULT nextval('optiongroups_ogid_seq'::regclass) NOT NULL,
     type integer,
-    x_pos integer,
-    y_pos integer
+    x_pos double precision,
+    y_pos double precision,
+    qid integer
 );
 
 
@@ -258,7 +259,6 @@ SET default_with_oids = false;
 --
 
 CREATE TABLE "Options" (
-    qid integer,
     oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
     label character varying,
     ogid integer
@@ -320,9 +320,8 @@ CREATE TABLE "Questions" (
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
     label character varying(256),
     is_required boolean DEFAULT false,
-    "order" integer,
-    x_pos integer,
-    y_pos integer
+    x_pos double precision,
+    y_pos double precision
 );
 
 
@@ -508,14 +507,6 @@ ALTER TABLE ONLY "Experiments"
 
 
 --
--- Name: Groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "OptionGroups"
-    ADD CONSTRAINT "Groups_pkey" PRIMARY KEY (ogid);
-
-
---
 -- Name: Laboratories_name_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -668,6 +659,30 @@ ALTER TABLE ONLY manage
 
 
 --
+-- Name: ogid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT ogid UNIQUE (ogid);
+
+
+--
+-- Name: ogid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT ogid_pkey PRIMARY KEY (ogid);
+
+
+--
+-- Name: oid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT oid UNIQUE (oid);
+
+
+--
 -- Name: oid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -692,11 +707,11 @@ ALTER TABLE ONLY "Questions"
 
 
 --
--- Name: qid_oid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: qid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT qid_oid_ukey UNIQUE (qid, oid);
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT qid UNIQUE (qid);
 
 
 --
@@ -900,19 +915,19 @@ ALTER TABLE ONLY manage
 
 
 --
--- Name: ogid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: optiongroups_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT optiongroups_ref_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: options_ref_ogid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT ogid FOREIGN KEY (ogid) REFERENCES "OptionGroups"(ogid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: options_ref_questions_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT options_ref_questions_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT options_ref_ogid FOREIGN KEY (ogid) REFERENCES "OptionGroups"(ogid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

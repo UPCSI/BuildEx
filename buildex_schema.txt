@@ -61,21 +61,20 @@ TABLE Questions:
 	qid: integer PRIMARY AUTOINCREMENT
 	label: character varying(256)
 	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
-	order: integer
-	x_pos: integer
-	y_pos: integer
+	x_pos: double precision
+	y_pos: double precision
 
 TABLE OptionGroups:
+	qid: integer references Questions.qid
 	ogid: integer PRIMARY AUTOINCREMENT
 	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
-	x_pos: integer
-	y_pos: integer
+	x_pos: double precision
+	y_pos: double precision
 
 TABLE Options:
-	qid: integer references Questions.qid
+	ogid: integer references OptionGroups.ogid
 	oid: integer PRIMARY AUTOINCREMENT
 	label: character varying(32)
-	ogid: integer references Groups.ogid
 
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
