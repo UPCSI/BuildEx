@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -154,6 +153,36 @@ CREATE TABLE "Graduates" (
 ALTER TABLE public."Graduates" OWNER TO postgres;
 
 --
+-- Name: groups_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE groups_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.groups_gid_seq OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: Groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Groups" (
+    gid integer DEFAULT nextval('groups_gid_seq'::regclass) NOT NULL,
+    type integer,
+    x_pos integer,
+    y_pos integer
+);
+
+
+ALTER TABLE public."Groups" OWNER TO postgres;
+
+--
 -- Name: laboratories_labid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -166,6 +195,8 @@ CREATE SEQUENCE laboratories_labid_seq
 
 
 ALTER TABLE public.laboratories_labid_seq OWNER TO postgres;
+
+SET default_with_oids = false;
 
 --
 -- Name: Laboratories; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -229,7 +260,8 @@ ALTER TABLE public.options_oid_seq OWNER TO postgres;
 CREATE TABLE "Options" (
     qid integer,
     oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
-    label character varying
+    label character varying,
+    gid integer
 );
 
 
@@ -287,11 +319,10 @@ CREATE TABLE "Questions" (
     pid integer,
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
     label character varying(256),
-    type integer,
     is_required boolean DEFAULT false,
     "order" integer,
-    time_started timestamp without time zone DEFAULT ('now'::text)::date,
-    time_ended timestamp without time zone
+    x_pos integer,
+    y_pos integer
 );
 
 
@@ -474,6 +505,14 @@ ALTER TABLE public.manage OWNER TO postgres;
 
 ALTER TABLE ONLY "Experiments"
     ADD CONSTRAINT "Experiments_pkey" PRIMARY KEY (eid);
+
+
+--
+-- Name: Groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Groups"
+    ADD CONSTRAINT "Groups_pkey" PRIMARY KEY (gid);
 
 
 --
@@ -794,6 +833,14 @@ ALTER TABLE ONLY faculty_member_of
 
 ALTER TABLE ONLY "Faculty"
     ADD CONSTRAINT faculty_ref_users FOREIGN KEY (uid) REFERENCES "Users"(uid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: gid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT gid FOREIGN KEY (gid) REFERENCES "Groups"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
