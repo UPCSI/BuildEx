@@ -3,32 +3,45 @@
 <script>
 	$.count = 1;
 	$(function() {
-	    $('#object1').click(function(eventClick, posX, posY){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    $('#object1')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
 
-			var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
-			if (posX != null && posY != null){
-				alert('x' + posX);
-				alert('y' + posY);
-				htmlData += ' left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
-			}
-			else{
-				htmlData += '"';
-			}
+				var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += ' left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				else{
+					htmlData += '"';
+				}
 
-			htmlData += '><p style="color:black">Object</p><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
-	        $('.demo').append(htmlData);
-	        $('.draggable').draggable({
-	        	drag: function(){
-		            var offset1 = $(this).offset();
-		            var xPos1 = offset1.left;
-		            var yPos1 = offset1.top;
-		            var element = $(this).attr('id');
-		            $('#pos'+element+'X').text('x: ' + xPos1);
-		            $('#pos'+element+'Y').text('y: ' + yPos1);
+				htmlData += '><div id="editable'+$.count+'" class="editable" style="color:black">Object</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+		        $('.demo').append(htmlData);
+		        $('.draggable').draggable({
+		        	drag: function(){
+			            var offset1 = $(this).offset();
+			            var xPos1 = offset1.left;
+			            var yPos1 = offset1.top;
+			            var element = $(this).attr('id');
+			            $('#pos'+element+'X').text('x: ' + xPos1);
+			            $('#pos'+element+'Y').text('y: ' + yPos1);
+			        }
+	        })
+		    .resizable()
+		    .click(function(){
+		        if ( $(this).is('.ui-draggable-dragging') ) {
+		            return;
 		        }
-	        });
+		        $(this).draggable( "option", "disabled", true );
+		        $(this).attr('contenteditable','true');
+		    })
+		    .blur(function(){
+		        $(this).draggable( 'option', 'disabled', false);
+		        $(this).attr('contenteditable','false');
+		    });
 	        $.count++;
 	    });
 	    $("#getObjectValues").click(function () {
@@ -52,7 +65,11 @@
 		   		}
 		   	});
 		});
+	    
+		
 
+
+	    
 	});
 
 </script>
@@ -78,6 +95,9 @@
 			<p>Workspace</p>
 		</div>
 		<div class='demo'></div>
+		<!-- <div id="d">
+			Text to edit
+		</div> -->
 	</div>
 </div>
 

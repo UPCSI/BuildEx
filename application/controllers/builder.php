@@ -7,7 +7,7 @@ class Builder extends MY_Controller{
 
 	public function index(){
 		//temp values
-		$data['var'] = array(array(400,200),array(56,78));
+		//$data['var'] = array(array(400,200),array(56,78));
 
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/add_experiment_form';

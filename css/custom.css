@@ -364,11 +364,11 @@ section.sitemap {
 }
 
 .panel {
-	border-width: 0px
+    border-width: 0px
 }
 
 ul {
-	margin-left: 0px;
+    margin-left: 0px;
 }
 
 .icon > span{
@@ -388,5 +388,13 @@ ul {
 }
 
 .top-bar .name h1 a {
-  padding:0px;
+    padding: 0px;
+}
+
+.ui-state-disabled { 
+    opacity: 1; 
+}
+
+.draggable {
+    cursor: move;
 }
