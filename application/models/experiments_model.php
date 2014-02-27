@@ -81,6 +81,16 @@ class Experiments_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
+	public function get_experiment_by_hash($url){
+		/*
+		* Returns an experiment given its url(hash)
+		*/
+		$this->db->select('*');
+		$this->db->where('url',$url);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
 	public function get_faculty_experiment($fid = 0, $eid = 0){
 		/*
 		* Returns all the fields of an experiment

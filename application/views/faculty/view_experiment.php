@@ -14,7 +14,7 @@
 <?php if($experiment->is_published == 'f'): ?>
 	<a class = "button small" href = "<?php echo site_url('faculty/publish/'.$experiment->eid); ?>"> Publish </a>
 <?php else: ?>
-	<p> <strong> URL: </strong> <a href ="<?php echo site_url('builder/respond/'.$experiment->url); ?>"> <?php echo site_url('builder/respond/'.$experiment->url); ?> </a></p>
+	<p> <strong> URL: </strong> <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>"> <?php echo site_url('respond/view/'.$experiment->url); ?> </a></p>
 	<a class = "button small" href = "<?php echo site_url('faculty/unpublish/'.$experiment->eid); ?>"> Unpublish </a>
 <?php endif; ?>
 <a class = "button small" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>

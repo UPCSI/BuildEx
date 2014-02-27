@@ -3,6 +3,8 @@
 class Builder extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('experiments_model');
+		$this->load->model('builder_model');
 	}
 
 	public function index(){
@@ -52,7 +54,7 @@ class Builder extends MY_Controller{
 			// $data['column'] = 1;
 		}
 
-		$this->load->model('builder_model');
+		
 		return $this->builder_model->add_page($data);
 	}
 
@@ -70,7 +72,7 @@ class Builder extends MY_Controller{
 		// $data['type'] = ;
 		// $data['is_required'] = ;
 
-		$this->load->model('builder_model');
+		
 		return $this->builder_model->add_form($data);
 	}
 
@@ -86,7 +88,7 @@ class Builder extends MY_Controller{
 		// $data['qid'] = ;
 		// $data['label'] = ;
 
-		$this->load->model('builder_model');
+		
 		return $this->builder_model->add_option($data);
 	}
 
@@ -105,7 +107,7 @@ class Builder extends MY_Controller{
 		// $data['label'] = ;
 		// $data['is_required'] = ;
 
-		$this->load->model('builder_model');
+		
 		$this->builder_model->update_form($data);
 	}
 
@@ -119,7 +121,7 @@ class Builder extends MY_Controller{
 		// $data['oid'] = ;
 		// $data['label'] = ;
 
-		$this->load->model('builder_model');
+		
 		$this->builder_model->update_option($data);
 	}
 
@@ -135,7 +137,7 @@ class Builder extends MY_Controller{
 
 		// $data['eid'] = ;
 		// $data['pid'] = ;
-		$this->load->model('builder_model');
+		
 		$this->builder_model->delete_page($data);
 	}
 
@@ -148,14 +150,7 @@ class Builder extends MY_Controller{
 		*/
 
 		// $data['pid'] = ;
-		$this->load->model('builder_model');
+		
 		$this->builder_model->insert_page($data);
 	}
-
-	public function respond($hash){
-		
-	}
-
-
-
 }

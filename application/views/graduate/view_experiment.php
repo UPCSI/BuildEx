@@ -27,6 +27,6 @@
   		<a class="close-reveal-modal">&#215;</a>
 	</div>
 <?php else: ?>
-	<p> <strong> URL: </strong> <a href ="<?php echo site_url('builder/respond/'.$experiment->url); ?>"> <?php echo site_url('builder/respond/'.$experiment->url); ?></a></p>
+	<p> <strong> URL: </strong> <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>"> <?php echo site_url('respond/view/'.$experiment->url); ?></a></p>
 <?php endif; ?>
 <a class = "button small" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
