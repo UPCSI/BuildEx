@@ -26,7 +26,7 @@ class Experiment extends MY_Controller{
 		// $success = 'You have successfully created an experiment!';
 		// $this->session->set_flashdata('notification',$success);
 		// redirect($role.'/experiments');
-		redirect('builder');
+		//redirect('builder');
     }
 
 	public function delete_experiment($eid = 0){

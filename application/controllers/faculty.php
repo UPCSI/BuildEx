@@ -41,7 +41,11 @@ class Faculty extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
-	public function publish($eid){
+	public function publish($eid = 0){
+		if($eid == 0){
+			redirect(''); //implement where to redirect id $eid is nonexistent
+		}
+
 		$info['is_published'] = 'True';
 		$this->load->model('experiments_model');
 		if($this->experiments_model->update_experiment($eid,$info)){

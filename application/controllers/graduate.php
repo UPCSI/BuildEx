@@ -135,7 +135,7 @@ class Graduate extends MY_Controller{
 			//implement where to redirect if eid is non-existent
 		}
 		$this->load->model('faculty_model');
-		$gid = $this->session->userdata('active_id');
+		$gid = $this->session->userdata('gid');
 		$faculty_uname = $this->input->post('faculty_uname');
 		$faculty = $this->faculty_model->get_faculty_profile(0,$faculty_uname);
 		if(isset($faculty)){
@@ -151,7 +151,7 @@ class Graduate extends MY_Controller{
 			$msg = 'Faculty member does not exists.';
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('graduate/view_experiment/'.$gid.'/'.$eid); //implement where to redirect after sending a request for advise
+		redirect('graduate/view_experiment/'.$eid); //implement where to redirect after sending a request for advise
 	}
 
 	private function get_all_experiments($gid = 0){
