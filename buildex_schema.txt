@@ -65,7 +65,7 @@ TABLE Questions:
 	x_pos: integer
 	y_pos: integer
 
-TABLE Groups:
+TABLE Option_Groups:
 	gid: integer PRIMARY AUTOINCREMENT
 	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
 	x_pos: integer

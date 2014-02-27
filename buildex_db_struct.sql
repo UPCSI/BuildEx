@@ -153,36 +153,6 @@ CREATE TABLE "Graduates" (
 ALTER TABLE public."Graduates" OWNER TO postgres;
 
 --
--- Name: groups_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE groups_gid_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.groups_gid_seq OWNER TO postgres;
-
-SET default_with_oids = true;
-
---
--- Name: Groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE "Groups" (
-    gid integer DEFAULT nextval('groups_gid_seq'::regclass) NOT NULL,
-    type integer,
-    x_pos integer,
-    y_pos integer
-);
-
-
-ALTER TABLE public."Groups" OWNER TO postgres;
-
---
 -- Name: laboratories_labid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -195,8 +165,6 @@ CREATE SEQUENCE laboratories_labid_seq
 
 
 ALTER TABLE public.laboratories_labid_seq OWNER TO postgres;
-
-SET default_with_oids = false;
 
 --
 -- Name: Laboratories; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -240,6 +208,36 @@ CREATE TABLE "LaboratoryHeads" (
 ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
 
 --
+-- Name: groups_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE groups_gid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.groups_gid_seq OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: Option_Groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Option_Groups" (
+    gid integer DEFAULT nextval('groups_gid_seq'::regclass) NOT NULL,
+    type integer,
+    x_pos integer,
+    y_pos integer
+);
+
+
+ALTER TABLE public."Option_Groups" OWNER TO postgres;
+
+--
 -- Name: options_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -252,6 +250,8 @@ CREATE SEQUENCE options_oid_seq
 
 
 ALTER TABLE public.options_oid_seq OWNER TO postgres;
+
+SET default_with_oids = false;
 
 --
 -- Name: Options; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -511,7 +511,7 @@ ALTER TABLE ONLY "Experiments"
 -- Name: Groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "Groups"
+ALTER TABLE ONLY "Option_Groups"
     ADD CONSTRAINT "Groups_pkey" PRIMARY KEY (gid);
 
 
@@ -840,7 +840,7 @@ ALTER TABLE ONLY "Faculty"
 --
 
 ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT gid FOREIGN KEY (gid) REFERENCES "Groups"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT gid FOREIGN KEY (gid) REFERENCES "Option_Groups"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
