@@ -11,9 +11,10 @@ class Experiments_model extends MY_Model{
 		* Inserts the experiment to the database
 		* Returns the eid of that specific experiment.
 		*/
-		$info['url'] = $this->generate_url($fid,$info['title']);
 		$this->db->insert('Experiments',$info);
 		$conduct_info['eid'] = $this->db->insert_id();
+		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
+		$this->update_experiment($conduct_info['eid'],$new_info);
 		$conduct_info['fid'] = $fid;
 		$this->db->insert('faculty_conduct',$conduct_info);
 		return $conduct_info['eid'];
@@ -27,6 +28,8 @@ class Experiments_model extends MY_Model{
 		$info['url'] = $this->generate_url($gid,$info['title']);
 		$this->db->insert('Experiments',$info);
 		$conduct_info['eid'] = $this->db->insert_id();
+		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
+		$this->update_experiment($conduct_info['eid'],$new_info);
 		$conduct_info['gid'] = $gid;
 		$this->db->insert('graduates_conduct',$conduct_info);
 		return $conduct_info['eid'];
@@ -305,8 +308,9 @@ class Experiments_model extends MY_Model{
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}
-	private function generate_url($id,$title){
-		$str = strval($id).$title;
-		return base64_encode($str).$id.'X';
+
+	private function generate_url($eid,$title){
+		$str = strval($eid).$title;
+		return base64_encode($str);
 	}
 }

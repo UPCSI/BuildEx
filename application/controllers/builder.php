@@ -152,6 +152,10 @@ class Builder extends MY_Controller{
 		$this->builder_model->insert_page($data);
 	}
 
+	public function respond($hash){
+		
+	}
+
 
 
 }

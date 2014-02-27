@@ -14,6 +14,7 @@ class Experiment extends MY_Controller{
 		$info['target_count'] = $this->input->post('target_count');
 		$info['privacy'] = $this->input->post('privacy');
 		$role = $this->session->userdata('active_role');
+
 		$id = $this->session->userdata('active_id');
 		
 		if ($role == 'faculty'){
@@ -26,7 +27,7 @@ class Experiment extends MY_Controller{
 		// $success = 'You have successfully created an experiment!';
 		// $this->session->set_flashdata('notification',$success);
 		// redirect($role.'/experiments');
-		//redirect('builder');
+		redirect('builder');
     }
 
 	public function delete_experiment($eid = 0){
