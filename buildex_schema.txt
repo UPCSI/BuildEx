@@ -65,8 +65,8 @@ TABLE Questions:
 	x_pos: integer
 	y_pos: integer
 
-TABLE Option_Groups:
-	gid: integer PRIMARY AUTOINCREMENT
+TABLE OptionGroups:
+	ogid: integer PRIMARY AUTOINCREMENT
 	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
 	x_pos: integer
 	y_pos: integer
@@ -75,7 +75,7 @@ TABLE Options:
 	qid: integer references Questions.qid
 	oid: integer PRIMARY AUTOINCREMENT
 	label: character varying(32)
-	gid: integer references Groups.gid
+	ogid: integer references Groups.ogid
 
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT

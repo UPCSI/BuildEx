@@ -208,10 +208,10 @@ CREATE TABLE "LaboratoryHeads" (
 ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
 
 --
--- Name: groups_gid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: optiongroups_ogid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE groups_gid_seq
+CREATE SEQUENCE optiongroups_ogid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -219,23 +219,23 @@ CREATE SEQUENCE groups_gid_seq
     CACHE 1;
 
 
-ALTER TABLE public.groups_gid_seq OWNER TO postgres;
+ALTER TABLE public.optiongroups_ogid_seq OWNER TO postgres;
 
 SET default_with_oids = true;
 
 --
--- Name: Option_Groups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: OptionGroups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "Option_Groups" (
-    gid integer DEFAULT nextval('groups_gid_seq'::regclass) NOT NULL,
+CREATE TABLE "OptionGroups" (
+    ogid integer DEFAULT nextval('optiongroups_ogid_seq'::regclass) NOT NULL,
     type integer,
     x_pos integer,
     y_pos integer
 );
 
 
-ALTER TABLE public."Option_Groups" OWNER TO postgres;
+ALTER TABLE public."OptionGroups" OWNER TO postgres;
 
 --
 -- Name: options_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -261,7 +261,7 @@ CREATE TABLE "Options" (
     qid integer,
     oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
     label character varying,
-    gid integer
+    ogid integer
 );
 
 
@@ -511,8 +511,8 @@ ALTER TABLE ONLY "Experiments"
 -- Name: Groups_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "Option_Groups"
-    ADD CONSTRAINT "Groups_pkey" PRIMARY KEY (gid);
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT "Groups_pkey" PRIMARY KEY (ogid);
 
 
 --
@@ -836,14 +836,6 @@ ALTER TABLE ONLY "Faculty"
 
 
 --
--- Name: gid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT gid FOREIGN KEY (gid) REFERENCES "Option_Groups"(gid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: graduates_conduct_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -905,6 +897,14 @@ ALTER TABLE ONLY manage
 
 ALTER TABLE ONLY manage
     ADD CONSTRAINT manage_ref_laboratoryheads FOREIGN KEY (lid) REFERENCES "LaboratoryHeads"(lid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: ogid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT ogid FOREIGN KEY (ogid) REFERENCES "OptionGroups"(ogid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
