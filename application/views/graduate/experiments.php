@@ -22,7 +22,7 @@
 		<tbody>
 		<?php foreach ($experiments as $experiment):?>
 			<tr>
-				<td> <?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?> </td>
+				<td> <?php echo anchor('graduate/view_experiment/'.$experiment->eid, $experiment->title); ?> </td>
 				<td> <?php echo $experiment->current_count; ?> </td>
 				<td> <?php echo $experiment->target_count; ?> </td>
 				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>

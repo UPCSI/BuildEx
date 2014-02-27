@@ -8,7 +8,6 @@ class Builder extends MY_Controller{
 	public function index(){
 		//temp values
 		$data['var'] = array(array(400,200),array(56,78));
-
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/add_experiment_form';
 		$this->load->view('_main_layout', $data);
@@ -22,8 +21,14 @@ class Builder extends MY_Controller{
 	}
 
 	public function app($eid = 0){
-		// echo 'I am your builder.';
-		echo $this->update_option();
+		/*this is the index of the app
+		* for the reason that we need the eid
+		* of the experiment for the app
+		* and it's not trivial to pass a variable
+		* from view to the controller index.
+		*/
+		echo "This is the index of builder app.";
+		//echo $this->update_option();
 	}
 
 	public function add_page(){

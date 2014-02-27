@@ -110,22 +110,23 @@ class Graduate extends MY_Controller{
 		$this->load->view('_main_layout_internal', $data);
 	}
 
-	public function view_experiment($gid = 0, $eid = 0){
-		if($eid == 0 || $gid == 0){
+	public function view_experiment($eid = 0){
+		if($eid == 0){
 			redirect('');
 			//implement where to redirect if eid or gid is non-existent
 		}
+		$this->load->model('experiments_model');
+		$gid = $this->session->userdata('gid');
+		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
+		$data['title'] = 'Graduate';
+		$data['main_content'] = 'graduate/view_experiment';
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
 
-		$this->load->model('experiments_model');
-		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate/view_experiment';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function request_advise($eid = 0){

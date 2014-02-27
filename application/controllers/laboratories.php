@@ -21,10 +21,10 @@ class Laboratories extends MY_Controller{
 
 		$data['is_member'] = null;
 		if($role == 'graduate'){
-			$data['is_member'] = $this->laboratories_model->is_graduate_member($role_id,$labid);
+			$data['is_member'] = $this->laboratories_model->is_graduate_member($role_id);
 		}
 		else if($role == 'faculty'){
-			$data['is_member'] = $this->laboratories_model->is_faculty_member($role_id,$labid);
+			$data['is_member'] = $this->laboratories_model->is_faculty_member($role_id);
 		}
 
 		$data['title'] = 'Laboratories';

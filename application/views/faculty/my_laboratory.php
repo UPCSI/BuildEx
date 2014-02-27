@@ -2,6 +2,7 @@
 <hr>
 <?php if (isset($main_lab)): ?>
 	<h2> <?php echo $main_lab->name; ?></h2>
+	<p> <strong> Laboratory Head: </strong> <a href = "<?= site_url('faculty/view/'.$lab_head->username); ?>"><?= strtoupper($lab_head->last_name).', '.ucwords($lab_head->first_name).', '.ucfirst($lab_head->middle_name); ?> </a> </p>
 	<?php if(isset($main_lab->description)): ?>
 		<p> <?php echo $main_lab->description; ?> </p>
 	<?php endif; ?>
