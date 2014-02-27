@@ -51,7 +51,7 @@ class Builder extends MY_Controller{
 		* from view to the controller index.
 		*/
 
-		// echo "This is the index of builder app.";
+		echo "This is the index of builder app.";
 	}
 
 	public function add_page($data){

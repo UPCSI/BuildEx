@@ -24,10 +24,10 @@ class Experiment extends MY_Controller{
 			$this->experiments_model->add_graduates_experiment($id,$info);
 		}
 
-		// $success = 'You have successfully created an experiment!';
-		// $this->session->set_flashdata('notification',$success);
-		// redirect($role.'/experiments');
-		redirect('builder');
+		$success = 'You have successfully created an experiment!';
+		$this->session->set_flashdata('notification',$success);
+		redirect($role.'/experiments');
+		//redirect('builder');
     }
 
 	public function delete_experiment($eid = 0){
