@@ -41,6 +41,36 @@ class Faculty extends MY_Controller{
 		$this->load->view('_main_layout_internal',$data);
 	}
 
+	public function publish($eid = 0){
+		if($eid == 0){
+			redirect(''); //implement where to redirect id $eid is nonexistent
+		}
+
+		$info['is_published'] = 'True';
+		$this->load->model('experiments_model');
+		if($this->experiments_model->update_experiment($eid,$info)){
+			$msg = "You have successfully published the experiment.";
+		}
+		else{
+			$msg = "Publication of experiment failed.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('faculty/view_experiment/'.$eid);
+	}
+
+	public function unpublish($eid){
+		$info['is_published'] = 'False';
+		$this->load->model('experiments_model');
+		if($this->experiments_model->update_experiment($eid,$info)){
+			$msg = "You have successfully unpublished the experiment.";
+		}
+		else{
+			$msg = "Unpublication of experiment failed.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('faculty/view_experiment/'.$eid);
+	}
+
 	public function view_experiment($eid = 0){
 		if($eid == 0){
 			redirect('');
@@ -51,6 +81,12 @@ class Faculty extends MY_Controller{
 		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view_experiment';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
 		$this->load->view('_main_layout_internal', $data);
 	}
 
@@ -74,11 +110,14 @@ class Faculty extends MY_Controller{
 
 	public function laboratory(){
 		$this->load->model('laboratories_model');
+		$this->load->model('laboratoryheads_model');
 		$this->load->model('graduates_model');
 		$fid = $this->session->userdata('active_id');
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/my_laboratory';
 		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
+		$labid = $data['main_lab']->labid;
+		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
 			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);

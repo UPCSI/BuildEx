@@ -46,6 +46,7 @@ TABLE Experiments:
 	current_count: integer
 	status: boolean #{COMPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+	url: character varying(128)
 
 TABLE Pages:
 	eid: integer references Experiments.eid
@@ -59,14 +60,19 @@ TABLE Questions:
 	pid: integer references Page.pid
 	qid: integer PRIMARY AUTOINCREMENT
 	label: character varying(256)
-	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
 	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
-	order: integer
-	time_started: time
-	time_ended: time
+	x_pos: double precision
+	y_pos: double precision
+
+TABLE OptionGroups:
+	qid: integer references Questions.qid
+	ogid: integer PRIMARY AUTOINCREMENT
+	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
+	x_pos: double precision
+	y_pos: double precision
 
 TABLE Options:
-	qid: integer references Questions.qid
+	ogid: integer references OptionGroups.ogid
 	oid: integer PRIMARY AUTOINCREMENT
 	label: character varying(32)
 

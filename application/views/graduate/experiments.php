@@ -22,12 +22,12 @@
 		<tbody>
 		<?php foreach ($experiments as $experiment):?>
 			<tr>
-				<td> <?php echo anchor('graduate/view_experiment/'.$gid.'/'.$experiment->eid, $experiment->title); ?> </td>
+				<td> <?php echo anchor('graduate/view_experiment/'.$experiment->eid, $experiment->title); ?> </td>
 				<td> <?php echo $experiment->current_count; ?> </td>
 				<td> <?php echo $experiment->target_count; ?> </td>
 				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
 				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
-				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a> </td>	
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Edit </a> </td>	
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

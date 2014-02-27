@@ -16,76 +16,99 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
-		echo $message;
+		$message = substr($message, 1, -1);
+		$objects = explode('),(', $message);
+
+		//hardcode (to change later)
+		$page['eid'] = 27;
+		$page['order'] = 0;
+
+		foreach ($objects as $obj){		
+			//parse and get positions
+			if($obj == $objects[sizeof($objects)-1])
+				$obj = substr($obj, 0, -1);
+
+			$obj = substr($obj, 1);
+
+			$positions = explode(',', $obj);
+			$form['x_pos'] = $positions[0];
+			$form['y_pos'] = $positions[1];
+
+			// save page and form
+			$page['order'] += 1;
+			$form['pid'] = $this->add_page($page);
+			$group['qid'] = $this->add_form($form);
+		}
+
 		// $data['main_content'] = 'experiment/test';
 		// $this->load->view('_main_layout', $data);
 	}
 
 	public function app($eid = 0){
-		// echo 'I am your builder.';
-		echo $this->update_option();
+		/*this is the index of the app
+		* for the reason that we need the eid
+		* of the experiment for the app
+		* and it's not trivial to pass a variable
+		* from view to the controller index.
+		*/
+
+		echo "This is the index of builder app.";
 	}
 
-	public function add_page(){
+	public function add_page($data){
 		/*
 			Adds page. Returns pid. Required data listed below:
 				eid = experiment id
 				order = page number of current experiment
-				template = integer; form maker (1), text (2), comparison stimulus(3)
 
-			Additional data needed for grid (applies only if template is text or images):
-				row
-				column
+				Ignore template, row, and column for now.
 		*/
-
-		// $data['eid'] = ;
-		// $data['order'] = ;
-		// $data['template'] = ;
-
-		if ($data['template'] > 1) {
-			// $data['row'] = 1;
-			// $data['column'] = 1;
-		}
 
 		$this->load->model('builder_model');
 		return $this->builder_model->add_page($data);
 	}
 
-	public function add_form(){
+	public function add_form($data){
 		/* 
 			Adds form/question. Returns qid. Required data listed below:
 				pid = page id
 				label = question itself (i.e. "Are you a psychopath?")
-				type = integer; text box (0), radio button (1), multiple choice (2), dropdown (3)
 				is_required = boolean; must be 't' or 'f'
+				x_pos = x position
+				y_pos = y position
 		*/
-
-		// $data['pid'] = ;
-		// $data['label'] = ;
-		// $data['type'] = ;
-		// $data['is_required'] = ;
 
 		$this->load->model('builder_model');
 		return $this->builder_model->add_form($data);
 	}
 
-	public function add_option(){
+	public function add_option_group($data){
 		/*
-			Adds option. Applies only if form_type > 0 (builder_model checks this). Returns oid.
-			Required data listed below:
-				qid = id of form
-				label = option itself (i.e. yes, no, maybe)
-
+			Adds option_group. Returns ogid. Required data listed below:
+				qid = question id
+				type = integer; text box (0), radio button (1), multiple choice (2), dropdown (3)
+				x_pos = x position
+				y_pos = y position
 		*/
 
-		// $data['qid'] = ;
-		// $data['label'] = ;
+
+		$this->load->model('builder_model');
+		return $this->builder_model->add_option_group($data);
+	}
+
+	public function add_option($data){
+		/*
+			Adds option. Returns oid. Required data listed below:
+				ogid = option group id
+				label = option itself (i.e. yes, no, maybe)
+		*/
+
 
 		$this->load->model('builder_model');
 		return $this->builder_model->add_option($data);
 	}
 
-	public function update_form(){
+	public function update_form($data){
 		/*
 			Updates form/question; does not change order of questions. Required data listed below:
 				qid = id of form
@@ -93,26 +116,21 @@ class Builder extends MY_Controller{
 			Optional data to be updated:
 				label = change question
 				is_required = boolean; must be 't' or 'f'
+				x_pos = x postion
+				y_pos = y postion
 		*/
-
-		// $data['qid'] = ;
-
-		// $data['label'] = ;
-		// $data['is_required'] = ;
 
 		$this->load->model('builder_model');
 		$this->builder_model->update_form($data);
 	}
 
-	public function update_option(){
+	public function update_option($data){
 		/*
 			Updates individual options. Required data listed below:
 				oid = id of option
 				label = option itself
 		*/
 
-		// $data['oid'] = ;
-		// $data['label'] = ;
 
 		$this->load->model('builder_model');
 		$this->builder_model->update_option($data);

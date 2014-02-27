@@ -95,7 +95,7 @@ section.main-section > div.row {
 
 .main-body {
   min-height:100%;
-  height: 100%;
+  /*height: 100%;*/
 }
 
 .main-body > div.row.full.legit {

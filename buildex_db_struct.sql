@@ -3,7 +3,6 @@
 --
 
 SET statement_timeout = 0;
-SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -90,7 +89,8 @@ CREATE TABLE "Experiments" (
     request_status boolean DEFAULT false,
     description character varying(256),
     is_published boolean DEFAULT false,
-    privacy integer DEFAULT 0
+    privacy integer DEFAULT 0,
+    url character varying(128)
 );
 
 
@@ -208,6 +208,37 @@ CREATE TABLE "LaboratoryHeads" (
 ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
 
 --
+-- Name: optiongroups_ogid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE optiongroups_ogid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.optiongroups_ogid_seq OWNER TO postgres;
+
+SET default_with_oids = true;
+
+--
+-- Name: OptionGroups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "OptionGroups" (
+    ogid integer DEFAULT nextval('optiongroups_ogid_seq'::regclass) NOT NULL,
+    type integer,
+    x_pos double precision,
+    y_pos double precision,
+    qid integer
+);
+
+
+ALTER TABLE public."OptionGroups" OWNER TO postgres;
+
+--
 -- Name: options_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -221,14 +252,16 @@ CREATE SEQUENCE options_oid_seq
 
 ALTER TABLE public.options_oid_seq OWNER TO postgres;
 
+SET default_with_oids = false;
+
 --
 -- Name: Options; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Options" (
-    qid integer,
     oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
-    label character varying
+    label character varying,
+    ogid integer
 );
 
 
@@ -286,11 +319,9 @@ CREATE TABLE "Questions" (
     pid integer,
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
     label character varying(256),
-    type integer,
     is_required boolean DEFAULT false,
-    "order" integer,
-    time_started timestamp without time zone DEFAULT ('now'::text)::date,
-    time_ended timestamp without time zone
+    x_pos double precision,
+    y_pos double precision
 );
 
 
@@ -628,6 +659,30 @@ ALTER TABLE ONLY manage
 
 
 --
+-- Name: ogid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT ogid UNIQUE (ogid);
+
+
+--
+-- Name: ogid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT ogid_pkey PRIMARY KEY (ogid);
+
+
+--
+-- Name: oid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Options"
+    ADD CONSTRAINT oid UNIQUE (oid);
+
+
+--
 -- Name: oid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -652,11 +707,11 @@ ALTER TABLE ONLY "Questions"
 
 
 --
--- Name: qid_oid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: qid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT qid_oid_ukey UNIQUE (qid, oid);
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT qid UNIQUE (qid);
 
 
 --
@@ -705,6 +760,14 @@ ALTER TABLE ONLY "Graduates"
 
 ALTER TABLE ONLY "LaboratoryHeads"
     ADD CONSTRAINT uid_lid_pkey PRIMARY KEY (uid, lid);
+
+
+--
+-- Name: url_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Experiments"
+    ADD CONSTRAINT url_ukey UNIQUE (url);
 
 
 --
@@ -852,11 +915,19 @@ ALTER TABLE ONLY manage
 
 
 --
--- Name: options_ref_questions_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+-- Name: optiongroups_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "OptionGroups"
+    ADD CONSTRAINT optiongroups_ref_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: options_ref_ogid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT options_ref_questions_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+    ADD CONSTRAINT options_ref_ogid FOREIGN KEY (ogid) REFERENCES "OptionGroups"(ogid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

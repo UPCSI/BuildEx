@@ -82,9 +82,9 @@ class Laboratories_model extends MY_Model{
 		return $this->db->insert('graduates_member_of',array('labid'=>$labid,'gid'=>$gid));
 	}
 
-	public function is_graduate_member($gid,$labid){
+	public function is_graduate_member($gid){
 		$this->db->where('gid',$gid);
-		$this->db->where('labid',$labid);
+		$this->db->where('status','true');
 		$q = $this->db->get('graduates_member_of');
 		if($q->num_rows() > 0){
 			return true;
@@ -92,9 +92,9 @@ class Laboratories_model extends MY_Model{
 		return false;
 	}
 
-	public function is_faculty_member($fid,$labid){
+	public function is_faculty_member($fid){
 		$this->db->where('fid',$fid);
-		$this->db->where('labid',$labid);
+		$this->db->where('status','true');
 		$q = $this->db->get('faculty_member_of');
 		if($q->num_rows() > 0){
 			return true;

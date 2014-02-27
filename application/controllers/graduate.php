@@ -110,22 +110,23 @@ class Graduate extends MY_Controller{
 		$this->load->view('_main_layout_internal', $data);
 	}
 
-	public function view_experiment($gid = 0, $eid = 0){
-		if($eid == 0 || $gid == 0){
+	public function view_experiment($eid = 0){
+		if($eid == 0){
 			redirect('');
 			//implement where to redirect if eid or gid is non-existent
 		}
+		$this->load->model('experiments_model');
+		$gid = $this->session->userdata('gid');
+		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
+		$data['title'] = 'Graduate';
+		$data['main_content'] = 'graduate/view_experiment';
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
 
-		$this->load->model('experiments_model');
-		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate/view_experiment';
-		$this->load->view('_main_layout', $data);
+		$this->load->view('_main_layout_internal', $data);
 	}
 
 	public function request_advise($eid = 0){
@@ -134,7 +135,7 @@ class Graduate extends MY_Controller{
 			//implement where to redirect if eid is non-existent
 		}
 		$this->load->model('faculty_model');
-		$gid = $this->session->userdata('active_id');
+		$gid = $this->session->userdata('gid');
 		$faculty_uname = $this->input->post('faculty_uname');
 		$faculty = $this->faculty_model->get_faculty_profile(0,$faculty_uname);
 		if(isset($faculty)){
@@ -150,7 +151,7 @@ class Graduate extends MY_Controller{
 			$msg = 'Faculty member does not exists.';
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('graduate/view_experiment/'.$gid.'/'.$eid); //implement where to redirect after sending a request for advise
+		redirect('graduate/view_experiment/'.$eid); //implement where to redirect after sending a request for advise
 	}
 
 	private function get_all_experiments($gid = 0){

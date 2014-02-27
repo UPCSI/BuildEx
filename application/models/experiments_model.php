@@ -13,6 +13,8 @@ class Experiments_model extends MY_Model{
 		*/
 		$this->db->insert('Experiments',$info);
 		$conduct_info['eid'] = $this->db->insert_id();
+		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
+		$this->update_experiment($conduct_info['eid'],$new_info);
 		$conduct_info['fid'] = $fid;
 		$this->db->insert('faculty_conduct',$conduct_info);
 		return $conduct_info['eid'];
@@ -23,8 +25,11 @@ class Experiments_model extends MY_Model{
 		* Inserts the experiment to the database
 		* Returns the eid of that specific experiment.
 		*/
+		$info['url'] = $this->generate_url($gid,$info['title']);
 		$this->db->insert('Experiments',$info);
 		$conduct_info['eid'] = $this->db->insert_id();
+		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
+		$this->update_experiment($conduct_info['eid'],$new_info);
 		$conduct_info['gid'] = $gid;
 		$this->db->insert('graduates_conduct',$conduct_info);
 		return $conduct_info['eid'];
@@ -72,6 +77,16 @@ class Experiments_model extends MY_Model{
 		*/
 		$this->db->select('*');
 		$this->db->where('eid',$eid);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
+	public function get_experiment_by_hash($url){
+		/*
+		* Returns an experiment given its url(hash)
+		*/
+		$this->db->select('*');
+		$this->db->where('url',$url);
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
@@ -302,5 +317,10 @@ class Experiments_model extends MY_Model{
 		$this->db->where('status','f');
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
+	}
+
+	private function generate_url($eid,$title){
+		$str = strval($eid).$title;
+		return base64_encode($str);
 	}
 }

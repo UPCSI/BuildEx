@@ -16,19 +16,14 @@ class Builder_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-	function add_option($data){
-		$this->db->where('qid', $data['qid']);
-		$query = $this->db->get('Questions');
-		$question = $query->row();
-		$type = $question->type;
+	function add_option_group($data){
+		$this->db->insert('OptionGroups',$data);
+		return $this->db->insert_id();
+	}
 
+	function add_option($data){
 		$this->db->insert('Options',$data);
 		return $this->db->insert_id();
-
-		if($type > 0){
-			$this->db->insert('Options',$data);
-			return $this->db->insert_id();
-		}
 	}
 
 	function update_form($data){
