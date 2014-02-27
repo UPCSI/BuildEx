@@ -48,13 +48,13 @@ class Home extends CI_Controller{
 					redirect('');
 				}
 			}
-
-			else
+			else{
 				echo "Cannot sign in.";
+			}
 		}
-
-		else
+		else{
 			echo "Invalid input.";
+		}
 	}
 
 	public function loggedin(){
