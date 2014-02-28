@@ -42,22 +42,22 @@ body {
 }
 
 svg {
-	display: block;
-	margin:auto;
-	width:80%;
-	height:80%;
+  display: block;
+  margin:auto;
+  width:80%;
+  height:80%;
 }
 
 div.row.vcenter10 {
-	margin-top: 10%
+  margin-top: 10%
 }
 
 div.row.vcenter20 {
-	margin-top: 20%
+  margin-top: 20%
 }
 
 div.row.vcenter30 {
-	margin-top: 30%
+  margin-top: 30%
 }
 
 @media only screen and (min-width: 64.063em) {
@@ -95,7 +95,7 @@ section.main-section > div.row {
 }
 
 .row.full {
-	max-width:90%;
+  max-width:90%;
 }
 
 .row.full.legit {
@@ -103,7 +103,7 @@ section.main-section > div.row {
 }
 
 .row.full > .row {
-	max-width:100%;
+  max-width:100%;
 }
 
 .main-body {
@@ -133,7 +133,7 @@ section.main-section > div.row {
 /* top-bar large */
 
 .top-bar {
-	background: #252525;
+  background: #252525;
   height: 55px;
   line-height: 55px;
 }
@@ -176,7 +176,7 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
 
 @media only screen and (max-width: 40.063em) {
   .top-bar-section ul {
-  	background: #238ACC;
+    background: #238ACC;
     -webkit-transition: background-color 300ms ease-out;
     -moz-transition: background-color 300ms ease-out;
     transition: background-color 300ms ease-out;
@@ -201,7 +201,7 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
 }
 
 .top-bar-section li a:not(.button) {
-	background: rgba(0,0,0,0);
+  background: rgba(0,0,0,0);
   -webkit-transition: background-color 300ms ease-out;
   -moz-transition: background-color 300ms ease-out;
   transition: background-color 300ms ease-out;
@@ -222,14 +222,14 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
 }
 
 .top-bar-section li a:not(.button):hover {
-	background: #53b3f0;
+  background: #53b3f0;
   -webkit-transition: background-color 300ms ease-out;
   -moz-transition: background-color 300ms ease-out;
   transition: background-color 300ms ease-out;
 }
 
 .top-bar-section ul li:hover > a {
-	background: #53b3f0;
+  background: #53b3f0;
   -webkit-transition: background-color 300ms ease-out;
   -moz-transition: background-color 300ms ease-out;
   transition: background-color 300ms ease-out;
@@ -239,29 +239,29 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
 /* top-bar small */
 
 .top-bar.expanded .title-area {
-	background: #53b3f0;
+  background: #53b3f0;
 }
 
 .top-bar.expanded .toggle-topbar a {
-	color: #252525;
+  color: #252525;
 }
 
 /* home content */
 
 .white {
-	color: #fff !important;
+  color: #fff !important;
 }
 
 .justify {
-	text-align: justify;
+  text-align: justify;
 }
 
 section.jumbotron {
-	min-height: 100%;
-	background: #000000;
+  min-height: 100%;
+  background: #000000;
   background-image: url('../images/jumbo_grad.jpg');
   background-size: cover;
-	color:#fff;
+  color:#fff;
 }
 
 @media only screen and (min-width: 64.063em) {
@@ -301,26 +301,26 @@ section.jumbotron > div.row > div.columns > div.row > div.columns > a.button.exp
 }
 
 section.homesection {
-	padding-bottom: 1%;
+  padding-bottom: 1%;
 }
 
 section:nth-child(even).homesection {
-	background-color: #141414;
+  background-color: #141414;
 }
 
 section:nth-child(odd).homesection {
-	background-color: #141414;
+  background-color: #141414;
 }
 
 div.titleholder {
-	padding:5px;
-	margin-bottom: 3%;
-	background:#252525;
+  padding:5px;
+  margin-bottom: 3%;
+  background:#252525;
 }
 
 section.sitemap {
-	background-color: #252525;
-	padding: 1% 0px;
+  background-color: #252525;
+  padding: 1% 0px;
 }
 
 /* credits */
@@ -380,11 +380,11 @@ section.sitemap {
 }
 
 .panel {
-	border-width: 0px
+  border-width: 0px
 }
 
 ul {
-	margin-left: 0px;
+  margin-left: 0px;
 }
 
 .icon > span{
@@ -404,7 +404,42 @@ ul {
 }
 
 .top-bar .name h1 a {
-  padding:0px;
+    padding: 0px;
+}
+
+.ui-state-disabled { 
+    opacity: 1; 
+}
+
+.ui-wrapper {
+    margin: 0px;
+}
+
+.editable {
+    cursor: auto;
+}
+
+.draggable {
+    width:100px;
+    height:100px;
+    float:left;
+    position:absolute; 
+    cursor: move;
+}
+
+a.delete { 
+    display:none;
+    position:absolute;
+    top:0;
+    right:0;
+    width:10px;
+    height:10px;
+    text-indent:-999px;
+    background:red; 
+}
+
+.draggable:hover a.delete { 
+    display:block; 
 }
 
 .panel.pnl {
@@ -414,27 +449,6 @@ ul {
 ul {
   margin-left: 0px;
 }
-
-
-div.inputbtn > div > .ui-resizable-e {
-    right: 65px;
-}
-
-div.inputbtn > div > .ui-resizable-s {
-    bottom: auto;
-}
-
-div.inputbtn > div > .ui-resizable-se {
-    bottom: auto;
-    right: 60px;
-}
-
-.ui-wrapper {
-    margin: 0px;
-}
-
-.editable {
-    cursor: auto;
 
 div.panel.pnl {
   display:block;
