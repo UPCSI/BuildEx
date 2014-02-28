@@ -25,6 +25,7 @@ class Builder extends MY_Controller{
 	public function save() {
 		
 		$message = $this->input->post('msg');
+
 		// $message = substr($message, 1, -1);
 		// $objects = explode('),(', $message);
 
@@ -34,6 +35,7 @@ class Builder extends MY_Controller{
 		//echo json_encode($eid);
 		//die();
 		// $page['order'] = 0;
+
 
 		// foreach ($objects as $obj){		
 		// 	//parse and get positions
@@ -45,6 +47,7 @@ class Builder extends MY_Controller{
 		// 	$positions = explode(',', $obj);
 		// 	$form['x_pos'] = $positions[0];
 		// 	$form['y_pos'] = $positions[1];
+
 
 		// 	// save page and form
 		// 	$page['order'] += 1;
