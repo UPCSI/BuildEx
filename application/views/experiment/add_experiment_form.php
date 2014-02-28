@@ -49,7 +49,7 @@
 	    $("#getObjectValues").click(function () {
 			var x = new Array();
 			for(i=1; i<$.count; i++){
-				if (i!=1) {msg+=","}
+				//if (i!=1) {msg+=","}
 				var offset = $('#obj'+i).offset();
 		        var xPos = offset.left;
 		        var yPos = offset.top;
@@ -70,7 +70,7 @@
 		   		complete: function(data) {
 		   			//alert("success");
 		   			//alert(data[0][0]);
-		   			//alert(data.responseText);
+		   			alert(data.responseText);
 		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
 		   		},
 		
