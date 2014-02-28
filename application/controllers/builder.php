@@ -43,6 +43,7 @@ class Builder extends MY_Controller{
 		$page['order'] = 1;
 		$form['pid'] = $this->add_page($page);
 		
+		if ($message == 'false') return;
 		foreach ($message as $object){
 			$form['x_pos'] = (double)$object[0];
 			$form['y_pos'] = (double)$object[1];

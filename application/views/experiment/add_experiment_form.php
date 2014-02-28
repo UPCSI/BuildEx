@@ -106,13 +106,68 @@
 	    });
 
 
+		$('#button')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="btn'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">move me, resize me</button><a href="#" class="delete" style="z-index:999"></a></div>';
+				
+				$('.demo').append(htmlData);	
+		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	drag: function(){
+			            var offset1 = $(this).offset();
+			            var xPos1 = offset1.left;
+			            var yPos1 = offset1.top;
+			            var element = $(this).attr('id');
+			            //substring depends on the length of id string
+			            var number = element.substring(3);
+			            $('#pos'+number+'X').text('x: ' + xPos1);
+			            $('#pos'+number+'Y').text('y: ' + yPos1);
+			        }
+	        })
+		    .resizable()
+		    .click(function(){
+		        if ( $(this).is('.ui-draggable-dragging') ) {
+		            return;
+		        }
+		        $(this).draggable( "option", "disabled", true );
+		        $(this).attr('contenteditable','true');
+		    })
+		    .blur(function(){
+		        $(this).draggable( 'option', 'disabled', false);
+		        $(this).attr('contenteditable','false');
+		    });
+		    $('a.delete').on('click',function(e){
+		        e.preventDefault();
+		        btnID = $(this).closest('.draggable')[0].id;
+		        //alert('Now deleting "'+objID+'"');
+		        $('#'+btnID+'').remove();
+		    });
+		    
+	        $.count++;
+	    });
+
 
 	    $("#getObjectValues").click(function () {
+
+	    	//collect all question object
 			var x = new Array();
 			for(i=1; i<$.count; i++){
-				if ($('#obj'+i).offset() !== undefined){
-	    			alert($('#obj'+i).offset().left);
-					var offset = $('#obj'+i).offset();
+				if ($('#qtn'+i).offset() !== undefined){
+	    			//alert($('#qtn'+i).offset().left);
+					var offset = $('#qtn'+i).offset();
 			        var xPos = offset.left;
 			        var yPos = offset.top;
 			   		var data = new Array();
@@ -121,7 +176,7 @@
 			   		x.push(data);
 			   	}
 			}
-			
+
 		   	$.ajax({
 		   		url: '<?=base_url()?>builder/save',
 		   		type:"POST",
@@ -133,7 +188,7 @@
 		   		complete: function(data) {
 		   			//alert("success");
 		   			//alert(data[0][0]);
-		   			alert(data.responseText);
+		   			//alert(data.responseText);
 		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
 		   		},
 		
@@ -163,6 +218,7 @@
 		-->
 		<a id="question"class = "button small">Create Question</a>
 		<a id="textinput"class = "button small">Create Text Input</a>
+		<a id="button"class = "button small">Create Button</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 	</div>
 
