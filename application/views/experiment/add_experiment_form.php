@@ -8,7 +8,7 @@
 		    	posX = typeof posX !== 'undefined' ? posX : null;
 				posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
+				var htmlData='<div id="obj'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
 				if (posX != null && posY != null){
 					alert('x' + posX);
 					alert('y' + posY);
@@ -19,15 +19,17 @@
 				}
 
 				htmlData += '><div id="editable'+$.count+'" class="editable" style="color:black">Object</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
-		        $('.demo').append(htmlData);
+				
+				$('.demo').append(htmlData);
 		        $('.draggable').draggable({
 		        	drag: function(){
 			            var offset1 = $(this).offset();
 			            var xPos1 = offset1.left;
 			            var yPos1 = offset1.top;
 			            var element = $(this).attr('id');
-			            $('#pos'+element+'X').text('x: ' + xPos1);
-			            $('#pos'+element+'Y').text('y: ' + yPos1);
+			            var number = element.substring(3);
+			            $('#pos'+number+'X').text('x: ' + xPos1);
+			            $('#pos'+number+'Y').text('y: ' + yPos1);
 			        }
 	        })
 		    .resizable()
@@ -45,24 +47,33 @@
 	        $.count++;
 	    });
 	    $("#getObjectValues").click(function () {
-			var msg = '[';
+			var x = new Array();
 			for(i=1; i<$.count; i++){
 				if (i!=1) {msg+=","}
-				var offset = $('#'+i).offset();
+				var offset = $('#obj'+i).offset();
 		        var xPos = offset.left;
 		        var yPos = offset.top;
-		   		msg += "("+xPos+","+yPos+")";
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		x.push(data);
 			}
-			msg += ']';
 			
 		   	$.ajax({
-		   		url:"builder/save",
+		   		url: '<?=base_url()?>builder/save',
 		   		type:"POST",
-		   		data:{'msg':msg},
-		   		success: function(s) {
-		   			alert('success'+s);
-		   			window.location.href = "<?php echo $this->session->userdata('active_role'); ?>"+"/experiments";
-		   		}
+		   		data:{
+		   			'msg':x,
+		   			'eid':'<?=$eid?>'
+		   		},
+		   		dataType: 'json',
+		   		complete: function(data) {
+		   			//alert("success");
+		   			//alert(data[0][0]);
+		   			//alert(data.responseText);
+		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+		   		},
+		
 		   	});
 		});
 	    
@@ -112,3 +123,4 @@
 		}
 	}
 ?>
+

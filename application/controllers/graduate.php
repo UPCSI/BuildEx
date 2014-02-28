@@ -17,6 +17,7 @@ class Graduate extends MY_Controller{
 			$role = $this->session->userdata('active_role');
 			redirect($role[0]);
 		}
+		echo 'try';
 	}
 
 	public function profile(){

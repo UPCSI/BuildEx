@@ -5,45 +5,6 @@ class Builder extends MY_Controller{
 		parent::__construct();
 	}
 
-	public function index(){
-		//temp values
-		//$data['var'] = array(array(400,200),array(56,78));
-
-		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/add_experiment_form';
-		$this->load->view('_main_layout', $data);
-	}
-
-	public function save() {
-		$message = $this->input->post('msg');
-		$message = substr($message, 1, -1);
-		$objects = explode('),(', $message);
-
-		//hardcode (to change later)
-		$page['eid'] = 27;
-		$page['order'] = 0;
-
-		foreach ($objects as $obj){		
-			//parse and get positions
-			if($obj == $objects[sizeof($objects)-1])
-				$obj = substr($obj, 0, -1);
-
-			$obj = substr($obj, 1);
-
-			$positions = explode(',', $obj);
-			$form['x_pos'] = $positions[0];
-			$form['y_pos'] = $positions[1];
-
-			// save page and form
-			$page['order'] += 1;
-			$form['pid'] = $this->add_page($page);
-			$group['qid'] = $this->add_form($form);
-		}
-
-		// $data['main_content'] = 'experiment/test';
-		// $this->load->view('_main_layout', $data);
-	}
-
 	public function app($eid = 0){
 		/*this is the index of the app
 		* for the reason that we need the eid
@@ -52,8 +13,49 @@ class Builder extends MY_Controller{
 		* from view to the controller index.
 		*/
 
-		echo "This is the index of builder app.";
+		//temp values
+		//$data['var'] = array(array(400,200),array(56,78));
+
+		$data['title'] = 'Experiment';
+		$data['eid'] = $eid;
+		$data['main_content'] = 'experiment/add_experiment_form';
+		$this->load->view('_main_layout', $data);
 	}
+
+	public function save() {
+		
+		$message = $this->input->post('msg');
+		// $message = substr($message, 1, -1);
+		// $objects = explode('),(', $message);
+
+		//hardcode (to change later)
+		//echo json_encode($message);
+		$eid = $this->input->post('eid');
+		//echo json_encode($eid);
+		//die();
+		// $page['order'] = 0;
+
+		// foreach ($objects as $obj){		
+		// 	//parse and get positions
+		// 	if($obj == $objects[sizeof($objects)-1])
+		// 		$obj = substr($obj, 0, -1);
+
+		// 	$obj = substr($obj, 1);
+
+		// 	$positions = explode(',', $obj);
+		// 	$form['x_pos'] = $positions[0];
+		// 	$form['y_pos'] = $positions[1];
+
+		// 	// save page and form
+		// 	$page['order'] += 1;
+		// 	$form['pid'] = $this->add_page($page);
+		// 	$group['qid'] = $this->add_form($form);
+		// }
+
+		// $data['main_content'] = 'experiment/test';
+		//$this->load->view('_main_layout', $data);
+	}
+
 
 	public function add_page($data){
 		/*

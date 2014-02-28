@@ -1,5 +1,6 @@
 <h1> Experiments </h1>
 <hr>
+<? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
 
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
