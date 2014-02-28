@@ -16,7 +16,7 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
-		$message = substr($message, 1, -1);
+		$message = substr($message, 2, -2);
 		$objects = explode('),(', $message);
 
 		//hardcode (to change later)
@@ -25,11 +25,6 @@ class Builder extends MY_Controller{
 
 		foreach ($objects as $obj){		
 			//parse and get positions
-			if($obj == $objects[sizeof($objects)-1])
-				$obj = substr($obj, 0, -1);
-
-			$obj = substr($obj, 1);
-
 			$positions = explode(',', $obj);
 			$form['x_pos'] = $positions[0];
 			$form['y_pos'] = $positions[1];
