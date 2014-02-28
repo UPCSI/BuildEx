@@ -400,5 +400,21 @@ ul {
 }
 
 .draggable {
+    width:100px;
+    height:100px;
+    float:left;
+    position:absolute; 
     cursor: move;
 }
+
+a.delete { 
+  display:none;
+  position:absolute;
+  top:0;
+  right:0;
+  width:10px;
+  height:10px;
+  text-indent:-999px;
+  background:red; 
+}
+.draggable:hover a.delete { display:block; }

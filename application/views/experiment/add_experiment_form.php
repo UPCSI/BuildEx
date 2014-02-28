@@ -8,17 +8,15 @@
 		    	posX = typeof posX !== 'undefined' ? posX : null;
 				posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="obj'+$.count+'" class="draggable ui-widget-content ui-draggable" style="height:100px; width:100px;';
+				var htmlData='<div id="obj'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
 				if (posX != null && posY != null){
 					alert('x' + posX);
 					alert('y' + posY);
-					htmlData += ' left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
 				}
-				else{
-					htmlData += '"';
-				}
+				
 
-				htmlData += '><div id="editable'+$.count+'" class="editable" style="color:black">Object</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black">Object</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
 				
 				$('.demo').append(htmlData);
 		        $('.draggable').draggable({
@@ -44,19 +42,27 @@
 		        $(this).draggable( 'option', 'disabled', false);
 		        $(this).attr('contenteditable','false');
 		    });
+		    $('a.delete').on('click',function(e){
+		        e.preventDefault();
+		        objID = $(this).closest('.draggable')[0].id;
+		        //alert('Now deleting "'+objID+'"');
+		        $('#'+objID+'').remove();
+		    });
 	        $.count++;
 	    });
 	    $("#getObjectValues").click(function () {
 			var x = new Array();
 			for(i=1; i<$.count; i++){
-				if (i!=1) {msg+=","}
-				var offset = $('#obj'+i).offset();
-		        var xPos = offset.left;
-		        var yPos = offset.top;
-		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		x.push(data);
+				if ($('#obj'+i).offset() !== undefined){
+	    			alert($('#obj'+i).offset().left);
+					var offset = $('#obj'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		x.push(data);
+			   	}
 			}
 			
 		   	$.ajax({
@@ -71,17 +77,20 @@
 		   			//alert("success");
 		   			//alert(data[0][0]);
 		   			//alert(data.responseText);
-		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+		   			//window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
 		   		},
 		
 		   	});
 		});
-	    
 		
 
-
-	    
-	});
+		$('body').on('paste', '.ui-widget-content', function (e) {       
+		    setTimeout(function() {
+		        console.log($(e.target).html($(e.target).text()));
+		    }, 0);
+		});
+	});    
+		
 
 </script>
 <div id="builder" class="row full">
@@ -106,6 +115,7 @@
 			<p>Workspace</p>
 		</div>
 		<div class='demo'></div>
+    
 		<!-- <div id="d">
 			Text to edit
 		</div> -->
