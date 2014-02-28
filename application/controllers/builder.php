@@ -48,7 +48,7 @@ class Builder extends MY_Controller{
 			$form['x_pos'] = (double)$object[0];
 			$form['y_pos'] = (double)$object[1];
 			$group['qid'] = $this->add_form($form);
-		//}
+		}
 
 		// $data['main_content'] = 'experiment/test';
 		// $this->load->view('_main_layout', $data);
