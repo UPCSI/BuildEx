@@ -5,6 +5,13 @@ class Builder extends MY_Controller{
 		parent::__construct();
 	}
 
+	public function form($eid = 0){
+		$data['title'] = 'Experiment';
+		$data['eid'] = $eid;
+		$data['main_content'] = 'builder/form_maker';
+		$this->load->view('builder/_maker_layout',$data);
+	}
+
 	public function app($eid = 0){
 		/*this is the index of the app
 		* for the reason that we need the eid
@@ -27,7 +34,12 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
+		if ($message == 'false')
+			return;
+
 		$page['eid'] = $this->input->post('eid');
+		$this->delete($page['eid']);
+
 		$page['order'] = 1;
 		$form['pid'] = $this->add_page($page);
 		
@@ -42,6 +54,10 @@ class Builder extends MY_Controller{
 		// $this->load->view('_main_layout', $data);
 	}
 
+	public function delete($eid){
+		$this->load->model('builder_model');
+		$this->builder_model->delete($eid);		
+	}
 
 	public function get_positions($eid){
 		$this->load->model('builder_model');

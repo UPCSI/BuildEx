@@ -25,12 +25,23 @@ class Builder_model extends MY_Model{
 		return $data;
 	}
 
+	function delete($eid){
+		$this->db->where('eid',$eid);
+		$this->db->delete('Pages');		
+	}
+
 	function add_page($data){
+		$this->db->where('eid', $data['eid']);
+		$this->db->delete('Pages');
+
 		$this->db->insert('Pages',$data);
 		return $this->db->insert_id();
 	}
 
 	function add_form($data){
+		$this->db->where('pid', $data['pid']);
+		$this->db->delete('Questions');
+
 		$this->db->insert('Questions',$data);
 		return $this->db->insert_id();
 	}

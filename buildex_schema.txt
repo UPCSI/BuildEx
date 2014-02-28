@@ -58,8 +58,22 @@ TABLE ProfileFields:
 
 TABLE TextInputs:
 	pfid: integer references ProfileFields.pfid
+	tid: integer PRIMARY AUTOINCREMENT
 	size: character varying(16) {tiny small medium large}
 	placeholder: character varying(128)
+
+TABLE TextAreas:
+	pfid: integer references ProfileFields.pfid
+	tid: integer PRIMARY AUTOINCREMENT
+	size: character varying(16) {tiny small medium large}
+	placeholder: character varying(128)
+
+/*
+TABLE Dropdowns:
+	pfid: integer references ProfileFields.pfid
+	did: integer PRIMARY AUTOINCREMENT
+	options: character varying(256)
+*/
 
 TABLE Pages:
 	eid: integer references Experiments.eid
