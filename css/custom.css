@@ -395,6 +395,23 @@ ul {
     opacity: 1; 
 }
 
+div.inputbtn > div > .ui-resizable-e {
+    right: 65px;
+}
+
+div.inputbtn > div > .ui-resizable-s {
+    bottom: auto;
+}
+
+div.inputbtn > div > .ui-resizable-se {
+    bottom: auto;
+    right: 60px;
+}
+
+.ui-wrapper {
+    margin: 0px;
+}
+
 .editable {
     cursor: auto;
 }
@@ -429,3 +446,10 @@ a.delete {
   font-style:italic;
 }
 */
+
+.no-select { 
+        -moz-user-select: none; 
+        -khtml-user-select: none; 
+        -webkit-user-select: none; 
+        -o-user-select: none; 
+} 
