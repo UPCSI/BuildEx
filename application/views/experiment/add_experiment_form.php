@@ -3,28 +3,31 @@
 <script>
 	$.count = 1;
 	$(function() {
-	    $('#object1')
+	    $('#question')
 	    	.click(function(eventClick, posX, posY){
 		    	posX = typeof posX !== 'undefined' ? posX : null;
 				posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="obj'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
+				var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
 				if (posX != null && posY != null){
 					alert('x' + posX);
 					alert('y' + posY);
 					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
 				}
 				
-
-				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black">Object</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black" ></div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
 				
-				$('.demo').append(htmlData);
+				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
 		        	drag: function(){
 			            var offset1 = $(this).offset();
 			            var xPos1 = offset1.left;
 			            var yPos1 = offset1.top;
 			            var element = $(this).attr('id');
+			            //substring depends on the length of id string
 			            var number = element.substring(3);
 			            $('#pos'+number+'X').text('x: ' + xPos1);
 			            $('#pos'+number+'Y').text('y: ' + yPos1);
@@ -44,12 +47,66 @@
 		    });
 		    $('a.delete').on('click',function(e){
 		        e.preventDefault();
-		        objID = $(this).closest('.draggable')[0].id;
-		        //alert('Now deleting "'+objID+'"');
-		        $('#'+objID+'').remove();
+		        qtnD = $(this).closest('.draggable')[0].id;
+		        //alert('Now deleting "'+qtnID+'"');
+		        $('#'+qtnID+'').remove();
 		    });
 	        $.count++;
 	    });
+
+		$('#textinput')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black" ></div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+				
+				$('.demo').append(htmlData);	
+		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	drag: function(){
+			            var offset1 = $(this).offset();
+			            var xPos1 = offset1.left;
+			            var yPos1 = offset1.top;
+			            var element = $(this).attr('id');
+			            //substring depends on the length of id string
+			            var number = element.substring(3);
+			            $('#pos'+number+'X').text('x: ' + xPos1);
+			            $('#pos'+number+'Y').text('y: ' + yPos1);
+			        }
+	        })
+		    .resizable()
+		    .click(function(){
+		        if ( $(this).is('.ui-draggable-dragging') ) {
+		            return;
+		        }
+		        $(this).draggable( "option", "disabled", true );
+		        $(this).attr('contenteditable','true');
+		    })
+		    .blur(function(){
+		        $(this).draggable( 'option', 'disabled', false);
+		        $(this).attr('contenteditable','false');
+		    });
+		    $('a.delete').on('click',function(e){
+		        e.preventDefault();
+		        inpID = $(this).closest('.draggable')[0].id;
+		        //alert('Now deleting "'+objID+'"');
+		        $('#'+inpID+'').remove();
+		    });
+	        $.count++;
+	    });
+
+
+
 	    $("#getObjectValues").click(function () {
 			var x = new Array();
 			for(i=1; i<$.count; i++){
@@ -76,15 +133,14 @@
 		   		complete: function(data) {
 		   			//alert("success");
 		   			//alert(data[0][0]);
-		   			//alert(data.responseText);
-		   			//window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+		   			alert(data.responseText);
+		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
 		   		},
 		
 		   	});
 		});
 		
-
-		$('body').on('paste', '.ui-widget-content', function (e) {       
+		$('body').on('paste', '.ui-widget-content', function (e) {
 		    setTimeout(function() {
 		        console.log($(e.target).html($(e.target).text()));
 		    }, 0);
@@ -105,7 +161,8 @@
 		  <p>Object</p>
 		</div> 
 		-->
-		<a id="object1"class = "button small">Create Object1</a>
+		<a id="question"class = "button small">Create Question</a>
+		<a id="textinput"class = "button small">Create Text Input</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 	</div>
 
@@ -127,7 +184,7 @@
 		foreach ($var as $obj){
 			echo '<script>';
 			echo '$(function() {';
-			echo '$("#object1").trigger("click",['.$obj[0].','.$obj[1].']);';
+			echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].']);';
 			echo '})';
 			echo '</script>';
 		}

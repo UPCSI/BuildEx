@@ -23,12 +23,18 @@ class Builder extends MY_Controller{
 	}
 
 	public function save() {
-		
 		$message = $this->input->post('msg');
+		$page['eid'] = $this->input->post('eid');
+		$page['order'] = 0;
 
-		// $message = substr($message, 1, -1);
-		// $objects = explode('),(', $message);
+		foreach ($message as $object){
+			$form['x_pos'] = (double)$object[0];
+			$form['y_pos'] = (double)$object[1];
+			$page['order'] += 1;
 
+			$form['pid'] = $this->add_page($page);
+			$group['qid'] = $this->add_form($form);
+		}
 		//hardcode (to change later)
 		//echo json_encode($message);
 		$eid = $this->input->post('eid');
@@ -47,16 +53,18 @@ class Builder extends MY_Controller{
 		// 	$positions = explode(',', $obj);
 		// 	$form['x_pos'] = $positions[0];
 		// 	$form['y_pos'] = $positions[1];
-
+		//save page and form
+		$page['order'] += 1;
+		$form['pid'] = $this->add_page($page);
+		$group['qid'] = $this->add_form($form);
 
 		// 	// save page and form
 		// 	$page['order'] += 1;
 		// 	$form['pid'] = $this->add_page($page);
 		// 	$group['qid'] = $this->add_form($form);
 		// }
-
 		// $data['main_content'] = 'experiment/test';
-		//$this->load->view('_main_layout', $data);
+		// $this->load->view('_main_layout', $data);
 	}
 
 

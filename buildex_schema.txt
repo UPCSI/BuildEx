@@ -44,9 +44,22 @@ TABLE Experiments:
 	description: character varying(256)
 	target_count: integer
 	current_count: integer
-	status: boolean #{COMPLETE[true],ONGOING[false]}
+	status: boolean #{COMtextinputPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 	url: character varying(128)
+
+TABLE ProfileFields:
+	eid: integer references Experiments.eid
+	pfid: integer PRIMARY AUTOINCREMENT
+	name: character varying(128) #item name
+	label: character varying(256) #actual text
+	type: character varying(64) #{text-input,text-area,dropdown,radio-button,checkboxes}
+	helper: character varying(64)
+
+TABLE TextInputs:
+	pfid: integer references ProfileFields.pfid
+	size: character varying(16) {tiny small medium large}
+	placeholder: character varying(128)
 
 TABLE Pages:
 	eid: integer references Experiments.eid
