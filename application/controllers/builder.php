@@ -35,7 +35,35 @@ class Builder extends MY_Controller{
 			$form['pid'] = $this->add_page($page);
 			$group['qid'] = $this->add_form($form);
 		}
+		//hardcode (to change later)
+		//echo json_encode($message);
+		$eid = $this->input->post('eid');
+		//echo json_encode($eid);
+		//die();
+		// $page['order'] = 0;
 
+
+		// foreach ($objects as $obj){		
+		// 	//parse and get positions
+		// 	if($obj == $objects[sizeof($objects)-1])
+		// 		$obj = substr($obj, 0, -1);
+
+		// 	$obj = substr($obj, 1);
+
+		// 	$positions = explode(',', $obj);
+		// 	$form['x_pos'] = $positions[0];
+		// 	$form['y_pos'] = $positions[1];
+		//save page and form
+			$page['order'] += 1;
+			$form['pid'] = $this->add_page($page);
+			$group['qid'] = $this->add_form($form);
+		}
+
+		// 	// save page and form
+		// 	$page['order'] += 1;
+		// 	$form['pid'] = $this->add_page($page);
+		// 	$group['qid'] = $this->add_form($form);
+		// }
 		// $data['main_content'] = 'experiment/test';
 		// $this->load->view('_main_layout', $data);
 	}

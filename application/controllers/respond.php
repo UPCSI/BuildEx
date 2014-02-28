@@ -1,6 +1,6 @@
 <?php
 
-class Respond extends MY_Controller{
+class Respond extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
