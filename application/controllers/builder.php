@@ -6,11 +6,10 @@ class Builder extends MY_Controller{
 	}
 
 	public function form($eid = 0){
-		
 		$data['title'] = 'Experiment';
 		$data['eid'] = $eid;
 		$data['main_content'] = 'builder/form_maker';
-		$this->load->view('_main_layout',$data);
+		$this->load->view('builder/_maker_layout',$data);
 	}
 
 	public function app($eid = 0){
