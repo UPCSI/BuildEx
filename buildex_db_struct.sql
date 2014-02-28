@@ -359,11 +359,44 @@ CREATE TABLE "Respondents" (
     birthdate date,
     sex boolean DEFAULT false,
     gender character varying(32),
-    civil_status integer DEFAULT 0
+    civil_status integer DEFAULT 0,
+    eid integer,
+    since date,
+    duration time without time zone
 );
 
 
 ALTER TABLE public."Respondents" OWNER TO postgres;
+
+--
+-- Name: answers_ans_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE answers_ans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.answers_ans_id_seq OWNER TO postgres;
+
+--
+-- Name: Responses; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Responses" (
+    rid integer NOT NULL,
+    ans_id integer DEFAULT nextval('answers_ans_id_seq'::regclass) NOT NULL,
+    qid integer,
+    oid integer,
+    free_answer character varying,
+    duration time without time zone
+);
+
+
+ALTER TABLE public."Responses" OWNER TO postgres;
 
 --
 -- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -417,19 +450,6 @@ CREATE TABLE advise (
 
 
 ALTER TABLE public.advise OWNER TO postgres;
-
---
--- Name: answer; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE answer (
-    rid integer NOT NULL,
-    eid integer NOT NULL,
-    since date DEFAULT ('now'::text)::date
-);
-
-
-ALTER TABLE public.answer OWNER TO postgres;
 
 --
 -- Name: faculty_conduct; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -579,11 +599,19 @@ ALTER TABLE ONLY "Admins"
 
 
 --
--- Name: answer_primary; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+-- Name: ans_id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
-ALTER TABLE ONLY answer
-    ADD CONSTRAINT answer_primary PRIMARY KEY (rid, eid);
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT ans_id_pkey PRIMARY KEY (ans_id);
+
+
+--
+-- Name: ans_id_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT ans_id_ukey UNIQUE (ans_id);
 
 
 --
@@ -795,19 +823,27 @@ ALTER TABLE ONLY advise
 
 
 --
--- Name: answer_ref_experiments; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY answer
-    ADD CONSTRAINT answer_ref_experiments FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: answer_ref_respondents; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
-ALTER TABLE ONLY answer
+ALTER TABLE ONLY "Responses"
     ADD CONSTRAINT answer_ref_respondents FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: answers_ref_oid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT answers_ref_oid FOREIGN KEY (oid) REFERENCES "Options"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: answers_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT answers_ref_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -944,6 +980,14 @@ ALTER TABLE ONLY "Pages"
 
 ALTER TABLE ONLY "Questions"
     ADD CONSTRAINT questions_ref_pages_pid FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: respondents_ref_eid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Respondents"
+    ADD CONSTRAINT respondents_ref_eid FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

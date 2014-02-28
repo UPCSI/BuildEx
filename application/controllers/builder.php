@@ -18,55 +18,34 @@ class Builder extends MY_Controller{
 
 		$data['title'] = 'Experiment';
 		$data['eid'] = $eid;
+		$data['var'] = $this->get_positions($eid);
+
 		$data['main_content'] = 'experiment/add_experiment_form';
 		$this->load->view('_main_layout', $data);
+
 	}
 
 	public function save() {
 		$message = $this->input->post('msg');
 		$page['eid'] = $this->input->post('eid');
-		$page['order'] = 0;
-
+		$page['order'] = 1;
+		$form['pid'] = $this->add_page($page);
+		
 		foreach ($message as $object){
 			$form['x_pos'] = (double)$object[0];
 			$form['y_pos'] = (double)$object[1];
-			$page['order'] += 1;
-
-			$form['pid'] = $this->add_page($page);
 			$group['qid'] = $this->add_form($form);
 		}
-		//hardcode (to change later)
-		//echo json_encode($message);
-		$eid = $this->input->post('eid');
-		//echo json_encode($eid);
-		//die();
-		// $page['order'] = 0;
 
-
-		// foreach ($objects as $obj){		
-		// 	//parse and get positions
-		// 	if($obj == $objects[sizeof($objects)-1])
-		// 		$obj = substr($obj, 0, -1);
-
-		// 	$obj = substr($obj, 1);
-
-		// 	$positions = explode(',', $obj);
-		// 	$form['x_pos'] = $positions[0];
-		// 	$form['y_pos'] = $positions[1];
-		//save page and form
-		$page['order'] += 1;
-		$form['pid'] = $this->add_page($page);
-		$group['qid'] = $this->add_form($form);
-
-		// 	// save page and form
-		// 	$page['order'] += 1;
-		// 	$form['pid'] = $this->add_page($page);
-		// 	$group['qid'] = $this->add_form($form);
-		// }
 		// $data['main_content'] = 'experiment/test';
 		// $this->load->view('_main_layout', $data);
 	}
 
+
+	public function get_positions($eid){
+		$this->load->model('builder_model');
+		return $this->builder_model->get_positions($eid);
+	}
 
 	public function add_page($data){
 		/*

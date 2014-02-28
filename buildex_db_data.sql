@@ -118,7 +118,15 @@ COPY "Options" (oid, label, ogid) FROM stdin;
 -- Data for Name: Respondents; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, street_addr, barangay_addr, city_addr, nationality, birthdate, sex, gender, civil_status) FROM stdin;
+COPY "Respondents" (rid, first_name, middle_name, last_name, email_ad, age, street_addr, barangay_addr, city_addr, nationality, birthdate, sex, gender, civil_status, eid, since, duration) FROM stdin;
+\.
+
+
+--
+-- Data for Name: Responses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "Responses" (rid, ans_id, qid, oid, free_answer, duration) FROM stdin;
 \.
 
 
@@ -138,18 +146,17 @@ COPY advise (fid, eid, since, status) FROM stdin;
 
 
 --
--- Data for Name: answer; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Name: answers_ans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-COPY answer (rid, eid, since) FROM stdin;
-\.
+SELECT pg_catalog.setval('answers_ans_id_seq', 1, false);
 
 
 --
 -- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('experiments_eid_seq', 26, true);
+SELECT pg_catalog.setval('experiments_eid_seq', 1, false);
 
 
 --

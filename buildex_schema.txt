@@ -91,6 +91,10 @@ TABLE Options:
 
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
+	eid: integer references Experiments.eid
+	since: date
+	duration: time
+
 	#OPTIONAL FIELDS:
 	first_name: character varying(32)
 	middle_name: character varying(32)
@@ -106,10 +110,16 @@ TABLE Respondents:
 	gender: character varying(32)
 	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
+TABLE Responses:
+	rid: integer references Respondents.rid
+	ans_id: integer PRIMARY AUTOINCREMENT
+	qid: integer references Questions.qid
+	oid: integer references Options.oid
+	free_answer: character varying
+	duration: time
+
 TABLE advise:
 	fid: integer references Faculty.fid
-	eid: integer references Experiments.eid
-	since: date
 	status: boolean #{Faculty
 	confirmed[true],not confirmed[false]}
 
@@ -120,11 +130,6 @@ TABLE faculty_conduct:
 
 TABLE graduates_conduct:
 	gid: integer references Graduates.gid
-	eid: integer references Experiments.eid
-	since: date
-
-TABLE answer:
-	rid: integer references Respondents.rid
 	eid: integer references Experiments.eid
 	since: date
 

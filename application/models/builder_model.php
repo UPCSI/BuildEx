@@ -6,6 +6,25 @@ class Builder_model extends MY_Model{
 		parent::__construct();
 	}
 
+	function get_positions($eid){
+		$data = [];
+
+		$this->db->where('Pages.eid', $eid);
+		$this->db->join('Pages', 'Pages.pid = Questions.pid');
+		$query = $this->db->get('Questions');
+
+		if($query->num_rows == 0)
+			return null;
+
+		$objects = $this->query_conversion($query);
+		foreach($objects as $object){
+			$new_obj = array($object->x_pos, $object->y_pos);
+			array_push($data, $new_obj);
+		}
+
+		return $data;
+	}
+
 	function add_page($data){
 		$this->db->insert('Pages',$data);
 		return $this->db->insert_id();
