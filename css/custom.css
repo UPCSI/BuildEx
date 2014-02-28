@@ -14,6 +14,19 @@
     font-weight: bold;
 }
 
+div.unpad-v {
+  padding-top:0px;
+  padding-bottom:0px;
+}
+div.unmar-h {
+  margin-left:0px;
+  margin-right:0px;
+}
+div.unmar-v {
+  margin-top:0px;
+  margin-bottom:0px;
+}
+
 h1, h2, h3, h4, h5, h6, p, a, li {
   font-family: 'Din' !important;
 }
@@ -95,7 +108,7 @@ section.main-section > div.row {
 
 .main-body {
   min-height:100%;
-  height: 100%;
+  /*height: 100%;*/
 }
 
 .main-body > div.row.full.legit {
@@ -109,8 +122,11 @@ section.main-section > div.row {
 }
 
 .sidebar {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding: 5px;
+  /*background-color: #252525;*/
+}
+
+.sidebar > ul.off-canvas-list {
   background-color: #252525;
 }
 
@@ -364,11 +380,11 @@ section.sitemap {
 }
 
 .panel {
-    border-width: 0px
+	border-width: 0px
 }
 
 ul {
-    margin-left: 0px;
+	margin-left: 0px;
 }
 
 .icon > span{
@@ -388,44 +404,55 @@ ul {
 }
 
 .top-bar .name h1 a {
-    padding: 0px;
+  padding:0px;
 }
 
-.ui-state-disabled { 
-    opacity: 1; 
+.panel.pnl {
+  border-width: 0px
 }
 
-.editable {
-    cursor: auto;
+ul {
+  margin-left: 0px;
 }
 
-.draggable {
-    width:100px;
-    height:100px;
-    float:left;
-    position:absolute; 
-    cursor: move;
+div.panel.pnl {
+  display:block;
 }
 
-a.delete { 
-    display:none;
-    position:absolute;
-    top:0;
-    right:0;
-    width:10px;
-    height:10px;
-    text-indent:-999px;
-    background:red; 
+div.panels {
+  height:100%;
+  overflow-y: auto;
 }
 
-.draggable:hover a.delete { 
-    display:block; 
+div.panel.elmt {
+  display:table-cell;
 }
 
-/*placeholder for div -- faulty
-[contentEditable=true]:empty:not(:focus):before{
-  content:attr(data-ph);
-  color:grey;
-  font-style:italic;
+li:last-child > div.panel.pnl {
+  margin:0px;
 }
-*/
+
+div.tabs-content.elements {
+  width:100%;
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+.row.fullest {
+  max-width:100%;
+}
+
+@media only screen and (min-width: 64.063em) {
+  .unpad-h {
+    padding-left:0px;
+    padding-right:0px;
+  }
+
+}
+
+
+@media only screen and (min-width: 40em) {
+#save {
+  top: 12px;
+}
+}
