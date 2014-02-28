@@ -2,30 +2,25 @@ define([
        "jquery" , "underscore" , "backbone",
        "collections/snippets" , "collections/my-form-snippets",
        "views/tab" , "views/my-form",
-       "text!data/input.json", "text!data/radio.json",
-       "text!data/select.json", "text!templates/app/help.html",
+       "text!data/text.json", "text!data/choice.json","text!templates/app/help.html",
 ], function(
   $, _, Backbone,
   SnippetsCollection, MyFormSnippetsCollection,
   TabView,
   MyFormView,
-  inputJSON, radioJSON, selectJSON, helpTab
+  textJSON, choiceJSON, helpTab
 ){
   return {
     initialize: function(){
 
       //Bootstrap tabs from json.
       new TabView({
-        title: "Input",
-        collection: new SnippetsCollection(JSON.parse(inputJSON))
+        title: "Text",
+        collection: new SnippetsCollection(JSON.parse(textJSON))
       });
       new TabView({
-        title: "Radios / Checkboxes",
-        collection: new SnippetsCollection(JSON.parse(radioJSON))
-      });
-      new TabView({
-        title: "Select",
-        collection: new SnippetsCollection(JSON.parse(selectJSON))
+        title: "Choices",
+        collection: new SnippetsCollection(JSON.parse(choiceJSON))
       });
       new TabView({
         title: "Help",

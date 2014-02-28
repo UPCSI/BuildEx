@@ -1,10 +1,10 @@
-[
+
   {
     "fields": {
       "id": {
         "type": "input",
         "label": "ID / Name",
-        "value": "selectbasic"
+        "value": "selectmultiple"
       },
       "options": {
         "type": "textarea-split",
@@ -53,9 +53,9 @@
       "label": {
         "type": "input",
         "label": "Label Text",
-        "value": "Select Basic"
+        "value": "Select Multiple"
       }
     },
-    "title": "Select Basic"
+    "title": "Select Multiple"
   }
 ]
