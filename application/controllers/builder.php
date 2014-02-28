@@ -5,6 +5,14 @@ class Builder extends MY_Controller{
 		parent::__construct();
 	}
 
+	public function form($eid = 0){
+		
+		$data['title'] = 'Experiment';
+		$data['eid'] = $eid;
+		$data['main_content'] = 'builder/form_maker';
+		$this->load->view('_main_layout',$data);
+	}
+
 	public function app($eid = 0){
 		/*this is the index of the app
 		* for the reason that we need the eid
@@ -35,7 +43,7 @@ class Builder extends MY_Controller{
 			$form['x_pos'] = (double)$object[0];
 			$form['y_pos'] = (double)$object[1];
 			$group['qid'] = $this->add_form($form);
-		}
+		//}
 
 		// $data['main_content'] = 'experiment/test';
 		// $this->load->view('_main_layout', $data);

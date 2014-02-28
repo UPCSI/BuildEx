@@ -17,4 +17,6 @@
 	<p> <strong> URL: </strong> <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>"> <?php echo site_url('respond/view/'.$experiment->url); ?> </a></p>
 	<a class = "button small" href = "<?php echo site_url('faculty/unpublish/'.$experiment->eid); ?>"> Unpublish </a>
 <?php endif; ?>
+
+<a class = "button small" href = "<?php echo site_url('builder/form/'.$experiment->eid); ?>"> Go to Form Maker </a>
 <a class = "button small" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
