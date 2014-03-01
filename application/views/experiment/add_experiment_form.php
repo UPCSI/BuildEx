@@ -61,7 +61,7 @@
 		    	posX = typeof posX !== 'undefined' ? posX : null;
 				posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
+				var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content ui-draggable" ' + 'data-page="' + $.page + '" ';
 				if (posX != null && posY != null){
 					alert('x' + posX);
 					alert('y' + posY);
@@ -112,7 +112,7 @@
 		    	posX = typeof posX !== 'undefined' ? posX : null;
 				posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="btn'+$.count+'" class="draggable ui-widget-content ui-draggable" ';
+				var htmlData='<div id="btn'+$.count+'" class="draggable ui-widget-content ui-draggable" ' + 'data-page="' + $.page + '" ';
 				if (posX != null && posY != null){
 					alert('x' + posX);
 					alert('y' + posY);
@@ -201,6 +201,8 @@
 		});
 
 		$("#newPage").click(function(){
+			$.page++;
+			$.current_page++;
 			for(i=1; i<$.count; i++){
 				if(document.getElementById('qtn'+i)){
 					document.getElementById('qtn'+i).style.visibility = 'hidden';
@@ -214,13 +216,12 @@
 					document.getElementById('btn'+i).style.visibility = 'hidden';
 				}
 			}
-
-			$.page++;
-			$.current_page++;
 		});
 
 		$("#prevPage").click(function(){
-			$.current_page--;
+			if($.current_page > 1){
+				$.current_page--;
+			}
 
 			//hide all objects first
 			for(i=1; i<$.count; i++){
@@ -243,17 +244,51 @@
 					document.getElementById('qtn'+i).style.visibility = 'visible';
 				}
 
-				if(document.getElementById('inp'+i)){
+				if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
 					document.getElementById('inp'+i).style.visibility = 'visible';
 				}
 
-				if(document.getElementById('btn'+i)){
+				if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
 					document.getElementById('btn'+i).style.visibility = 'visible';
 				}
 			}
 		});
 
+		$("#nextPage").click(function(){
+			if($.current_page < $.page){
+				$.current_page++;
+			}
 
+			//hide all objects first
+			for(i=1; i<$.count; i++){
+				if(document.getElementById('qtn'+i)){
+					document.getElementById('qtn'+i).style.visibility = 'hidden';
+				}
+
+				if(document.getElementById('inp'+i)){
+					document.getElementById('inp'+i).style.visibility = 'hidden';
+				}
+
+				if(document.getElementById('btn'+i)){
+					document.getElementById('btn'+i).style.visibility = 'hidden';
+				}
+			}
+
+			//get objects for current page
+			for(i=1; i<$.count; i++){
+				if(document.getElementById('qtn'+i) && $("#qtn"+i).data('page') == $.current_page){
+					document.getElementById('qtn'+i).style.visibility = 'visible';
+				}
+
+				if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
+					document.getElementById('inp'+i).style.visibility = 'visible';
+				}
+
+				if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
+					document.getElementById('btn'+i).style.visibility = 'visible';
+				}
+			}
+		});
 	});    
 		
 
@@ -275,6 +310,7 @@
 		<a id="button"class = "button small">Create Button</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 		<a id="prevPage"class = "button small">Previous Page</a>
+		<a id="nextPage"class = "button small">Next Page</a>
 		<a id="newPage"class = "button small">New Page</a>
 	</div>
 
