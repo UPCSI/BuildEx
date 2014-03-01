@@ -1,5 +1,6 @@
 #Schema for CS192 Project: Experiment Builder
 
+#Primary Entities
 TABLE Users:
 	uid: integer PRIMARY AUTOINCREMENT
 	username: character varying(32) UNIQUE
@@ -48,90 +49,6 @@ TABLE Experiments:
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 	url: character varying(128)
 
-TABLE ProfileFields:
-	eid: integer references Experiments.eid
-	pfid: integer PRIMARY AUTOINCREMENT
-	name: character varying(128) #item name
-	label: character varying(256) #actual text
-	type: character varying(64) #{text-input,text-area,dropdown,radio-button,checkboxes}
-	helper: character varying(64)
-
-TABLE TextInputs:
-	pfid: integer references ProfileFields.pfid
-	tid: integer PRIMARY AUTOINCREMENT
-	size: character varying(16) {tiny small medium large}
-	placeholder: character varying(128)
-
-TABLE TextAreas:
-	pfid: integer references ProfileFields.pfid
-	tid: integer PRIMARY AUTOINCREMENT
-	size: character varying(16) {tiny small medium large}
-	placeholder: character varying(128)
-
-/*
-TABLE Dropdowns:
-	pfid: integer references ProfileFields.pfid
-	did: integer PRIMARY AUTOINCREMENT
-	options: character varying(256)
-*/
-
-TABLE Pages:
-	eid: integer references Experiments.eid
-	pid: integer PRIMARY AUTOINCREMENT
-	order: integer
-	template: integer #{Form maker[0],Text-only,[1],Comparison Stimulus[2]}
-	row: integer #only significant if template is text and images
-	column: integer #only significant if template is text and images
-
-TABLE Questions:
-	pid: integer references Page.pid
-	qid: integer PRIMARY AUTOINCREMENT
-	label: character varying(256)
-	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
-	x_pos: double precision
-	y_pos: double precision
-
-TABLE OptionGroups:
-	qid: integer references Questions.qid
-	ogid: integer PRIMARY AUTOINCREMENT
-	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
-	x_pos: double precision
-	y_pos: double precision
-
-TABLE Options:
-	ogid: integer references OptionGroups.ogid
-	oid: integer PRIMARY AUTOINCREMENT
-	label: character varying(32)
-
-TABLE Respondents:
-	rid: int(11) PRIMARY AUTOINCREMENT
-	eid: integer references Experiments.eid
-	since: date
-	duration: time
-
-	#OPTIONAL FIELDS:
-	first_name: character varying(32)
-	middle_name: character varying(32)
-	last_name: character varying(32)
-	email_ad: character varying(32)
-	age: integer
-	street_addr: character varying(64)
-	barangay_addr: character varying(64)
-	city_addr: character varying(64)
-	nationality: character varying(32)
-	birthdate: date
-	sex: boolean #{MALE[false],FEMALE[true]}
-	gender: character varying(32)
-	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
-
-TABLE Responses:
-	rid: integer references Respondents.rid
-	ans_id: integer PRIMARY AUTOINCREMENT
-	qid: integer references Questions.qid
-	oid: integer references Options.oid
-	free_answer: character varying
-	duration: time
-
 TABLE advise:
 	fid: integer references Faculty.fid
 	status: boolean #{Faculty
@@ -163,3 +80,80 @@ TABLE graduates_member_of:
 	labid: references Laboratories.labid
 	since: date
 	status: boolean #{LabHead confirmed[true],not confirmed[false]}
+
+#End of Primary Entities
+
+#Form Maker
+TABLE ProfileFields:
+	eid: integer references Experiments.eid
+	pfid: integer PRIMARY AUTOINCREMENT
+	name: character varying(128) #item name
+	label: character varying(256) #actual text
+	type: character varying(64) #{text-input,text-area,dropdown,radio-button,checkboxes}
+	helper: character varying(64)
+
+TABLE TextInputs:
+	pfid: integer references ProfileFields.pfid
+	tid: integer PRIMARY AUTOINCREMENT
+	size: character varying(16) {tiny small medium large}
+	placeholder: character varying(128)
+
+TABLE TextAreas:
+	pfid: integer references ProfileFields.pfid
+	tid: integer PRIMARY AUTOINCREMENT
+	size: character varying(16) {tiny small medium large}
+	placeholder: character varying(128)
+
+/*
+TABLE Dropdowns:
+	pfid: integer references ProfileFields.pfid
+	did: integer PRIMARY AUTOINCREMENT
+	options: character varying(256)
+*/
+#End of Form Maker
+
+#Experiment Builder
+TABLE Pages:
+	eid: integer references Experiments.eid
+	pid: integer PRIMARY AUTOINCREMENT
+	order: integer
+	template: integer #{Form maker[0],Text-only,[1],Comparison Stimulus[2]}
+	row: integer #only significant if template is text and images
+	column: integer #only significant if template is text and images
+
+TABLE Questions:
+	pid: integer references Page.pid
+	qid: integer PRIMARY AUTOINCREMENT
+	label: character varying(256)
+	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
+	x_pos: double precision
+	y_pos: double precision
+
+TABLE OptionGroups:
+	qid: integer references Questions.qid
+	ogid: integer PRIMARY AUTOINCREMENT
+	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
+	x_pos: double precision
+	y_pos: double precision
+
+TABLE Options:
+	ogid: integer references OptionGroups.ogid
+	oid: integer PRIMARY AUTOINCREMENT
+	label: character varying(32)
+#End of Experiment Builder
+
+#Respondents
+TABLE Respondents:
+	rid: int(11) PRIMARY AUTOINCREMENT
+	eid: integer references Experiments.eid
+	since: date
+	duration: time
+
+TABLE Responses:
+	rid: integer references Respondents.rid
+	ans_id: integer PRIMARY AUTOINCREMENT
+	qid: integer references Questions.qid
+	oid: integer references Options.oid
+	free_answer: character varying
+	duration: time
+#End of Respondents

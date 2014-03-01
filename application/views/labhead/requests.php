@@ -25,8 +25,8 @@
 				<td> <?php echo $request->username; ?> </td>
 				<td> <?php echo $request->faculty_num; ?> </td>
 				<td> <?php echo $request->since; ?> </td>
-				<td><a class = "button tiny" href = "<?php echo site_url('labhead/confirm_faculty'.$request->labid.'/'.$request->fid); ?>"> Confirm </a></td>
-				<td><a class = "button tiny" href = "<?php echo site_url('labhead/reject_faculty/'.$request->fid); ?>"> Reject </a></td>
+				<td><a class = "button tiny" href = "<?php echo site_url('labhead/confirm_faculty/'.$request->labid.'/'.$request->fid); ?>"> Confirm </a></td>
+				<td><a class = "button tiny" href = "<?php echo site_url('labhead/reject_faculty/'.$request->labid.'/'.$request->fid); ?>"> Reject </a></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>

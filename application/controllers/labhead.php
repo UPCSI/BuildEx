@@ -96,7 +96,6 @@ class Labhead extends MY_Controller{
 	public function reject_faculty($labid = 0,$fid=0){
 		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
 		$labid = $query->labid;
-
 		$status = $this->laboratories_model->reject_faculty($labid,$fid);
 		if($status){
 			$msg = "You have successfully rejected a faculty member from your lab.";

@@ -114,6 +114,7 @@ class Admin extends MY_Controller{
 				$labid = $this->laboratories_model->add_laboratory($laboratory_info,$lab_head_info);
 				$this->laboratories_model->request_faculty_lab($labid,$faculty->fid);
 				$this->laboratories_model->accept_faculty($labid,$faculty->fid);
+				$this->laboratories_model->increment_member_count($labid);
 				$msg = 'You have successfully created a laboratory!';				
 			}
 			else{

@@ -116,10 +116,9 @@ class Faculty extends MY_Controller{
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/my_laboratory';
 		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
-		$labid = $data['main_lab']->labid;
-		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 		if(isset($data['main_lab'])){
 			$labid = $data['main_lab']->labid;
+			$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
 			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 		}
