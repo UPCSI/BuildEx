@@ -29,11 +29,12 @@ class Builder extends MY_Controller{
 
 		$data['main_content'] = 'experiment/add_experiment_form';
 		$this->load->view('_main_layout', $data);
-
 	}
 
 	public function save() {
 		$message = $this->input->post('msg');
+		// echo json_encode("hello");
+
 		if ($message == 'false')
 			return;
 
@@ -50,8 +51,8 @@ class Builder extends MY_Controller{
 			$group['qid'] = $this->add_form($form);
 		}
 
-		// $data['main_content'] = 'experiment/test';
-		// $this->load->view('_main_layout', $data);
+		$data['main_content'] = 'experiment/test';
+		$this->load->view('_main_layout', $data);
 	}
 
 	public function delete($eid){

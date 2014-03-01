@@ -39,9 +39,6 @@ class Builder_model extends MY_Model{
 	}
 
 	function add_form($data){
-		$this->db->where('pid', $data['pid']);
-		$this->db->delete('Questions');
-
 		$this->db->insert('Questions',$data);
 		return $this->db->insert_id();
 	}
