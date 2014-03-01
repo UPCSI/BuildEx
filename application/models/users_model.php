@@ -219,4 +219,20 @@ class Users_model extends MY_Model{
 		$q = $this->db->get('Users');
 		return $this->query_row_conversion($q);
 	}
+
+	public function switch_roles($role){
+		$this->session->set_userdata(array('active_role' => $role));
+		if($role == 'admin')
+			$id = $this->session->userdata('aid');
+		else if($role == 'labhead')
+			$id = $this->session->userdata('lid');
+		else if($role == 'faculty')
+			$id = $this->session->userdata('fid');
+		else if ($role == 'graduate')
+			$id = $this->session->userdata('gid');
+
+		$this->session->set_userdata(array('active_id' => $id));
+	}
+
+
 }
