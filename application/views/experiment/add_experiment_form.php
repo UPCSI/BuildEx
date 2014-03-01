@@ -18,41 +18,43 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black" ></div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black">Question</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
 				
 				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
-		        	drag: function(){
-			            var offset1 = $(this).offset();
-			            var xPos1 = offset1.left;
-			            var yPos1 = offset1.top;
-			            var element = $(this).attr('id');
-			            //substring depends on the length of id string
-			            var number = element.substring(3);
-			            $('#pos'+number+'X').text('x: ' + xPos1);
-			            $('#pos'+number+'Y').text('y: ' + yPos1);
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })
+			    .resizable({
+			    	containment: "#workspace"
+			    })
+			    .click(function(){
+			        if ( $(this).is('.ui-draggable-dragging') ) {
+			            return;
 			        }
-	        })
-		    .resizable()
-		    .click(function(){
-		        if ( $(this).is('.ui-draggable-dragging') ) {
-		            return;
-		        }
-		        $(this).draggable( "option", "disabled", true );
-		        $(this).attr('contenteditable','true');
-		    })
-		    .blur(function(){
-		        $(this).draggable( 'option', 'disabled', false);
-		        $(this).attr('contenteditable','false');
-		    });
-		    $('a.delete').on('click',function(e){
-		        e.preventDefault();
-		        qtnD = $(this).closest('.draggable')[0].id;
-		        //alert('Now deleting "'+qtnID+'"');
-		        $('#'+qtnID+'').remove();
-		    });
+			        $(this).draggable( "option", "disabled", true );
+			        $(this).attr('contenteditable','true');
+			    })
+			    .blur(function(){
+			        $(this).draggable( 'option', 'disabled', false);
+			        $(this).attr('contenteditable','false');
+			    });
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        qtnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+qtnID+'"');
+			        $('#'+qtnID+'').remove();
+			    });
 	        $.count++;
 	    });
 
@@ -69,24 +71,26 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black" ></div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
+				htmlData += '><a href="#" class="delete"></a><div id="editable'+$.count+'" class="editable" style="color:black">Text Input</div><div id="pos'+$.count+'X"></div><div id="pos'+$.count+'Y"></div></div>';
 				
 				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
-		        	drag: function(){
-			            var offset1 = $(this).offset();
-			            var xPos1 = offset1.left;
-			            var yPos1 = offset1.top;
-			            var element = $(this).attr('id');
-			            //substring depends on the length of id string
-			            var number = element.substring(3);
-			            $('#pos'+number+'X').text('x: ' + xPos1);
-			            $('#pos'+number+'Y').text('y: ' + yPos1);
-			        }
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
 	        })
-		    .resizable()
+		    .resizable({
+		    	containment: "#workspace"
+		    })
 		    .click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
@@ -120,25 +124,27 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">move me, resize me</button><a href="#" class="delete" style="z-index:999"></a></div>';
+				htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">Button</button><a href="#" class="delete" style="z-index:999"></a></div>';
 				
 				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
 		        	cancel: false,
-		        	drag: function(){
-			            var offset1 = $(this).offset();
-			            var xPos1 = offset1.left;
-			            var yPos1 = offset1.top;
-			            var element = $(this).attr('id');
-			            //substring depends on the length of id string
-			            var number = element.substring(3);
-			            $('#pos'+number+'X').text('x: ' + xPos1);
-			            $('#pos'+number+'Y').text('y: ' + yPos1);
-			        }
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
 	        })
-		    .resizable()
+		    .resizable({
+		    	// containment: "#workspace"
+		    })
 		    .click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
@@ -315,12 +321,13 @@
 	</div>
 
 	<!-- Workspace -->
-	<div id="workspace" class="large-9 column" style="height:500px; background:black;">
-		<div style="color:white">
+	<div class="large-9 column" style="height:500px; background:#f7f7f7;">
+		<div>
 			<p>Workspace</p>
 		</div>
-		<div class='demo'></div>
-    
+		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
+		<!--div class='demo'></div-->
+    	</div>
 		<!-- <div id="d">
 			Text to edit
 		</div> -->

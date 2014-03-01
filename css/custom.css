@@ -506,3 +506,27 @@ div.tabs-content.elements {
   font-style:italic;
 }
 */
+
+#ParentDIV {
+    width: 500px;
+    height: 200px;
+    margin: 20px auto;
+    background: green;
+    position: relative;
+}
+.dragClass {
+    font-family: Tahoma, sans;
+    color: black;
+    background: orange;
+    border: 1px solid orange;
+    width: 100px;
+    height: 100px;
+    padding: 6px;
+    position: absolute;
+}
+p {
+    margin: 0; padding: 0;
+}
+.ui-resizable-helper {
+    border: 2px dotted #00F;
+}

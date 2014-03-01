@@ -109,6 +109,20 @@ textarea {
 select {
   width: 100%; }
 
+.column,
+.columns {
+  position: relative;
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+  width: 100%;
+  float: left; }
+
+
+
+
+
+
+
 .row {
   width: 100%;
   margin-left: auto;
@@ -154,14 +168,6 @@ select {
         display: table; }
       .row .row.collapse:after {
         clear: both; }
-
-.column,
-.columns {
-  position: relative;
-  padding-left: 0.9375rem;
-  padding-right: 0.9375rem;
-  width: 100%;
-  float: left; }
 
 @media only screen {
   .small-push-1 {
@@ -969,6 +975,17 @@ select {
   .column.large-uncentered.opposite,
   .columns.large-uncentered.opposite {
     float: right !important; } }
+
+
+
+
+
+
+
+
+
+
+
 @media only screen and (min-width: 90.063em) {
   .xlarge-push-1 {
     position: relative;

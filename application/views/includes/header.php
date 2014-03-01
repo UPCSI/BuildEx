@@ -16,12 +16,4 @@
 <script src="<?php echo site_url('js/jquery.js'); ?>"></script>
 <script src="<?php echo site_url('js/jquery-ui.js'); ?>"></script>
 
-<style>
-  #draggable { width: 150px; height: 150px; padding: 0.5em; }
-</style>
-<script>
-//   $(function() {
-//     $( "#draggable" ).draggable();
-//   });
-</script>
 </head>
