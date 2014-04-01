@@ -12,8 +12,8 @@
 
 				var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content ui-draggable" ' + 'data-page="' + $.page + '" ';
 				if (posX != null && posY != null){
-					alert('x' + posX);
-					alert('y' + posY);
+					// alert('x' + posX);
+					// alert('y' + posY);
 					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
 				}
 				
@@ -191,7 +191,7 @@
 		   		},
 		   		dataType: 'json',
 		   		complete: function(data) {
-		   			//alert("success");
+		   			// alert("Saved Successfully!");
 		   			//alert(data[0][0]);
 		   			//alert(data.responseText);
 		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
