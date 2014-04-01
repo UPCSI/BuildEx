@@ -124,7 +124,7 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">Button</button><a href="#" class="delete" style="z-index:999"></a></div>';
+				htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">Button</button><a href="#" class="delete"></a></div>';
 				
 				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
@@ -141,30 +141,111 @@
 			        //     $('#pos'+number+'X').text('x: ' + xPos1);
 			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
 			        // }
-	        })
-		    .resizable({
-		    	// containment: "#workspace"
-		    })
-		    .click(function(){
-		        if ( $(this).is('.ui-draggable-dragging') ) {
-		            return;
-		        }
-		        $(this).draggable( "option", "disabled", true );
-		        $(this).attr('contenteditable','true');
-		    })
-		    .blur(function(){
-		        $(this).draggable( 'option', 'disabled', false);
-		        $(this).attr('contenteditable','false');
-		    });
-		    $('a.delete').on('click',function(e){
-		        e.preventDefault();
-		        btnID = $(this).closest('.draggable')[0].id;
-		        //alert('Now deleting "'+objID+'"');
-		        $('#'+btnID+'').remove();
-		    });
-		    
-	        $.count++;
+		        })
+			    .resizable({
+			    	containment: "#workspace"
+			    })
+			    .click(function(){
+			        if ( $(this).is('.ui-draggable-dragging') ) {
+			            return;
+			        }
+			        $(this).draggable( "option", "disabled", true );
+			        $(this).attr('contenteditable','true');
+			    })
+			    .blur(function(){
+			        $(this).draggable( 'option', 'disabled', false);
+			        $(this).attr('contenteditable','false');
+			    });
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+			    
+		        $.count++;
 	    });
+	
+		$('#radiobutton')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += 'style="height:25px; width:100px;"><input type="radio" id="radeditable'+$.count+'" value="Placeholder">Placeholder<a href="#" class="delete"></a></div>';
+				
+				$('.demo').append(htmlData);	
+		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	snap: '.radiosnap'
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })
+			    //.resizable({
+			    	// containment: "#workspace"
+			    //})
+			    .click(function(){
+			        if ( $(this).is('.ui-draggable-dragging') ) {
+			            return;
+			        }
+			        $(this).draggable( "option", "disabled", true );
+			        $(this).attr('contenteditable','true');
+			    })
+			    .blur(function(){
+			        $(this).draggable( 'option', 'disabled', false);
+			        $(this).attr('contenteditable','false');
+			    });
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+			    
+		        $.count++;
+	    });
+
+		// $('#button')
+	 //    	.click(function(eventClick, posX, posY){
+		//     	posX = typeof posX !== 'undefined' ? posX : null;
+		// 		posY = typeof posY !== 'undefined' ? posY : null;
+
+		// 		var htmlData='<div id="btn'+$.count+'"';
+
+		// 		htmlData += '><button id="editable'+$.count+'" style="width:50px; height:200px margin-bottom:0px">move me, resize me</button></div>';
+				
+		// 		$('.demo').append(htmlData);
+		// 		$('#btn2').resizable({grid: 10})
+		// 		.draggable({cancel:false, grid: [ 10,10 ] });
+		// 		$('#editable2').click(function(){
+		// 		    if ( $(this).is('.ui-draggable-dragging') ) {
+		// 		    return;
+		// 		    }
+		// 		    $(this).draggable( "option", "disabled", true);
+		// 		    $(this).attr('contentEditable',true);
+		// 	    })
+		// 	    .blur(function(){
+		// 		    $(this).draggable( 'option', 'disabled', false);
+		// 		    $(this).attr('contentEditable',false);
+		// 		})
+	 //    });
 
 	    $("#getObjectValues").click(function () {
 	    	//collect all question object
@@ -296,7 +377,19 @@
 			}
 		});
 	});    
-		
+	// $(function() {
+
+	//     $('#bt1').on('click', function() {
+	//         $(this).attr('contentEditable', true); 
+	//     });
+	//     $('#bt1').on('blur', function() {
+	//         $(this).attr('contentEditable', false); 
+	//     });
+	//     $('#bt1').draggable({
+	//     	cancel:false,
+	//     	delay:300
+	//     });
+	// });
 
 </script>
 <div id="builder" class="row full">
@@ -314,6 +407,7 @@
 		<a id="question"class = "button small">Create Question</a>
 		<a id="textinput"class = "button small">Create Text Input</a>
 		<a id="button"class = "button small">Create Button</a>
+		<a id="radiobutton"class = "button small">Create Radio Button</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 		<a id="prevPage"class = "button small">Previous Page</a>
 		<a id="nextPage"class = "button small">Next Page</a>
