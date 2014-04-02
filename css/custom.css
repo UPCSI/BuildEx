@@ -1,15 +1,15 @@
 /*default version*/
 @font-face {
-    font-family: 'Din';
+    font-family: 'Nexa';
     src: 
-        url('../fonts/DINPro-Light.ttf') 
+        url('../fonts/Nexa Light.otf') 
         format('opentype');
 }
 /*bold version*/
 @font-face {
-    font-family: 'Din';
+    font-family: 'Nexa';
     src: 
-        url('../fonts/DINPro-Medium.ttf') 
+        url('../fonts/Nexa Bold.otf') 
         format('opentype');
     font-weight: bold;
 }
@@ -28,7 +28,7 @@ div.unmar-v {
 }
 
 h1, h2, h3, h4, h5, h6, p, a, li {
-  font-family: 'Din' !important;
+  font-family: 'Nexa' !important;
 }
 
 /* sizing */
@@ -529,4 +529,16 @@ p {
 }
 .ui-resizable-helper {
     border: 2px dotted #00F;
+}
+}
+
+div.panel.dash-item {
+    background-color:#1f1f1f !important;
+}
+
+div.panel.dash-item > h1, div.panel.dash-item > p {
+    color:#fff;
+}
+body.internal {
+    background-color: #3E3E3E;
 }
