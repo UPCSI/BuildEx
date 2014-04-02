@@ -1,6 +1,54 @@
 <h2>BuildEx: Experiment</h2>
 <? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
+
+
+<div id="builder" class="row full">
+	
+	<!-- Toolbar -->
+	<div id="pane" class="large-3 column" style="height:500px; background:gray">
+		<div style="color:white">
+			<p>Toolbar</p>
+		</div>
+		<!-- 
+		<div id="draggable" class="ui-widget-content">
+		  <p>Object</p>
+		</div> 
+		-->
+		<a id="question"class = "button small">Create Question</a>
+		<a id="textinput"class = "button small">Create Text Input</a>
+		<a id="button"class = "button small">Create Button</a>
+		<a id="radiobutton"class = "button small">Create Radio Button</a>
+		<a id="checkbox"class = "button small">Create Check Box</a>
+		<a id="dropdown"class = "button small">Create Dropdown</a>
+		<a id="slider"class = "button small">Create Slider</a>
+		<a id="getObjectValues"class = "button small">Save Environment</a>
+		<a id="prevPage"class = "button small">Previous Page</a>
+		<a id="nextPage"class = "button small">Next Page</a>
+		<a id="newPage"class = "button small">New Page</a>
+	</div>
+
+	<!-- Workspace -->
+	<div class="large-9 column" style="height:500px; background:#f7f7f7;">
+		<div>
+			<p>Workspace</p>
+		</div>
+		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
+		<!--div class='demo'></div-->
+		<h2>Range</h2>
+  		<input id="pak" type="text" data-slider="true" data-slider-range="10,1000">
+  		<span class="output"></span>
+    	</div>
+    	
+	</div>	
+	
+</div>
 <script>
+// $("[data-slider]")
+//     .bind("slider:ready slider:changed", function (event, data) {
+//       $(this)
+//         .nextAll(".output:first")
+//           .html(data.value.toFixed(3));
+//     });
 	$.count = 1;
 	$.page = 1;
 	$.current_page = 1;
@@ -365,6 +413,63 @@
 		        $.count++;
 	    });
 
+		$('#slider')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += 'style="height:25px; width:360px"><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
+
+				var temp = $.count
+				$('.demo').append(htmlData);	
+				$('#movingslider'+temp).simpleSlider();
+				$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
+				$('#movingslider'+temp)
+				    .bind("slider:ready slider:changed", function (event, data) {
+
+				    	var a = $(this).data('slider-range').split(',');
+				    	var base = 0;
+				    	if(data.value.toFixed(3) == 0){
+				    		base = parseInt(a[0]);
+				    	}
+				    	else{
+				    		base = data.value.toFixed(3) * parseInt(a[1]);
+				    	}
+				      	$(this).nextAll(".output:first").html(base);
+				    });
+		        $('#sldr'+temp).draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })	    
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+			    
+		        $.count++;
+	    });
+		
 		// $('#button')
 	 //    	.click(function(eventClick, posX, posY){
 		//     	posX = typeof posX !== 'undefined' ? posX : null;
@@ -519,8 +624,7 @@
 				}
 			}
 		});
-
-
+		
 		
 	});    
 	// $(function() {
@@ -538,43 +642,6 @@
 	// });
 	
 </script>
-
-<div id="builder" class="row full">
-	
-	<!-- Toolbar -->
-	<div id="pane" class="large-3 column" style="height:500px; background:gray">
-		<div style="color:white">
-			<p>Toolbar</p>
-		</div>
-		<!-- 
-		<div id="draggable" class="ui-widget-content">
-		  <p>Object</p>
-		</div> 
-		-->
-		<a id="question"class = "button small">Create Question</a>
-		<a id="textinput"class = "button small">Create Text Input</a>
-		<a id="button"class = "button small">Create Button</a>
-		<a id="radiobutton"class = "button small">Create Radio Button</a>
-		<a id="checkbox"class = "button small">Create Check Box</a>
-		<a id="dropdown"class = "button small">Create Dropdown</a>
-		<a id="getObjectValues"class = "button small">Save Environment</a>
-		<a id="prevPage"class = "button small">Previous Page</a>
-		<a id="nextPage"class = "button small">Next Page</a>
-		<a id="newPage"class = "button small">New Page</a>
-	</div>
-
-	<!-- Workspace -->
-	<div class="large-9 column" style="height:500px; background:#f7f7f7;">
-		<div>
-			<p>Workspace</p>
-		</div>
-		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
-		<!--div class='demo'></div-->
-    	</div>
-	</div>	
-	
-</div>
-
 <? 
 	if(isset($var)){
 		foreach ($var as $obj){
