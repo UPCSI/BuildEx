@@ -278,6 +278,99 @@
 		        $.count++;
 	    });
 
+		$('#dropdown')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += 'style="height:40px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px;"> <option value="add">Add</option> <option value="sample" selected="selected">dropdown</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
+				
+
+				$('.demo').append(htmlData);	
+		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	handle: "input",
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })
+			    //.resizable({
+			    	// containment: "#workspace"
+			    //})
+			    .click(function(){
+			        if ( $(this).is('.ui-draggable-dragging') ) {
+			            return;
+			        }
+			        $(this).draggable( "option", "disabled", true );
+			        $(this).attr('contenteditable','true');
+			    })
+			    .blur(function(){
+			        $(this).draggable( 'option', 'disabled', false);
+			        $(this).attr('contenteditable','false');
+			    });
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+
+			    var temp = $.count;
+			    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+
+				$('#drpeditable'+temp).on('change', function(){
+				    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+				});
+
+				function edit(){
+				    $('#drpeditable'+temp+' option:selected').text($('#drpinput'+temp).val());
+				    $('#drpeditable'+temp+' option:selected').val($('#drpinput'+temp).val());
+				}
+
+				$('#drpinput'+temp).on('keyup', function(e){
+				    if($('#drpeditable'+temp+' option:selected').val() != 'add'){
+				        edit();
+				    } else {
+				        var code = e.keyCode || e.which;
+				        if (code == 13){
+				            var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
+				            $('#drpeditable'+temp).append(str);
+				            $('#drpeditable'+temp+' :last').attr("selected", "selected");
+				        }
+				    };
+				});
+
+				$('#drpinput'+temp).on('focus', function(e){
+				    if($('#drpeditable'+temp+' option:selected').val() == 'add'){
+				         $('#drpinput'+temp).val('');
+				        var code = e.keyCode || e.which;
+				        if (code == 13){
+				            var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
+				            $('#drpeditable'+temp).append(str);
+				            $('#drpeditable'+temp+' :last').attr("selected", "selected");
+				        }
+				    };
+				});
+		        $.count++;
+	    });
+
 		// $('#button')
 	 //    	.click(function(eventClick, posX, posY){
 		//     	posX = typeof posX !== 'undefined' ? posX : null;
@@ -432,6 +525,9 @@
 				}
 			}
 		});
+
+
+		
 	});    
 	// $(function() {
 
@@ -446,8 +542,9 @@
 	//     	delay:300
 	//     });
 	// });
-
+	
 </script>
+
 <div id="builder" class="row full">
 	
 	<!-- Toolbar -->
@@ -465,6 +562,7 @@
 		<a id="button"class = "button small">Create Button</a>
 		<a id="radiobutton"class = "button small">Create Radio Button</a>
 		<a id="checkbox"class = "button small">Create Check Box</a>
+		<a id="dropdown"class = "button small">Create Dropdown</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 		<a id="prevPage"class = "button small">Previous Page</a>
 		<a id="nextPage"class = "button small">Next Page</a>
@@ -479,10 +577,25 @@
 		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
 		<!--div class='demo'></div-->
     	</div>
-		<!-- <div id="d">
-			Text to edit
-		</div> -->
-	</div>
+    	<!-- <select id="s1" style="position:absolute; width:160px; height:23px;left:0; top:0; border:0;">
+            <option value="0">Addnew</option>
+            <option value="100" selected="selected" >100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="400">400</option>
+        </select>
+        <input id="drp" type="text" name="" value="" style="position:absolute; width:140px; height:23px; left:0; top:0;">
+
+        <select id="s" style="position:absolute; width:160px; height:23px;left:100; top:100; border:0;">
+            <option value="00">Addnew</option>
+            <option value="1000" selected="selected" >1000</option>
+            <option value="2000">2000</option>
+            <option value="3000">3000</option>
+            <option value="4000">4000</option>
+        </select>
+        <input id="drp1" type="text" name="" value="" style="position:absolute; width:140px; height:23px; left:100; top:100;"> -->
+	</div>	
+	
 </div>
 
 <? 
