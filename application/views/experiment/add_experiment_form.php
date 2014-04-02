@@ -179,7 +179,7 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += 'style="height:25px; width:100px;"><input type="radio" id="radeditable'+$.count+'" value="Placeholder">Placeholder<a href="#" class="delete"></a></div>';
+				htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name='+$.page+'value="radiobutton">Radio Button<a href="#" class="delete"></a></div>';
 				
 				$('.demo').append(htmlData);	
 		        $('.draggable').draggable({
@@ -187,6 +187,62 @@
 		        	scroll: false,
 		        	cancel: false,
 		        	snap: '.radiosnap'
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })
+			    //.resizable({
+			    	// containment: "#workspace"
+			    //})
+			    .click(function(){
+			        if ( $(this).is('.ui-draggable-dragging') ) {
+			            return;
+			        }
+			        $(this).draggable( "option", "disabled", true );
+			        $(this).attr('contenteditable','true');
+			    })
+			    .blur(function(){
+			        $(this).draggable( 'option', 'disabled', false);
+			        $(this).attr('contenteditable','false');
+			    });
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+			    
+		        $.count++;
+	    });
+
+		$('#checkbox')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+				if (posX != null && posY != null){
+					alert('x' + posX);
+					alert('y' + posY);
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += 'style="height:25px; width:120px;"><input type="checkbox" id="chkeditable'+$.count+'" name='+$.page+'value="checkbox">Check Box<a href="#" class="delete"></a></div>';
+				
+				$('.demo').append(htmlData);	
+		        $('.draggable').draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	snap: '.checksnap'
 		        	// drag: function(){
 			        //     var offset1 = $(this).offset();
 			        //     var xPos1 = offset1.left;
@@ -408,6 +464,7 @@
 		<a id="textinput"class = "button small">Create Text Input</a>
 		<a id="button"class = "button small">Create Button</a>
 		<a id="radiobutton"class = "button small">Create Radio Button</a>
+		<a id="checkbox"class = "button small">Create Check Box</a>
 		<a id="getObjectValues"class = "button small">Save Environment</a>
 		<a id="prevPage"class = "button small">Previous Page</a>
 		<a id="nextPage"class = "button small">Next Page</a>
