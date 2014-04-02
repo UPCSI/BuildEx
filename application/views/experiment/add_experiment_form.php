@@ -291,7 +291,7 @@
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += 'style="height:40px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px;"> <option value="add">Add</option> <option value="sample" selected="selected">dropdown</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
+				htmlData += 'style="height:25px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px;"> <option value="addoption">Add Option</option> <option value="sample" selected="selected">dropdown</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
 				
 
 				$('.demo').append(htmlData);	
@@ -299,7 +299,6 @@
 		        	containment: "#workspace",
 		        	scroll: false,
 		        	cancel: false,
-		        	handle: "input",
 		        	// drag: function(){
 			        //     var offset1 = $(this).offset();
 			        //     var xPos1 = offset1.left;
@@ -311,20 +310,11 @@
 			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
 			        // }
 		        })
-			    //.resizable({
-			    	// containment: "#workspace"
-			    //})
 			    .click(function(){
-			        if ( $(this).is('.ui-draggable-dragging') ) {
-			            return;
-			        }
 			        $(this).draggable( "option", "disabled", true );
 			        $(this).attr('contenteditable','true');
-			    })
-			    .blur(function(){
-			        $(this).draggable( 'option', 'disabled', false);
-			        $(this).attr('contenteditable','false');
 			    });
+			    
 			    $('a.delete').on('click',function(e){
 			        e.preventDefault();
 			        btnID = $(this).closest('.draggable')[0].id;
@@ -335,8 +325,18 @@
 			    var temp = $.count;
 			    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
 
+			    $('#drpinput'+temp).blur(function(){
+			    	//alert('1');
+			        $('.draggable').draggable( 'option', 'disabled', false);
+			        $('.draggable').attr('contenteditable','false');
+			    });
+
 				$('#drpeditable'+temp).on('change', function(){
-				    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+					if($('#drpeditable'+temp+' option:selected').val() == 'addoption'){
+						$('#drpinput'+temp).val('');
+					}else{
+						$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+					}
 				});
 
 				function edit(){
@@ -345,28 +345,21 @@
 				}
 
 				$('#drpinput'+temp).on('keyup', function(e){
-				    if($('#drpeditable'+temp+' option:selected').val() != 'add'){
+				    if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() != ""){
 				        edit();
-				    } else {
-				        var code = e.keyCode || e.which;
-				        if (code == 13){
-				            var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
-				            $('#drpeditable'+temp).append(str);
-				            $('#drpeditable'+temp+' :last').attr("selected", "selected");
-				        }
-				    };
+				    }
 				});
 
-				$('#drpinput'+temp).on('focus', function(e){
-				    if($('#drpeditable'+temp+' option:selected').val() == 'add'){
-				         $('#drpinput'+temp).val('');
-				        var code = e.keyCode || e.which;
-				        if (code == 13){
-				            var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
-				            $('#drpeditable'+temp).append(str);
-				            $('#drpeditable'+temp+' :last').attr("selected", "selected");
-				        }
-				    };
+
+				$('#drpinput'+temp).blur(function(){
+					if($('#drpeditable'+temp+' option:selected').val() == 'addoption' && $('#drpinput'+temp).val() != ""){
+						var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
+			            $('#drpeditable'+temp).append(str);
+			            $('#drpeditable'+temp+' :last').attr("selected", "selected");
+					}
+					else if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() == ""){
+				    	$('#drpeditable'+temp+' option:selected').remove();
+				    }
 				});
 		        $.count++;
 	    });
