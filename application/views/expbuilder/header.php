@@ -8,10 +8,14 @@
 <!-- wow much CSS -->
 <link rel="stylesheet" href="<?php echo site_url('css/normalize.css'); ?>">
 <link rel="stylesheet" href="<?php echo site_url('css/foundation.css'); ?>">
+<link rel="stylesheet" href="<?php echo site_url('css/jquery-ui.css'); ?>">
 <link rel="stylesheet" href="<?php echo site_url('css/custom.css'); ?>">
 
 <!-- wow much JS -->
-<script src="<?php echo site_url('js/vendor/modernizr.js'); ?>"></script>
+<script src="<?php echo site_url('js/modernizr.js'); ?>"></script>
+<script src="<?php echo site_url('js/jquery.js'); ?>"></script>
+<script src="<?php echo site_url('js/builder.js'); ?>"></script>
 </head>
 
 <body>
+	
