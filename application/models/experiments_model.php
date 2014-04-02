@@ -87,6 +87,7 @@ class Experiments_model extends MY_Model{
 		*/
 		$this->db->select('*');
 		$this->db->where('url',$url);
+		$this->db->where('is_published','t');
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}

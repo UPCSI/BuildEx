@@ -45,7 +45,7 @@ TABLE Experiments:
 	description: character varying(256)
 	target_count: integer
 	current_count: integer
-	status: boolean #{COMtextinputPLETE[true],ONGOING[false]}
+	status: boolean #{COMPLETE[true],ONGOING[false]}
 	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
 	url: character varying(128)
 
