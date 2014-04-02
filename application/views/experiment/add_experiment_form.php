@@ -24,6 +24,7 @@
 		        $('.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
+		        	snap: false,
 		        	// drag: function(){
 			        //     var offset1 = $(this).offset();
 			        //     var xPos1 = offset1.left;
@@ -182,7 +183,7 @@
 				htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name='+$.page+'value="radiobutton">Radio Button<a href="#" class="delete"></a></div>';
 				
 				$('.demo').append(htmlData);	
-		        $('.draggable').draggable({
+		        $('.radiosnap.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
 		        	cancel: false,
@@ -238,7 +239,7 @@
 				htmlData += 'style="height:25px; width:120px;"><input type="checkbox" id="chkeditable'+$.count+'" name='+$.page+'value="checkbox">Check Box<a href="#" class="delete"></a></div>';
 				
 				$('.demo').append(htmlData);	
-		        $('.draggable').draggable({
+		        $('.checksnap.draggable').draggable({
 		        	containment: "#workspace",
 		        	scroll: false,
 		        	cancel: false,
@@ -570,23 +571,6 @@
 		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
 		<!--div class='demo'></div-->
     	</div>
-    	<!-- <select id="s1" style="position:absolute; width:160px; height:23px;left:0; top:0; border:0;">
-            <option value="0">Addnew</option>
-            <option value="100" selected="selected" >100</option>
-            <option value="200">200</option>
-            <option value="300">300</option>
-            <option value="400">400</option>
-        </select>
-        <input id="drp" type="text" name="" value="" style="position:absolute; width:140px; height:23px; left:0; top:0;">
-
-        <select id="s" style="position:absolute; width:160px; height:23px;left:100; top:100; border:0;">
-            <option value="00">Addnew</option>
-            <option value="1000" selected="selected" >1000</option>
-            <option value="2000">2000</option>
-            <option value="3000">3000</option>
-            <option value="4000">4000</option>
-        </select>
-        <input id="drp1" type="text" name="" value="" style="position:absolute; width:140px; height:23px; left:100; top:100;"> -->
 	</div>	
 	
 </div>
