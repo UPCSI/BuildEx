@@ -10,13 +10,13 @@ $this->load->view('expbuilder/topbar');
 <div class="row full legit" style="min-height:73%;height:73%">
 <div class="large-3 medium-3 small-3 column unmar-v" style="min-height:100%;height:100%;margin-top:10px;margin-bottom:10px;margin-top:0px;
     margin-bottom:0px;">
-<div class="panel callout" style="min-height:100%;height:100%;overflow-y:auto">
+<div class="panel callout" style="min-height:100%;height:100%;overflow-y:auto;">
 <ol>
 <?php $this->load->view('expbuilder/panels'); ?>
 </ol>
 </div>
 </div>
-<div class="large-9 medium-9 small-9 column" style="min-height:100%;height:100%;overflow-y:auto">
+<div class="large-9 medium-9 small-9 column" style="min-height:100%;height:100%;overflow:auto;display:list-item;line-height:initial;text-align:-webkit-center;">
 <?php $this->load->view($main_content); ?>
 </div>
 </div>
