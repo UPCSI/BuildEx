@@ -99,6 +99,12 @@ TABLE Objects:
 	x_pos: double precision
 	y_pos: double precision
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+TABLE OptionGroups:
+=======
+>>>>>>> Stashed changes
 TABLE Questions:
 	oid: integer references Objects.oid
 	qid: integer PRIMARY AUTOINCREMENT
@@ -120,6 +126,24 @@ TABLE Labels:
 TABLE Buttons:
 	oid: integer references Objects.oid
 	button_id: integer PRIMARY AUTOINCREMENT
+<<<<<<< Updated upstream
+=======
+	type: character varying(32) #{'default','question','or anything else na idecide natin na idadagdag'}
+
+	text: character varying(32)
+	size: character varying(8) #button size: #{'tiny','small','big','large'}
+	go_to: integer #page number; optional field; default is next page
+
+TABLE QuestionButtons:
+	button_id: integer references Buttons.buttons_id
+	qbutton_id: integer PRIMARY AUTOINCREMENT
+	qid: integer references Questions.qid
+
+TABLE Buttons:
+	oid: integer references Objects.oid
+	button_id: integer PRIMARY AUTOINCREMENT
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 	qid: integer references Questions.qid
 
 	text: character varying(32)
@@ -153,6 +177,16 @@ TABLE Checkboxes:
 
 	choices: character varying(2048) #format(without the quotes): "choice1,choice2,choice3...choiceN"
 	orientation: character varying(16) #{'vertical','horizontal'}
+
+TABLE Dropdowns:
+	input_id: integer references Inputs.input.id
+	dropdown_id: integer PRIMARY AUTOINCREMENT
+
+	choices: character varying(2048) #format(without the quotes): "choice1,choice2,choice3...choiceN"
+
+TABLE Sliders:
+	input_id: integer references Inputs.input.id
+	slider_id: integer PRIMARY AUTOINCREMENT
 
 #Respondents
 TABLE Respondents:
