@@ -427,11 +427,14 @@ ul {
 
 .editable {
     cursor: auto;
+    width: 100%;
+    height: 100%;
+    word-wrap: break-word;
 }
 
 .draggable {
-    width:100px;
-    height:100px;
+    width:200px;
+    height:40px;
     float:left;
     position:absolute; 
     cursor: move;
