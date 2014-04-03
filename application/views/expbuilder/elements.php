@@ -11,7 +11,7 @@
     <div class="panel elmt"><a id="radiobutton"class = "button small">Create Radio Button</a></div>
     <div class="panel elmt"><a id="checkbox"class = "button small">Create Check Box</a></div>
     <div class="panel elmt"><a id="dropdown"class = "button small">Create Dropdown</a></div>
-    <div class="panel elmt"><p>Blah</p></div>
+    <div class="panel elmt"><a id="slider"class = "button small">Create Slider</a></div>
     <div class="panel elmt"><p>Blah</p></div>
     <div class="panel elmt"><p>Blah</p></div>
     <div class="panel elmt"><p>Blah</p></div>

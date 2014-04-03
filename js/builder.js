@@ -372,6 +372,61 @@ $(function() {
 	        $.count++;
     });
 
+	$('#slider')
+	    	.click(function(eventClick, posX, posY){
+		    	posX = typeof posX !== 'undefined' ? posX : null;
+				posY = typeof posY !== 'undefined' ? posY : null;
+
+				var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
+				if (posX != null && posY != null){
+					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				}
+				
+				// faulty -- contentEditable=true data-ph="My Placeholder String"
+				htmlData += 'style="height:25px; width:360px"><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
+
+				var temp = $.count
+				$('.demo').append(htmlData);	
+				$('#movingslider'+temp).simpleSlider();
+				$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
+				$('#movingslider'+temp)
+				    .bind("slider:ready slider:changed", function (event, data) {
+
+				    	var a = $(this).data('slider-range').split(',');
+				    	var base = 0;
+				    	if(data.value.toFixed(3) == 0){
+				    		base = parseInt(a[0]);
+				    	}
+				    	else{
+				    		base = data.value.toFixed(3) * parseInt(a[1]);
+				    	}
+				      	$(this).nextAll(".output:first").html(base);
+				    });
+		        $('#sldr'+temp).draggable({
+		        	containment: "#workspace",
+		        	scroll: false,
+		        	cancel: false,
+		        	// drag: function(){
+			        //     var offset1 = $(this).offset();
+			        //     var xPos1 = offset1.left;
+			        //     var yPos1 = offset1.top;
+			        //     var element = $(this).attr('id');
+			        //     //substring depends on the length of id string
+			        //     var number = element.substring(3);
+			        //     $('#pos'+number+'X').text('x: ' + xPos1);
+			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+			        // }
+		        })	    
+			    $('a.delete').on('click',function(e){
+			        e.preventDefault();
+			        btnID = $(this).closest('.draggable')[0].id;
+			        //alert('Now deleting "'+objID+'"');
+			        $('#'+btnID+'').remove();
+			    });
+			    
+		        $.count++;
+	    });
+
 /*	$('#button')
     	.click(function(eventClick, posX, posY){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
