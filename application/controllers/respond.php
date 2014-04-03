@@ -74,6 +74,7 @@ class Respond extends CI_Controller{
 	public function exp($slug){
 		/*slide show of the experiment*/
 		$eid = $this->session->userdata('respond_to');
+		$data['slug'] = $slug;
 		$data['exp'] = $this->experiments_model->get_experiment($eid);
 		$data['var'] = $this->get_objects($eid);
 		$data['title'] = "Respond";
@@ -81,21 +82,69 @@ class Respond extends CI_Controller{
 		$this->load->view('respondent/_view_layout', $data);
 	}
 
-	
-	public function leave(){
-		return 0;
+	public function save($slug){
+		//save individual elements
+		$rid = $this->session->userdata('rid');
+		$qid = $this->input->post('qid');
+
+		$info = array('answer' => $this->input->post($qid),
+					'duration' => $this->input->post('time_'.$qid));
+
+		$this->respondents_model->add_response($info,$qid,$rid);
 	}
 
-	public function save(){
-		return 0;
+	public function debrief($slug){
+		/*shows the page after the last one*/
+		/*to debried the user and to confirm his inputs just in case*/
+		$eid = $this->session->userdata('respond_to');
+		$exp = $this->experiments_model->get_experiment($eid);
+		$id = $this->faculty_model->get_faculty_by_experiment($eid);
+		
+		if(is_null($id)){
+			$id = $this->graduates_model->get_graduate_by_experiment($eid);
+			$author = $this->graduates_model->get_graduate_profile($id->gid,null);
+		}
+		else{
+			$author = $this->faculty_model->get_faculty_profile($id->fid,null);
+		}
+
+		$data['experiment'] = $exp->title;
+		$data['description'] = $exp->description;
+		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
+		$data['title'] = 'Respond';
+		$data['main_content'] = 'respondent/debrief';
+		$this->load->view('respondent/_view_layout', $data);
 	}
 
-	public function save_all(){
+	public function submit(){
 		$eid = $this->input->post('eid');
-		/*
-		save the answers here
-		*/
-		echo "Save success!";
+		$this->experiments_model->increment_count($eid);
+		/* last call before exiting */
+
+		/*perform form validations*/ //not priority
+
+		redirect('respond/complete');
+	}
+
+	public function complete(){
+		$this->session->unset_userdata('rid');
+		$this->session->unset_userdata('respond_to');
+		$this->session->unset_userdata('eid');
+
+		$data['title'] = 'Complete';
+		$data['main_content'] = 'respondent/complete';
+		$this->load->view('respondent/_view_layout', $data);
+	}
+
+
+	public function leave(){
+		$this->session->unset_userdata('rid');
+		$this->session->unset_userdata('respond_to');
+		$this->session->unset_userdata('eid');
+
+		$data['title'] = 'Good bye!';
+		$data['main_content'] = 'respondent/leave';
+		$this->load->view('respondent/_view_layout', $data);
 	}
 
 	public function pause(){

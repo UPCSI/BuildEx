@@ -27,6 +27,13 @@ class Respondents_model extends MY_Model{
 		return true;
 	}
 
+	public function add_response($info,$qid,$rid){
+		$info['rid'] = $rid;
+		$info['qid'] = $qid;
+		$this->db->insert('Responses',$info);
+		return $this->db->insert_id();
+	}
+
 	public function get_respondent($rid = 0){
 		$this->db->select('*');
 		$this->db->where('rid',$rid);

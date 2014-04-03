@@ -107,8 +107,8 @@ class Graduates_model extends MY_Model{
 
 	public function get_graduate_by_experiment($eid = 0){
 		$this->db->select('Graduates.*');
-		$this->db->join('graduate_conduct','graduate_conduct.gid = Graduates.gid');
-		$this->db->where('graduate_conduct.eid',$eid);
+		$this->db->join('graduates_conduct','graduates_conduct.gid = Graduates.gid');
+		$this->db->where('graduates_conduct.eid',$eid);
 		$q = $this->db->get('Graduates');
 
 		$res = $this->query_row_conversion($q);
