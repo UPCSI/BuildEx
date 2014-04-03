@@ -2,11 +2,10 @@
 
 class Respondents_model extends MY_Model{
 	public function add_respondent($info,$eid){
+		$info['eid'] = $eid; 
+		$info['since'] = date("Y-m-d H:i:s");
 		$this->db->insert('Respondents',$info);
-		$answer_info['rid'] = $this->db->insert_id();
-		$answer_info['eid'] = $eid;
-		$answer_info['since'] = date("Y-m-d H:i:s");
-		$this->db->insert('answer',$answer_info);
+		return $this->db->insert_id();
 	}
 
 	public function delete_respondent($eid, $rid){

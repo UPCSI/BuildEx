@@ -220,6 +220,29 @@ class Experiments_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
+	public function generate_slug($title,$replace = array(),$delimiter='-'){
+		if(!empty($replace)){
+			$title = str_replace((array)$replace,' ',$title);
+		}
+
+		$clean = iconv('UTF-8', 'ASCII//TRANSLIT', $title);
+		$clean = preg_replace("/[^a-zA-Z0-9\/_|+ -]/", '', $clean);
+		$clean = strtolower(trim($clean,'-'));
+		$clean = preg_replace("/[\/_|+ -]+/", $delimiter, $clean);
+
+		$slug = $clean;
+
+		return $slug;
+
+	}
+
+	private function generate_url($eid,$title){
+		$str = strval($eid).$title;
+		return base64_encode($str);
+	}
+
+	
+
 	public function advise_experiment($fid,$eid){
 		$info['status'] = "true";
 		$this->db->where('fid', $fid);
@@ -318,10 +341,5 @@ class Experiments_model extends MY_Model{
 		$this->db->where('status','f');
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
-	}
-
-	private function generate_url($eid,$title){
-		$str = strval($eid).$title;
-		return base64_encode($str);
 	}
 }

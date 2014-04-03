@@ -85,17 +85,18 @@ class Faculty_model extends MY_Model{
 	public function get_faculty_profile($fid = 0, $username = null){
 		/*
 		* Returns the profile of a particular faculty member 
-		* given its aid or username.
+		* given its fid or username.
 		*/
 		if($fid == 0 && is_null($username)){
 			return false;
 		}
-		$this->db->select('Faculty.*');
+
+		$this->db->select('Faculty.*,Users.*'); //change Users
+		$this->db->join('Users','Users.uid = Faculty.uid');
 		if($fid > 0){
 			$this->db->where('Faculty.fid',$fid);
 		}
 		else{
-			$this->db->join('Users','Users.uid = Faculty.uid');
 			$this->db->where('Users.username',$username);
 		}
 		$q = $this->db->get('Faculty');
@@ -124,7 +125,19 @@ class Faculty_model extends MY_Model{
 		return $this->db->insert('advise',array('fid'=>$fid,'eid'=>$eid));
 	}
 
+	public function get_faculty_by_experiment($eid = 0){
+		$this->db->select('Faculty.*');
+		$this->db->join('faculty_conduct','faculty_conduct.fid = Faculty.fid');
+		$this->db->where('faculty_conduct.eid',$eid);
+		$q = $this->db->get('Faculty');
+
+		$res = $this->query_row_conversion($q);
+
+		return $res;
+	}
+
 	/* Laboratory Heads functionalities*/
+
 	/*Admin functionalities*/
 	public function get_all_faculty(){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
