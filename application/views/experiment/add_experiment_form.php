@@ -34,9 +34,6 @@
 		</div>
 		<div id="workspace" class="demo panel callout" style="width:100%;height:432px;margin-right:0px">
 		<!--div class='demo'></div-->
-		<h2>Range</h2>
-  		<input id="pak" type="text" data-slider="true" data-slider-range="10,1000">
-  		<span class="output"></span>
     	</div>
     	
 	</div>	
