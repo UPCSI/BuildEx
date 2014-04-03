@@ -172,6 +172,16 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
     -o-transform: translate3d(0px, 0, 0);
     transform: translate3d(0px, 0, 0);
   }
+
+  .move-right > .inner-wrap > .exit-off-canvas {
+  	opacity: 0;
+  	height:0;
+    -webkit-transition: opacity 0.25s ease-out, height 0s linear 0.25s;
+    -moz-transition: opacity 0.25s ease-out, height 0s linear 0.25s;
+    -ms-transition: opacity 0.25s ease-out, height 0s linear 0.25s;
+    -o-transition: opacity 0.25s ease-out, height 0s linear 0.25s;
+    transition: opacity 0.25s ease-out, height 0s linear 0.25s;
+  }
 }
 
 @media only screen and (max-width: 40.063em) {
@@ -427,14 +437,6 @@ ul {
     cursor: move;
 }
 
- body { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-  [class^=slider] { display: inline-block; margin-bottom: 30px; }
-  .output { color: #888; font-size: 14px; padding-top: 1px; margin-left: 5px; vertical-align: top;}
-  h1 { font-size: 20px; }
-  h2 { clear: both; margin: 0; margin-bottom: 5px; font-size: 16px; }
-  p { font-size: 15px; margin-bottom: 30px; }
-  h2:first-of-type { margin-top: 0; }
-
 a.delete { 
     display:none;
     position:absolute;
@@ -495,7 +497,7 @@ div.tabs-content.elements {
 
 
 @media only screen and (min-width: 40em) {
-#save {
+#getObjectValues {
   top: 12px;
 }
 
@@ -542,6 +544,8 @@ p {
 
 div.panel.dash-item {
     background-color:#1f1f1f !important;
+    border-bottom:7px;
+    border-style: solid; 
 }
 
 div.panel.dash-item > h1, div.panel.dash-item > p {
@@ -549,4 +553,27 @@ div.panel.dash-item > h1, div.panel.dash-item > p {
 }
 body.internal {
     background-color: #3E3E3E;
+}
+
+/* experiment builder stuff */
+.tabs dd > a {
+		padding-top: 0.5rem;
+		padding-bottom: 0.5625rem;
+}
+
+.tabs-content > .content {
+	padding: 0 0;
+}
+
+div.large-12.medium-12.small-12.column.unpad-h {
+	height: 100%
+}
+
+div.tabs-content.elements {
+	height: 76%;
+}
+
+div.tabs-content.elements > div.content > div.panel.elmt {
+    height: 100%;
+    vertical-align: middle;
 }

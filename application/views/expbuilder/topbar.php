@@ -20,7 +20,7 @@
 			<ul class="left">
 				<li><a href="#">New</a></li>
 				<li><a href="#">Open</a></li>
-				<li><a id="save" class="button success" href="#">Save</a></li>
+				<li><a href="#" id="getObjectValues" class = "button success">Save Environment</a></li>
 			</ul>
 		</section>
 	</nav>
