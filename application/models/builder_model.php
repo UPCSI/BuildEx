@@ -10,8 +10,8 @@ class Builder_model extends MY_Model{
 		$data = [];
 
 		$this->db->where('Pages.eid', $eid);
-		$this->db->join('Pages', 'Pages.pid = Questions.pid');
-		$query = $this->db->get('Questions');
+		$this->db->join('Pages', 'Pages.pid = Objects.pid');
+		$query = $this->db->get('Objects');
 
 		if($query->num_rows == 0)
 			return null;
@@ -38,20 +38,53 @@ class Builder_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-	function add_form($data){
+	function add_object($data){
+		$this->db->insert('Objects',$data);
+		return $this->db->insert_id();
+	}
+
+	function add_label($data){
+		$this->db->insert('Labels',$data);
+		return $this->db->insert_id();
+	}
+
+	function add_button($data){
+		$this->db->insert('Buttons',$data);
+		return $this->db->insert_id();
+	}
+
+	function add_question($data){
 		$this->db->insert('Questions',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_option_group($data){
-		$this->db->insert('OptionGroups',$data);
+	function add_input($data){
+		$this->db->insert('Inputs',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_option($data){
-		$this->db->insert('Options',$data);
+	function add_text($data){
+		$this->db->insert('Texts',$data);
 		return $this->db->insert_id();
 	}
+
+	function add_radio($data){
+		$this->db->insert('Radios',$data);
+		return $this->db->insert_id();
+	}
+
+	function add_checkbox($data){
+		$this->db->insert('Checkboxes',$data);
+		return $this->db->insert_id();
+	}
+
+
+/*
+	------------------------------------------------------------------------------------
+	UPDATE
+	------------------------------------------------------------------------------------
+*/
+
 
 	function update_form($data){
 		$this->db->where('qid', $data['qid']);
