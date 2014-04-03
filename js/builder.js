@@ -368,64 +368,131 @@ $(function() {
 	        $.count++;
     });
 
-	// $('#button')
- //    	.click(function(eventClick, posX, posY){
-	//     	posX = typeof posX !== 'undefined' ? posX : null;
-	// 		posY = typeof posY !== 'undefined' ? posY : null;
+/*	$('#button')
+    	.click(function(eventClick, posX, posY){
+	    	posX = typeof posX !== 'undefined' ? posX : null;
+			posY = typeof posY !== 'undefined' ? posY : null;
 
-	// 		var htmlData='<div id="btn'+$.count+'"';
+			var htmlData='<div id="btn'+$.count+'"';
 
-	// 		htmlData += '><button id="editable'+$.count+'" style="width:50px; height:200px margin-bottom:0px">move me, resize me</button></div>';
+			htmlData += '><button id="editable'+$.count+'" style="width:50px; height:200px margin-bottom:0px">move me, resize me</button></div>';
 			
-	// 		$('.demo').append(htmlData);
-	// 		$('#btn2').resizable({grid: 10})
-	// 		.draggable({cancel:false, grid: [ 10,10 ] });
-	// 		$('#editable2').click(function(){
-	// 		    if ( $(this).is('.ui-draggable-dragging') ) {
-	// 		    return;
-	// 		    }
-	// 		    $(this).draggable( "option", "disabled", true);
-	// 		    $(this).attr('contentEditable',true);
-	// 	    })
-	// 	    .blur(function(){
-	// 		    $(this).draggable( 'option', 'disabled', false);
-	// 		    $(this).attr('contentEditable',false);
-	// 		})
- //    });
+			$('.demo').append(htmlData);
+			$('#btn2').resizable({grid: 10})
+			.draggable({cancel:false, grid: [ 10,10 ] });
+			$('#editable2').click(function(){
+			    if ( $(this).is('.ui-draggable-dragging') ) {
+			    return;
+			    }
+			    $(this).draggable( "option", "disabled", true);
+			    $(this).attr('contentEditable',true);
+		    })
+		    .blur(function(){
+			    $(this).draggable( 'option', 'disabled', false);
+			    $(this).attr('contentEditable',false);
+			})
+    });*/
 
-    $("#getObjectValues").click(function () {
-    	//collect all question object
-		var x = new Array();
-		for(i=1; i<$.count; i++){
-			if ($('#qtn'+i).offset() !== undefined){
-    			//alert($('#qtn'+i).offset().left);
-				var offset = $('#qtn'+i).offset();
-		        var xPos = offset.left;
-		        var yPos = offset.top;
-		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		x.push(data);
-		   	}
-		}
+	    $("#getObjectValues").click(function () {
+	    	//collect all question object
+			var x = new Array();
+			for(i=1; i<$.count; i++){
+				if ($('#qtn'+i).offset() !== undefined){
+					var offset = $('#qtn'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "question";
+			   		x.push(data);
+			   	}
 
-	   	$.ajax({
-	   		url: '<?=base_url()?>builder/save',
-	   		type:"POST",
-	   		data:{
-	   			'msg':x,
-	   			'eid':'<?=$eid?>'
-	   		},
-	   		dataType: 'json',
-	   		complete: function(data) {
-	   			// alert("Saved Successfully!");
-	   			//alert(data[0][0]);
-	   			//alert(data.responseText);
-	   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
-	   		},
-	
-	   	});
-	});
+				if ($('#inp'+i).offset() !== undefined){
+					var offset = $('#inp'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "label";
+			   		x.push(data);
+			   	}
+
+				if ($('#btn'+i).offset() !== undefined){
+					var offset = $('#btn'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "button";
+			   		x.push(data);
+			   	}
+
+				if ($('#radbtn'+i).offset() !== undefined){
+					var offset = $('#radbtn'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "radio";
+			   		x.push(data);
+			   	}
+
+				if ($('#chkbox'+i).offset() !== undefined){
+					var offset = $('#chkbox'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "checkbox";
+			   		x.push(data);
+			   	}
+
+				if ($('#dropdown'+i).offset() !== undefined){
+					var offset = $('#dropdown'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "dropdown";
+			   		x.push(data);
+			   	}
+
+				if ($('#sldr'+i).offset() !== undefined){
+					var offset = $('#sldr'+i).offset();
+			        var xPos = offset.left;
+			        var yPos = offset.top;
+			   		var data = new Array();
+			   		data[0] = xPos;
+			   		data[1] = yPos;
+			   		data[2] = "slider";
+			   		x.push(data);
+			   	}
+
+			}
+
+		   	$.ajax({
+		   		url: '<?=base_url()?>builder/save',
+		   		type:"POST",
+		   		data:{
+		   			'msg':x,
+		   			'eid':'<?=$eid?>'
+		   		},
+		   		dataType: 'json',
+		   		complete: function(data) {
+		   			// alert("Saved Successfully!");
+		   			//alert(data[0][0]);
+		   			//alert(data.responseText);
+		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+		   		},
+		
+		   	});
+		});
 	
 	$('body').on('paste', '.ui-widget-content', function (e) {
 	    setTimeout(function() {
@@ -526,16 +593,16 @@ $(function() {
 
 	
 });    
-// $(function() {
+/*$(function() {
 
-//     $('#bt1').on('click', function() {
-//         $(this).attr('contentEditable', true); 
-//     });
-//     $('#bt1').on('blur', function() {
-//         $(this).attr('contentEditable', false); 
-//     });
-//     $('#bt1').draggable({
-//     	cancel:false,
-//     	delay:300
-//     });
-// });
+    $('#bt1').on('click', function() {
+        $(this).attr('contentEditable', true); 
+    });
+    $('#bt1').on('blur', function() {
+        $(this).attr('contentEditable', false); 
+    });
+    $('#bt1').draggable({
+    	cancel:false,
+    	delay:300
+    });
+});*/

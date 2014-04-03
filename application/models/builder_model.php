@@ -18,7 +18,7 @@ class Builder_model extends MY_Model{
 
 		$objects = $this->query_conversion($query);
 		foreach($objects as $object){
-			$new_obj = array($object->x_pos, $object->y_pos);
+			$new_obj = array($object->x_pos, $object->y_pos, $object->type);
 			array_push($data, $new_obj);
 		}
 
