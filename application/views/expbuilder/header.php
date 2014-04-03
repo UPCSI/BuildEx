@@ -19,10 +19,10 @@
 <!-- wow much JS -->
 <script src="<?php echo site_url('js/modernizr.js'); ?>"></script>
 <script src="<?php echo site_url('js/jquery.js'); ?>"></script>
-<script src="<?php echo site_url('js/builder.js'); ?>"></script>
 <script src="<?php echo site_url('js/jquery-ui.js'); ?>"></script>
 <script src="<?php echo site_url('js/simple-slider.js'); ?>"></script>
 <script src="<?php echo site_url('js/jQuery.divPlaceholder.js'); ?>"></script>
+<script src="<?php echo site_url('js/builder.js'); ?>"></script>
 </head>
 
 <body>

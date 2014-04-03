@@ -413,7 +413,8 @@
 				// faulty -- contentEditable=true data-ph="My Placeholder String"
 				htmlData += 'style="height:25px; width:360px"><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
 
-				var temp = $.count
+				var temp = $.count;
+				alert(temp);
 				$('.demo').append(htmlData);	
 				$('#movingslider'+temp).simpleSlider();
 				$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
@@ -455,31 +456,6 @@
 		        $.count++;
 	    });
 		
-/*		$('#button')
-	    	.click(function(eventClick, posX, posY){
-		    	posX = typeof posX !== 'undefined' ? posX : null;
-				posY = typeof posY !== 'undefined' ? posY : null;
-
-				var htmlData='<div id="btn'+$.count+'"';
-
-				htmlData += '><button id="editable'+$.count+'" style="width:50px; height:200px margin-bottom:0px">move me, resize me</button></div>';
-				
-				$('.demo').append(htmlData);
-				$('#btn2').resizable({grid: 10})
-				.draggable({cancel:false, grid: [ 10,10 ] });
-				$('#editable2').click(function(){
-				    if ( $(this).is('.ui-draggable-dragging') ) {
-				    return;
-				    }
-				    $(this).draggable( "option", "disabled", true);
-				    $(this).attr('contentEditable',true);
-			    })
-			    .blur(function(){
-				    $(this).draggable( 'option', 'disabled', false);
-				    $(this).attr('contentEditable',false);
-				})
-	    });
-*/
 	    $("#getObjectValues").click(function () {
 	    	//collect all question object
 			var x = new Array();
