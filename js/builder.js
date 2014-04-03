@@ -120,7 +120,7 @@ $(function() {
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 
-			var htmlData='<div id="btn'+$.count+'" class="draggable ui-widget-content ui-draggable" ' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="btn'+$.count+'" class="draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
 				alert('x' + posX);
 				alert('y' + posY);
@@ -128,8 +128,10 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%">Button</button><a href="#" class="delete"></a></div>';
+			htmlData += 'style="width:150px; height:60"><button id="editable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px">Button</button><a href="#" class="delete"></a></div>';
 			
+			var temp = $.count;
+
 			$('.demo').append(htmlData);	
 	        $('.draggable').draggable({
 	        	containment: "#workspace",
@@ -148,17 +150,19 @@ $(function() {
 	        })
 		    .resizable({
 		    	containment: "#workspace"
-		    })
-		    .click(function(){
+		    });
+		    $('#editable'+temp).click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
 		        }
-		        $(this).draggable( "option", "disabled", true );
+		        $('#btn'+temp).draggable( "option", "disabled", true );
 		        $(this).attr('contenteditable','true');
 		    })
-		    .blur(function(){
-		        $(this).draggable( 'option', 'disabled', false);
-		        $(this).attr('contenteditable','false');
+		    $(document).click(function(e){
+		    	if(e.target.id != ('editable'+temp)){
+			        $('#btn'+temp).draggable( 'option', 'disabled', false);
+			        $('#editable'+temp).attr('contenteditable','false');
+			    }
 		    });
 		    $('a.delete').on('click',function(e){
 		        e.preventDefault();
@@ -183,7 +187,7 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name='+$.page+'value="radiobutton">Radio Button<a href="#" class="delete"></a></div>';
+			htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name='+$.page+'" value="radiobutton">Radio Button<a href="#" class="delete"></a></div>';
 			
 			$('.demo').append(htmlData);	
 	        $('.radiosnap.draggable').draggable({
