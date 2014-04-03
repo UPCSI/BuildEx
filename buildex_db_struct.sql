@@ -431,17 +431,13 @@ CREATE TABLE "Respondents" (
     last_name character varying(32),
     email_ad character varying(32),
     age integer,
-    street_addr character varying(64),
-    barangay_addr character varying(64),
-    city_addr character varying(64),
+    address character varying(256),
     nationality character varying(32),
     birthdate date,
-    sex boolean DEFAULT false,
     gender character varying(32),
     civil_status integer DEFAULT 0,
     eid integer,
-    since date,
-    duration time without time zone
+    since date
 );
 
 

@@ -166,12 +166,9 @@ TABLE Respondents:
 	last_name: character varying(32)
 	email_ad: character varying(32)
 	age: integer
-	street_addr: character varying(64)
-	barangay_addr: character varying(64)
-	city_addr: character varying(64)
+	address: character varying(256)
 	nationality: character varying(32)
 	birthdate: date
-	sex: boolean #{MALE[false],FEMALE[true]}
 	gender: character varying(32)
 	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
