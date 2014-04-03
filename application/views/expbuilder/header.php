@@ -11,11 +11,13 @@
 <link rel="stylesheet" href="<?php echo site_url('css/jquery-ui.css'); ?>">
 <link rel="stylesheet" href="<?php echo site_url('css/font-awesome.css'); ?>">
 <link rel="stylesheet" href="<?php echo site_url('css/custom.css'); ?>">
+<link rel="stylesheet" href="<?php echo site_url('css/jQuery.divPlaceholder.css');?>" > 
 
 <!-- wow much JS -->
 <script src="<?php echo site_url('js/modernizr.js'); ?>"></script>
 <script src="<?php echo site_url('js/jquery.js'); ?>"></script>
 <script src="<?php echo site_url('js/builder.js'); ?>"></script>
+<script src="<?php echo site_url('js/jQuery.divPlaceholder.js'); ?>"></script>
 </head>
 
 <body>

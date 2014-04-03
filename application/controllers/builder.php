@@ -31,6 +31,12 @@ class Builder extends MY_Controller{
 		$this->load->view('_main_layout', $data);
 	}
 
+/*
+	------------------------------------------------------------------------------------
+	SAVE
+	------------------------------------------------------------------------------------
+*/
+
 	public function save() {
 		$message = $this->input->post('msg');
 		// echo json_encode("hello");
@@ -38,17 +44,17 @@ class Builder extends MY_Controller{
 		if ($message == 'false')
 			return;
 
+		// save page
 		$page['eid'] = $this->input->post('eid');
 		$this->delete($page['eid']);
-
 		$page['order'] = 1;
-		$form['pid'] = $this->add_page($page);
-		
-		if ($message == 'false') return;
-		foreach ($message as $object){
-			$form['x_pos'] = (double)$object[0];
-			$form['y_pos'] = (double)$object[1];
-			$group['qid'] = $this->add_form($form);
+
+		// save object
+		$object['pid'] = $this->add_page($page);		
+		foreach ($message as $item){
+			$object['x_pos'] = (double)$item[0];
+			$object['y_pos'] = (double)$item[1];
+			$oid = $this->add_object($object);
 		}
 
 		$data['main_content'] = 'experiment/test';
@@ -65,6 +71,12 @@ class Builder extends MY_Controller{
 		return $this->builder_model->get_positions($eid);
 	}
 
+/*
+	------------------------------------------------------------------------------------
+	ADD TO TABLES
+	------------------------------------------------------------------------------------
+*/
+
 	public function add_page($data){
 		/*
 			Adds page. Returns pid. Required data listed below:
@@ -78,45 +90,51 @@ class Builder extends MY_Controller{
 		return $this->builder_model->add_page($data);
 	}
 
-	public function add_form($data){
-		/* 
-			Adds form/question. Returns qid. Required data listed below:
-				pid = page id
-				label = question itself (i.e. "Are you a psychopath?")
-				is_required = boolean; must be 't' or 'f'
-				x_pos = x position
-				y_pos = y position
-		*/
-
+	public function add_object($data){
 		$this->load->model('builder_model');
-		return $this->builder_model->add_form($data);
+		return $this->builder_model->add_object($data);
 	}
 
-	public function add_option_group($data){
-		/*
-			Adds option_group. Returns ogid. Required data listed below:
-				qid = question id
-				type = integer; text box (0), radio button (1), multiple choice (2), dropdown (3)
-				x_pos = x position
-				y_pos = y position
-		*/
-
-
+	public function add_labels($data){
 		$this->load->model('builder_model');
-		return $this->builder_model->add_option_group($data);
+		return $this->builder_model->add_labels($data);
 	}
 
-	public function add_option($data){
-		/*
-			Adds option. Returns oid. Required data listed below:
-				ogid = option group id
-				label = option itself (i.e. yes, no, maybe)
-		*/
-
-
+	public function add_button($data){
 		$this->load->model('builder_model');
-		return $this->builder_model->add_option($data);
+		return $this->builder_model->add_buttons($data);
 	}
+
+	public function add_question($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_question($data);
+	}
+
+	public function add_input($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_input($data);
+	}
+
+	public function add_text($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_text($data);
+	}
+
+	public function add_radio($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_radio($data);
+	}
+
+	public function add_checkbox($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_checkbox($data);
+	}
+
+/*
+	------------------------------------------------------------------------------------
+	UPDATE/DELETE
+	------------------------------------------------------------------------------------
+*/
 
 	public function update_form($data){
 		/*
