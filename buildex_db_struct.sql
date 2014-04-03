@@ -3,31 +3,11 @@
 --
 
 SET statement_timeout = 0;
+SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
-
---
--- Name: buildex_db; Type: COMMENT; Schema: -; Owner: postgres
---
-
-COMMENT ON DATABASE buildex_db IS 'BuildEx Database. University of the Philippines Diliman. Department of Psychology.';
-
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
 
 SET search_path = public, pg_catalog;
 
@@ -60,6 +40,50 @@ CREATE TABLE "Admins" (
 
 
 ALTER TABLE public."Admins" OWNER TO postgres;
+
+--
+-- Name: Buttons; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Buttons" (
+    oid integer,
+    button_id integer NOT NULL,
+    qid integer,
+    text character varying(32),
+    size character varying(8),
+    go_to integer
+);
+
+
+ALTER TABLE public."Buttons" OWNER TO postgres;
+
+--
+-- Name: checkboxes_checkbox_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE checkboxes_checkbox_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.checkboxes_checkbox_id_seq OWNER TO postgres;
+
+--
+-- Name: Checkboxes; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Checkboxes" (
+    input_id integer,
+    checkbox_id integer DEFAULT nextval('checkboxes_checkbox_id_seq'::regclass) NOT NULL,
+    choices character varying(2048),
+    orientation character varying(16)
+);
+
+
+ALTER TABLE public."Checkboxes" OWNER TO postgres;
 
 --
 -- Name: experiments_eid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -153,6 +177,64 @@ CREATE TABLE "Graduates" (
 ALTER TABLE public."Graduates" OWNER TO postgres;
 
 --
+-- Name: buttons_button_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE buttons_button_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.buttons_button_id_seq OWNER TO postgres;
+
+--
+-- Name: Inputs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Inputs" (
+    oid integer,
+    input_id integer DEFAULT nextval('buttons_button_id_seq'::regclass) NOT NULL,
+    type character varying(32),
+    helper character varying(512)
+);
+
+
+ALTER TABLE public."Inputs" OWNER TO postgres;
+
+--
+-- Name: labels_label_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE labels_label_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.labels_label_id_seq OWNER TO postgres;
+
+--
+-- Name: Labels; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Labels" (
+    oid integer,
+    label_id integer DEFAULT nextval('labels_label_id_seq'::regclass) NOT NULL,
+    text character varying(2048),
+    font character varying(64),
+    font_size double precision DEFAULT 12,
+    font_color character varying(6) DEFAULT 0
+);
+
+
+ALTER TABLE public."Labels" OWNER TO postgres;
+
+--
 -- Name: laboratories_labid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -208,10 +290,10 @@ CREATE TABLE "LaboratoryHeads" (
 ALTER TABLE public."LaboratoryHeads" OWNER TO postgres;
 
 --
--- Name: optiongroups_ogid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: objects_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE optiongroups_ogid_seq
+CREATE SEQUENCE objects_oid_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -219,53 +301,23 @@ CREATE SEQUENCE optiongroups_ogid_seq
     CACHE 1;
 
 
-ALTER TABLE public.optiongroups_ogid_seq OWNER TO postgres;
-
-SET default_with_oids = true;
+ALTER TABLE public.objects_oid_seq OWNER TO postgres;
 
 --
--- Name: OptionGroups; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+-- Name: Objects; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-CREATE TABLE "OptionGroups" (
-    ogid integer DEFAULT nextval('optiongroups_ogid_seq'::regclass) NOT NULL,
-    type integer,
+CREATE TABLE "Objects" (
+    pid integer,
+    oid integer DEFAULT nextval('objects_oid_seq'::regclass) NOT NULL,
+    id character varying(32),
+    type character varying(32),
     x_pos double precision,
-    y_pos double precision,
-    qid integer
+    y_pos double precision
 );
 
 
-ALTER TABLE public."OptionGroups" OWNER TO postgres;
-
---
--- Name: options_oid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE options_oid_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.options_oid_seq OWNER TO postgres;
-
-SET default_with_oids = false;
-
---
--- Name: Options; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
---
-
-CREATE TABLE "Options" (
-    oid integer DEFAULT nextval('options_oid_seq'::regclass) NOT NULL,
-    label character varying,
-    ogid integer
-);
-
-
-ALTER TABLE public."Options" OWNER TO postgres;
+ALTER TABLE public."Objects" OWNER TO postgres;
 
 --
 -- Name: pages_pid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -316,16 +368,43 @@ ALTER TABLE public.questions_qid_seq OWNER TO postgres;
 --
 
 CREATE TABLE "Questions" (
-    pid integer,
+    oid integer,
     qid integer DEFAULT nextval('questions_qid_seq'::regclass) NOT NULL,
-    label character varying(256),
     is_required boolean DEFAULT false,
-    x_pos double precision,
-    y_pos double precision
+    input integer,
+    label integer
 );
 
 
 ALTER TABLE public."Questions" OWNER TO postgres;
+
+--
+-- Name: radios_radio_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE radios_radio_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.radios_radio_id_seq OWNER TO postgres;
+
+--
+-- Name: Radios; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Radios" (
+    input_id integer,
+    radio_id integer DEFAULT nextval('radios_radio_id_seq'::regclass) NOT NULL,
+    choices character varying(2048),
+    orientation character varying(16)
+);
+
+
+ALTER TABLE public."Radios" OWNER TO postgres;
 
 --
 -- Name: respondents_rid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -369,10 +448,10 @@ CREATE TABLE "Respondents" (
 ALTER TABLE public."Respondents" OWNER TO postgres;
 
 --
--- Name: answers_ans_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: responses_response_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
-CREATE SEQUENCE answers_ans_id_seq
+CREATE SEQUENCE responses_response_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -380,7 +459,7 @@ CREATE SEQUENCE answers_ans_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.answers_ans_id_seq OWNER TO postgres;
+ALTER TABLE public.responses_response_id_seq OWNER TO postgres;
 
 --
 -- Name: Responses; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -388,15 +467,42 @@ ALTER TABLE public.answers_ans_id_seq OWNER TO postgres;
 
 CREATE TABLE "Responses" (
     rid integer NOT NULL,
-    ans_id integer DEFAULT nextval('answers_ans_id_seq'::regclass) NOT NULL,
+    response_id integer DEFAULT nextval('responses_response_id_seq'::regclass) NOT NULL,
     qid integer,
-    oid integer,
-    free_answer character varying,
-    duration time without time zone
+    answer character varying(4096),
+    duration double precision
 );
 
 
 ALTER TABLE public."Responses" OWNER TO postgres;
+
+--
+-- Name: texts_text_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE texts_text_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.texts_text_id_seq OWNER TO postgres;
+
+--
+-- Name: Texts; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "Texts" (
+    input_id integer,
+    text_id integer DEFAULT nextval('texts_text_id_seq'::regclass) NOT NULL,
+    length integer,
+    orientation character varying(16)
+);
+
+
+ALTER TABLE public."Texts" OWNER TO postgres;
 
 --
 -- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
@@ -519,11 +625,59 @@ CREATE TABLE manage (
 ALTER TABLE public.manage OWNER TO postgres;
 
 --
+-- Name: Buttons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Buttons"
+    ADD CONSTRAINT "Buttons_pkey" PRIMARY KEY (button_id);
+
+
+--
+-- Name: Buttons_qid_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Buttons"
+    ADD CONSTRAINT "Buttons_qid_key" UNIQUE (qid);
+
+
+--
+-- Name: Checkboxes_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Checkboxes"
+    ADD CONSTRAINT "Checkboxes_input_id_key" UNIQUE (input_id);
+
+
+--
+-- Name: Checkboxes_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Checkboxes"
+    ADD CONSTRAINT "Checkboxes_pkey" PRIMARY KEY (checkbox_id);
+
+
+--
 -- Name: Experiments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Experiments"
     ADD CONSTRAINT "Experiments_pkey" PRIMARY KEY (eid);
+
+
+--
+-- Name: Inputs_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Inputs"
+    ADD CONSTRAINT "Inputs_pkey" PRIMARY KEY (input_id);
+
+
+--
+-- Name: Labels_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Labels"
+    ADD CONSTRAINT "Labels_pkey" PRIMARY KEY (label_id);
 
 
 --
@@ -551,11 +705,75 @@ ALTER TABLE ONLY "LaboratoryHeads"
 
 
 --
+-- Name: Objects_pid_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Objects"
+    ADD CONSTRAINT "Objects_pid_id_key" UNIQUE (pid, id);
+
+
+--
+-- Name: Objects_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Objects"
+    ADD CONSTRAINT "Objects_pkey" PRIMARY KEY (oid);
+
+
+--
+-- Name: Radios_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Radios"
+    ADD CONSTRAINT "Radios_input_id_key" UNIQUE (input_id);
+
+
+--
+-- Name: Radios_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Radios"
+    ADD CONSTRAINT "Radios_pkey" PRIMARY KEY (radio_id);
+
+
+--
 -- Name: Respondents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Respondents"
     ADD CONSTRAINT "Respondents_pkey" PRIMARY KEY (rid);
+
+
+--
+-- Name: Responses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT "Responses_pkey" PRIMARY KEY (response_id);
+
+
+--
+-- Name: Responses_qid_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT "Responses_qid_key" UNIQUE (qid);
+
+
+--
+-- Name: Texts_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Texts"
+    ADD CONSTRAINT "Texts_input_id_key" UNIQUE (input_id);
+
+
+--
+-- Name: Texts_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "Texts"
+    ADD CONSTRAINT "Texts_pkey" PRIMARY KEY (text_id);
 
 
 --
@@ -596,22 +814,6 @@ ALTER TABLE ONLY advise
 
 ALTER TABLE ONLY "Admins"
     ADD CONSTRAINT aid_ukey UNIQUE (aid);
-
-
---
--- Name: ans_id_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT ans_id_pkey PRIMARY KEY (ans_id);
-
-
---
--- Name: ans_id_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT ans_id_ukey UNIQUE (ans_id);
 
 
 --
@@ -687,59 +889,11 @@ ALTER TABLE ONLY manage
 
 
 --
--- Name: ogid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "OptionGroups"
-    ADD CONSTRAINT ogid UNIQUE (ogid);
-
-
---
--- Name: ogid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "OptionGroups"
-    ADD CONSTRAINT ogid_pkey PRIMARY KEY (ogid);
-
-
---
--- Name: oid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT oid UNIQUE (oid);
-
-
---
--- Name: oid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT oid_pkey PRIMARY KEY (oid);
-
-
---
 -- Name: pid_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
 ALTER TABLE ONLY "Pages"
     ADD CONSTRAINT pid_pkey PRIMARY KEY (pid);
-
-
---
--- Name: pid_qid_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Questions"
-    ADD CONSTRAINT pid_qid_ukey UNIQUE (pid, qid);
-
-
---
--- Name: qid; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "OptionGroups"
-    ADD CONSTRAINT qid UNIQUE (qid);
 
 
 --
@@ -799,6 +953,110 @@ ALTER TABLE ONLY "Experiments"
 
 
 --
+-- Name: Buttons_oid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Buttons"
+    ADD CONSTRAINT "Buttons_oid_fkey" FOREIGN KEY (oid) REFERENCES "Objects"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Buttons_qid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Buttons"
+    ADD CONSTRAINT "Buttons_qid_fkey" FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Checkboxes_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Checkboxes"
+    ADD CONSTRAINT "Checkboxes_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Inputs_oid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Inputs"
+    ADD CONSTRAINT "Inputs_oid_fkey" FOREIGN KEY (oid) REFERENCES "Objects"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Labels_oid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Labels"
+    ADD CONSTRAINT "Labels_oid_fkey" FOREIGN KEY (oid) REFERENCES "Objects"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Objects_pid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Objects"
+    ADD CONSTRAINT "Objects_pid_fkey" FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Questions_input_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT "Questions_input_fkey" FOREIGN KEY (input) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Questions_label_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT "Questions_label_fkey" FOREIGN KEY (label) REFERENCES "Labels"(label_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Questions_oid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Questions"
+    ADD CONSTRAINT "Questions_oid_fkey" FOREIGN KEY (oid) REFERENCES "Objects"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Radios_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Radios"
+    ADD CONSTRAINT "Radios_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Responses_qid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT "Responses_qid_fkey" FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Responses_rid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT "Responses_rid_fkey" FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
+-- Name: Texts_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY "Texts"
+    ADD CONSTRAINT "Texts_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: admins_ref_users; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -820,30 +1078,6 @@ ALTER TABLE ONLY advise
 
 ALTER TABLE ONLY advise
     ADD CONSTRAINT advise_ref_faculty FOREIGN KEY (fid) REFERENCES "Faculty"(fid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: answer_ref_respondents; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT answer_ref_respondents FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: answers_ref_oid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT answers_ref_oid FOREIGN KEY (oid) REFERENCES "Options"(oid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: answers_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT answers_ref_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -951,35 +1185,11 @@ ALTER TABLE ONLY manage
 
 
 --
--- Name: optiongroups_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "OptionGroups"
-    ADD CONSTRAINT optiongroups_ref_qid FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: options_ref_ogid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Options"
-    ADD CONSTRAINT options_ref_ogid FOREIGN KEY (ogid) REFERENCES "OptionGroups"(ogid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
 -- Name: pages_ref_experiments_eid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Pages"
     ADD CONSTRAINT pages_ref_experiments_eid FOREIGN KEY (eid) REFERENCES "Experiments"(eid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: questions_ref_pages_pid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Questions"
-    ADD CONSTRAINT questions_ref_pages_pid FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --

@@ -1,0 +1,37 @@
+TABLE Faculty:
+	uid: references Users.uid
+	fid: integer PRIMARY AUTOINCREMENT
+	faculty_num: integer UNIQUE
+	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
+
+TABLE Graduates:
+	uid: references Users.uid
+	gid: integer PRIMARY AUTOINCREMENT
+	student_num: integer UNIQUE
+	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
+
+TABLE advise:
+	fid: integer references Faculty.fid
+	status: boolean #{Faculty
+	confirmed[true],not confirmed[false]}
+
+TABLE faculty_conduct:
+	fid: integer references Faculty.fid
+	eid: integer references Experiments.eid
+	since: date
+
+TABLE graduates_conduct:
+	gid: integer references Graduates.gid
+	eid: integer references Experiments.eid
+	since: date
+
+TABLE Experiments:
+	eid: integer PRIMARY AUTOINCREMENT
+	title: character varying(64)
+	category: character varying(32)
+	description: character varying(256)
+	target_count: integer
+	current_count: integer
+	status: boolean #{COMPLETE[true],ONGOING[false]}
+	is_published: boolean #{Faculty Confirmed[true], Not Confirmed[false]}
+	url: character varying(128)

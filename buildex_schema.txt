@@ -80,37 +80,7 @@ TABLE graduates_member_of:
 	labid: references Laboratories.labid
 	since: date
 	status: boolean #{LabHead confirmed[true],not confirmed[false]}
-
 #End of Primary Entities
-
-#Form Maker
-TABLE ProfileFields:
-	eid: integer references Experiments.eid
-	pfid: integer PRIMARY AUTOINCREMENT
-	name: character varying(128) #item name
-	label: character varying(256) #actual text
-	type: character varying(64) #{text-input,text-area,dropdown,radio-button,checkboxes}
-	helper: character varying(64)
-
-TABLE TextInputs:
-	pfid: integer references ProfileFields.pfid
-	tid: integer PRIMARY AUTOINCREMENT
-	size: character varying(16) {tiny small medium large}
-	placeholder: character varying(128)
-
-TABLE TextAreas:
-	pfid: integer references ProfileFields.pfid
-	tid: integer PRIMARY AUTOINCREMENT
-	size: character varying(16) {tiny small medium large}
-	placeholder: character varying(128)
-
-/*
-TABLE Dropdowns:
-	pfid: integer references ProfileFields.pfid
-	did: integer PRIMARY AUTOINCREMENT
-	options: character varying(256)
-*/
-#End of Form Maker
 
 #Experiment Builder
 TABLE Pages:
@@ -121,39 +91,94 @@ TABLE Pages:
 	row: integer #only significant if template is text and images
 	column: integer #only significant if template is text and images
 
-TABLE Questions:
+TABLE Objects:
 	pid: integer references Page.pid
-	qid: integer PRIMARY AUTOINCREMENT
-	label: character varying(256)
-	is_required: boolean #{REQUIRED[true], NOT REQUIRED[false]}
-	x_pos: double precision
-	y_pos: double precision
-
-TABLE OptionGroups:
-	qid: integer references Questions.qid
-	ogid: integer PRIMARY AUTOINCREMENT
-	type: integer #{TEXT BOX[0],RADIO BUTTONS[1],MULTIPLE CHOICE[2],DROPDOWN[3]}
-	x_pos: double precision
-	y_pos: double precision
-
-TABLE Options:
-	ogid: integer references OptionGroups.ogid
 	oid: integer PRIMARY AUTOINCREMENT
-	label: character varying(32)
-#End of Experiment Builder
+	id: character varying(32) #frontend representations of "id"
+	type: character varying(32) #{'question','label','button','image'}
+	x_pos: double precision
+	y_pos: double precision
+
+TABLE Questions:
+	oid: integer references Objects.oid
+	qid: integer PRIMARY AUTOINCREMENT
+	
+	input: integer references Input.input_id
+	label: integer references Label.label_id
+
+	is_required: boolean #{REQUIRED[true],NOT REQUIRED[false]}
+
+TABLE Labels:
+	oid: integer references Objects.oid
+	label_id: integer PRIMARY AUTOINCREMENT
+
+	text: character varying(2048) #the actual text
+	font: character varying(64) #font_name
+	font_size: double precision #in px
+	font_color: character varying(6) #hex
+
+TABLE Buttons:
+	oid: integer references Objects.oid
+	button_id: integer PRIMARY AUTOINCREMENT
+	qid: integer references Questions.qid
+
+	text: character varying(32)
+	size: character varying(8) #button size: #{'tiny','small','big','large'}
+	go_to: integer #page number; optional field; default is next page
+
+TABLE Inputs:
+	oid: integer references Objects.oid
+	input_id: integer PRIMARY AUTOINCREMENT
+
+	type: character varying(32) #{'text','radio','checkbox'}
+	helper: character varying(512) #helper text
+
+TABLE Texts:
+	input_id: integer references Inputs.input_id
+	text_id: integer PRIMARY AUTOINCREMENT
+
+	length: integer #how many characters allowed
+	orientation: character varying(16) #{'line','paragraph'}
+
+TABLE Radios:
+	input_id: integer references Inputs.input_id
+	radio_id: integer PRIMARY AUTOINCREMENT
+
+	choices: character varying(2048) #format(without the quotes): "choice1,choice2,choice3...choiceN"
+	orientation: character varying(16) #{'vertical','horizontal'}
+
+TABLE Checkboxes:
+	input_id: integer references Inputs.input_id
+	checkbox_id: integer PRIMARY AUTOINCREMENT
+
+	choices: character varying(2048) #format(without the quotes): "choice1,choice2,choice3...choiceN"
+	orientation: character varying(16) #{'vertical','horizontal'}
 
 #Respondents
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
 	eid: integer references Experiments.eid
 	since: date
-	duration: time
+
+	#OPTIONAL FIELDS:
+	first_name: character varying(32)
+	middle_name: character varying(32)
+	last_name: character varying(32)
+	email_ad: character varying(32)
+	age: integer
+	street_addr: character varying(64)
+	barangay_addr: character varying(64)
+	city_addr: character varying(64)
+	nationality: character varying(32)
+	birthdate: date
+	sex: boolean #{MALE[false],FEMALE[true]}
+	gender: character varying(32)
+	civil_status: integer #{SINGLE[0],MARRIED[1],SEPARATED[2],WIDOWED[3]}
 
 TABLE Responses:
 	rid: integer references Respondents.rid
-	ans_id: integer PRIMARY AUTOINCREMENT
+	response_id: integer PRIMARY AUTOINCREMENT
 	qid: integer references Questions.qid
-	oid: integer references Options.oid
-	free_answer: character varying
-	duration: time
+	answer: character varying(4096)
+	duration: double precision #in sec
 #End of Respondents

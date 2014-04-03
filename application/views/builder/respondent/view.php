@@ -13,3 +13,7 @@
 <p> Please see view/includes/builder_view_header for additional css imports. </p>
 <p> Please see view/includes/builder_view_footer for additional js imports. </p>
 <p> Please see view/components/topbar_builder_view for the desired topbar of this view.</p>
+<br>
+<button class = "small" onclick = "save();"> Save </button> <!--subject for change; just temporary -->
+<button class = "small" onclick = "pause();"> Pause </button>
+<button class = "small" onclick = "reset();"> Reset </button> <!--subject for change; just temporary -->
