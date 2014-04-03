@@ -1,7 +1,7 @@
 <h1> Personal Information </h1>
 <p>*-required </p>
 
-<?php echo form_open('respond/register'); ?>
+<form id = "demographics" action="<?php echo site_url('respond/register'); ?>" method = "post" accept-charset="utf-8">	
 	<fieldset>
 		<legend>Personal Information</legend>
 
@@ -46,6 +46,6 @@
 		</select>
 
 	</fieldset>
-	<input type="submit" class="button small" value="Submit">
-	<button class = "small" onclick = "clear();"> Reset </button>
-<?php echo form_close(); ?>
+	<button type="submit" class="small"> Submit </button>
+	<button type = "button" class = "small" onclick = "clear_form()"> Reset </button> <!-- clear all inputs -->
+</form>
