@@ -16,7 +16,7 @@ $this->load->view('expbuilder/topbar');
 </ol>
 </div>
 </div>
-<div class="large-9 medium-9 small-9 column" style="min-height:100%;height:100%;overflow:auto;display:list-item;line-height:initial;text-align:-webkit-center;">
+<div class="large-9 medium-9 small-9 column" style="min-height:100%;height:100%;overflow:auto;display:flex;line-height:initial;text-align:-webkit-center;">
 <?php $this->load->view($main_content); ?>
 </div>
 </div>
