@@ -54,6 +54,7 @@ class Builder extends MY_Controller{
 		foreach ($message as $item){
 			$object['x_pos'] = (double)$item[0];
 			$object['y_pos'] = (double)$item[1];
+			$object['type'] = $item[2];
 			$oid = $this->add_object($object);
 		}
 
