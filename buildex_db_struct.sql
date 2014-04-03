@@ -9,6 +9,27 @@ SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 
+--
+-- Name: buildex_db; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE buildex_db IS 'BuildEx Database. University of the Philippines Diliman. Department of Psychology.';
+
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -45,19 +66,6 @@ ALTER TABLE public."Admins" OWNER TO postgres;
 -- Name: Buttons; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
-<<<<<<< Updated upstream
-CREATE TABLE "Buttons" (
-    oid integer,
-    button_id integer NOT NULL,
-    qid integer,
-    text character varying(32),
-    size character varying(8),
-    go_to integer
-);
-=======
-<<<<<<< Updated upstream
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-=======
 CREATE TABLE "Buttons" (
     oid integer,
     button_id integer NOT NULL,
@@ -66,8 +74,6 @@ CREATE TABLE "Buttons" (
     go_to integer,
     type character varying(32) DEFAULT 'default'::character varying
 );
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 
 
 ALTER TABLE public."Buttons" OWNER TO postgres;
@@ -542,10 +548,6 @@ CREATE TABLE "Responses" (
 ALTER TABLE public."Responses" OWNER TO postgres;
 
 --
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
 -- Name: slider_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -575,7 +577,6 @@ CREATE TABLE "Sliders" (
 ALTER TABLE public."Sliders" OWNER TO postgres;
 
 --
->>>>>>> Stashed changes
 -- Name: texts_text_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -604,10 +605,6 @@ CREATE TABLE "Texts" (
 ALTER TABLE public."Texts" OWNER TO postgres;
 
 --
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 -- Name: users_uid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -728,11 +725,6 @@ CREATE TABLE manage (
 ALTER TABLE public.manage OWNER TO postgres;
 
 --
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 -- Name: Buttons_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -741,17 +733,6 @@ ALTER TABLE ONLY "Buttons"
 
 
 --
-<<<<<<< Updated upstream
--- Name: Buttons_qid_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Buttons"
-    ADD CONSTRAINT "Buttons_qid_key" UNIQUE (qid);
-
-
---
-=======
->>>>>>> Stashed changes
 -- Name: Checkboxes_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -768,8 +749,6 @@ ALTER TABLE ONLY "Checkboxes"
 
 
 --
-<<<<<<< Updated upstream
-=======
 -- Name: Dropdowns_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -786,8 +765,6 @@ ALTER TABLE ONLY "Dropdowns"
 
 
 --
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 -- Name: Experiments_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -836,11 +813,6 @@ ALTER TABLE ONLY "LaboratoryHeads"
 
 
 --
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 -- Name: Objects_pid_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -857,8 +829,6 @@ ALTER TABLE ONLY "Objects"
 
 
 --
-<<<<<<< Updated upstream
-=======
 -- Name: QuestionButtons_button_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -883,7 +853,6 @@ ALTER TABLE ONLY "QuestionButtons"
 
 
 --
->>>>>>> Stashed changes
 -- Name: Radios_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -900,10 +869,6 @@ ALTER TABLE ONLY "Radios"
 
 
 --
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 -- Name: Respondents_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -912,11 +877,6 @@ ALTER TABLE ONLY "Respondents"
 
 
 --
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
 -- Name: Responses_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -933,8 +893,6 @@ ALTER TABLE ONLY "Responses"
 
 
 --
-<<<<<<< Updated upstream
-=======
 -- Name: Sliders_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -951,7 +909,6 @@ ALTER TABLE ONLY "Sliders"
 
 
 --
->>>>>>> Stashed changes
 -- Name: Texts_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -968,10 +925,6 @@ ALTER TABLE ONLY "Texts"
 
 
 --
-<<<<<<< Updated upstream
-=======
->>>>>>> Stashed changes
->>>>>>> Stashed changes
 -- Name: Users_email_ad_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -1148,12 +1101,7 @@ ALTER TABLE ONLY "Experiments"
 
 
 --
-<<<<<<< Updated upstream
 -- Name: Buttons_oid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
-=======
-<<<<<<< Updated upstream
--- Name: student_num_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
->>>>>>> Stashed changes
 --
 
 ALTER TABLE ONLY "Buttons"
@@ -1161,16 +1109,6 @@ ALTER TABLE ONLY "Buttons"
 
 
 --
--- Name: Buttons_qid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-<<<<<<< Updated upstream
-ALTER TABLE ONLY "Buttons"
-    ADD CONSTRAINT "Buttons_qid_fkey" FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
-=======
-ALTER TABLE ONLY "Admins"
-    ADD CONSTRAINT uid_aid_pkey PRIMARY KEY (uid, aid);
-=======
 -- Name: Checkboxes_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1184,16 +1122,6 @@ ALTER TABLE ONLY "Checkboxes"
 
 ALTER TABLE ONLY "Dropdowns"
     ADD CONSTRAINT "Dropdowns_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
->>>>>>> Stashed changes
->>>>>>> Stashed changes
-
-
---
--- Name: Checkboxes_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY "Checkboxes"
-    ADD CONSTRAINT "Checkboxes_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1213,12 +1141,14 @@ ALTER TABLE ONLY "Labels"
 
 
 --
-<<<<<<< Updated upstream
 -- Name: Objects_pid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
-=======
-<<<<<<< Updated upstream
--- Name: url_ukey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
-=======
+--
+
+ALTER TABLE ONLY "Objects"
+    ADD CONSTRAINT "Objects_pid_fkey" FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: QuestionButtons_button_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1232,16 +1162,6 @@ ALTER TABLE ONLY "QuestionButtons"
 
 ALTER TABLE ONLY "QuestionButtons"
     ADD CONSTRAINT "QuestionButtons_qid_fkey" FOREIGN KEY (qid) REFERENCES "Questions"(qid) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: Questions_input_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
->>>>>>> Stashed changes
->>>>>>> Stashed changes
---
-
-ALTER TABLE ONLY "Objects"
-    ADD CONSTRAINT "Objects_pid_fkey" FOREIGN KEY (pid) REFERENCES "Pages"(pid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
@@ -1285,27 +1205,19 @@ ALTER TABLE ONLY "Responses"
 
 
 --
-<<<<<<< Updated upstream
 -- Name: Responses_rid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
-=======
-<<<<<<< Updated upstream
--- Name: answers_ref_qid; Type: FK CONSTRAINT; Schema: public; Owner: postgres
-=======
+--
+
+ALTER TABLE ONLY "Responses"
+    ADD CONSTRAINT "Responses_rid_fkey" FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
+--
 -- Name: Sliders_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY "Sliders"
     ADD CONSTRAINT "Sliders_input_id_fkey" FOREIGN KEY (input_id) REFERENCES "Inputs"(input_id) ON UPDATE CASCADE ON DELETE CASCADE;
-
-
---
--- Name: Texts_input_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
->>>>>>> Stashed changes
->>>>>>> Stashed changes
---
-
-ALTER TABLE ONLY "Responses"
-    ADD CONSTRAINT "Responses_rid_fkey" FOREIGN KEY (rid) REFERENCES "Respondents"(rid) ON UPDATE CASCADE ON DELETE CASCADE;
 
 
 --
