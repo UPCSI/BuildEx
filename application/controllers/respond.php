@@ -72,7 +72,13 @@ class Respond extends CI_Controller{
 	}
 
 	public function exp($slug){
-		return 0;
+		/*slide show of the experiment*/
+		$eid = $this->session->userdata('respond_to');
+		$data['exp'] = $this->experiments_model->get_experiment($eid);
+		$data['var'] = $this->get_objects($eid);
+		$data['title'] = "Respond";
+		$data['main_content'] = "respondent/exp";
+		$this->load->view('respondent/_view_layout', $data);
 	}
 
 	
@@ -81,6 +87,10 @@ class Respond extends CI_Controller{
 	}
 
 	public function save(){
+		return 0;
+	}
+
+	public function save_all(){
 		$eid = $this->input->post('eid');
 		/*
 		save the answers here
