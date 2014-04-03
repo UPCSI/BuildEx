@@ -43,8 +43,48 @@ INSERT INTO "Admins" VALUES (1, 2);
 -- Data for Name: Experiments; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO "Experiments" VALUES (2, 'Sample02', '0', 30, 0, false, false, 'Sample', false, 0, 'MlNhbXBsZTAy');
-INSERT INTO "Experiments" VALUES (3, 'Sample03', '0', 30, 0, false, false, 'HIHIHI', false, 0, 'M1NhbXBsZTAz');
+
+
+--
+-- Data for Name: Pages; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Objects; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Inputs; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Labels; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Questions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Buttons; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Checkboxes; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
 
 
 --
@@ -91,27 +131,7 @@ INSERT INTO "LaboratoryHeads" VALUES (32, 23);
 
 
 --
--- Data for Name: Pages; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "Pages" VALUES (2, 2, 1, 0, 1, 1);
-
-
---
--- Data for Name: Questions; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO "Questions" VALUES (2, 6, NULL, false, 1135.44995117190001, 504.600006103520002);
-
-
---
--- Data for Name: OptionGroups; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-
-
---
--- Data for Name: Options; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: Radios; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
@@ -124,6 +144,12 @@ INSERT INTO "Questions" VALUES (2, 6, NULL, false, 1135.44995117190001, 504.6000
 
 --
 -- Data for Name: Responses; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+
+--
+-- Data for Name: Texts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 
@@ -142,25 +168,30 @@ SELECT pg_catalog.setval('admins_aid_seq', 1, false);
 
 
 --
--- Name: answers_ans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: buttons_button_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('answers_ans_id_seq', 1, false);
+SELECT pg_catalog.setval('buttons_button_id_seq', 1, false);
+
+
+--
+-- Name: checkboxes_checkbox_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('checkboxes_checkbox_id_seq', 1, false);
 
 
 --
 -- Name: experiments_eid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('experiments_eid_seq', 3, true);
+SELECT pg_catalog.setval('experiments_eid_seq', 4, true);
 
 
 --
 -- Data for Name: faculty_conduct; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO faculty_conduct VALUES (19, 2, '2014-03-01');
-INSERT INTO faculty_conduct VALUES (19, 3, '2014-03-01');
 
 
 --
@@ -200,6 +231,13 @@ SELECT pg_catalog.setval('graduates_gid_seq', 11, true);
 
 
 --
+-- Name: labels_label_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('labels_label_id_seq', 1, false);
+
+
+--
 -- Name: laboratories_labid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -223,17 +261,10 @@ INSERT INTO manage VALUES (23, 23, '2014-03-01');
 
 
 --
--- Name: optiongroups_ogid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: objects_oid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('optiongroups_ogid_seq', 1, false);
-
-
---
--- Name: options_oid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('options_oid_seq', 1, false);
+SELECT pg_catalog.setval('objects_oid_seq', 1, false);
 
 
 --
@@ -251,10 +282,31 @@ SELECT pg_catalog.setval('questions_qid_seq', 6, true);
 
 
 --
+-- Name: radios_radio_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('radios_radio_id_seq', 1, false);
+
+
+--
 -- Name: respondents_rid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('respondents_rid_seq', 1, true);
+
+
+--
+-- Name: responses_response_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('responses_response_id_seq', 1, false);
+
+
+--
+-- Name: texts_text_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('texts_text_id_seq', 1, false);
 
 
 --
