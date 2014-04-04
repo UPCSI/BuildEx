@@ -14,7 +14,7 @@ $(function() {
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 			}
 
 			htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable" data-placeholder="Enter Question" ></div></div>';
@@ -72,7 +72,7 @@ $(function() {
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 			}
 			
 			htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
@@ -127,7 +127,7 @@ $(function() {
 			if (posX != null && posY != null){
 				alert('x' + posX);
 				alert('y' + posY);
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
@@ -192,7 +192,7 @@ $(function() {
 			if (posX != null && posY != null){
 				alert('x' + posX);
 				alert('y' + posY);
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
@@ -258,7 +258,7 @@ $(function() {
 			if (posX != null && posY != null){
 				alert('x' + posX);
 				alert('y' + posY);
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
@@ -322,7 +322,7 @@ $(function() {
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
@@ -406,7 +406,7 @@ $(function() {
 
 			var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
-				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"

@@ -1,6 +1,8 @@
 <?php
-	$this->load->view('builder/header',$title);
-	$this->load->view('builder/topbar');
+
+$this->load->view('builder/header',$title);
+$this->load->view('builder/topbar');
+
 ?>
 
 <div class="row full legit" style="min-height:100%;height:100%">
