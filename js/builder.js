@@ -456,6 +456,7 @@ $(function() {
 
     $("#getObjectValues").click(function () {
     	//collect all question object
+    	var eid = document.getElementById('workspace').getAttribute('data-eid');
 		var x = new Array();
 		for(i=1; i<$.count; i++){
 			if ($('#qtn'+i).offset() !== undefined){
@@ -531,18 +532,18 @@ $(function() {
 		}
 
 	   	$.ajax({
-	   		url: '<?=base_url()?>builder/save',
+	   		url: window.location.protocol+"//"+window.location.host + '/buildex/builder/save',
 	   		type:"POST",
 	   		data:{
 	   			'msg':x,
-	   			'eid':'<?=$eid?>'
+	   			'eid':eid
 	   		},
 	   		dataType: 'json',
 	   		complete: function(data) {
 	   			// alert("Saved Successfully!");
 	   			//alert(data[0][0]);
 	   			//alert(data.responseText);
-	   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+	   			window.location.href = window.location.protocol+"//"+window.location.host + '/buildex/' + data.responseText + '/experiments';
 	   		},
 	
 	   	});

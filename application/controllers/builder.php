@@ -50,16 +50,17 @@ class Builder extends MY_Controller{
 		$page['order'] = 1;
 
 		// save object
-		$object['pid'] = $this->add_page($page);		
-		foreach ($message as $item){
-			$object['x_pos'] = (double)$item[0];
-			$object['y_pos'] = (double)$item[1];
-			$object['type'] = $item[2];
-			$oid = $this->add_object($object);
+		$object['pid'] = $this->add_page($page);	
+		if($message != ""){
+			foreach ($message as $item){
+				$object['x_pos'] = (double)$item[0];
+				$object['y_pos'] = (double)$item[1];
+				$object['type'] = $item[2];
+				$oid = $this->add_object($object);
+			}
 		}
-
-		$data['main_content'] = 'experiment/test';
-		$this->load->view('_main_layout', $data);
+		
+		echo $this->session->userdata('active_role'); #for ajax
 	}
 
 	public function delete($eid){

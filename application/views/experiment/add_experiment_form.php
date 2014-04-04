@@ -461,9 +461,8 @@
 			var x = new Array();
 			for(i=1; i<$.count; i++){
 				if ($('#qtn'+i).offset() !== undefined){
-					var offset = $('#qtn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#qtn'+i).css('left');
+		        	var yPos = $('#qtn'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -472,9 +471,8 @@
 			   	}
 
 				if ($('#inp'+i).offset() !== undefined){
-					var offset = $('#inp'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#inp'+i).css('left');
+		        	var yPos = $('#inp'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -483,9 +481,8 @@
 			   	}
 
 				if ($('#btn'+i).offset() !== undefined){
-					var offset = $('#btn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#btn'+i).css('left');
+		      		var yPos = $('#btn'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -494,9 +491,8 @@
 			   	}
 
 				if ($('#radbtn'+i).offset() !== undefined){
-					var offset = $('#radbtn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#radbtn'+i).css('left');
+		       		var yPos = $('#radbtn'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -505,9 +501,8 @@
 			   	}
 
 				if ($('#chkbox'+i).offset() !== undefined){
-					var offset = $('#chkbox'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#chkbox'+i).css('left');
+		        	var yPos = $('#chkbox'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -516,9 +511,8 @@
 			   	}
 
 				if ($('#dropdown'+i).offset() !== undefined){
-					var offset = $('#dropdown'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#dropdown'+i).css('left');
+		        	var yPos = $('#dropdown'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
@@ -527,9 +521,8 @@
 			   	}
 
 				if ($('#sldr'+i).offset() !== undefined){
-					var offset = $('#sldr'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
+					var xPos = $('#sldr'+i).css('left');
+		        	var yPos = $('#sldr'+i).css('top');
 			   		var data = new Array();
 			   		data[0] = xPos;
 			   		data[1] = yPos;
