@@ -508,15 +508,17 @@ $(function() {
     	//collect all question object
     	var eid = document.getElementById('workspace').getAttribute('data-eid');
 		var x = new Array();
+		x.push($.page);
 		for(i=1; i<$.count; i++){
 			if ($('#qtn'+i).offset() !== undefined){
 		        var xPos = $('#qtn'+i).css('left');
 		        var yPos = $('#qtn'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "question";
-		   		data[3] = document.getElementById('qtneditable'+i).textContent;
+				data[0]=$('#qtn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "question";
+		   		data[4] = document.getElementById('qtneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -524,10 +526,11 @@ $(function() {
 				var xPos = $('#inp'+i).css('left');
 		        var yPos = $('#inp'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "label";
-		   		data[3] = document.getElementById('inpeditable'+i).textContent;
+				data[0]=$('#inp'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "label";
+		   		data[4] = document.getElementById('inpeditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -535,10 +538,11 @@ $(function() {
 				var xPos = $('#btn'+i).css('left');
 		        var yPos = $('#btn'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "button";
-		   		data[3] = document.getElementById('btneditable'+i).textContent;
+				data[0]=$('#btn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "button";
+		   		data[4] = document.getElementById('btneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -546,9 +550,10 @@ $(function() {
 				var xPos = $('#radbtn'+i).css('left');
 		        var yPos = $('#radbtn'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "radio";
+				data[0]=$('#radbtn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "radio";
 		   		x.push(data);
 		   	}
 
@@ -556,9 +561,10 @@ $(function() {
 				var xPos = $('#chkbox'+i).css('left');
 		        var yPos = $('#chkbox'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "checkbox";
+				data[0]=$('#chkbox'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "checkbox";
 		   		x.push(data);
 		   	}
 
@@ -566,9 +572,10 @@ $(function() {
 				var xPos = $('#dropdown'+i).css('left');
 		        var yPos = $('#dropdown'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "dropdown";
+				data[0]=$('#dropdown'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "dropdown";
 		   		x.push(data);
 		   	}
 
@@ -576,9 +583,10 @@ $(function() {
 				var xPos = $('#sldr'+i).css('left');
 		        var yPos = $('#sldr'+i).css('top');
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "slider";
+				data[0]=$('#sldr'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "slider";
 		   		x.push(data);
 		   	}
 

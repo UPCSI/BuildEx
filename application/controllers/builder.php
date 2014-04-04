@@ -39,17 +39,25 @@ class Builder extends MY_Controller{
 		if ($message == 'false')
 			return;
 
+		$pid_list = array();
 		/* page */
 		$page['eid'] = $this->input->post('eid');
 		$this->delete($page['eid']);
-		$page['order'] = 1;
+		$total_pages = array_shift($message);
+
+		for($index=1; $index <= $total_pages; $index++){
+			$page['eid'] = $this->input->post('eid');
+			$page['order'] = $index;
+			array_push($pid_list, $this->add_page($page));
+		}
 
 		/* object */
-		$object['pid'] = $this->add_page($page);		
 		foreach ($message as $item){
-			$object['x_pos'] = (double)$item[0];
-			$object['y_pos'] = (double)$item[1];
-			$object['type'] = $item[2];
+			$order = (int)explode('page', $item[0]);
+			$object['pid'] = $pid_list[$order-1];
+			$object['x_pos'] = (double)$item[1];
+			$object['y_pos'] = (double)$item[2];
+			$object['type'] = $item[3];
 			// $object['width'] = $item[];
 			// $object['height'] = $item[];
 			$oid = $this->add_object($object);
@@ -57,7 +65,7 @@ class Builder extends MY_Controller{
 			/* label */
 			if ($object['type'] == "label" || $object['type'] == "question"){
 				$label['oid'] = $oid;
-				$label['text'] = $item[3];
+				$label['text'] = $item[4];
 				// $label['font'] = ;
 				// $label['font_size'] = ;
 				// $label['font_color'] = ;
@@ -78,7 +86,7 @@ class Builder extends MY_Controller{
 			/* button */
 			if ($object['type'] == "button"){
 				$button['oid'] = $oid;
-				$button['text'] = $item[3];
+				$button['text'] = $item[4];
 				// $button['go_to'] = ;
 				// $button['type'] = ;
 
