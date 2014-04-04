@@ -5,9 +5,10 @@ $(function() {
 	$.current_page = 1;
 
     $('#question')
-    	.click(function(eventClick, posX, posY, text_input){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
@@ -24,8 +25,12 @@ $(function() {
 				htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable" data-placeholder="Enter Question" ></div></div>';
 
 			var temp = $.count;
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 
-			$('.demo').append(htmlData);	
 	        $('.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -67,9 +72,10 @@ $(function() {
     });
 
 	$('#textinput')
-    	.click(function(eventClick, posX, posY, text_input){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
@@ -82,13 +88,16 @@ $(function() {
 			
 			if(text_input != "")
 				htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable">'+text_input+'</div></div>';
-
 			else
 				htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
 
 			var temp = $.count;
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 
-			$('.demo').append(htmlData);	
 	        $('.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -128,9 +137,10 @@ $(function() {
     });
 
 	$('#button')
-    	.click(function(eventClick, posX, posY, text_input){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" ' + 'data-page="' + $.page + '" ';
@@ -143,7 +153,12 @@ $(function() {
 			
 			var temp = $.count;
 
-			$('.demo').append(htmlData);	
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -192,14 +207,15 @@ $(function() {
     });
 
 	$('#radiobutton')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_numm){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
-				alert('x' + posX);
-				alert('y' + posY);
+				// alert('x' + posX);
+				// alert('y' + posY);
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
@@ -208,7 +224,11 @@ $(function() {
 			
 			var temp = $.count;
 
-			$('.demo').append(htmlData);	
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 	        $('.radiosnap.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -258,14 +278,15 @@ $(function() {
     });
 
 	$('#checkbox')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
-				alert('x' + posX);
-				alert('y' + posY);
+				// alert('x' + posX);
+				// alert('y' + posY);
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 			
@@ -273,8 +294,11 @@ $(function() {
 			htmlData += 'style="height:25px; width:120px;"><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Check Box</div><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
-
-			$('.demo').append(htmlData);	
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 	        $('.checksnap.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -324,9 +348,10 @@ $(function() {
     });
 
 	$('#dropdown')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -335,9 +360,13 @@ $(function() {
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
 			htmlData += 'style="height:25px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
-			
 
-			$('.demo').append(htmlData);	
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('.draggable').draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -408,9 +437,10 @@ $(function() {
 	    });
 
 	$('#slider')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -421,7 +451,12 @@ $(function() {
 			htmlData += 'style="height:25px; width:360px"><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
 
 			var temp = $.count;
-			$('.demo').append(htmlData);	
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 			$('#movingslider'+temp).simpleSlider();
 			$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
 			$('#movingslider'+temp)
@@ -460,6 +495,13 @@ $(function() {
 		    });
 		    
 	        $.count++;
+    });
+
+	$('#page')
+    	.click(function(eventClick, page_num){
+    		var index = page_num;
+			var htmlData = '<div id="page"' + index +'><div>';
+			$('.demo').append(htmlData);
     });
 
     $("#getObjectValues").click(function () {
@@ -569,91 +611,29 @@ $(function() {
 	$("#newPage").click(function(){
 		$.page++;
 		$.current_page++;
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
 
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
+		var htmlData = '<div id="page"' + $.current_page +'><div>';
+		$('.demo').append(htmlData);
 	});
 
 	$("#prevPage").click(function(){
+		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+
 		if($.current_page > 1){
 			$.current_page--;
 		}
 
-		//hide all objects first
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
-
-		//get objects for current page
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i) && $("#qtn"+i).data('page') == $.current_page){
-				document.getElementById('qtn'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
-				document.getElementById('inp'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
-				document.getElementById('btn'+i).style.visibility = 'visible';
-			}
-		}
+		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
 	$("#nextPage").click(function(){
+		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+
 		if($.current_page < $.page){
 			$.current_page++;
 		}
 
-		//hide all objects first
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
-
-		//get objects for current page
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i) && $("#qtn"+i).data('page') == $.current_page){
-				document.getElementById('qtn'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
-				document.getElementById('inp'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
-				document.getElementById('btn'+i).style.visibility = 'visible';
-			}
-		}
+		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
 });   
 

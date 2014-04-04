@@ -1,5 +1,6 @@
 <div id="workspace" class="demo panel callout" style="width:576px;height:432px;margin:auto;
 vertical-align: middle;" data-eid='<?= $eid;?>'>
+<div id="page1"></div>
 
 </div>
 
@@ -10,13 +11,13 @@ vertical-align: middle;" data-eid='<?= $eid;?>'>
 		echo '$(function() {';
 		foreach ($var as $obj){
 			if($obj[2] == "question")
-				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
+				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'1"]);';
 			
 			else if($obj[2] == "label")
-				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
+				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'1"]);';
 			
 			else if($obj[2] == "button")
-				echo '$("#button").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
+				echo '$("#button").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'1"]);';
 			
 			else if($obj[2] == "radio")
 				echo '$("#radiobutton").trigger("click",['.$obj[0].','.$obj[1].']);';
