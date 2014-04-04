@@ -27,14 +27,16 @@ $(function() {
 	        	scroll: false,
 	        	snap: false,
 	        	// drag: function(){
-		        //     var offset1 = $(this).offset();
-		        //     var xPos1 = offset1.left;
-		        //     var yPos1 = offset1.top;
-		        //     var element = $(this).attr('id');
-		        //     //substring depends on the length of id string
-		        //     var number = element.substring(3);
-		        //     $('#pos'+number+'X').text('x: ' + xPos1);
-		        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+	        	// 	var xPos = $(this).css('left');
+		        // 	var yPos = $(this).css('top');
+		            // var offset1 = $(this).offset();
+		            // var xPos1 = offset1.left;
+		            // var yPos1 = offset1.top;
+		            // var element = $(this).attr('id');
+		            // //substring depends on the length of id string
+		            // var number = element.substring(3);
+		            // $('#pos'+number+'X').text('x: ' + xPos1);
+		            // $('#pos'+number+'Y').text('y: ' + yPos1);
 		        // }
 	        })
 		    .resizable({
@@ -314,87 +316,87 @@ $(function() {
     });
 
 	$('#dropdown')
-	    	.click(function(eventClick, posX, posY){
-		    	posX = typeof posX !== 'undefined' ? posX : null;
-				posY = typeof posY !== 'undefined' ? posY : null;
+    	.click(function(eventClick, posX, posY){
+	    	posX = typeof posX !== 'undefined' ? posX : null;
+			posY = typeof posY !== 'undefined' ? posY : null;
 
-				var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
-				if (posX != null && posY != null){
-					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+			if (posX != null && posY != null){
+				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;"';
+			}
+			
+			// faulty -- contentEditable=true data-ph="My Placeholder String"
+			htmlData += 'style="height:25px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
+			
+
+			$('.demo').append(htmlData);	
+	        $('.draggable').draggable({
+	        	containment: "#workspace",
+	        	scroll: false,
+	        	cancel: false,
+	        	// drag: function(){
+		        //     var offset1 = $(this).offset();
+		        //     var xPos1 = offset1.left;
+		        //     var yPos1 = offset1.top;
+		        //     var element = $(this).attr('id');
+		        //     //substring depends on the length of id string
+		        //     var number = element.substring(3);
+		        //     $('#pos'+number+'X').text('x: ' + xPos1);
+		        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+		        // }
+	        })
+		    .click(function(){
+		        $(this).draggable( "option", "disabled", true );
+		        $(this).attr('contenteditable','true');
+		    });
+		    
+		    $('a.delete').on('click',function(e){
+		        e.preventDefault();
+		        btnID = $(this).closest('.draggable')[0].id;
+		        //alert('Now deleting "'+objID+'"');
+		        $('#'+btnID+'').remove();
+		    });
+
+		    var temp = $.count;
+		    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+
+		    $('#drpinput'+temp).blur(function(){
+		    	//alert('1');
+		        $('.draggable').draggable( 'option', 'disabled', false);
+		        $('.draggable').attr('contenteditable','false');
+		    });
+
+			$('#drpeditable'+temp).on('change', function(){
+				if($('#drpeditable'+temp+' option:selected').val() == 'addoption'){
+					$('#drpinput'+temp).val('');
+				}else{
+					$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
 				}
-				
-				// faulty -- contentEditable=true data-ph="My Placeholder String"
-				htmlData += 'style="height:25px; width:140px;"> <select id="drpeditable'+$.count+'" style="position:absolute; width:160px; height:23px; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:140px; height:23px;"><a href="#" class="delete"></a></div>';
-				
+			});
 
-				$('.demo').append(htmlData);	
-		        $('.draggable').draggable({
-		        	containment: "#workspace",
-		        	scroll: false,
-		        	cancel: false,
-		        	// drag: function(){
-			        //     var offset1 = $(this).offset();
-			        //     var xPos1 = offset1.left;
-			        //     var yPos1 = offset1.top;
-			        //     var element = $(this).attr('id');
-			        //     //substring depends on the length of id string
-			        //     var number = element.substring(3);
-			        //     $('#pos'+number+'X').text('x: ' + xPos1);
-			        //     $('#pos'+number+'Y').text('y: ' + yPos1);
-			        // }
-		        })
-			    .click(function(){
-			        $(this).draggable( "option", "disabled", true );
-			        $(this).attr('contenteditable','true');
-			    });
-			    
-			    $('a.delete').on('click',function(e){
-			        e.preventDefault();
-			        btnID = $(this).closest('.draggable')[0].id;
-			        //alert('Now deleting "'+objID+'"');
-			        $('#'+btnID+'').remove();
-			    });
+			function edit(){
+			    $('#drpeditable'+temp+' option:selected').text($('#drpinput'+temp).val());
+			    $('#drpeditable'+temp+' option:selected').val($('#drpinput'+temp).val());
+			}
 
-			    var temp = $.count;
-			    $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+			$('#drpinput'+temp).on('keyup', function(e){
+			    if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() != ""){
+			        edit();
+			    }
+			});
 
-			    $('#drpinput'+temp).blur(function(){
-			    	//alert('1');
-			        $('.draggable').draggable( 'option', 'disabled', false);
-			        $('.draggable').attr('contenteditable','false');
-			    });
 
-				$('#drpeditable'+temp).on('change', function(){
-					if($('#drpeditable'+temp+' option:selected').val() == 'addoption'){
-						$('#drpinput'+temp).val('');
-					}else{
-						$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
-					}
-				});
-
-				function edit(){
-				    $('#drpeditable'+temp+' option:selected').text($('#drpinput'+temp).val());
-				    $('#drpeditable'+temp+' option:selected').val($('#drpinput'+temp).val());
+			$('#drpinput'+temp).blur(function(){
+				if($('#drpeditable'+temp+' option:selected').val() == 'addoption' && $('#drpinput'+temp).val() != ""){
+					var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
+		            $('#drpeditable'+temp+' option').eq(-1).before(str);
+		            $('#drpeditable'+temp+' option:last').attr("selected", "selected");
 				}
-
-				$('#drpinput'+temp).on('keyup', function(e){
-				    if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() != ""){
-				        edit();
-				    }
-				});
-
-
-				$('#drpinput'+temp).blur(function(){
-					if($('#drpeditable'+temp+' option:selected').val() == 'addoption' && $('#drpinput'+temp).val() != ""){
-						var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
-			            $('#drpeditable'+temp+' option').eq(-1).before(str);
-			            $('#drpeditable'+temp+' option:last').attr("selected", "selected");
-					}
-					else if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() == ""){
-				    	$('#drpeditable'+temp+' option:selected').remove();
-				    }
-				});
-		        $.count++;
+				else if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() == ""){
+			    	$('#drpeditable'+temp+' option:selected').remove();
+			    }
+			});
+	        $.count++;
 	    });
 
 	$('#slider')
@@ -452,131 +454,99 @@ $(function() {
 	        $.count++;
     });
 
-/*	$('#button')
-    	.click(function(eventClick, posX, posY){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+    $("#getObjectValues").click(function () {
+    	//collect all question object
+		var x = new Array();
+		for(i=1; i<$.count; i++){
+			if ($('#qtn'+i).offset() !== undefined){
+		        var xPos = $('#qtn'+i).css('left');
+		        var yPos = $('#qtn'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "question";
+		   		x.push(data);
+		   	}
 
-			var htmlData='<div id="btn'+$.count+'"';
+			if ($('#inp'+i).offset() !== undefined){
+				var xPos = $('#inp'+i).css('left');
+		        var yPos = $('#inp'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "label";
+		   		x.push(data);
+		   	}
 
-			htmlData += '><button id="editable'+$.count+'" style="width:50px; height:200px margin-bottom:0px">move me, resize me</button></div>';
-			
-			$('.demo').append(htmlData);
-			$('#btn2').resizable({grid: 10})
-			.draggable({cancel:false, grid: [ 10,10 ] });
-			$('#editable2').click(function(){
-			    if ( $(this).is('.ui-draggable-dragging') ) {
-			    return;
-			    }
-			    $(this).draggable( "option", "disabled", true);
-			    $(this).attr('contentEditable',true);
-		    })
-		    .blur(function(){
-			    $(this).draggable( 'option', 'disabled', false);
-			    $(this).attr('contentEditable',false);
-			})
-    });*/
+			if ($('#btn'+i).offset() !== undefined){
+				var xPos = $('#btn'+i).css('left');
+		        var yPos = $('#btn'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "button";
+		   		x.push(data);
+		   	}
 
-	    $("#getObjectValues").click(function () {
-	    	//collect all question object
-			var x = new Array();
-			for(i=1; i<$.count; i++){
-				if ($('#qtn'+i).offset() !== undefined){
-					var offset = $('#qtn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "question";
-			   		x.push(data);
-			   	}
+			if ($('#radbtn'+i).offset() !== undefined){
+				var xPos = $('#radbtn'+i).css('left');
+		        var yPos = $('#radbtn'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "radio";
+		   		x.push(data);
+		   	}
 
-				if ($('#inp'+i).offset() !== undefined){
-					var offset = $('#inp'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "label";
-			   		x.push(data);
-			   	}
+			if ($('#chkbox'+i).offset() !== undefined){
+				var xPos = $('#chkbox'+i).css('left');
+		        var yPos = $('#chkbox'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "checkbox";
+		   		x.push(data);
+		   	}
 
-				if ($('#btn'+i).offset() !== undefined){
-					var offset = $('#btn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "button";
-			   		x.push(data);
-			   	}
+			if ($('#dropdown'+i).offset() !== undefined){
+				var xPos = $('#dropdown'+i).css('left');
+		        var yPos = $('#dropdown'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "dropdown";
+		   		x.push(data);
+		   	}
 
-				if ($('#radbtn'+i).offset() !== undefined){
-					var offset = $('#radbtn'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "radio";
-			   		x.push(data);
-			   	}
+			if ($('#sldr'+i).offset() !== undefined){
+				var xPos = $('#sldr'+i).css('left');
+		        var yPos = $('#sldr'+i).css('top');
+		   		var data = new Array();
+		   		data[0] = xPos;
+		   		data[1] = yPos;
+		   		data[2] = "slider";
+		   		x.push(data);
+		   	}
 
-				if ($('#chkbox'+i).offset() !== undefined){
-					var offset = $('#chkbox'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "checkbox";
-			   		x.push(data);
-			   	}
+		}
 
-				if ($('#dropdown'+i).offset() !== undefined){
-					var offset = $('#dropdown'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "dropdown";
-			   		x.push(data);
-			   	}
-
-				if ($('#sldr'+i).offset() !== undefined){
-					var offset = $('#sldr'+i).offset();
-			        var xPos = offset.left;
-			        var yPos = offset.top;
-			   		var data = new Array();
-			   		data[0] = xPos;
-			   		data[1] = yPos;
-			   		data[2] = "slider";
-			   		x.push(data);
-			   	}
-
-			}
-
-		   	$.ajax({
-		   		url: '<?=base_url()?>builder/save',
-		   		type:"POST",
-		   		data:{
-		   			'msg':x,
-		   			'eid':'<?=$eid?>'
-		   		},
-		   		dataType: 'json',
-		   		complete: function(data) {
-		   			// alert("Saved Successfully!");
-		   			//alert(data[0][0]);
-		   			//alert(data.responseText);
-		   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
-		   		},
-		
-		   	});
-		});
+	   	$.ajax({
+	   		url: '<?=base_url()?>builder/save',
+	   		type:"POST",
+	   		data:{
+	   			'msg':x,
+	   			'eid':'<?=$eid?>'
+	   		},
+	   		dataType: 'json',
+	   		complete: function(data) {
+	   			// alert("Saved Successfully!");
+	   			//alert(data[0][0]);
+	   			//alert(data.responseText);
+	   			window.location.href = "<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>";
+	   		},
+	
+	   	});
+	});
 	
 	$('body').on('paste', '.ui-widget-content', function (e) {
 	    setTimeout(function() {
