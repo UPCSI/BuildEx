@@ -18,18 +18,17 @@ class Builder_model extends MY_Model{
 
 		$objects = $this->query_conversion($query);
 		foreach($objects as $object){
-			$new_obj = array($object->x_pos, $object->y_pos, $object->type);
-			// if ($new_obj[2] == "label"){
-			// 	$label = $this->get_object($object->oid, 'Labels');
-			// 	array_push($new_obj, $label->text);
-			// }
+			$this->db->where('pid', $object->pid);
+			$query = $this->db->get('Pages');
+			$order = $this->query_row_conversion($query);
 
-			if ($new_obj[2] == "question"){
+			$new_obj = array($order->order, $object->x_pos, $object->y_pos, $object->type);
+			if ($new_obj[3] == "question"){
 				$label = $this->get_object($object->oid, 'Labels');
 				array_push($new_obj, $label->text);
 			}
 
-			if ($new_obj[2] == "button"){
+			if ($new_obj[3] == "button"){
 				$button = $this->get_object($object->oid, 'Buttons');
 				array_push($new_obj, $button->text);
 			}
@@ -40,6 +39,12 @@ class Builder_model extends MY_Model{
 		return $data;
 	}
 
+	function get_all_pages($eid){
+		$this->db->select("*");
+		$this->db->where('eid', $eid);
+		$query = $this->db->get('Pages');
+		return $this->query_conversion($query);
+	}
 
 	function get_object($oid, $table){
 		$this->db->where('oid', $oid);
@@ -59,15 +64,11 @@ class Builder_model extends MY_Model{
 		$query = $this->db->get('Objects');
 		$object = $this->query_row_conversion($query);
 
-		$this->db->where('qid', $object->qid);		
+		$this->db->where('qid', $object->qid);
 		$this->db->update('Questions', array('input' => $input_id));
-
 	}
 
 	function add_page($data){
-		$this->db->where('eid', $data['eid']);
-		$this->db->delete('Pages');
-
 		$this->db->insert('Pages',$data);
 		return $this->db->insert_id();
 	}

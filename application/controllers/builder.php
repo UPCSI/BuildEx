@@ -22,8 +22,11 @@ class Builder extends MY_Controller{
 
 		$data['title'] = 'Experiment';
 		$data['eid'] = $eid;
+		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 
+
+		// var_dump($data['var']);
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
 	}
@@ -38,7 +41,10 @@ class Builder extends MY_Controller{
 		$message = $this->input->post('msg');
 		if ($message == 'false')
 			return;
-
+		
+		$eid = $this->input->post('eid');
+		$this->delete($eid);
+		
 		$pid_list = array();
 		/* page */
 		$page['eid'] = $this->input->post('eid');
@@ -46,14 +52,16 @@ class Builder extends MY_Controller{
 		$total_pages = array_shift($message);
 
 		for($index=1; $index <= $total_pages; $index++){
-			$page['eid'] = $this->input->post('eid');
+			$page['eid'] = $eid;
 			$page['order'] = $index;
 			array_push($pid_list, $this->add_page($page));
 		}
 
+		// $d['page'] = array();
+
 		/* object */
 		foreach ($message as $item){
-			$order = (int)explode('page', $item[0]);
+			$order = (int)substr($item[0], 4);
 			$object['pid'] = $pid_list[$order-1];
 			$object['x_pos'] = (double)$item[1];
 			$object['y_pos'] = (double)$item[2];
@@ -61,6 +69,9 @@ class Builder extends MY_Controller{
 			// $object['width'] = $item[];
 			// $object['height'] = $item[];
 			$oid = $this->add_object($object);
+
+
+			// array_push($d['page'],$order);
 
 			/* question */
 			if ($object['type'] == "question"){
@@ -102,6 +113,8 @@ class Builder extends MY_Controller{
 				$button_id = $this->add_button($button);
 			}
 		}
+			// $d['pid'] = $pid_list;
+			// $this->session->set_userdata($d);
 
 		echo $this->session->userdata('active_role'); #for ajax
 	}
@@ -127,7 +140,12 @@ class Builder extends MY_Controller{
 		$this->builder_model->bind($pid, $input_id);
 	}
 
-	public function save_input($oid, $type){
+	public function get_all_pages($eid){
+		$this->load->model('builder_model');
+		return $this->builder_model->get_all_pages($eid);
+	}
+
+		public function save_input($oid, $type){
 		$input['oid'] = $oid;
 		$input['type'] = $type;
 		// $input['helper'] = ;

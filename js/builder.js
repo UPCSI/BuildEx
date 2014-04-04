@@ -1,5 +1,6 @@
 (function($){ 
 $(function() {
+
 	$.count = 1;
 	$.page = 1;
 	$.current_page = 1;
@@ -10,13 +11,12 @@ $(function() {
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
-			
-			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
+			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
 			}
 
 			if(text_input != "")
@@ -26,10 +26,14 @@ $(function() {
 
 			var temp = $.count;
 			var index = page_num;
-			if(index <= 0)
+			// alert(index);
+			if(index <= 0){
 				$("#page" + $.current_page).append(htmlData);
-			else
+			}
+
+			else{
 				$("#page" + index).append(htmlData);
+			}
 
 	        $('#qtn'+temp).draggable({
 	        	containment: "#workspace",
@@ -78,7 +82,7 @@ $(function() {
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
-			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
+			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content"';
 
 			if (posX != null && posY != null){
 				// alert('x' + posX);
@@ -143,7 +147,7 @@ $(function() {
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 
-			var htmlData='<div id="btn'+$.count+'" class="draggable" ' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="btn'+$.count+'" class="draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
@@ -212,12 +216,12 @@ $(function() {
     });
 
 	$('#radiobutton')
-    	.click(function(eventClick, posX, posY, page_numm){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
-			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
@@ -292,7 +296,7 @@ $(function() {
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
-			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
@@ -367,7 +371,7 @@ $(function() {
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
-			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
 			if (posX != null && posY != null){
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:34px; width:140px;"';
 			}
@@ -459,7 +463,7 @@ $(function() {
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
-			var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
+			var htmlData='<div id="sldr'+$.count+'" class="draggable"';
 			if (posX != null && posY != null){
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:360px"';
 			}
@@ -516,13 +520,6 @@ $(function() {
 		    });
 		    
 	        $.count++;
-    });
-
-	$('#page')
-    	.click(function(eventClick, page_num){
-    		var index = page_num;
-			var htmlData = '<div id="page"' + index +'><div>';
-			$('.demo').append(htmlData);
     });
 
     $("#getObjectValues").click(function () {
@@ -638,10 +635,15 @@ $(function() {
 
 	$("#newPage").click(function(){
 		$.page++;
-		$.current_page++;
 
-		var htmlData = '<div id="page"' + $.current_page +'><div>';
+		var htmlData = '<div id="page' + $.page +'"><div>';
 		$('.demo').append(htmlData);
+
+		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+		$.current_page++;
+		// alert($.current_page);
+
+		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
 	$("#prevPage").click(function(){
@@ -651,6 +653,7 @@ $(function() {
 			$.current_page--;
 		}
 
+		// alert($.current_page);
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
@@ -661,8 +664,11 @@ $(function() {
 			$.current_page++;
 		}
 
+		// alert($.current_page);
+
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
+
 });   
 
 }) (jQuery); 
