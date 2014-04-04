@@ -27,8 +27,8 @@ class Builder extends MY_Controller{
 		$data['eid'] = $eid;
 		$data['var'] = $this->get_positions($eid);
 
-		$data['main_content'] = 'experiment/add_experiment_form';
-		$this->load->view('_main_layout', $data);
+		$data['main_content'] = 'builder/workspace';
+		$this->load->view('builder/layout', $data);
 	}
 
 /*

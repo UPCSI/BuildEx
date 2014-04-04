@@ -1,8 +1,6 @@
 <?php
-
-$this->load->view('expbuilder/header',$title);
-$this->load->view('expbuilder/topbar');
-
+	$this->load->view('builder/header',$title);
+	$this->load->view('builder/topbar');
 ?>
 
 <div class="row full legit" style="min-height:100%;height:100%">
@@ -12,7 +10,7 @@ $this->load->view('expbuilder/topbar');
     margin-bottom:0px;">
 <div class="panel callout" style="min-height:100%;height:100%;overflow-y:auto;">
 <ol>
-<?php $this->load->view('expbuilder/panels'); ?>
+<?php $this->load->view('builder/panels'); ?>
 </ol>
 </div>
 </div>
@@ -22,15 +20,15 @@ $this->load->view('expbuilder/topbar');
 </div>
 <div class="row full legit" style="min-height:27%;height:27%;margin-left:0px;margin-right:0px;background:#252525">
 <div class="large-12 medium-12 small-12 column unpad-h" style="top: -1px;">
-<?php $this->load->view('expbuilder/elements'); ?>
+<?php $this->load->view('builder/elements'); ?>
 </div>
 </div>
 </div>
 <div class="large-2 medium-2 small-2 column" style="min-height:100%;height:100%;overflow-y:auto;background:#252525;padding:0px">
-<?php $this->load->view('expbuilder/settings'); ?>
+<?php $this->load->view('builder/settings'); ?>
 </div>
 </div>
-<?php $this->load->view('expbuilder/footer'); ?>
+<?php $this->load->view('builder/footer'); ?>
 
 </body>
 </html>

@@ -14,6 +14,6 @@
 	<label>Target Count</label><br/>
 	<input type="text" id="targetCount" required name="target_count" value="<?php echo $experiment->target_count; ?>" placeholder="Target Count"><br/><br/>
 
-	<input type="submit" value="Edit Experiment">
+	<input type="submit" class = "button small" value="Edit Experiment">
 	<?php echo form_close();?>
 </fieldset>

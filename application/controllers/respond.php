@@ -117,12 +117,15 @@ class Respond extends CI_Controller{
 	}
 
 	public function submit(){
-		$eid = $this->input->post('eid');
-		$this->experiments_model->increment_count($eid);
+		$eid = $this->session->userdata('respond_to');
+		
+		if(!$this->experiments_model->increment_count($eid)){
+			var_dump('error!');//go to error page
+			return 0;
+		}
 		/* last call before exiting */
 
 		/*perform form validations*/ //not priority
-
 		redirect('respond/complete');
 	}
 
@@ -142,7 +145,7 @@ class Respond extends CI_Controller{
 		$this->session->unset_userdata('respond_to');
 		$this->session->unset_userdata('eid');
 
-		$data['title'] = 'Good bye!';
+		$data['title'] = 'Good Bye';
 		$data['main_content'] = 'respondent/leave';
 		$this->load->view('respondent/_view_layout', $data);
 	}

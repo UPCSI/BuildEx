@@ -61,8 +61,8 @@ class Experiment extends MY_Controller{
 	*/
 	public function edit_experiment($eid = 0){
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
-		$data['title'] = '\Temporary Edit\ Experiment';
-		$data['main_content'] = 'experiment/add_experiment_form';
+		$data['title'] = 'Experiment';
+		$data['main_content'] = 'experiment/edit_experiment_form';
 		$this->load->view('_main_layout', $data);
 	}
 
