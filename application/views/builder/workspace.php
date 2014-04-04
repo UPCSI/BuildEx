@@ -1,5 +1,5 @@
-<div id="workspace" class="demo panel callout" style="min-width:576px;height:432px;margin:auto;
-vertical-align: middle; padding:0px; border:0px" data-eid='<?= $eid;?>'>
+<div id="workspace" class="demo panel callout" style="min-width:576px; max-width:0px; position:relative; height:432px; margin:auto;
+vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
 
 </div>
 
