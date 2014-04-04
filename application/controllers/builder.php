@@ -62,8 +62,8 @@ class Builder extends MY_Controller{
 			// $object['height'] = $item[];
 			$oid = $this->add_object($object);
 
-			/* label */
-			if ($object['type'] == "label" || $object['type'] == "question"){
+			/* question */
+			if ($object['type'] == "question"){
 				$label['oid'] = $oid;
 				$label['text'] = $item[4];
 				// $label['font'] = ;
@@ -71,16 +71,25 @@ class Builder extends MY_Controller{
 				// $label['font_color'] = ;
 
 				$label_id = $this->add_label($label);
-			}
 
-			/* question */
-			if ($object['type'] == "question"){
 				$question['oid'] = $oid;
 				$question['is_required'] = 'f';
 				// $question['input'] = ;
 				$question['label'] = $label_id;
 
 				$qid = $this->add_question($question);
+			}
+
+			/* textinput */
+			if ($object['type'] == "textinput"){
+				$input_id = $this->save_input($oid, 'textinput');
+
+				$textinput['input_id'] = $input_id;
+				// $textinput['length'] = ;
+				// $textinput['orientation'] = ;
+
+				$textinput_id = $this->add_textinput($textinput);
+				$this->bind($object['pid'], $input_id);
 			}
 
 			/* button */
@@ -92,16 +101,6 @@ class Builder extends MY_Controller{
 
 				$button_id = $this->add_button($button);
 			}
-
-			// /* radio */
-			// if ($object['type'] == "radio" || $object['type'] == "radio"){
-			// 	$input['oid'] = $oid;
-			// 	$input['text'] = $item[3];
-			// 	// $input['go_to'] = ;
-			// 	// $input['type'] = ;
-
-			// 	$input_id = $this->add_input($input);
-			// }
 		}
 
 		echo $this->session->userdata('active_role'); #for ajax
@@ -123,6 +122,18 @@ class Builder extends MY_Controller{
 	------------------------------------------------------------------------------------
 */
 
+	public function bind($pid, $input_id){
+		$this->load->model('builder_model');
+		$this->builder_model->bind($pid, $input_id);
+	}
+
+	public function save_input($oid, $type){
+		$input['oid'] = $oid;
+		$input['type'] = $type;
+		// $input['helper'] = ;
+		return $this->add_input($input);		
+	}
+
 	public function add_page($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_page($data);
@@ -136,6 +147,11 @@ class Builder extends MY_Controller{
 	public function add_label($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_label($data);
+	}
+
+	public function add_textinput($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_textinput($data);
 	}
 
 	public function add_button($data){

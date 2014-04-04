@@ -13,8 +13,8 @@ vertical-align: middle;" data-eid='<?= $eid;?>'>
 			if($obj[2] == "question")
 				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'",1]);';
 			
-			else if($obj[2] == "label")
-				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'",1]);';
+			else if($obj[2] == "textinput")
+				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].',"' ."" .'",1]);';
 			
 			else if($obj[2] == "button")
 				echo '$("#button").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'",1]);';

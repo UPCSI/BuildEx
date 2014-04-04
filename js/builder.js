@@ -529,8 +529,7 @@ $(function() {
 				data[0]=$('#inp'+i).parent().attr("id");
 		   		data[1] = xPos;
 		   		data[2] = yPos;
-		   		data[3] = "label";
-		   		data[4] = document.getElementById('inpeditable'+i).textContent;
+		   		data[3] = "textinput";
 		   		x.push(data);
 		   	}
 

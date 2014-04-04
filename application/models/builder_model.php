@@ -19,10 +19,10 @@ class Builder_model extends MY_Model{
 		$objects = $this->query_conversion($query);
 		foreach($objects as $object){
 			$new_obj = array($object->x_pos, $object->y_pos, $object->type);
-			if ($new_obj[2] == "label"){
-				$label = $this->get_object($object->oid, 'Labels');
-				array_push($new_obj, $label->text);
-			}
+			// if ($new_obj[2] == "label"){
+			// 	$label = $this->get_object($object->oid, 'Labels');
+			// 	array_push($new_obj, $label->text);
+			// }
 
 			if ($new_obj[2] == "question"){
 				$label = $this->get_object($object->oid, 'Labels');
@@ -46,9 +46,22 @@ class Builder_model extends MY_Model{
 		$query = $this->db->get($table);
 		return $this->query_row_conversion($query);
 	}
+
 	function delete($eid){
 		$this->db->where('eid',$eid);
 		$this->db->delete('Pages');		
+	}
+
+	function bind($pid, $input_id){
+		$this->db->where('Pages.pid', $pid);
+		$this->db->join('Pages', 'Pages.pid = Objects.pid');
+		$this->db->join('Questions', 'Questions.oid = Objects.oid');
+		$query = $this->db->get('Objects');
+		$object = $this->query_row_conversion($query);
+
+		$this->db->where('qid', $object->qid);		
+		$this->db->update('Questions', array('input' => $input_id));
+
 	}
 
 	function add_page($data){
@@ -66,6 +79,11 @@ class Builder_model extends MY_Model{
 
 	function add_label($data){
 		$this->db->insert('Labels',$data);
+		return $this->db->insert_id();
+	}
+
+	function add_textinput($data){
+		$this->db->insert('Texts',$data);
 		return $this->db->insert_id();
 	}
 
