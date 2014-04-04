@@ -40,6 +40,7 @@
 
 <!-- Modal - Create Experiment -->
 <div id="create_experiment_modal" class="reveal-modal small" data-reveal>
+  <div class = "loader"> </div> <!-- loading image -->
   <h2>Create an Experiment</h2>
 	<?php echo validation_errors();?>
 	<?php echo form_open("experiment/add_experiment");?>
@@ -59,3 +60,20 @@
 	<?php echo form_close();?>
   <a class="close-reveal-modal">&#215;</a>
 </div>
+
+<script> 
+$("#create_experiment_modal form").submit(function(){
+											var x = $(this).serialize();
+											$(".loader").fadeIn();
+											$.ajax({ url: window.location.protocol+"//"+window.location.host + '/BuildEx/experiment/add_experiment',
+													data: x,
+													type: "POST",
+													complete: function(data){
+																	console.log(data.responseText);
+																	window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/builder/app/'+data.responseText;
+																}
+												});
+											return false;
+													});
+
+</script>
