@@ -425,6 +425,10 @@ ul {
     margin: 0px;
 }
 
+.slider {
+    margin-left: 0px !important;
+    margin-bottom: 0px !important;
+}
 .editable {
     cursor: move;
     width: 100%;
