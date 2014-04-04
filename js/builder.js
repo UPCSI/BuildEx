@@ -129,7 +129,7 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += 'style="width:150px; height:60"><button id="editable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px">Button</button><a href="#" class="delete"></a></div>';
+			htmlData += 'style="width:150px; height:60"><button id="editable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Button</div></button><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
 
@@ -152,17 +152,24 @@ $(function() {
 		    .resizable({
 		    	containment: "#workspace"
 		    });
-		    $('#editable'+temp).click(function(){
+		    $('.default').click(function(){
+		    	console.log("click");
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
 		        }
 		        $('#btn'+temp).draggable( "option", "disabled", true );
 		        $(this).attr('contenteditable','true');
-		    })
+		    });
+
 		    $(document).click(function(e){
-		    	if(e.target.id != ('editable'+temp)){
+		    	if($(e.target).attr('id') == ('editable'+temp)){
+		    		$(e.target).children().click();
+		    		$(e.target).children().focus();
+		    	}
+		    	else if(e.target.className != 'default' && e.target.id != 'editable'+temp){
 			        $('#btn'+temp).draggable( 'option', 'disabled', false);
-			        $('#editable'+temp).attr('contenteditable','false');
+			        $('.default').attr('contenteditable','false');
+			        
 			    }
 		    });
 		    $('a.delete').on('click',function(e){
