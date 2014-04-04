@@ -153,7 +153,6 @@ $(function() {
 		    	containment: "#workspace"
 		    });
 		    $('.default').click(function(){
-		    	console.log("click");
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
 		        }
@@ -195,8 +194,10 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name='+$.page+'" value="radiobutton">Radio Button<a href="#" class="delete"></a></div>';
+			htmlData += 'style="height:25px; width:120px;"><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Radio Button</div><a href="#" class="delete"></a></div>';
 			
+			var temp = $.count;
+
 			$('.demo').append(htmlData);	
 	        $('.radiosnap.draggable').draggable({
 	        	containment: "#workspace",
@@ -214,20 +215,28 @@ $(function() {
 		        //     $('#pos'+number+'Y').text('y: ' + yPos1);
 		        // }
 	        })
-		    //.resizable({
-		    	// containment: "#workspace"
-		    //})
-		    .click(function(){
+	        .resizable({
+		    	containment: "#workspace"
+		    });
+		    $('.default').click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
 		        }
-		        $(this).draggable( "option", "disabled", true );
+		        $('.radiosnap.draggable').draggable( "option", "disabled", true );
 		        $(this).attr('contenteditable','true');
 		    })
 		    .blur(function(){
-		        $(this).draggable( 'option', 'disabled', false);
+		        $('.radiosnap.draggable').draggable( 'option', 'disabled', false);
 		        $(this).attr('contenteditable','false');
 		    });
+
+		    $(document).click(function(e){
+		    	if($(e.target).attr('id') == ('radbtn'+temp)){
+		    		$(e.target).children('.default').click();
+		    		$(e.target).children('.default').focus();
+		    	}
+		    });
+
 		    $('a.delete').on('click',function(e){
 		        e.preventDefault();
 		        btnID = $(this).closest('.draggable')[0].id;
@@ -251,8 +260,10 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += 'style="height:25px; width:120px;"><input type="checkbox" id="chkeditable'+$.count+'" name='+$.page+'value="checkbox">Check Box<a href="#" class="delete"></a></div>';
+			htmlData += 'style="height:25px; width:120px;"><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Check Box</div><a href="#" class="delete"></a></div>';
 			
+			var temp = $.count;
+
 			$('.demo').append(htmlData);	
 	        $('.checksnap.draggable').draggable({
 	        	containment: "#workspace",
@@ -270,20 +281,28 @@ $(function() {
 		        //     $('#pos'+number+'Y').text('y: ' + yPos1);
 		        // }
 	        })
-		    //.resizable({
-		    	// containment: "#workspace"
-		    //})
-		    .click(function(){
+		    .resizable({
+		    	containment: "#workspace"
+		    });
+		    $('.default').click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
 		            return;
 		        }
-		        $(this).draggable( "option", "disabled", true );
+		        $('.checksnap.draggable').draggable( "option", "disabled", true );
 		        $(this).attr('contenteditable','true');
 		    })
 		    .blur(function(){
-		        $(this).draggable( 'option', 'disabled', false);
+		        $('.checksnap.draggable').draggable( 'option', 'disabled', false);
 		        $(this).attr('contenteditable','false');
 		    });
+
+		    $(document).click(function(e){
+		    	if($(e.target).attr('id') == ('chkbox'+temp)){
+		    		$(e.target).children('.default').click();
+		    		$(e.target).children('.default').focus();
+		    	}
+		    });
+
 		    $('a.delete').on('click',function(e){
 		        e.preventDefault();
 		        btnID = $(this).closest('.draggable')[0].id;
