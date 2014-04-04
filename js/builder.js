@@ -5,9 +5,11 @@ $(function() {
 	$.current_page = 1;
 
     $('#question')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
 
@@ -17,11 +19,18 @@ $(function() {
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 			}
 
-			htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable" data-placeholder="Enter Question" ></div></div>';
+			if(text_input != "")
+				htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable">'+text_input+'</div></div>';
+			else
+				htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable" data-placeholder="Enter Question" ></div></div>';
 
 			var temp = $.count;
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 
-			$('.demo').append(htmlData);	
 	        $('#qtn'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -63,9 +72,11 @@ $(function() {
     });
 
 	$('#textinput')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
 
@@ -75,11 +86,18 @@ $(function() {
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 			}
 			
-			htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
+			if(text_input != "")
+				htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable">'+text_input+'</div></div>';
+			else
+				htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
 
 			var temp = $.count;
+			var index = page_num;
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
 
-			$('.demo').append(htmlData);	
 	        $('#inp'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -119,9 +137,11 @@ $(function() {
     });
 
 	$('#button')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -133,12 +153,17 @@ $(function() {
 				htmlData += 'style="width:150px; height:60"';
 			}
 			
-			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += '><button id="editable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Button</div></button><a href="#" class="delete"></a></div>';
+			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
 
-			$('.demo').append(htmlData);	
+			var index = page_num;
+
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('#btn'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -166,11 +191,11 @@ $(function() {
 		    });
 
 		    $(document).click(function(e){
-		    	if($(e.target).attr('id') == ('editable'+temp)){
+		    	if($(e.target).attr('id') == ('btneditable'+temp)){
 		    		$(e.target).children().click();
 		    		$(e.target).children().focus();
 		    	}
-		    	else if(e.target.className != 'default' && e.target.id != 'editable'+temp){
+		    	else if(e.target.className != 'default' && e.target.id != 'btneditable'+temp){
 			        $('#btn'+temp).draggable( 'option', 'disabled', false);
 			        $('.default').attr('contenteditable','false');
 			        
@@ -187,9 +212,10 @@ $(function() {
     });
 
 	$('#radiobutton')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_numm){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -205,8 +231,13 @@ $(function() {
 			htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Radio Button</div><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
+			var index = page_num;
 
-			$('.demo').append(htmlData);
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('#radbtn'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -256,9 +287,10 @@ $(function() {
     });
 
 	$('#checkbox')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -274,8 +306,13 @@ $(function() {
 			htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Check Box</div><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
+			var index = page_num;
 
-			$('.demo').append(htmlData);	
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('#chkbox'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -325,9 +362,10 @@ $(function() {
     });
 
 	$('#dropdown')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -337,12 +375,16 @@ $(function() {
 				htmlData += 'style="height:34px; width:140px;"';
 			}
 
-			// faulty -- contentEditable=true data-ph="My Placeholder String"
 			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
+			var index = page_num;
 
-			$('.demo').append(htmlData);	
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 	        $('#dropdown'+temp).draggable({
 	        	containment: "#workspace",
 	        	scroll: false,
@@ -412,9 +454,10 @@ $(function() {
 	    });
 
 	$('#slider')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="sldr'+$.count+'" class="draggable"' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
@@ -428,8 +471,13 @@ $(function() {
 			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
 
 			var temp = $.count;
+			var index = page_num;
 
-			$('.demo').append(htmlData);	
+			if(index <= 0)
+				$("#page" + $.current_page).append(htmlData);
+			else
+				$("#page" + index).append(htmlData);
+
 			$('#movingslider'+temp).simpleSlider();
 			$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
 			$('#movingslider'+temp)
@@ -470,18 +518,28 @@ $(function() {
 	        $.count++;
     });
 
+	$('#page')
+    	.click(function(eventClick, page_num){
+    		var index = page_num;
+			var htmlData = '<div id="page"' + index +'><div>';
+			$('.demo').append(htmlData);
+    });
+
     $("#getObjectValues").click(function () {
     	//collect all question object
     	var eid = document.getElementById('workspace').getAttribute('data-eid');
 		var x = new Array();
+		x.push($.page);
 		for(i=1; i<$.count; i++){
 			if ($('#qtn'+i).offset() !== undefined){
 		        var xPos = $('#qtn'+i).css('left') == 'auto' ? 5 : parseInt($('#qtn'+i).css('left'));
 		        var yPos = $('#qtn'+i).css('top') == 'auto' ? 5 : parseInt($('#qtn'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "question";
+				data[0]=$('#qtn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "question";
+		   		data[4] = document.getElementById('qtneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -489,9 +547,11 @@ $(function() {
 				var xPos = $('#inp'+i).css('left') == 'auto' ? 5 : parseInt($('#inp'+i).css('left'));
 		        var yPos = $('#inp'+i).css('top') == 'auto' ? 5 : parseInt($('#inp'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "label";
+				data[0]=$('#inp'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "label";
+		   		data[4] = document.getElementById('inpeditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -499,9 +559,11 @@ $(function() {
 				var xPos = $('#btn'+i).css('left') == 'auto' ? 5 : parseInt($('#btn'+i).css('left'));
 		        var yPos = $('#btn'+i).css('top') == 'auto' ? 5 : parseInt($('#btn'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "button";
+				data[0]=$('#btn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "button";
+		   		data[4] = document.getElementById('btneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -509,9 +571,10 @@ $(function() {
 				var xPos = $('#radbtn'+i).css('left') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('left'));
 		        var yPos = $('#radbtn'+i).css('top') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "radio";
+				data[0]=$('#radbtn'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "radio";
 		   		x.push(data);
 		   	}
 
@@ -519,9 +582,10 @@ $(function() {
 				var xPos = $('#chkbox'+i).css('left') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('left'));
 		        var yPos = $('#chkbox'+i).css('top') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "checkbox";
+				data[0]=$('#chkbox'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "checkbox";
 		   		x.push(data);
 		   	}
 
@@ -529,9 +593,10 @@ $(function() {
 				var xPos = $('#dropdown'+i).css('left') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('left'));
 		        var yPos = $('#dropdown'+i).css('top') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "dropdown";
+				data[0]=$('#dropdown'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "dropdown";
 		   		x.push(data);
 		   	}
 
@@ -539,16 +604,17 @@ $(function() {
 				var xPos = $('#sldr'+i).css('left') == 'auto' ? 5 : parseInt($('#sldr'+i).css('left'));
 		        var yPos = $('#sldr'+i).css('top') == 'auto' ? 5 : parseInt($('#sldr'+i).css('top'));
 		   		var data = new Array();
-		   		data[0] = xPos;
-		   		data[1] = yPos;
-		   		data[2] = "slider";
+				data[0]=$('#sldr'+i).parent().attr("id");
+		   		data[1] = xPos;
+		   		data[2] = yPos;
+		   		data[3] = "slider";
 		   		x.push(data);
 		   	}
 
 		}
 
 	   	$.ajax({
-	   		url: window.location.protocol+"//"+window.location.host + '/buildex/builder/save',
+	   		url: window.location.protocol+"//"+window.location.host + '/BuildEx/builder/save',
 	   		type:"POST",
 	   		data:{
 	   			'msg':x,
@@ -559,7 +625,7 @@ $(function() {
 	   			// alert("Saved Successfully!");
 	   			//alert(data[0][0]);
 	   			//alert(data.responseText);
-	   			window.location.href = window.location.protocol+"//"+window.location.host + '/buildex/' + data.responseText + '/experiments';
+	   			window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
 	   		},
 	
 	   	});
@@ -574,91 +640,29 @@ $(function() {
 	$("#newPage").click(function(){
 		$.page++;
 		$.current_page++;
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
 
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
+		var htmlData = '<div id="page"' + $.current_page +'><div>';
+		$('.demo').append(htmlData);
 	});
 
 	$("#prevPage").click(function(){
+		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+
 		if($.current_page > 1){
 			$.current_page--;
 		}
 
-		//hide all objects first
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
-
-		//get objects for current page
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i) && $("#qtn"+i).data('page') == $.current_page){
-				document.getElementById('qtn'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
-				document.getElementById('inp'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
-				document.getElementById('btn'+i).style.visibility = 'visible';
-			}
-		}
+		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
 	$("#nextPage").click(function(){
+		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+
 		if($.current_page < $.page){
 			$.current_page++;
 		}
 
-		//hide all objects first
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i)){
-				document.getElementById('qtn'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('inp'+i)){
-				document.getElementById('inp'+i).style.visibility = 'hidden';
-			}
-
-			if(document.getElementById('btn'+i)){
-				document.getElementById('btn'+i).style.visibility = 'hidden';
-			}
-		}
-
-		//get objects for current page
-		for(i=1; i<$.count; i++){
-			if(document.getElementById('qtn'+i) && $("#qtn"+i).data('page') == $.current_page){
-				document.getElementById('qtn'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('inp'+i) && $("#inp"+i).data('page') == $.current_page){
-				document.getElementById('inp'+i).style.visibility = 'visible';
-			}
-
-			if(document.getElementById('btn'+i) && $("#btn"+i).data('page') == $.current_page){
-				document.getElementById('btn'+i).style.visibility = 'visible';
-			}
-		}
+		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
 });   
 

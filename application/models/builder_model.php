@@ -6,7 +6,7 @@ class Builder_model extends MY_Model{
 		parent::__construct();
 	}
 
-	function get_positions($eid){
+	function get_all_objects($eid){
 		$data = [];
 
 		$this->db->where('Pages.eid', $eid);
@@ -19,12 +19,33 @@ class Builder_model extends MY_Model{
 		$objects = $this->query_conversion($query);
 		foreach($objects as $object){
 			$new_obj = array($object->x_pos, $object->y_pos, $object->type);
+			if ($new_obj[2] == "label"){
+				$label = $this->get_object($object->oid, 'Labels');
+				array_push($new_obj, $label->text);
+			}
+
+			if ($new_obj[2] == "question"){
+				$label = $this->get_object($object->oid, 'Labels');
+				array_push($new_obj, $label->text);
+			}
+
+			if ($new_obj[2] == "button"){
+				$button = $this->get_object($object->oid, 'Buttons');
+				array_push($new_obj, $button->text);
+			}
+
 			array_push($data, $new_obj);
 		}
 
 		return $data;
 	}
 
+
+	function get_object($oid, $table){
+		$this->db->where('oid', $oid);
+		$query = $this->db->get($table);
+		return $this->query_row_conversion($query);
+	}
 	function delete($eid){
 		$this->db->where('eid',$eid);
 		$this->db->delete('Pages');		
@@ -78,62 +99,14 @@ class Builder_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-
-/*
-	------------------------------------------------------------------------------------
-	UPDATE
-	------------------------------------------------------------------------------------
-*/
-
-
-	function update_form($data){
-		$this->db->where('qid', $data['qid']);
-		$this->db->update('Questions',$data);
+	function add_dropdown($data){
+		$this->db->insert('Dropdowns',$data);
+		return $this->db->insert_id();
 	}
 
-	function update_option($data){
-		$this->db->where('oid', $data['oid']);
-		$this->db->update('Options',$data);
+	function add_slider($data){
+		$this->db->insert('Sliders',$data);
+		return $this->db->insert_id();
 	}
-
-/*
-	------------------------------------------------------------------------------------
-	DO NOT EDIT SECTION BELOW
-	------------------------------------------------------------------------------------
-*/
-
-	function delete_page($data){
-		//gets order (for changing numbering) and qid (for deleting associated forms and options)
-		$this->db->where('pid', $data['pid']);
-		$query = $this->db->get('Pages');
-		$page = $query->row();
-		$order = $page->order;
-
-		$this->db->where('pid', $data['pid']);
-		$query = $this->db->get('Questions');
-		$form = $query->row();
-		$qid = $form->qid;
-
-		//deletes page and associated forms and options
-		$this->db->where('pid', $data['pid']);
-		$this->db->delete('Pages');
-
-		$this->db->where('pid', $data['pid']);
-		$this->db->delete('Questions');
-
-		$this->db->where('qid', $data['qid']);
-		$this->db->delete('Options');
-
-		//change numbering
-		$this->change_numbering($data['eid'], $order, -1);
-	}
-
-	function insert_page($data){
-	}
-
-	function change_numbering($eid, $order, $incr){
-	}
-
-
 
 }
