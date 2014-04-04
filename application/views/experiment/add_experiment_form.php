@@ -59,7 +59,7 @@
 				if (posX != null && posY != null){
 					// alert('x' + posX);
 					// alert('y' + posY);
-					htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
+					htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
 				}
 				
 				// faulty -- contentEditable=true data-ph="My Placeholder String"

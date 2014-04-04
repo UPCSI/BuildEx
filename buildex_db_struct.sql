@@ -63,12 +63,26 @@ CREATE TABLE "Admins" (
 ALTER TABLE public."Admins" OWNER TO postgres;
 
 --
+-- Name: buttons_button_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE buttons_button_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.buttons_button_id_seq OWNER TO postgres;
+
+--
 -- Name: Buttons; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
 CREATE TABLE "Buttons" (
     oid integer,
-    button_id integer NOT NULL,
+    button_id integer DEFAULT nextval('buttons_button_id_seq'::regclass) NOT NULL,
     text character varying(32),
     size character varying(8),
     go_to integer,
@@ -225,20 +239,6 @@ CREATE TABLE "Graduates" (
 ALTER TABLE public."Graduates" OWNER TO postgres;
 
 --
--- Name: buttons_button_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE buttons_button_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.buttons_button_id_seq OWNER TO postgres;
-
---
 -- Name: Inputs; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -361,7 +361,9 @@ CREATE TABLE "Objects" (
     id character varying(32),
     type character varying(32),
     x_pos double precision,
-    y_pos double precision
+    y_pos double precision,
+    width double precision,
+    height double precision
 );
 
 
@@ -512,7 +514,9 @@ CREATE TABLE "Respondents" (
     gender character varying(32),
     civil_status integer DEFAULT 0,
     eid integer,
-    since date
+    since timestamp without time zone DEFAULT ('now'::text)::date,
+    ip_addr character varying(64),
+    user_agent character varying(256)
 );
 
 

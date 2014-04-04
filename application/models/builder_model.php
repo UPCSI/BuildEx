@@ -21,8 +21,7 @@ class Builder_model extends MY_Model{
 			$new_obj = array($object->x_pos, $object->y_pos, $object->type);
 			if ($new_obj[2] == "label"){
 				$label = $this->get_object($object->oid, 'Labels');
-				if($label != null)
-					array_push($new_obj, $label->text);
+				array_push($new_obj, $label->text);
 			}
 
 			if ($new_obj[2] == "question"){

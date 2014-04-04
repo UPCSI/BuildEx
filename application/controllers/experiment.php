@@ -16,18 +16,18 @@ class Experiment extends MY_Controller{
 		$role = $this->session->userdata('active_role');
 
 		$id = $this->session->userdata('active_id');
-		
+		$eid  = 0;
 		if ($role == 'faculty'){
-			$this->experiments_model->add_faculty_experiment($id,$info);
+			$eid = $this->experiments_model->add_faculty_experiment($id,$info);
 		}
 		else if ($role == 'graduate'){
-			$this->experiments_model->add_graduates_experiment($id,$info);
+			$eid = $this->experiments_model->add_graduates_experiment($id,$info);
 		}
 
 		$success = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification',$success);
-		redirect($role.'/experiments');
-		//redirect('builder');
+		//redirect($role.'/experiments');
+		redirect('builder/app/'.$eid);
     }
 
 	public function delete_experiment($eid = 0){

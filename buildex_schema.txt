@@ -98,6 +98,8 @@ TABLE Objects:
 	type: character varying(32) #{'question','label','button','image'}
 	x_pos: double precision
 	y_pos: double precision
+	width: double precision
+	height: double precision
 
 TABLE Questions:
 	oid: integer references Objects.oid
@@ -173,8 +175,8 @@ TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
 	eid: integer references Experiments.eid
 	since: timestamp without timezone
-	ip_addr: character_varying(64)
-	browser: chracter-varying(64)
+	ip_addr: character_varying(256)
+	user_agent: chracter-varying(256)
 
 	#OPTIONAL FIELDS:
 	first_name: character varying(32)
