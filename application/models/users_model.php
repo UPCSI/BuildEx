@@ -79,6 +79,7 @@ class Users_model extends MY_Model{
 			$query = $this->db->get('LaboratoryHeads');
 			$user = $query->row();
 			$data['lid'] = $user->lid;
+			$data['active_role'] = 'labhead';
 		}		
 
 		if(in_array('faculty',$role)){

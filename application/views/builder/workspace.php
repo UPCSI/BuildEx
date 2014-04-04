@@ -3,20 +3,20 @@ vertical-align: middle;" data-eid='<?= $eid;?>'>
 
 </div>
 
-<? 	
+<? 
 	if(isset($var)){
-		echo '<script>';
-		echo '(function($){ ';
-		echo '$(function() {';
+		$index = 0;
 		foreach ($var as $obj){
+			echo '<script>';
+			echo '$(function() {';
 			if($obj[2] == "question")
-				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].']);';
+				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
 			
 			else if($obj[2] == "label")
-				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].']);';
+				echo '$("#textinput").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
 			
 			else if($obj[2] == "button")
-				echo '$("#button").trigger("click",['.$obj[0].','.$obj[1].']);';
+				echo '$("#button").trigger("click",['.$obj[0].','.$obj[1].',"' .$obj[3] .'"]);';
 			
 			else if($obj[2] == "radio")
 				echo '$("#radiobutton").trigger("click",['.$obj[0].','.$obj[1].']);';
@@ -32,9 +32,13 @@ vertical-align: middle;" data-eid='<?= $eid;?>'>
 			
 			else
 				echo '$("#question").trigger("click",['.$obj[0].','.$obj[1].']);';
+
+			echo '})';
+			echo '</script>';
+
+			// if($obj[2] == "button"){
+			// 	echo $obj[2];
+			// }
 		}
-		echo '});';
-		echo '}) (jQuery);';
-		echo '</script>';
 	}
 ?>

@@ -5,9 +5,10 @@ $(function() {
 	$.current_page = 1;
 
     $('#question')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
 
@@ -63,9 +64,10 @@ $(function() {
     });
 
 	$('#textinput')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			
 			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content" ' + 'data-page="' + $.page + '"';
 
@@ -119,19 +121,20 @@ $(function() {
     });
 
 	$('#button')
-    	.click(function(eventClick, posX, posY){
+    	.click(function(eventClick, posX, posY, text_input){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
+			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" ' + 'data-page="' + $.page + '" ';
 			if (posX != null && posY != null){
-				alert('x' + posX);
-				alert('y' + posY);
+				// alert('x' + posX);
+				// alert('y' + posY);
 				htmlData += 'style="left:'+ Math.abs(posX - 439) +'px; top:'+ Math.abs(posY - 124) +'px;""';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += 'style="width:150px; height:60"><button id="editable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Button</div></button><a href="#" class="delete"></a></div>';
+			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
 
@@ -163,11 +166,11 @@ $(function() {
 		    });
 
 		    $(document).click(function(e){
-		    	if($(e.target).attr('id') == ('editable'+temp)){
+		    	if($(e.target).attr('id') == ('btneditable'+temp)){
 		    		$(e.target).children().click();
 		    		$(e.target).children().focus();
 		    	}
-		    	else if(e.target.className != 'default' && e.target.id != 'editable'+temp){
+		    	else if(e.target.className != 'default' && e.target.id != 'btneditable'+temp){
 			        $('#btn'+temp).draggable( 'option', 'disabled', false);
 			        $('.default').attr('contenteditable','false');
 			        
@@ -466,6 +469,7 @@ $(function() {
 		   		data[0] = xPos;
 		   		data[1] = yPos;
 		   		data[2] = "question";
+		   		data[3] = document.getElementById('qtneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -476,6 +480,7 @@ $(function() {
 		   		data[0] = xPos;
 		   		data[1] = yPos;
 		   		data[2] = "label";
+		   		data[3] = document.getElementById('inpeditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -486,6 +491,7 @@ $(function() {
 		   		data[0] = xPos;
 		   		data[1] = yPos;
 		   		data[2] = "button";
+		   		data[3] = document.getElementById('btneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -532,7 +538,7 @@ $(function() {
 		}
 
 	   	$.ajax({
-	   		url: window.location.protocol+"//"+window.location.host + '/buildex/builder/save',
+	   		url: window.location.protocol+"//"+window.location.host + '/BuildEx/builder/save',
 	   		type:"POST",
 	   		data:{
 	   			'msg':x,
@@ -543,7 +549,7 @@ $(function() {
 	   			// alert("Saved Successfully!");
 	   			//alert(data[0][0]);
 	   			//alert(data.responseText);
-	   			window.location.href = window.location.protocol+"//"+window.location.host + '/buildex/' + data.responseText + '/experiments';
+	   			window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
 	   		},
 	
 	   	});

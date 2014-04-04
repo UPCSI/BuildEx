@@ -20,12 +20,9 @@ class Builder extends MY_Controller{
 		* from view to the controller index.
 		*/
 
-		//temp values
-		//$data['var'] = array(array(400,200),array(56,78));
-
 		$data['title'] = 'Experiment';
 		$data['eid'] = $eid;
-		$data['var'] = $this->get_positions($eid);
+		$data['var'] = $this->get_all_objects($eid);
 
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
@@ -39,38 +36,77 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
-		// echo json_encode("hello");
-
 		if ($message == 'false')
 			return;
 
-		// save page
+		/* page */
 		$page['eid'] = $this->input->post('eid');
 		$this->delete($page['eid']);
 		$page['order'] = 1;
 
-		// save object
-		$object['pid'] = $this->add_page($page);	
-		if($message != ""){
-			foreach ($message as $item){
-				$object['x_pos'] = (double)$item[0];
-				$object['y_pos'] = (double)$item[1];
-				$object['type'] = $item[2];
-				$oid = $this->add_object($object);
+		/* object */
+		$object['pid'] = $this->add_page($page);		
+		foreach ($message as $item){
+			$object['x_pos'] = (double)$item[0];
+			$object['y_pos'] = (double)$item[1];
+			$object['type'] = $item[2];
+			// $object['width'] = $item[];
+			// $object['height'] = $item[];
+			$oid = $this->add_object($object);
+
+			/* label */
+			if ($object['type'] == "label" || $object['type'] == "question"){
+				$label['oid'] = $oid;
+				$label['text'] = $item[3];
+				// $label['font'] = ;
+				// $label['font_size'] = ;
+				// $label['font_color'] = ;
+
+				$label_id = $this->add_label($label);
 			}
+
+			/* question */
+			if ($object['type'] == "question"){
+				$question['oid'] = $oid;
+				$question['is_required'] = 'f';
+				// $question['input'] = ;
+				$question['label'] = $label_id;
+
+				$qid = $this->add_question($question);
+			}
+
+			/* button */
+			if ($object['type'] == "button"){
+				$button['oid'] = $oid;
+				$button['text'] = $item[3];
+				// $button['go_to'] = ;
+				// $button['type'] = ;
+
+				$button_id = $this->add_button($button);
+			}
+
+			// /* radio */
+			// if ($object['type'] == "radio" || $object['type'] == "radio"){
+			// 	$input['oid'] = $oid;
+			// 	$input['text'] = $item[3];
+			// 	// $input['go_to'] = ;
+			// 	// $input['type'] = ;
+
+			// 	$input_id = $this->add_input($input);
+			// }
 		}
-		
+
 		echo $this->session->userdata('active_role'); #for ajax
 	}
 
 	public function delete($eid){
 		$this->load->model('builder_model');
-		$this->builder_model->delete($eid);		
+		$this->builder_model->delete($eid);
 	}
 
-	public function get_positions($eid){
+	public function get_all_objects($eid){
 		$this->load->model('builder_model');
-		return $this->builder_model->get_positions($eid);
+		return $this->builder_model->get_all_objects($eid);
 	}
 
 /*
@@ -80,14 +116,6 @@ class Builder extends MY_Controller{
 */
 
 	public function add_page($data){
-		/*
-			Adds page. Returns pid. Required data listed below:
-				eid = experiment id
-				order = page number of current experiment
-
-				Ignore template, row, and column for now.
-		*/
-
 		$this->load->model('builder_model');
 		return $this->builder_model->add_page($data);
 	}
@@ -97,14 +125,14 @@ class Builder extends MY_Controller{
 		return $this->builder_model->add_object($data);
 	}
 
-	public function add_labels($data){
+	public function add_label($data){
 		$this->load->model('builder_model');
-		return $this->builder_model->add_labels($data);
+		return $this->builder_model->add_label($data);
 	}
 
 	public function add_button($data){
 		$this->load->model('builder_model');
-		return $this->builder_model->add_buttons($data);
+		return $this->builder_model->add_button($data);
 	}
 
 	public function add_question($data){
@@ -132,69 +160,14 @@ class Builder extends MY_Controller{
 		return $this->builder_model->add_checkbox($data);
 	}
 
-/*
-	------------------------------------------------------------------------------------
-	UPDATE/DELETE
-	------------------------------------------------------------------------------------
-*/
-
-	public function update_form($data){
-		/*
-			Updates form/question; does not change order of questions. Required data listed below:
-				qid = id of form
-
-			Optional data to be updated:
-				label = change question
-				is_required = boolean; must be 't' or 'f'
-				x_pos = x postion
-				y_pos = y postion
-		*/
-
+	public function add_dropdown($data){
 		$this->load->model('builder_model');
-		$this->builder_model->update_form($data);
+		return $this->builder_model->add_dropdown($data);
 	}
 
-	public function update_option($data){
-		/*
-			Updates individual options. Required data listed below:
-				oid = id of option
-				label = option itself
-		*/
-
-
+	public function add_slider($data){
 		$this->load->model('builder_model');
-		$this->builder_model->update_option($data);
+		return $this->builder_model->add_slider($data);
 	}
-
-	public function delete_page(){
-		/*
-			NOT YET DONE. DO NOT EDIT.
-
-			Deletes page along with associated form and options. Changes numbering accordingly.
-			Required data listed below:
-				eid = id of current experiment
-				pid = id of page
-		*/
-
-		// $data['eid'] = ;
-		// $data['pid'] = ;
-		$this->load->model('builder_model');
-		$this->builder_model->delete_page($data);
-	}
-
-	public function insert_page(){
-		/*
-			NOT YET DONE. DO NOT EDIT.
-
-			Inserts page in between and changes numbering accordingly. Required data listed below:
-				pid = id of page
-		*/
-
-		// $data['pid'] = ;
-		$this->load->model('builder_model');
-		$this->builder_model->insert_page($data);
-	}
-
-
 
 }
