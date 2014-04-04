@@ -76,11 +76,31 @@ class Faculty extends MY_Controller{
 			redirect('');
 			//implement where to redirect if eid or gid is non-existent
 		}
+
 		$this->load->model('experiments_model');
 		$fid = $this->session->userdata('fid');
 		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view_experiment';
+
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
+		$this->load->view('_main_layout_internal', $data);
+	}
+
+	public function view_respondents($eid =0){
+		if($eid == 0){
+			redirect('');
+			//implement where to redirect if eid or gid is non-existent
+		}
+		
+		$this->load->model('respondents_model');
+		$data['respondents'] = $this->respondents_model->get_respondents($eid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'faculty/view_respondents';
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){

@@ -65,6 +65,9 @@ class Respond extends CI_Controller{
 					'civil_status' => +$this->input->post('civil_status'),
 					'gender' => $this->input->post('gender'));
 
+		$info['ip_addr'] = $this->session->userdata('ip_address');
+		$info['user_agent'] = $this->session->userdata('user_agent');
+
 		$rid = $this->respondents_model->add_respondent($info,$eid);
 		$this->session->set_userdata('rid',$rid);
 		$slug = $this->session->userdata('slug');

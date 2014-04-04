@@ -8,7 +8,7 @@
 <p> <strong> Category: </strong><?php echo $experiment->category; ?> </p>
 <p> <strong> Description: </strong><?php echo $experiment->description; ?> </p>
 <p> <strong> Target Count: </strong><?php echo $experiment->target_count; ?> </p>
-<p> <strong> Current Count: </strong><?php echo $experiment->current_count; ?> </p>
+<p> <strong> Current Count: </strong><?php echo $experiment->current_count; ?> (<a href = "<?php echo site_url('faculty/view_respondents/'.$experiment->eid); ?>"> View All </a> ) </p>
 <p> <strong> Status: </strong><?php if($experiment->status == 'f'){echo 'On-going';}else{echo 'Complete';} ?> </p>
 <p> <strong> Is published: </strong><?php if($experiment->is_published == 'f'){echo 'False';}else{echo 'True';} ?> </p>
 <?php if($experiment->is_published == 'f'): ?>

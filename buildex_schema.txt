@@ -99,12 +99,6 @@ TABLE Objects:
 	x_pos: double precision
 	y_pos: double precision
 
-<<<<<<< Updated upstream
-=======
-<<<<<<< Updated upstream
-TABLE OptionGroups:
-=======
->>>>>>> Stashed changes
 TABLE Questions:
 	oid: integer references Objects.oid
 	qid: integer PRIMARY AUTOINCREMENT
@@ -170,8 +164,6 @@ TABLE Dropdowns:
 	input_id: integer references Inputs.input.id
 	dropdown_id: integer PRIMARY AUTOINCREMENT
 
-	choices: character varying(2048) #format(without the quotes): "choice1,choice2,choice3...choiceN"
-
 TABLE Sliders:
 	input_id: integer references Inputs.input.id
 	slider_id: integer PRIMARY AUTOINCREMENT
@@ -180,7 +172,9 @@ TABLE Sliders:
 TABLE Respondents:
 	rid: int(11) PRIMARY AUTOINCREMENT
 	eid: integer references Experiments.eid
-	since: date
+	since: timestamp without timezone
+	ip_addr: character_varying(64)
+	browser: chracter-varying(64)
 
 	#OPTIONAL FIELDS:
 	first_name: character varying(32)

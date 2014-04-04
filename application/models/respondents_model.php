@@ -3,7 +3,6 @@
 class Respondents_model extends MY_Model{
 	public function add_respondent($info,$eid){
 		$info['eid'] = $eid; 
-		$info['since'] = date("Y-m-d H:i:s");
 		$this->db->insert('Respondents',$info);
 		return $this->db->insert_id();
 	}
@@ -25,6 +24,14 @@ class Respondents_model extends MY_Model{
 
 		$this->experiments_model->decrement_count($eid);
 		return true;
+	}
+
+	public function get_respondents($eid){
+		$this->db->select('*');
+		$this->db->where('eid',$eid);
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);
+
 	}
 
 	public function add_response($info,$qid,$rid){
