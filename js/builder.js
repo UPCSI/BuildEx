@@ -242,7 +242,7 @@ $(function() {
 	        	containment: "#workspace",
 	        	scroll: false,
 	        	cancel: false,
-	        	// snap: '.radiosnap'
+	        	snap: '.radiosnap'
 	        	// drag: function(){
 		        //     var offset1 = $(this).offset();
 		        //     var xPos1 = offset1.left;
