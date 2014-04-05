@@ -1,7 +1,17 @@
 <div id="workspace" class="demo panel callout" style="min-width:576px; max-width:576px; height:432px; position:relative; margin:auto; vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
 <div id="page1"></div>
 </div>
-
+<script>
+// (function($){
+// 	$(function(){
+// 		// alert('fak');
+// 		alert($.count);
+// 		$.count = 10;
+// 		alert($.count);
+// 	});
+	
+// }) (jQuery); 
+</script>
 <? 	
 	if(isset($var)){
 		echo '<script>';
