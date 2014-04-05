@@ -17,7 +17,6 @@
 		}
 
 		foreach ($var as $obj){
-			// echo 'alert("sending page " +' .$obj[3].');';
 			if($obj[3] == "question")
 				echo '$("#question").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
 			
@@ -28,10 +27,10 @@
 				echo '$("#button").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
 			
 			else if($obj[3] == "radio")
-				echo '$("#radiobutton").trigger("click",['.$obj[1].','.$obj[2] .',' .$obj[0].']);';
+				echo '$("#radiobutton").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
 			
 			else if($obj[3] == "checkbox")
-				echo '$("#checkbox").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';
+				echo '$("#checkbox").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
 			
 			else if($obj[3] == "dropdown")
 				echo '$("#dropdown").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';

@@ -33,6 +33,16 @@ class Builder_model extends MY_Model{
 				array_push($new_obj, $button->text);
 			}
 
+			if ($new_obj[3] == "radio"){
+				$radio = $this->get_input($object->oid, 'Radios');
+				array_push($new_obj, $radio->choices);
+			}
+
+			if ($new_obj[3] == "checkbox"){
+				$checkbox = $this->get_input($object->oid, 'Checkboxes');
+				array_push($new_obj, $checkbox->choices);
+			}
+
 			array_push($data, $new_obj);
 		}
 
@@ -49,6 +59,15 @@ class Builder_model extends MY_Model{
 	function get_object($oid, $table){
 		$this->db->where('oid', $oid);
 		$query = $this->db->get($table);
+		return $this->query_row_conversion($query);
+	}
+
+	function get_input($oid, $table){
+		$this->db->where('Inputs.oid', $oid);
+		$this->db->join('Inputs', $table.'.input_id = Inputs.input_id');
+		$query = $this->db->get($table);
+		$object = $this->query_row_conversion($query);
+
 		return $this->query_row_conversion($query);
 	}
 

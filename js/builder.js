@@ -26,14 +26,10 @@ $(function() {
 
 			var temp = $.count;
 			var index = page_num;
-			// alert(index);
-			if(index <= 0){
+			if(index <= 0)
 				$("#page" + $.current_page).append(htmlData);
-			}
-
-			else{
+			else
 				$("#page" + index).append(htmlData);
-			}
 
 	        $('#qtn'+temp).draggable({
 	        	containment: "#workspace",
@@ -216,10 +212,11 @@ $(function() {
     });
 
 	$('#radiobutton')
-    	.click(function(eventClick, posX, posY, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			text_input = typeof text_input !== 'undefined' ? text_input : "Radio Button";
 
 			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable"';
 			if (posX != null && posY != null){
@@ -232,7 +229,7 @@ $(function() {
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Radio Button</div><a href="#" class="delete"></a></div>';
+			htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div id="radbtneditable'+$.count+'"class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -291,10 +288,11 @@ $(function() {
     });
 
 	$('#checkbox')
-    	.click(function(eventClick, posX, posY, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			text_input = typeof text_input !== 'undefined' ? text_input : "Checkbox";
 
 			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable"';
 			if (posX != null && posY != null){
@@ -302,12 +300,13 @@ $(function() {
 				// alert('y' + posY);
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:120px;"';
 			}
+
 			else{
 				htmlData += 'style="height:25px; width:120px;"';
 			}
 			
 			// faulty -- contentEditable=true data-ph="My Placeholder String"
-			htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">Check Box</div><a href="#" class="delete"></a></div>';
+			htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div id="chkboxeditable'+$.count+'" class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><a href="#" class="delete"></a></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -571,6 +570,7 @@ $(function() {
 		   		data[1] = xPos;
 		   		data[2] = yPos;
 		   		data[3] = "radio";
+		   		data[4] = document.getElementById('radbtneditable'+i).textContent;
 		   		x.push(data);
 		   	}
 
@@ -582,6 +582,7 @@ $(function() {
 		   		data[1] = xPos;
 		   		data[2] = yPos;
 		   		data[3] = "checkbox";
+		   		data[4] = document.getElementById('chkboxeditable'+i).textContent;
 		   		x.push(data);
 		   	}
 

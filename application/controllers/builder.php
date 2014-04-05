@@ -44,8 +44,9 @@ class Builder extends MY_Controller{
 		
 		$eid = $this->input->post('eid');
 		$this->delete($eid);
-		
 		$pid_list = array();
+		// $radio_list = array();
+
 		/* page */
 		$page['eid'] = $this->input->post('eid');
 		$this->delete($page['eid']);
@@ -57,8 +58,6 @@ class Builder extends MY_Controller{
 			array_push($pid_list, $this->add_page($page));
 		}
 
-		// $d['page'] = array();
-
 		/* object */
 		foreach ($message as $item){
 			$order = (int)substr($item[0], 4);
@@ -69,9 +68,6 @@ class Builder extends MY_Controller{
 			// $object['width'] = $item[];
 			// $object['height'] = $item[];
 			$oid = $this->add_object($object);
-
-
-			// array_push($d['page'],$order);
 
 			/* question */
 			if ($object['type'] == "question"){
@@ -112,9 +108,34 @@ class Builder extends MY_Controller{
 
 				$button_id = $this->add_button($button);
 			}
+
+			/* radio */
+			if ($object['type'] == "radio"){
+				$input_id = $this->save_input($oid, 'radio');
+				$radio['input_id'] = $input_id;
+				$radio['choices'] = $item[4];
+				// $radio['orientation'] = ;
+
+				$radio_id = $this->add_radio($radio);
+				$this->bind($object['pid'], $input_id);
+			}
+			
+			/* checkbox */
+			if ($object['type'] == "checkbox"){
+				$input_id = $this->save_input($oid, 'checkbox');
+				$checkbox['input_id'] = $input_id;
+				$checkbox['choices'] = $item[4];
+				// $checkbox['orientation'] = ;
+
+				$checkbox_id = $this->add_checkbox($checkbox);
+				$this->bind($object['pid'], $input_id);
+			}
+
+
+
+
+
 		}
-			// $d['pid'] = $pid_list;
-			// $this->session->set_userdata($d);
 
 		echo $this->session->userdata('active_role'); #for ajax
 	}
@@ -145,7 +166,7 @@ class Builder extends MY_Controller{
 		return $this->builder_model->get_all_pages($eid);
 	}
 
-		public function save_input($oid, $type){
+	public function save_input($oid, $type){
 		$input['oid'] = $oid;
 		$input['type'] = $type;
 		// $input['helper'] = ;
