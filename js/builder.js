@@ -25,7 +25,7 @@ $(function() {
 	$(document).click(function(e){
 		var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
 		console.log($.last_selected);
-		$('.'+$.last_selected).css('color', hex);
+		$('#'+$.last_selected).css('color', hex);
 		// console.log(e.target.className);
 	})
 
@@ -73,7 +73,6 @@ $(function() {
 			height = typeof height !== 'undefined' ? height : 40;
 			color = typeof color !== 'undefined' ? color : 000000;
 			color = '#' + color;
-			alert(color);
 
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
@@ -136,7 +135,7 @@ $(function() {
 
 		    //styling
 		    $('#qtneditable'+temp).click(function(){
-		    	$.last_selected = $(this).attr('class');
+		    	$.last_selected = $(this).attr('id');
 		    	var color = rgba2hex($('#qtneditable'+temp).css('color'));
 		        $('#clr').val(color);
 		        // alert($.hex);
