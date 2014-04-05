@@ -142,7 +142,8 @@ $(function() {
 		        // alert($.hex);
 		        $('#clr').minicolors('settings',{});
 		    })
-		    
+
+		document.getElementById('qtneditable'+$.count).style.color = color;		    
         $.count++;
     });
 
