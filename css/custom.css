@@ -262,6 +262,11 @@ div.off-canvas-wrap.docs-wrap > div.inner-wrap > aside.left-off-canvas-menu {
   color: #fff !important;
 }
 
+div.titleholder > div.row > div.columns > h2 {
+    line-height: 4 rem;
+    display: inline;
+}
+
 .justify {
   text-align: justify;
 }
@@ -326,6 +331,45 @@ div.titleholder {
   padding:5px;
   margin-bottom: 3%;
   background:#252525;
+}
+
+div.panel.exp {
+  padding: 0;
+}
+
+div.panel.exp > div.titleholder {
+  margin: 0;
+  padding:10px;
+  background:#3498db;
+}
+
+div.panel.exp > div.titleholder > div > div > h3{
+  margin:0;
+}
+
+div.panel.exp > div.titleholder > div > div > h3 > a{
+  color:#ffffff;
+}
+
+div.panel.exp > div.titleholder > div > div > h3 > a:hover{
+  text-shadow: 0px 0px 5px #ffffff;
+}
+
+div.panel.exp > div.row > div.large-12.column > div.panel {
+  background-color: #252525;
+  margin:0;
+}
+
+div.panel.exp > div.row > div.large-12.column > div.panel > h5 {
+  color:#fff;
+}
+
+div.panel.exp > div.row > div.large-12.column > div.panel > h5.actions {
+  text-align: right;
+}
+
+div.panel.exp > div.row > div.large-12.column > div.panel > h5 > a.button.tiny {
+  margin:0;
 }
 
 section.sitemap {
@@ -425,12 +469,8 @@ ul {
     margin: 0px;
 }
 
-.slider {
-    margin-left: 0px !important;
-    margin-bottom: 0px !important;
-}
 .editable {
-    cursor: move;
+    cursor: auto;
     width: 100%;
     height: 100%;
     word-wrap: break-word;

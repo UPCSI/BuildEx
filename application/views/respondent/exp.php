@@ -1,19 +1,19 @@
-<h1> Respondent View </h1>
-<p> Do the slideshow here </p>
-<h2> Vars: </h2>
-<p> $exp: contains the experiment's meta-data such as eid,status,current_count,target_count...etc. </p> 
-<p> $var: all the objects of this experiment - not yet implemented </p>
+<div class = "row" style = "padding-top:50px">
+	<div class = "large-3 column">
+		<h1> Hello </h1>
+	</div>
 
-<h3> $exp: </h3>
-<pre>
-<?php var_dump($exp); ?>
-</pre>
+	<div class = "large-6 column" id = "workspace">
+		<h1> Slide Show </h1>
+	</div>
 
-<h2> Note: </h2>
-<p> Please see view/includes/respondent_header for additional css imports. </p>
-<p> Please see view/includes/respondent_footer for additional js imports. </p>
-<p> Please see view/components/topbar_respondent for the desired topbar of this view.</p>
-<br>
-<button class = "small" onclick = "save();"> Save </button> <!--subject for change; just temporary -->
-<button class = "small" onclick = "pause();"> Pause </button>
-<button class = "small" onclick = "reset();"> Reset </button> <!--subject for change; just temporary -->
+	<div class = "large-3 column" >
+		<h1> Hello </h1>
+	</div>
+</div>
+
+<div class = "row">
+	<button class = "small" onclick = "save();"> Save </button> <!--subject for change; just temporary -->
+	<button class = "small" onclick = "pause();"> Pause </button>
+	<button class = "small" onclick = "reset();"> Reset </button> <!--subject for change; just temporary -->
+</div>

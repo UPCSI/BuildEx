@@ -10,6 +10,7 @@ class Respond extends CI_Controller{
 		$this->load->model('graduates_model');
 		$this->load->model('users_model');
 		$this->load->model('respondents_model');
+		$this->load->model('builder_model');
 	}
 
 	public function view($hash){
@@ -81,8 +82,8 @@ class Respond extends CI_Controller{
 		$data['exp'] = $this->experiments_model->get_experiment($eid);
 		$data['var'] = $this->get_objects($eid);
 		$data['title'] = "Respond";
-		$data['main_content'] = "respondent/exp";
-		$this->load->view('respondent/_view_layout', $data);
+		$data['main_content'] = "respondent/workspace.php";
+		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
 	public function save($slug){
@@ -90,8 +91,8 @@ class Respond extends CI_Controller{
 		$rid = $this->session->userdata('rid');
 		$qid = $this->input->post('qid');
 
-		$info = array('answer' => $this->input->post($qid),
-					'duration' => $this->input->post('time_'.$qid));
+		$info = array('answer' => $this->input->post($qid));
+					#'duration' => $this->input->post('time_'.$qid));
 
 		$this->respondents_model->add_response($info,$qid,$rid);
 	}
@@ -160,6 +161,6 @@ class Respond extends CI_Controller{
 
 	private function get_objects($eid = 0){
 		//returns all the objects for the experiment with eid = $eid
-		return 0;
+		return $this->builder_model->get_all_objects($eid);
 	}
 }

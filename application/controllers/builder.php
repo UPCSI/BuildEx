@@ -211,5 +211,4 @@ class Builder extends MY_Controller{
 		$this->load->model('builder_model');
 		return $this->builder_model->add_slider($data);
 	}
-
 }

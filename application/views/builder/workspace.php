@@ -2,7 +2,7 @@
 <div id="page1"></div>
 </div>
 
-<? 	
+<?
 	if(isset($var)){
 		echo '<script>';
 		echo '(function($){ ';
