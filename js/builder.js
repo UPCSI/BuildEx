@@ -622,7 +622,6 @@ $(function() {
 		   		data[4] = document.getElementById('qtneditable'+i).textContent;
 				data[5] = $('#qtn'+i).css("width");
 				data[6] = $('#qtn'+i).css("height");
-				alert(data[5] + " " + data[6]);
 		   		x.push(data);
 		   	}
 
