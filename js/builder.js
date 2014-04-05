@@ -64,13 +64,16 @@ $(function() {
     });
 
     $('#question')
-    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			width = typeof width !== 'undefined' ? width : 200;
 			height = typeof height !== 'undefined' ? height : 40;
+			color = typeof color !== 'undefined' ? color : 000000;
+			color = '#' + color;
+			alert(color);
 
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
@@ -622,6 +625,7 @@ $(function() {
 		   		data[4] = document.getElementById('qtneditable'+i).textContent;
 				data[5] = $('#qtn'+i).css("width");
 				data[6] = $('#qtn'+i).css("height");
+				data[7] = rgb2hex($('#qtneditable'+i).css("color"));
 		   		x.push(data);
 		   	}
 

@@ -86,7 +86,7 @@ class Builder extends MY_Controller{
 				$label['text'] = $item[4];
 				// $label['font'] = ;
 				// $label['font_size'] = ;
-				// $label['font_color'] = ;
+				$label['font_color'] = substr($item[7],1);
 
 				$label_id = $this->add_label($label);
 
