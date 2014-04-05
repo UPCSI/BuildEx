@@ -78,15 +78,17 @@ class Respond extends CI_Controller{
 	public function exp($slug){
 		/*slide show of the experiment*/
 		$eid = $this->session->userdata('respond_to');
+		$data['eid'] = $eid;
 		$data['slug'] = $slug;
 		$data['exp'] = $this->experiments_model->get_experiment($eid);
-		$data['var'] = $this->get_objects($eid);
+		$data['pages'] = $this->builder_model->get_all_pages($eid);
+		$data['var'] = $this->builder_model->get_all_objects($eid);
 		$data['title'] = "Respond";
 		$data['main_content'] = "respondent/workspace.php";
 		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
-	public function save($slug){
+	public function save($rid,$qid){
 		//save individual elements
 		$rid = $this->session->userdata('rid');
 		$qid = $this->input->post('qid');
@@ -157,10 +159,5 @@ class Respond extends CI_Controller{
 	public function pause(){
 		$eid = $this->input->post('eid');
 		/* not a priority */
-	}
-
-	private function get_objects($eid = 0){
-		//returns all the objects for the experiment with eid = $eid
-		return $this->builder_model->get_all_objects($eid);
 	}
 }
