@@ -13,22 +13,25 @@
 			$htmlData = '<div id="page' . $page->order .'"></div>';
 			echo "$('.demo').append('" . $htmlData . "');";
 		}
-	}
 
-		/*foreach ($var as $obj){
+		foreach ($var as $obj){
 			// echo 'alert("sending page " +' .$obj[3].');';
-			if($obj[3] == "question")
-				echo '$("#question").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
+			if($obj[3] == "question"){
+				echo 'draw_question('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+			}
 			
-			else if($obj[3] == "textinput")
-				echo '$("#textinput").trigger("click",['.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].']);';
+			else if($obj[3] == "textinput"){
+				echo 'draw_text_input('.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].');';
+			}
+
+			else if($obj[3] == "button"){
+				echo 'draw_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+			}
+			else if($obj[3] == "radio"){
+				echo 'draw_button('.$obj[1].','.$obj[2] .',' .$obj[0].');';
+			}
 			
-			else if($obj[3] == "button")
-				echo '$("#button").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
-			
-			else if($obj[3] == "radio")
-				echo '$("#radiobutton").trigger("click",['.$obj[1].','.$obj[2] .',' .$obj[0].']);';
-			
+			/*
 			else if($obj[3] == "checkbox")
 				echo '$("#checkbox").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';
 			
@@ -36,19 +39,17 @@
 				echo '$("#dropdown").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';
 			
 			else if($obj[3] == "slider")
-				echo '$("#slider").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';			
+				echo '$("#slider").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';	*/		
 		}
 
 		for($index=2; $index<=$total; $index++){
 			echo 'document.getElementById("page" + '.$index.').style.visibility =' ."'hidden';";
 		}
-
-		echo '$.page = '.$total.';';
-		echo 'alert($.page);';*/
 	
 		echo '});';
 		echo '}) (jQuery);';
 		echo '</script>';
+	}
 ?>
 
 HAHAHAHA
