@@ -71,7 +71,7 @@ class Builder extends MY_Controller{
 				$object['height'] = $item[5];				
 			}
 
-			else if ($object['type'] == "dropdown" and $object['type'] == "slider")			
+			else if ($object['type'] != "dropdown" and $object['type'] != "slider")			
 				$object['width'] = $item[5];
 				$object['height'] = $item[6];
 			}
