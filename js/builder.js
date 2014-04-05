@@ -4,6 +4,67 @@ $(function() {
 	$.count = 1;
 	$.page = 1;
 	$.current_page = 1;
+	$.last_selected = null;
+
+	function rgba2hex(rgb){
+	 rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+	 return (rgb && rgb.length === 4) ? "#" +
+	  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+	  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+	  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+	}
+
+	function rgb2hex(rgb) {
+	    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+	    function hex(x) {
+	        return ("0" + parseInt(x).toString(16)).slice(-2);
+	    }
+	    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+	}
+
+	$(document).click(function(e){
+		var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
+		console.log($.last_selected);
+		$('.'+$.last_selected).css('color', hex);
+		// console.log(e.target.className);
+	})
+
+	$('.minicolors-panel').click(function(){
+		alert('dfsdfsd');
+		
+	})
+
+	$('.color-picker').each( function() {
+        //
+        // Dear reader, it's actually very easy to initialize MiniColors. For example:
+        //
+        //  $(selector).minicolors();
+        //
+        // The way I've done it below is just for the demo, so don't get confused 
+        // by it. Also, data- attributes aren't supported at this time. Again, 
+        // they're only used for the purposes of this demo.
+        //
+		$(this).minicolors({
+			control: $(this).attr('data-control') || 'hue',
+			defaultValue: $(this).attr('data-defaultValue') || '',
+			inline: $(this).attr('data-inline') === 'true',
+			letterCase: $(this).attr('data-letterCase') || 'lowercase',
+			opacity: $(this).attr('data-opacity'),
+			position: $(this).attr('data-position') || 'bottom left',
+			change: function(hex, opacity) {
+				$.hex = hex;
+				var log;
+				try {
+					log = hex ? hex : 'transparent';
+					if( opacity ) log += ', ' + opacity;
+					console.log(log);
+				} catch(e) {}
+			},
+			theme: 'default'
+		});
+        
+    });
+
 
     $('#question')
     	.click(function(eventClick, posX, posY, text_input, page_num){
@@ -68,6 +129,17 @@ $(function() {
 		        //alert('Now deleting "'+qtnID+'"');
 		        $('#'+qtnID+'').remove();
 		    });
+
+
+		    //styling
+		    $('#qtneditable'+temp).click(function(){
+		    	$.last_selected = $(this).attr('class');
+		    	var color = rgba2hex($('#qtneditable'+temp).css('color'));
+		        $('#clr').val(color);
+		        // alert($.hex);
+		        $('#clr').minicolors('settings',{});
+		    })
+		    
         $.count++;
     });
 
