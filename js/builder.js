@@ -605,6 +605,8 @@ $(function() {
 		   		data[1] = xPos;
 		   		data[2] = yPos;
 		   		data[3] = "slider";
+		   		data[4] = $('#movingslider'+i).data('slider-range').split(',')[0];
+		   		data[5] = $('#movingslider'+i).data('slider-range').split(',')[1];
 		   		x.push(data);
 		   	}
 
