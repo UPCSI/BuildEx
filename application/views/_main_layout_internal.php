@@ -19,7 +19,7 @@
 			      </section>
 
 			      <section class="right tab-bar-section">
-			        <h1 class="title">Foundation</h1>
+			        <h1 class="title">CS 192</h1>
 			      </section>
 
 			    </nav>

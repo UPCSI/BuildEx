@@ -56,8 +56,7 @@
 		<div class="row">
 			<div class="large-12 column">
 				<div class="panel">
-				<h5> Respondents: <?php echo $experiment->current_count; ?> </h5>
-				<h5> Quota: <?php echo $experiment->target_count; ?> </h5>
+				<h5> Quota: <?php echo $experiment->current_count; ?>/<?php echo $experiment->target_count; ?> </h5>
 				<h5> <?php if($experiment->status == 'f'){ if($experiment->is_published == 'f'){echo "<span style='color:#f1c40f'><i class='fa fa-minus-circle'></i> Standby </span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-play-circle'></i> Ongoing </span>";}}else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Complete </span>"; } ?> </h5>
 				<h5> <?php if($experiment->is_published == 'f'){ if($experiment->status == 'f'){echo "<span style='color:#e74c3c'><i class='fa fa-times-circle'></i> Not published</span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-times-circle'></i> Closed</span>";} }else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Published</span>"; } ?> </h5>
 				<h5 class="actions"> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Edit </a> </h5>	
@@ -66,7 +65,7 @@
 		</div>
 	</div>
 	<?php $expcounter++; ?>
-	<?php if($expcounter>=(count($experiments)/2)): ?>
+	<?php if($expcounter==((int)round(count($experiments)/2))): ?>
 	</div><div class="large-6 column">
 	<?php endif; ?>
 	<?php endforeach; ?>
