@@ -85,12 +85,14 @@ class Builder_model extends MY_Model{
 	}
 
 	function bind($pid, $input_id){
+		$this->db->select('*');
 		$this->db->where('Pages.pid', $pid);
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');
 		$this->db->join('Questions', 'Questions.oid = Objects.oid');
 		$query = $this->db->get('Objects');
-		$this->session->set_userdata('awaa',$query);
+		// $this->session->set_userdata('dfsdf',$query);
 		$object = $this->query_row_conversion($query);
+		// $this->session->set_userdata('awrwe',$object);
 		$this->db->where('qid', $object->qid);
 		$this->db->update('Questions', array('input' => $input_id));
 	}

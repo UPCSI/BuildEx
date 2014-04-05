@@ -110,7 +110,7 @@ $(function() {
 		        // }
 	        })
 		    .resizable({
-		    	containment: "#workspace"
+		    	containment: "parent"
 		    });
 		    $('#qtneditable'+temp).click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
@@ -188,7 +188,7 @@ $(function() {
 		        // }
 	        })
 		    .resizable({
-		    	containment: "#workspace"
+		    	containment: "parent"
 		    });
 		    $('#inpeditable'+temp).click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
@@ -256,7 +256,7 @@ $(function() {
 		        // }
 	        })
 		    .resizable({
-		    	containment: "#workspace"
+		    	containment: "parent"
 		    });
 		    $('.default').click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
@@ -334,7 +334,7 @@ $(function() {
 		        // }
 	        })
 	        .resizable({
-		    	containment: "#workspace"
+		    	containment: "parent"
 		    });
 		    $('.default').click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {
@@ -413,7 +413,7 @@ $(function() {
 		        // }
 	        })
 		    .resizable({
-		    	containment: "#workspace"
+		    	containment: "parent"
 		    });
 		    $('.default').click(function(){
 		        if ( $(this).is('.ui-draggable-dragging') ) {

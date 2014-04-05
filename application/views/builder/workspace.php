@@ -1,6 +1,6 @@
-
+<? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
 <div id="workspace" class="demo panel callout" style="min-width:576px; max-width:576px; height:432px; position:relative; margin:auto; vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
-<div id="page1"></div>
+<div id="page1" style="width:100%; height:100%"></div>
 </div>
 
 <?
@@ -11,7 +11,7 @@
 		$total = 0;
 		foreach ($pages as $page){
 			$total += 1;
-			$htmlData = '<div id="page' . $page->order .'"><div>';
+			$htmlData = '<div id="page' . $page->order .'" style="width:100%; height:100%"><div>';
 
 			if($page->order != 1)
 				echo "$('.demo').append('" . $htmlData . "');";

@@ -71,13 +71,14 @@ class Builder extends MY_Controller{
 				$object['height'] = $item[5];				
 			}
 
-			else{			
+			else if(isset($item[5]) && isset($item[6])){			
 				$object['width'] = $item[5];
 				$object['height'] = $item[6];
+				$object['width'] = (double)substr($object['width'],0, -2);
+				$object['height'] = (double)substr($object['height'],0, -2);
 			}
 
-			$object['width'] = (double)substr($object['width'],0, -2);
-			$object['height'] = (double)substr($object['height'],0, -2);
+			
 			$oid = $this->add_object($object);
 
 			/* question */
@@ -100,6 +101,7 @@ class Builder extends MY_Controller{
 
 			/* textinput */
 			if ($object['type'] == "textinput"){
+				$this->session->set_userdata('truee');
 				$input_id = $this->save_input($oid, 'textinput');
 
 				$textinput['input_id'] = $input_id;
@@ -145,6 +147,7 @@ class Builder extends MY_Controller{
 
 			/* slider */
 			if ($object['type'] == "slider"){
+				$this->session->set_userdata('fsd');
 				$input_id = $this->save_input($oid, 'slider');
 				$slider['input_id'] = $input_id;
 // 				$slider['type'] = ;
