@@ -89,8 +89,8 @@ class Builder_model extends MY_Model{
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');
 		$this->db->join('Questions', 'Questions.oid = Objects.oid');
 		$query = $this->db->get('Objects');
+		$this->session->set_userdata('awaa',$query);
 		$object = $this->query_row_conversion($query);
-
 		$this->db->where('qid', $object->qid);
 		$this->db->update('Questions', array('input' => $input_id));
 	}
