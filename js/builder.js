@@ -25,7 +25,7 @@ $(function() {
 	$(document).click(function(e){
 		var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
 		console.log($.last_selected);
-		$('.'+$.last_selected).css('color', hex);
+		$('#'+$.last_selected).css('color', hex);
 		// console.log(e.target.className);
 	})
 
@@ -64,13 +64,15 @@ $(function() {
     });
 
     $('#question')
-    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			width = typeof width !== 'undefined' ? width : 200;
 			height = typeof height !== 'undefined' ? height : 40;
+			color = typeof color !== 'undefined' ? color : 000000;
+			color = '#' + color;
 
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
@@ -133,13 +135,14 @@ $(function() {
 
 		    //styling
 		    $('#qtneditable'+temp).click(function(){
-		    	$.last_selected = $(this).attr('class');
+		    	$.last_selected = $(this).attr('id');
 		    	var color = rgba2hex($('#qtneditable'+temp).css('color'));
 		        $('#clr').val(color);
 		        // alert($.hex);
 		        $('#clr').minicolors('settings',{});
 		    })
-		    
+
+		document.getElementById('qtneditable'+$.count).style.color = color;		    
         $.count++;
     });
 
@@ -622,6 +625,7 @@ $(function() {
 		   		data[4] = document.getElementById('qtneditable'+i).textContent;
 				data[5] = $('#qtn'+i).css("width");
 				data[6] = $('#qtn'+i).css("height");
+				data[7] = rgb2hex($('#qtneditable'+i).css("color"));
 		   		x.push(data);
 		   	}
 

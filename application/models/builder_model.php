@@ -26,6 +26,7 @@ class Builder_model extends MY_Model{
 			if ($new_obj[3] == "question"){
 				$label = $this->get_object($object->oid, 'Labels');
 				array_push($new_obj, $label->text);
+				array_push($new_obj, $label->font_color);
 			}
 
 			if ($new_obj[3] == "button"){

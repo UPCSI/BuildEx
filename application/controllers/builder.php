@@ -71,7 +71,7 @@ class Builder extends MY_Controller{
 				$object['height'] = $item[5];				
 			}
 
-			else if(isset($item[5]) && isset($item[6])){			
+			else if ($object['type'] != "dropdown" and $object['type'] != "slider"){			
 				$object['width'] = $item[5];
 				$object['height'] = $item[6];
 				$object['width'] = (double)substr($object['width'],0, -2);
@@ -87,7 +87,7 @@ class Builder extends MY_Controller{
 				$label['text'] = $item[4];
 				// $label['font'] = ;
 				// $label['font_size'] = ;
-				// $label['font_color'] = ;
+				$label['font_color'] = substr($item[7],1);
 
 				$label_id = $this->add_label($label);
 

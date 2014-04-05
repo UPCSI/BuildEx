@@ -68,7 +68,7 @@
 		</div>
 	</div>
 	<?php $expcounter++; ?>
-	<?php if($expcounter>=(count($experiments)/2)): ?>
+	<?php if($expcounter==(int)round(count($experiments)/2)): ?>
 	</div><div class="large-6 column">
 	<?php endif; ?>
 	<?php endforeach; ?>

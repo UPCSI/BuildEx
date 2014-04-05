@@ -372,6 +372,56 @@ div.panel.exp > div.row > div.large-12.column > div.panel > h5 > a.button.tiny {
   margin:0;
 }
 
+div.panel.profile{
+  background: #000000;
+  background-image: url('../images/jumbo_grad.jpg');
+  background-size: cover;
+}
+
+dl.tabs.profile {
+  position: relative;
+  top:-1px;
+  width: 100%;
+}
+
+dl.tabs.profile > dd {
+  width: 50%;
+}
+
+div.tabs-content.profile {
+  
+}
+
+button.button.lab.expand {
+  background-color: #3498db;
+  border-style: solid;
+  border-width: 0 0 7px 0;
+  border-color: #2980b9;
+}
+
+button.button.lab.expand:hover {
+  background-color: #2980b9;
+}
+
+button.button.lab.expand > div.row> div.column > a{
+  color: #fff;
+  text-shadow: none;
+  -webkit-transition: text-shadow 0.25s ease-in-out;
+  -moz-transition: text-shadow 0.25s ease-in-out;
+  -ms-transition: text-shadow 0.25s ease-in-out;
+  -o-transition: text-shadow 0.25s ease-in-out;
+  transition: text-shadow 0.25s ease-in-out;
+}
+
+button.button.lab.expand > div.row> div.column > a:hover{
+  text-shadow: 0px 0px 5px #ffffff;
+  -webkit-transition: text-shadow 0.25s ease-in-out;
+  -moz-transition: text-shadow 0.25s ease-in-out;
+  -ms-transition: text-shadow 0.25s ease-in-out;
+  -o-transition: text-shadow 0.25s ease-in-out;
+  transition: text-shadow 0.25s ease-in-out;
+}
+
 section.sitemap {
   background-color: #252525;
   padding: 1% 0px;
@@ -470,15 +520,7 @@ ul {
 }
 
 .editable {
-    color: #000000;
-    cursor: move;
-    width: 100%;
-    height: 100%;
-    word-wrap: break-word;
-}
-
-.text-holder {
-    color: #000000;
+    cursor: auto;
     width: 100%;
     height: 100%;
     word-wrap: break-word;
@@ -490,44 +532,6 @@ ul {
     float:left;
     position:absolute; 
     cursor: move;
-}
-
-.static_obj {
-    width:200px;
-    height:40px;
-    float:left;
-    position:absolute; 
-}
-
-.minicolors {
-    height: 20px !important;
-}
-
-.minicolors-swatch {
-    top: 11px !important;
-    left: 10px !important;
-}
-
-div.minicolors {
-   margin-top: 5px;
-   display: block !important;
-   width: 100% !important;
-   height: 40px !important;
-}
-
-input.minicolors-input {
- background-color: rgba(0,0,0,0);
- color: rgba(255,255,255,0.7);
- border: 0px;
- width: 100% !important;
- height: 100% !important;
- display: block !important;
- padding-left: 31px !important;
- margin-bottom: 0px !important;
-}
-
-input.minicolors-input:focus {
- background-color: rgba(255,255,255,0.1);
 }
 
 [class^=slider] { 
@@ -604,10 +608,9 @@ div.tabs-content.elements {
 
 
 @media only screen and (min-width: 40em) {
-#getObjectValues, #pauseButton, #resumeButton{
-  margin-left: 5px;
-  margin-right: 5px; 
+#getObjectValues {
   top: 12px;
+}
 
 
 .no-select { 
