@@ -137,7 +137,7 @@ class Builder extends MY_Controller{
 				$input_id = $this->save_input($oid, 'slider');
 				$slider['input_id'] = $input_id;
 // 				$slider['type'] = ;
-				$slider['min_num'] = $item[4];
+				$slider['min_num'] = (int)$item[4];
 				$slider['max_num'] = (int)$item[5];
 
 				$slider_id = $this->add_slider($slider);

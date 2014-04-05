@@ -43,6 +43,12 @@ class Builder_model extends MY_Model{
 				array_push($new_obj, $checkbox->choices);
 			}
 
+			if ($new_obj[3] == "slider"){
+				$slider = $this->get_input($object->oid, 'Sliders');
+				array_push($new_obj, $slider->min_num);
+				array_push($new_obj, $slider->max_num);
+			}
+
 			array_push($data, $new_obj);
 		}
 

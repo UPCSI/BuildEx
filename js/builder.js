@@ -529,10 +529,12 @@ $(function() {
 	    });
 
 	$('#slider')
-    	.click(function(eventClick, posX, posY, page_num){
+    	.click(function(eventClick, posX, posY, page_num, min, max){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			min = typeof min !== 'undefined' ? min : 0;
+			max = typeof max !== 'undefined' ? max : 1;
 
 			var htmlData='<div id="sldr'+$.count+'" class="draggable"';
 			if (posX != null && posY != null){
@@ -567,6 +569,7 @@ $(function() {
 			    		base = data.value.toFixed(3) * parseInt(a[1]);
 			    	}
 			      	$(this).nextAll(".output:first").html(base);
+
 			});
 	        $('#sldr'+temp).draggable({
 	        	containment: "#workspace",
@@ -589,7 +592,9 @@ $(function() {
 		        //alert('Now deleting "'+objID+'"');
 		        $('#'+btnID+'').remove();
 		    });
-		    
+
+			$('#movingslider'+$.count).attr('data-slider-range', min + "," + max);
+			alert('#movingslider'+$.count);
 	        $.count++;
     });
 
