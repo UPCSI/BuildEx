@@ -22,8 +22,11 @@ class Builder extends MY_Controller{
 
 		$data['title'] = 'Experiment';
 		$data['eid'] = $eid;
+		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 
+
+		// var_dump($data['var']);
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
 	}
@@ -38,7 +41,10 @@ class Builder extends MY_Controller{
 		$message = $this->input->post('msg');
 		if ($message == 'false')
 			return;
-
+		
+		$eid = $this->input->post('eid');
+		$this->delete($eid);
+		
 		$pid_list = array();
 		/* page */
 		$page['eid'] = $this->input->post('eid');
@@ -46,14 +52,16 @@ class Builder extends MY_Controller{
 		$total_pages = array_shift($message);
 
 		for($index=1; $index <= $total_pages; $index++){
-			$page['eid'] = $this->input->post('eid');
+			$page['eid'] = $eid;
 			$page['order'] = $index;
 			array_push($pid_list, $this->add_page($page));
 		}
 
+		// $d['page'] = array();
+
 		/* object */
 		foreach ($message as $item){
-			$order = (int)explode('page', $item[0]);
+			$order = (int)substr($item[0], 4);
 			$object['pid'] = $pid_list[$order-1];
 			$object['x_pos'] = (double)$item[1];
 			$object['y_pos'] = (double)$item[2];
@@ -62,8 +70,11 @@ class Builder extends MY_Controller{
 			// $object['height'] = $item[];
 			$oid = $this->add_object($object);
 
-			/* label */
-			if ($object['type'] == "label" || $object['type'] == "question"){
+
+			// array_push($d['page'],$order);
+
+			/* question */
+			if ($object['type'] == "question"){
 				$label['oid'] = $oid;
 				$label['text'] = $item[4];
 				// $label['font'] = ;
@@ -71,16 +82,25 @@ class Builder extends MY_Controller{
 				// $label['font_color'] = ;
 
 				$label_id = $this->add_label($label);
-			}
 
-			/* question */
-			if ($object['type'] == "question"){
 				$question['oid'] = $oid;
 				$question['is_required'] = 'f';
 				// $question['input'] = ;
 				$question['label'] = $label_id;
 
 				$qid = $this->add_question($question);
+			}
+
+			/* textinput */
+			if ($object['type'] == "textinput"){
+				$input_id = $this->save_input($oid, 'textinput');
+
+				$textinput['input_id'] = $input_id;
+				// $textinput['length'] = ;
+				// $textinput['orientation'] = ;
+
+				$textinput_id = $this->add_textinput($textinput);
+				$this->bind($object['pid'], $input_id);
 			}
 
 			/* button */
@@ -92,17 +112,9 @@ class Builder extends MY_Controller{
 
 				$button_id = $this->add_button($button);
 			}
-
-			// /* radio */
-			// if ($object['type'] == "radio" || $object['type'] == "radio"){
-			// 	$input['oid'] = $oid;
-			// 	$input['text'] = $item[3];
-			// 	// $input['go_to'] = ;
-			// 	// $input['type'] = ;
-
-			// 	$input_id = $this->add_input($input);
-			// }
 		}
+			// $d['pid'] = $pid_list;
+			// $this->session->set_userdata($d);
 
 		echo $this->session->userdata('active_role'); #for ajax
 	}
@@ -123,6 +135,23 @@ class Builder extends MY_Controller{
 	------------------------------------------------------------------------------------
 */
 
+	public function bind($pid, $input_id){
+		$this->load->model('builder_model');
+		$this->builder_model->bind($pid, $input_id);
+	}
+
+	public function get_all_pages($eid){
+		$this->load->model('builder_model');
+		return $this->builder_model->get_all_pages($eid);
+	}
+
+		public function save_input($oid, $type){
+		$input['oid'] = $oid;
+		$input['type'] = $type;
+		// $input['helper'] = ;
+		return $this->add_input($input);		
+	}
+
 	public function add_page($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_page($data);
@@ -136,6 +165,11 @@ class Builder extends MY_Controller{
 	public function add_label($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_label($data);
+	}
+
+	public function add_textinput($data){
+		$this->load->model('builder_model');
+		return $this->builder_model->add_textinput($data);
 	}
 
 	public function add_button($data){
@@ -177,5 +211,4 @@ class Builder extends MY_Controller{
 		$this->load->model('builder_model');
 		return $this->builder_model->add_slider($data);
 	}
-
 }

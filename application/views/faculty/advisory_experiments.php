@@ -1,5 +1,15 @@
-<h1> Advisory Experiments </h1>
-<hr>
+<h1 class="white"> Experiments </h1>
+
+<div class="row">
+<div class="large-12 column">
+<h3 class="white" style="display:inline">Advisory Experiments</h3>
+<?php if(isset($requests)): ?>
+	<br class="hide-for-large"/>
+	<span style='color:#e74c3c !important'><a href="#requests"><i class="fa fa-exclamation-circle"></i> <?php echo count($requests) ?> pending requests</a></span>
+<?php endif; ?>
+</div>
+</div>
+
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
 	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
@@ -7,7 +17,7 @@
 
 <h3>Graduates' Experiments</h3>
 <?php if(isset($experiments)): ?>
-	<table>
+	<!--table style="width:100%;display:none">
 		<thead>
 			<tr>
 				<td width = "150"> Experiment </td>
@@ -30,14 +40,48 @@
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-	</table>
+	</table-->
+
+
+	<div class="row">
+	<div class="large-6 column">
+	<?php $expcounter = 0; ?>
+	<?php foreach ($experiments as $experiment):?>
+	<div class="panel exp">
+		<div class="titleholder">
+		<div class="row full">
+			<div class="large-12 column">
+				<h3> <?php echo anchor('experiment/view/' . $experiment->eid, $experiment->title); ?> </h3>
+			</div>
+		</div>
+		</div>	
+		<div class="row">
+			<div class="large-12 column">
+				<div class="panel">
+				<h5><a href = "<?php echo site_url('graduate/view/'.$experiment->username); ?>"><?php echo strtoupper($experiment->last_name).', '.ucwords($experiment->first_name).', '.ucfirst($experiment->middle_name); ?></a></h5>
+				<h5> Respondents: <?php echo $experiment->current_count; ?> </h5>
+				<h5> Quota: <?php echo $experiment->target_count; ?> </h5>
+				<h5> <?php if($experiment->status == 'f'){ if($experiment->is_published == 'f'){echo "<span style='color:#f1c40f'><i class='fa fa-minus-circle'></i> Standby </span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-play-circle'></i> Ongoing </span>";}}else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Complete </span>"; } ?> </h5>
+				<h5> <?php if($experiment->is_published == 'f'){ if($experiment->status == 'f'){echo "<span style='color:#e74c3c'><i class='fa fa-times-circle'></i> Not published</span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-times-circle'></i> Closed</span>";} }else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Published</span>"; } ?> </h5>
+			</div>
+			</div>
+		</div>
+	</div>
+	<?php $expcounter++; ?>
+	<?php if($expcounter>=(count($experiments)/2)): ?>
+	</div><div class="large-6 column">
+	<?php endif; ?>
+	<?php endforeach; ?>
+	</div>
+	</div>
+
 <?php else: ?>
-	<p> You're not advising any experiment. </p>
+	<p> You are not advising any experiment. </p>
 <?php endif; ?>
-<hr>
-<h3> Experiments to be advised </h3>
+
+<h3 name="requests"> Experiments to be advised </h3>
 <?php if(isset($requests)): ?>
-	<table>
+	<!--table style="width:100%;display:none">
 		<thead>
 			<tr>
 				<td width = "150"> Experiment </td>
@@ -64,7 +108,7 @@
 				</tr>
 			<?php endforeach; ?>
 		</tbody>
-	</table>
+	</table-->
 <?php else: ?>
-	<p> There is no advisory request. </p>
+	<p> You have no pending advisory requests. </p>
 <?php endif; ?>

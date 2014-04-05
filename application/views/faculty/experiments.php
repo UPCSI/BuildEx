@@ -1,15 +1,22 @@
-<h1> Experiments </h1>
-<hr>
+<h1 class="white"> Experiments </h1>
+
 <? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
 
 <!-- Notification Handling Part-->
 <?php if(isset($notification)): ?>
 	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
-
-<h3>My Experiments</h3>
+<div class="row">
+<div class="large-6 medium-6 small-6 column">
+<h3 class="white">My Experiments</h3>
+</div>
+<div class="large-6 medium-6 small-6 column">
+<a style="float:right" class = "button small" href="#" data-reveal-id="create_experiment_modal">Create Experiment</a>
+</div>
+</div>
 <?php if(isset($experiments)): ?>
-	<table>
+
+	<!--table style="width:100%;display:none">
 		<thead>
 			<tr>
 				<td width = "200"> Experiment </td>
@@ -28,15 +35,46 @@
 				<td> <?php echo $experiment->target_count; ?> </td>
 				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
 				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
-				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go To </a> </td>	
+				<td> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Edit </a> </td>	
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
-	</table>
+	</table-->
+
+	<div class="row">
+	<div class="large-6 column">
+	<?php $expcounter = 0; ?>
+	<?php foreach ($experiments as $experiment):?>
+	<div class="panel exp">
+		<div class="titleholder">
+		<div class="row full">
+			<div class="large-12 column">
+				<h3> <?php echo anchor('faculty/view_experiment/'.$experiment->eid, $experiment->title); ?> </h3>
+			</div>
+		</div>
+		</div>	
+		<div class="row">
+			<div class="large-12 column">
+				<div class="panel">
+				<h5> Respondents: <?php echo $experiment->current_count; ?> </h5>
+				<h5> Quota: <?php echo $experiment->target_count; ?> </h5>
+				<h5> <?php if($experiment->status == 'f'){ if($experiment->is_published == 'f'){echo "<span style='color:#f1c40f'><i class='fa fa-minus-circle'></i> Standby </span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-play-circle'></i> Ongoing </span>";}}else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Complete </span>"; } ?> </h5>
+				<h5> <?php if($experiment->is_published == 'f'){ if($experiment->status == 'f'){echo "<span style='color:#e74c3c'><i class='fa fa-times-circle'></i> Not published</span>";}else{echo "<span style='color:#f1c40f'><i class='fa fa-times-circle'></i> Closed</span>";} }else{ echo "<span style='color:#36d077'><i class='fa fa-check-circle'></i> Published</span>"; } ?> </h5>
+				<h5 class="actions"> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Edit </a> </h5>	
+			</div>
+			</div>
+		</div>
+	</div>
+	<?php $expcounter++; ?>
+	<?php if($expcounter>=(count($experiments)/2)): ?>
+	</div><div class="large-6 column">
+	<?php endif; ?>
+	<?php endforeach; ?>
+	</div>
+	</div>
 <?php else: ?>
 	<p> You have no experiments </p>
 <?php endif; ?>
-<a class = "button small" href="#" data-reveal-id="create_experiment_modal">Create Experiment</a>
 
 <!-- Modal - Create Experiment -->
 <div id="create_experiment_modal" class="reveal-modal small" data-reveal>
