@@ -49,6 +49,8 @@ class Builder_model extends MY_Model{
 				array_push($new_obj, $slider->max_num);
 			}
 
+			array_push($new_obj, $object->width + "px");
+			array_push($new_obj, $object->height + "px");
 			array_push($data, $new_obj);
 		}
 

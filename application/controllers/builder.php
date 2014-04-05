@@ -65,8 +65,19 @@ class Builder extends MY_Controller{
 			$object['x_pos'] = (double)$item[1];
 			$object['y_pos'] = (double)$item[2];
 			$object['type'] = $item[3];
-			// $object['width'] = $item[];
-			// $object['height'] = $item[];
+
+			if($object['type'] == "textinput"){
+				$object['width'] = $item[4];
+				$object['height'] = $item[5];				
+			}
+
+			else{			
+				$object['width'] = $item[5];
+				$object['height'] = $item[6];
+			}
+
+			$object['width'] = (double)substr($object['width'],0, -2);
+			$object['height'] = (double)substr($object['height'],0, -2);
 			$oid = $this->add_object($object);
 
 			/* question */

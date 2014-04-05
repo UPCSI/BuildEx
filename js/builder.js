@@ -30,8 +30,7 @@ $(function() {
 	})
 
 	$('.minicolors-panel').click(function(){
-		alert('dfsdfsd');
-		
+		alert('dfsdfsd');		
 	})
 
 	$('.color-picker').each( function() {
@@ -61,23 +60,24 @@ $(function() {
 				} catch(e) {}
 			},
 			theme: 'default'
-		});
-        
+		});        
     });
 
-
     $('#question')
-    	.click(function(eventClick, posX, posY, text_input, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
+			width = typeof width !== 'undefined' ? width : 200;
+			height = typeof height !== 'undefined' ? height : 40;
+
 			var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 			}
 
 			if(text_input != "")
@@ -144,18 +144,20 @@ $(function() {
     });
 
 	$('#textinput')
-    	.click(function(eventClick, posX, posY, text_input, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
+			width = typeof width !== 'undefined' ? width : 200;
+			height = typeof height !== 'undefined' ? height : 40;
 			
 			var htmlData='<div id="inp'+$.count+'" class="draggable ui-widget-content"';
 
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;""';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 			}
 			
 			if(text_input != "")
@@ -209,17 +211,19 @@ $(function() {
     });
 
 	$('#button')
-    	.click(function(eventClick, posX, posY, text_input, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
+			width = typeof width !== 'undefined' ? width : 200;
+			height = typeof height !== 'undefined' ? height : 40;
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 			}
 			else{
 				htmlData += 'style="width:150px; height:60"';
@@ -284,17 +288,19 @@ $(function() {
     });
 
 	$('#radiobutton')
-    	.click(function(eventClick, posX, posY, text_input, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Radio Button";
+			width = typeof width !== 'undefined' ? width : 120;
+			height = typeof height !== 'undefined' ? height : 25;
 
 			var htmlData='<div id="radbtn'+$.count+'" class="radiosnap draggable ui-draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:120px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 			}
 			else{
 				htmlData += 'style="height:25px; width:120px;"';
@@ -360,17 +366,19 @@ $(function() {
     });
 
 	$('#checkbox')
-    	.click(function(eventClick, posX, posY, text_input, page_num){
+    	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
 	    	posX = typeof posX !== 'undefined' ? posX : null;
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Checkbox";
+			width = typeof width !== 'undefined' ? width : 200;
+			height = typeof height !== 'undefined' ? height : 40;
 
 			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable"';
 			if (posX != null && posY != null){
 				// alert('x' + posX);
 				// alert('y' + posY);
-				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:120px;"';
+				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 			}
 
 			else{
@@ -594,7 +602,6 @@ $(function() {
 		    });
 
 			$('#movingslider'+$.count).attr('data-slider-range', min + "," + max);
-			alert('#movingslider'+$.count);
 	        $.count++;
     });
 
@@ -613,6 +620,9 @@ $(function() {
 		   		data[2] = yPos;
 		   		data[3] = "question";
 		   		data[4] = document.getElementById('qtneditable'+i).textContent;
+				data[5] = $('#qtn'+i).css("width");
+				data[6] = $('#qtn'+i).css("height");
+				alert(data[5] + " " + data[6]);
 		   		x.push(data);
 		   	}
 
@@ -624,6 +634,8 @@ $(function() {
 		   		data[1] = xPos;
 		   		data[2] = yPos;
 		   		data[3] = "textinput";
+				data[4] = $('#inp'+i).css("width");
+				data[5] = $('#inp'+i).css("height");
 		   		x.push(data);
 		   	}
 
@@ -636,6 +648,8 @@ $(function() {
 		   		data[2] = yPos;
 		   		data[3] = "button";
 		   		data[4] = document.getElementById('btneditable'+i).textContent;
+				data[5] = $('#btn'+i).css("width");
+				data[6] = $('#btn'+i).css("height");
 		   		x.push(data);
 		   	}
 
@@ -648,6 +662,8 @@ $(function() {
 		   		data[2] = yPos;
 		   		data[3] = "radio";
 		   		data[4] = document.getElementById('radbtneditable'+i).textContent;
+				data[5] = $('#radbtn'+i).css("width");
+				data[6] = $('#radbtn'+i).css("height");
 		   		x.push(data);
 		   	}
 
@@ -660,6 +676,8 @@ $(function() {
 		   		data[2] = yPos;
 		   		data[3] = "checkbox";
 		   		data[4] = document.getElementById('chkboxeditable'+i).textContent;
+				data[5] = $('#chkbox'+i).css("width");
+				data[6] = $('#chkbox'+i).css("height");
 		   		x.push(data);
 		   	}
 
