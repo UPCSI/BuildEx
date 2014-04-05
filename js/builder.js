@@ -216,7 +216,7 @@ $(function() {
 			posY = typeof posY !== 'undefined' ? posY : null;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
-			width = typeof width !== 'undefined' ? width : 200;
+			width = typeof width !== 'undefined' ? width : 150;
 			height = typeof height !== 'undefined' ? height : 40;
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable"';
