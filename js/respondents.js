@@ -9,18 +9,19 @@ function register_answer(qid,value){
 	answer_cache[qid] = value;
 }
 
-function draw_question(posX, posY, text_input, page_num){
+function draw_question(posX, posY, text_input, page_num, width, height, color){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
 	text_input = typeof text_input !== 'undefined' ? text_input : "";
 	width = typeof width !== 'undefined' ? width : 200;
 	height = typeof height !== 'undefined' ? height : 40;
-	
+	color = typeof color !== 'undefined' ? color : 000000;
+	color = '#' + color;	
 	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + $.page + '"';
 
 	if (posX !== null && posY !== null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:'+ height + 'px;"';
+		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
 	}
 
 	if(text_input !== "")
@@ -36,7 +37,8 @@ function draw_question(posX, posY, text_input, page_num){
 	else{
 		$("#page" + index).append(htmlData);
 	}
-
+	
+	document.getElementById('qtneditable'+$.count).style.color = color;	
 	$.count++;
 }
 

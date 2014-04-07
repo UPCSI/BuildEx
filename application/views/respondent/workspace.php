@@ -19,7 +19,7 @@
 		foreach ($var as $obj){
 			// echo 'alert("sending page " +' .$obj[3].');';
 			if($obj[3] == "question"){
-				echo 'draw_question('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+				echo 'draw_question('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[6].',' .$obj[7] .',"' .$obj[5].'");';
 			}
 			
 			else if($obj[3] == "textinput"){
