@@ -65,8 +65,8 @@ $(function() {
 
     $('#question')
     	.click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 183;
+			posY = typeof posY !== 'undefined' ? posY : 191;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			width = typeof width !== 'undefined' ? width : 200;
@@ -148,8 +148,8 @@ $(function() {
 
 	$('#textinput')
     	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 183;
+			posY = typeof posY !== 'undefined' ? posY : 191;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "";
 			width = typeof width !== 'undefined' ? width : 200;
@@ -215,8 +215,8 @@ $(function() {
 
 	$('#button')
     	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 208;
+			posY = typeof posY !== 'undefined' ? posY : 191;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 			width = typeof width !== 'undefined' ? width : 150;
@@ -292,8 +292,8 @@ $(function() {
 
 	$('#radiobutton')
     	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 223;
+			posY = typeof posY !== 'undefined' ? posY : 198;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Radio Button";
 			width = typeof width !== 'undefined' ? width : 120;
@@ -370,12 +370,12 @@ $(function() {
 
 	$('#checkbox')
     	.click(function(eventClick, posX, posY, text_input, page_num, width, height){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 223;
+			posY = typeof posY !== 'undefined' ? posY : 198;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Checkbox";
-			width = typeof width !== 'undefined' ? width : 200;
-			height = typeof height !== 'undefined' ? height : 40;
+			width = typeof width !== 'undefined' ? width : 120;
+			height = typeof height !== 'undefined' ? height : 25;
 
 			var htmlData='<div id="chkbox'+$.count+'" class="checksnap draggable ui-draggable"';
 			if (posX != null && posY != null){
@@ -449,8 +449,8 @@ $(function() {
 
 	$('#dropdown')
     	.click(function(eventClick, posX, posY, page_num){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 213;
+			posY = typeof posY !== 'undefined' ? posY : 194;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
@@ -541,8 +541,8 @@ $(function() {
 
 	$('#slider')
     	.click(function(eventClick, posX, posY, page_num, min, max){
-	    	posX = typeof posX !== 'undefined' ? posX : null;
-			posY = typeof posY !== 'undefined' ? posY : null;
+	    	posX = typeof posX !== 'undefined' ? posX : 120;
+			posY = typeof posY !== 'undefined' ? posY : 198;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			min = typeof min !== 'undefined' ? min : 0;
 			max = typeof max !== 'undefined' ? max : 1;
@@ -743,7 +743,7 @@ $(function() {
 
 		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
 		$.current_page++;
-		alert($.current_page);
+		// alert($.current_page);
 
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
@@ -755,7 +755,7 @@ $(function() {
 			$.current_page--;
 		}
 
-		alert($.current_page);
+		// alert($.current_page);
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
@@ -766,7 +766,7 @@ $(function() {
 			$.current_page++;
 		}
 
-		alert($.current_page);
+		// alert($.current_page);
 
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
