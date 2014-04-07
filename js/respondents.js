@@ -115,7 +115,7 @@ function draw_button(posX, posY, text_input, page_num){
 	$.count++;
 }
 
-function draw_radio_button(posX, posY, page_num){
+function draw_radio_button(posX, posY, text_input, page_num){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -249,7 +249,7 @@ function draw_slider(posX, posY, page_num){
 
 			document.getElementById("page" + $.current_page).style.visibility = 'visible';
 
-			alert($.current_page);
+			// alert($.current_page);
 		});
 	});
 })(jQuery);

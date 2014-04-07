@@ -743,7 +743,7 @@ $(function() {
 
 		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
 		$.current_page++;
-		// alert($.current_page);
+		alert($.current_page);
 
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
@@ -755,7 +755,7 @@ $(function() {
 			$.current_page--;
 		}
 
-		// alert($.current_page);
+		alert($.current_page);
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
@@ -766,7 +766,7 @@ $(function() {
 			$.current_page++;
 		}
 
-		// alert($.current_page);
+		alert($.current_page);
 
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
