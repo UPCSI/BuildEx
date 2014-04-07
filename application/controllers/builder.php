@@ -74,11 +74,11 @@ class Builder extends MY_Controller{
 			else if ($object['type'] != "dropdown" and $object['type'] != "slider"){			
 				$object['width'] = $item[5];
 				$object['height'] = $item[6];
-				$object['width'] = (double)substr($object['width'],0, -2);
-				$object['height'] = (double)substr($object['height'],0, -2);
 			}
 
 			
+			$object['width'] = (double)substr($object['width'],0, -2);
+			$object['height'] = (double)substr($object['height'],0, -2);
 			$oid = $this->add_object($object);
 
 			/* question */
@@ -150,7 +150,7 @@ class Builder extends MY_Controller{
 				$this->session->set_userdata('fsd');
 				$input_id = $this->save_input($oid, 'slider');
 				$slider['input_id'] = $input_id;
-// 				$slider['type'] = ;
+				// $slider['type'] = ;
 				$slider['min_num'] = (int)$item[4];
 				$slider['max_num'] = (int)$item[5];
 

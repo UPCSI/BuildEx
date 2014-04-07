@@ -721,7 +721,8 @@ $(function() {
 	   		complete: function(data) {
 	   			// alert("Saved Successfully!");
 	   			//alert(data[0][0]);
-	   			//alert(data.responseText);
+	   			// alert(data.responseText);
+	   			
 	   			window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
 	   		},
 	
