@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/respondent_header',$title); ?>
 
-<body style="margin-top: 100px;">
+<body>
 <?php $this->load->view('components/topbar'); ?>
 
 <?php $this->load->view($main_content); ?>

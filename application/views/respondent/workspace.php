@@ -1,9 +1,7 @@
-<div class="large-11 column">
 <div id="workspace" class="demo panel callout" style="min-width:576px; max-width:576px; height:432px; position:relative; margin:auto; vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
 
 </div>
-</div>
-<div class = "large-1 column" style="margin-top:80px">
+<div class = "row" style="margin-top:80px">
 	<button type = "button" id = "next_page"> Next </button>
 </div>
 <?
