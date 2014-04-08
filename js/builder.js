@@ -27,11 +27,7 @@ $(function() {
 		console.log($.last_selected);
 		$('#'+$.last_selected).css('color', hex);
 		// console.log(e.target.className);
-	})
-
-	$('.minicolors-panel').click(function(){
-		alert('dfsdfsd');		
-	})
+	});
 
 	$('.color-picker').each( function() {
         //
@@ -743,7 +739,7 @@ $(function() {
 
 		document.getElementById("page" + $.current_page).style.visibility = 'hidden';
 		$.current_page++;
-		// alert($.current_page);
+		//alert($.current_page);
 
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
@@ -755,7 +751,9 @@ $(function() {
 			$.current_page--;
 		}
 
-		// alert($.current_page);
+		//alert($.current_page);
+		$("#"+$.current_page).css('background', 'yellow');
+		$("#"+($.current_page+1)).css('background', '#f2f2f2');
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});
 
@@ -766,8 +764,9 @@ $(function() {
 			$.current_page++;
 		}
 
-		// alert($.current_page);
-
+		//alert($.current_page);
+		$("#"+($.current_page-1)).css('background', '#f2f2f2');
+		$("#"+$.current_page).css('background', 'yellow');
 		document.getElementById("page" + $.current_page).style.visibility = 'visible';
 	});	
 

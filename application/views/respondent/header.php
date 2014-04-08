@@ -25,4 +25,4 @@
 <script src="<?php echo site_url('js/respondents.js'); ?>"></script>
 </head>
 
-<body>
+<body style= "margin-top : 55px;">
