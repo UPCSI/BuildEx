@@ -3,6 +3,15 @@
 <div id="page1" style="width:100%; height:100%"></div>
 </div>
 
+<!-- <div id="myModal" class="reveal-modal" data-reveal>
+  <h2>Awesome. I have it.</h2>
+  <p class="lead">Your couch.  It is mine.</p>
+  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<a id="fak1" href="#" data-reveal-id="myModal" data-reveal>Click Me For A Modal</a> -->
+
 <?
 	if(isset($var)){
 		echo '<script>';
@@ -12,9 +21,13 @@
 		foreach ($pages as $page){
 			$total += 1;
 			$htmlData = '<div id="page' . $page->order .'" style="width:100%; height:100%"><div>';
-
-			if($page->order != 1)
+			$htmlData1 = '<div id="slide'. $page->order .'" class="panel pnl"><p>Slide '. $page->order .'</p></div>';
+			
+			if($page->order != 1) {
 				echo "$('.demo').append('" . $htmlData . "');";
+				echo "$('.slides').append('" . $htmlData1 . "');";
+			}
+			// echo '$("#newPage").click();';
 		}
 
 		foreach ($var as $obj){
@@ -44,6 +57,10 @@
 			echo 'document.getElementById("page" + '.$index.').style.visibility =' ."'hidden';";
 		}
 
+		// for($index=1; $index<$total; $index++){
+			
+		// }
+
 		echo '$.page = '.$total.';';
 		// echo 'alert($.page);';
 	
@@ -52,11 +69,3 @@
 		echo '</script>';
 	}
 ?>
-<script>
-(function($){
-	$(function(){
-		// alert($.page);
-	});
-
-})(jQuery);
-</script>

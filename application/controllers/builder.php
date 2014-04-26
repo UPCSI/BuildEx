@@ -101,7 +101,6 @@ class Builder extends MY_Controller{
 
 			/* textinput */
 			if ($object['type'] == "textinput"){
-				$this->session->set_userdata('truee');
 				$input_id = $this->save_input($oid, 'textinput');
 
 				$textinput['input_id'] = $input_id;

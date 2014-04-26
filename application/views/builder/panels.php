@@ -1,18 +1,1 @@
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
-<li><div class="panel pnl"><p>Blah</p></div></li>
+<div id="slide1" class="panel pnl" style="background:yellow"><p>Slide 1</p></div>
