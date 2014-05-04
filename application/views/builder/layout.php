@@ -12,7 +12,7 @@ $this->load->view('builder/topbar');
     margin-bottom:0px;">
 				<div class="slides panel callout" style="min-height:90%;height:90%;overflow-y:auto;margin-bottom:0px;">
 				</div>
-				<div class="panel callout" style="min-height:10%;height:10%;padding:0px;margin:0px">
+				<div class="panel callout" style="min-height:10%;height:10%;padding:0px;margin:0px;overflow-y:auto;">
 					<ul class="off-canvas-list">
 						<li><center>
 							<ul class="button-group" style="display:table;margin-top:10px;margin-bottom:10px">
