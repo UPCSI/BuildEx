@@ -1,6 +1,6 @@
 (function($){ 
 $(function() {
-
+  
   $.count = 1;
   $.page = 1;
   $.current_page = 1;
@@ -22,12 +22,19 @@ $(function() {
       return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
   }
 
+  function checkQuestion() {
+    var check = $('#page'+$.current_page).find('div');
+    if(check.hasClass('flag')){
+      $('#question').addClass('disabled');
+    }else{
+      $('#question').removeClass('disabled');
+    }
+  }
+
   $(document).click(function(e){
     var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
-    console.log($.last_selected);
     $('#'+$.last_selected).css('color', hex);
-    // console.log(e.target.className);
-  })
+  });
 
 
   $('.color-picker').each( function() {
@@ -59,89 +66,97 @@ $(function() {
       theme: 'default'
     });        
   });
+    
+  $('#workspace').on('click', '.delete', function(e){
+      var parent = $(this).parent('div');
+      if(parent.attr('id').substr(0,3) == 'qtn'){
+        $('#question').removeClass('disabled');
+      }
+      parent.remove();
+  });
 
   $('#question')
     .click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
-      posX = typeof posX !== 'undefined' ? posX : 183;
-      posY = typeof posY !== 'undefined' ? posY : 191;
-      page_num = typeof page_num !== 'undefined' ? page_num : 0;
-      text_input = typeof text_input !== 'undefined' ? text_input : "";
-      width = typeof width !== 'undefined' ? width : 200;
-      height = typeof height !== 'undefined' ? height : 40;
-      color = typeof color !== 'undefined' ? color : 000000;
-      color = '#' + color;
+      // alert($(this).hasClass('disabled'));
+      if(!$(this).hasClass('disabled')){
+        posX = typeof posX !== 'undefined' ? posX : 183;
+        posY = typeof posY !== 'undefined' ? posY : 191;
+        page_num = typeof page_num !== 'undefined' ? page_num : 0;
+        text_input = typeof text_input !== 'undefined' ? text_input : "";
+        width = typeof width !== 'undefined' ? width : 200;
+        height = typeof height !== 'undefined' ? height : 40;
+        color = typeof color !== 'undefined' ? color : 000000;
+        color = '#' + color;
 
-      var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
+        var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
-      if (posX != null && posY != null){
-        // alert('x' + posX);
-        // alert('y' + posY);
-        htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
-      }
+        if (posX != null && posY != null){
+          // alert('x' + posX);
+          // alert('y' + posY);
+          htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
+        }
 
-      if(text_input != "")
-        htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag">'+text_input+'</div></div>';
-      else
-        htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag" data-placeholder="Enter Question" ></div></div>';
+        if(text_input != "")
+          htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag">'+text_input+'</div></div>';
+        else
+          htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag" data-placeholder="Enter Question" ></div></div>';
 
-      var temp = $.count;
-      var index = page_num;
-      if(index <= 0)
-        $("#page" + $.current_page).append(htmlData);
-      else
-        $("#page" + index).append(htmlData);
+        var temp = $.count;
+        var index = page_num;
+        if(index <= 0)
+          $("#page" + $.current_page).append(htmlData);
+        else
+          $("#page" + index).append(htmlData);
 
-          $('#qtn'+temp).draggable({
-            containment: "#workspace",
-            scroll: false,
-            snap: false,
-            // drag: function(){
-            //  var xPos = $(this).css('left');
-            //  var yPos = $(this).css('top');
-                // var offset1 = $(this).offset();
-                // var xPos1 = offset1.left;
-                // var yPos1 = offset1.top;
-                // var element = $(this).attr('id');
-                // //substring depends on the length of id string
-                // var number = element.substring(3);
-                // $('#pos'+number+'X').text('x: ' + xPos1);
-                // $('#pos'+number+'Y').text('y: ' + yPos1);
-            // }
+            $('#qtn'+temp).draggable({
+              containment: "#workspace",
+              scroll: false,
+              snap: false,
+              // drag: function(){
+              //  var xPos = $(this).css('left');
+              //  var yPos = $(this).css('top');
+                  // var offset1 = $(this).offset();
+                  // var xPos1 = offset1.left;
+                  // var yPos1 = offset1.top;
+                  // var element = $(this).attr('id');
+                  // //substring depends on the length of id string
+                  // var number = element.substring(3);
+                  // $('#pos'+number+'X').text('x: ' + xPos1);
+                  // $('#pos'+number+'Y').text('y: ' + yPos1);
+              // }
+            })
+          .resizable({
+            containment: "parent"
+          });
+          $('#qtneditable'+temp).click(function(){
+              if ( $(this).is('.ui-draggable-dragging') ) {
+                  return;
+              }
+              $('#qtn'+temp).draggable( "option", "disabled", true );
+              $(this).attr('contenteditable','true');
           })
-        .resizable({
-          containment: "parent"
-        });
-        $('#qtneditable'+temp).click(function(){
-            if ( $(this).is('.ui-draggable-dragging') ) {
-                return;
-            }
-            $('#qtn'+temp).draggable( "option", "disabled", true );
-            $(this).attr('contenteditable','true');
-        })
-        .blur(function(){
-            $('#qtn'+temp).draggable( 'option', 'disabled', false);
-            $(this).attr('contenteditable','false');
-        });
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            qtnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+qtnID+'"');
-            $('#'+qtnID+'').remove();
-        });
+          .blur(function(){
+              $('#qtn'+temp).draggable( 'option', 'disabled', false);
+              $(this).attr('contenteditable','false');
+          });
 
+          //styling
+          $('#qtneditable'+temp).click(function(){
+            $.last_selected = $(this).attr('id');
+            var color = rgba2hex($('#qtneditable'+temp).css('color'));
+              $('#clr').val(color);
+              // alert($.hex);
+              $('#clr').minicolors('settings',{});
+          })
 
-        //styling
-        $('#qtneditable'+temp).click(function(){
-          $.last_selected = $(this).attr('id');
-          var color = rgba2hex($('#qtneditable'+temp).css('color'));
-            $('#clr').val(color);
-            // alert($.hex);
-            $('#clr').minicolors('settings',{});
-        })
-
-    document.getElementById('qtneditable'+$.count).style.color = color;       
+        document.getElementById('qtneditable'+$.count).style.color = color;   
+        $('#question').addClass('disabled');    
         $.count++;
-    });
+      }
+      else{
+        return false;
+      }
+  });
 
   $('#textinput')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -201,14 +216,9 @@ $(function() {
             $('#inp'+temp).draggable( 'option', 'disabled', false);
             $(this).attr('contenteditable','false');
         });
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            qtnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+qtnID+'"');
-            $('#'+qtnID+'').remove();
-        });
+        
         $.count++;
-    });
+  });
 
   $('#button')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -277,14 +287,8 @@ $(function() {
               
           }
         });
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            btnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+objID+'"');
-            $('#'+btnID+'').remove();
-        });
         
-          $.count++;
+        $.count++;
     });
 
   $('#radiobutton')
@@ -354,15 +358,8 @@ $(function() {
             $(e.target).children('.default').focus();
           }
         });
-
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            btnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+objID+'"');
-            $('#'+btnID+'').remove();
-        });
         
-          $.count++;
+        $.count++;
     });
 
   $('#checkbox')
@@ -434,14 +431,7 @@ $(function() {
           }
         });
 
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            btnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+objID+'"');
-            $('#'+btnID+'').remove();
-        });
-        
-          $.count++;
+        $.count++;
     });
 
   $('#dropdown')
@@ -468,7 +458,7 @@ $(function() {
       else
         $("#page" + index).append(htmlData);
 
-          $('#dropdown'+temp).draggable({
+      $('#dropdown'+temp).draggable({
             containment: "#workspace",
             scroll: false,
             cancel: false,
@@ -482,26 +472,19 @@ $(function() {
             //     $('#pos'+number+'X').text('x: ' + xPos1);
             //     $('#pos'+number+'Y').text('y: ' + yPos1);
             // }
-          })
-        .click(function(){
-            $(this).draggable( "option", "disabled", true );
-            $(this).attr('contenteditable','true');
-        });
-        
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            btnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+objID+'"');
-            $('#'+btnID+'').remove();
-        });
+      })
+      .click(function(){
+          $(this).draggable( "option", "disabled", true );
+          $(this).attr('contenteditable','true');
+      });
 
-        $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+      $('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
 
-        $('#drpinput'+temp).blur(function(){
-          //alert('1');
-            $('#dropdown'+temp).draggable( 'option', 'disabled', false);
-            $('.draggable').attr('contenteditable','false');
-        });
+      $('#drpinput'+temp).blur(function(){
+        //alert('1');
+          $('#dropdown'+temp).draggable( 'option', 'disabled', false);
+          $('.draggable').attr('contenteditable','false');
+      });
 
       $('#drpeditable'+temp).on('change', function(){
         if($('#drpeditable'+temp+' option:selected').val() == 'addoption'){
@@ -579,27 +562,21 @@ $(function() {
               $(this).nextAll(".output:first").html(base);
 
       });
-          $('#sldr'+temp).draggable({
-            containment: "#workspace",
-            scroll: false,
-            cancel: false,
-            // drag: function(){
-            //     var offset1 = $(this).offset();
-            //     var xPos1 = offset1.left;
-            //     var yPos1 = offset1.top;
-            //     var element = $(this).attr('id');
-            //     //substring depends on the length of id string
-            //     var number = element.substring(3);
-            //     $('#pos'+number+'X').text('x: ' + xPos1);
-            //     $('#pos'+number+'Y').text('y: ' + yPos1);
-            // }
-          })      
-        $('a.delete').on('click',function(e){
-            e.preventDefault();
-            btnID = $(this).closest('.draggable')[0].id;
-            //alert('Now deleting "'+objID+'"');
-            $('#'+btnID+'').remove();
-        });
+      $('#sldr'+temp).draggable({
+        containment: "#workspace",
+        scroll: false,
+        cancel: false,
+        // drag: function(){
+        //     var offset1 = $(this).offset();
+        //     var xPos1 = offset1.left;
+        //     var yPos1 = offset1.top;
+        //     var element = $(this).attr('id');
+        //     //substring depends on the length of id string
+        //     var number = element.substring(3);
+        //     $('#pos'+number+'X').text('x: ' + xPos1);
+        //     $('#pos'+number+'Y').text('y: ' + yPos1);
+        // }
+      });      
 
       $('#movingslider'+$.count).attr('data-slider-range', min + "," + max);
           $.count++;
@@ -756,15 +733,6 @@ $(function() {
       alert('Can\'t save, each slide should have a question');
     }
   });
-
-  $('#workspace').bind("DOMSubtreeModified",function(){
-    var check = $('#page'+$.current_page).find('div');
-    if(check.hasClass('flag')){
-      $('#question').attr('disabled','');
-    }else{
-      $('#question').removeAttr('disabled');
-    }
-  });
   
   $('body').on('paste', '.ui-widget-content', function (e) {
       setTimeout(function() {
@@ -773,28 +741,66 @@ $(function() {
   });
 
   $("#newPage").click(function(){
-    if($.current_page < $.page){
-      // alert($.current_page+' '+$.page);
-      for(i=$.page; i>=$.current_page+1; i--){
-        $('#slide'+i+' p').text('Slide '+(i+1));
-        $('#slide'+i).attr('id','slide'+(i+1));
-        $('#page'+i).attr('id','page'+(i+1));
+    // alert($.page + ' ' + $.current_page);
+    if($.trim($('.slides').html()).length == 0){
+
+      var htmlData = '<div id="page1" style="width:100%; height:100%"></div>';
+      $('#workspace').append(htmlData);
+
+      var htmlData = '<div id="slide1" class="panel pnl" style="background:yellow"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
+
+      $('.slides').append(htmlData);
+      //alert($.current_page+' '+$.page);
+    }
+    else{
+      if($.current_page < $.page){
+        for(i=$.page; i>=$.current_page+1; i--){
+          $('#slide'+i+' p').text('Slide '+(i+1));
+          $('#slide'+i).attr('id','slide'+(i+1));
+          $('#page'+i).attr('id','page'+(i+1));
+        }
       }
+      $.page++;
+      var after_curr_page = $.current_page+1;
+
+      var htmlData = '<div id="page' + after_curr_page +'" style="width:100%; height:100%"></div>';
+      $('#page'+$.current_page).after(htmlData);
+
+      var htmlData = '<div id="slide'+ after_curr_page +'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';
+      $('#slide'+$.current_page).after(htmlData);
+
+      $('#question').removeClass('disabled');
+      $("#nextPage").click();
+    }
+  });
+
+  $('.slides').on('click', '.remove-icon',function(e){
+    id = $(this).parent().attr('id').substring(5);
+    $(this).parent('div').remove();
+    $('#page'+id).remove();
+
+    id = parseInt(id);
+    for(i=id+1;i<=$.page;i++){
+      $('#slide'+i+' p').text('Slide '+(i-1));
+      $('#slide'+i).attr('id','slide'+(i-1));
+      $('#page'+i).attr('id','page'+(i-1));
     }
 
-    $.page++;
-    var after_curr_page = $.current_page+1;
+    // alert($.page + ' ' + $.current_page + ' ' + id);
 
-    var htmlData = '<div id="page' + after_curr_page +'"></div>';
-    $('#page'+$.current_page).after(htmlData);
+    if((id < $.current_page || $.current_page == $.page) && $.page != 1){
+      $.current_page--;
+    }
 
-    var htmlData = '<div id="slide'+ after_curr_page +'" class="panel pnl"><p>Slide '+ after_curr_page +'</p></div>';
-    $('#slide'+$.current_page).after(htmlData);
-
-    // alert($.current_page);
-
-    $("#nextPage").click();
-
+    if($.page != 1 && id == ($.current_page+1) || id == $.current_page){
+      $("#page" + $.current_page).css("visibility", "visible");
+      checkQuestion();
+      $("#slide"+$.current_page).css('background', 'yellow');
+    }
+    if($.page != 1){
+      $.page--;
+    }
+    // alert($.page + ' ' + $.current_page);
   });
 
   $("#prevPage").click(function(){
@@ -804,21 +810,14 @@ $(function() {
       $.current_page--;
     }
 
-    // alert($.current_page+' '+$.page);
 
     document.getElementById("page" + $.current_page).style.visibility = 'visible';
 
-    var check = $('#page'+$.current_page).find('div');
-    if(check.hasClass('flag')){
-      $('#question').attr('disabled','');
-    }else{
-      $('#question').removeAttr('disabled');
-    }
+    checkQuestion();
 
     //styling
     $("#slide"+$.current_page).css('background', 'yellow');
     $("#slide"+($.current_page+1)).css('background', '#f2f2f2');
-    document.getElementById("page" + $.current_page).style.visibility = 'visible';
   });
 
   $("#nextPage").click(function(){
@@ -833,12 +832,7 @@ $(function() {
     
     document.getElementById("page" + $.current_page).style.visibility = 'visible';
 
-    var check = $('#page'+$.current_page).find('div');
-    if(check.hasClass('flag')){
-      $('#question').attr('disabled','');
-    }else{
-      $('#question').removeAttr('disabled');
-    }
+    checkQuestion();
 
     //styling 
     $("#slide"+($.current_page-1)).css('background', '#f2f2f2');
