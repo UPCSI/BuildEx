@@ -527,6 +527,10 @@ ul {
     word-wrap: break-word;
 }
 
+.pageframe {
+    position: absolute;
+}
+
 .text-holder {
     color: #000000;
     width: 100%;

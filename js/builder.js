@@ -103,51 +103,41 @@ $(function() {
 
         var temp = $.count;
         var index = page_num;
-        if(index <= 0)
+        if(index <= 0) {
           $("#page" + $.current_page).append(htmlData);
-        else
+        }
+        else {
           $("#page" + index).append(htmlData);
+        }
 
-            $('#qtn'+temp).draggable({
-              containment: "#workspace",
-              scroll: false,
-              snap: false,
-              // drag: function(){
-              //  var xPos = $(this).css('left');
-              //  var yPos = $(this).css('top');
-                  // var offset1 = $(this).offset();
-                  // var xPos1 = offset1.left;
-                  // var yPos1 = offset1.top;
-                  // var element = $(this).attr('id');
-                  // //substring depends on the length of id string
-                  // var number = element.substring(3);
-                  // $('#pos'+number+'X').text('x: ' + xPos1);
-                  // $('#pos'+number+'Y').text('y: ' + yPos1);
-              // }
-            })
-          .resizable({
-            containment: "parent"
-          });
-          $('#qtneditable'+temp).click(function(){
-              if ( $(this).is('.ui-draggable-dragging') ) {
-                  return;
-              }
-              $('#qtn'+temp).draggable( "option", "disabled", true );
-              $(this).attr('contenteditable','true');
-          })
-          .blur(function(){
-              $('#qtn'+temp).draggable( 'option', 'disabled', false);
-              $(this).attr('contenteditable','false');
-          });
+        $('#qtn'+temp).draggable({
+          containment: "#workspace",
+          scroll: false,
+          snap: false,
+        })
+        .resizable({
+          containment: "parent"
+        });
+        $('#qtneditable'+temp).click(function(){
+            if ( $(this).is('.ui-draggable-dragging') ) {
+                return;
+            }
+            $('#qtn'+temp).draggable( "option", "disabled", true );
+            $(this).attr('contenteditable','true');
+        })
+        .blur(function(){
+            $('#qtn'+temp).draggable( 'option', 'disabled', false);
+            $(this).attr('contenteditable','false');
+        });
 
-          //styling
-          $('#qtneditable'+temp).click(function(){
-            $.last_selected = $(this).attr('id');
-            var color = rgba2hex($('#qtneditable'+temp).css('color'));
-              $('#clr').val(color);
-              // alert($.hex);
-              $('#clr').minicolors('settings',{});
-          })
+        //styling
+        $('#qtneditable'+temp).click(function(){
+          $.last_selected = $(this).attr('id');
+          var color = rgba2hex($('#qtneditable'+temp).css('color'));
+            $('#clr').val(color);
+            // alert($.hex);
+            $('#clr').minicolors('settings',{});
+        })
 
         document.getElementById('qtneditable'+$.count).style.color = color;   
         $('#question').addClass('disabled');    
@@ -792,7 +782,7 @@ $(function() {
   $("#newPage").click(function(){
     if($.trim($('.slides').html()).length == 0){
 
-      var htmlData = '<div id="page1" style="width:100%; height:100%"></div>';
+      var htmlData = '<div id="page1" class="pageframe" style="width:100%; height:100%"></div>';
       $('#workspace').append(htmlData);
 
       var htmlData = '<div id="slide1" class="slideframe panel pnl" style="background:yellow"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
@@ -810,7 +800,7 @@ $(function() {
       $.page++;
       var after_curr_page = $.current_page+1;
 
-      var htmlData = '<div id="page' + after_curr_page +'" style="width:100%; height:100%"></div>';
+      var htmlData = '<div id="page' + after_curr_page +'" class="pageframe" style="width:100%; height:100%"></div>';
       $('#page'+$.current_page).after(htmlData);
 
       var htmlData = '<div id="slide'+ after_curr_page +'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';

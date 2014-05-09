@@ -1,5 +1,5 @@
 <? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
-<div id="workspace" class="demo panel callout" style="min-width:720px; max-width:720px; height:480px; position:relative; margin:auto; vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
+<div id="workspace" class="demo panel callout" style="min-width:720px; max-width:720px; height:480px; margin:auto; vertical-align: middle; padding:0px; border:0px" data-eid='<?= $eid;?>'>
 
 </div>
 
