@@ -11,16 +11,15 @@
 	<nav class="top-bar" data-topbar>
 		<ul class="title-area">
 			<li class="name">
-				<h1><a href="<?php echo site_url(); ?>"><strong>BuildEx - Experiment Builder</strong></a></h1>
+				<h1><a href="<?php echo site_url($this->session->userdata('active_role').'/experiments'); ?>"><strong>BuildEx - Experiment Builder</strong></a></h1>
 			</li>
 			<li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
 		</ul>
 
 		<section class="top-bar-section">
 			<ul class="left">
-				<li><a href="#">New</a></li>
-				<li><a href="#">Open</a></li>
-				<li><a href="#" id="getObjectValues" class = "button success">Save Environment</a></li>
+				<li><a href="<? echo site_url($this->session->userdata('active_role').'/experiments'); ?>" class = "top-buttons">Back</a></li>
+				<li><a href="#" class = "top-buttons button success">Save Environment</a></li>
 			</ul>
 		</section>
 	</nav>

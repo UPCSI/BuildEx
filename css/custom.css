@@ -682,8 +682,8 @@ div.tabs-content.elements {
 
 
 @media only screen and (min-width: 40em) {
-#getObjectValues {
-  top: 12px;
+.top-buttons{
+  top: 12px !important;
 }
 
 
