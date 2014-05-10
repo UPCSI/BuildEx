@@ -600,10 +600,15 @@ input.minicolors-input:focus {
 }
 
 .remove-icon {
+  position: absolute;
   visibility: hidden;
   font-size: 20px;
   top: 0 !important;
   right: 0 !important;
+}
+
+.slideframe {
+  position: relative !important;
 }
 
 .slide-title {
@@ -611,7 +616,7 @@ input.minicolors-input:focus {
   text-align: center
 }
 
-a.delete { 
+.delete { 
     display:none;
     position:absolute;
     top:0;
@@ -622,8 +627,9 @@ a.delete {
     background:red; 
 }
 
-.draggable:hover a.delete { 
-  display:block; 
+.draggable:hover .remove-icon { 
+  cursor: auto;
+  visibility: visible; 
 }
 
 .panel.pnl {

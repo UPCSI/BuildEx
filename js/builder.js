@@ -58,7 +58,7 @@ $(function() {
     });        
   });
     
-  $('#workspace').on('click', '.delete', function(e){
+  $('#workspace').on('click', '.remove-icon', function(e){
       var parent = $(this).parent('div');
       if(parent.attr('id').substr(0,3) == 'qtn'){
         $('#question').removeClass('disabled');
@@ -68,7 +68,6 @@ $(function() {
 
   $('#question')
     .click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
-      // alert($(this).hasClass('disabled'));
       if(!$(this).hasClass('disabled')){
         posX = typeof posX !== 'undefined' ? posX : 183;
         posY = typeof posY !== 'undefined' ? posY : 191;
@@ -82,18 +81,19 @@ $(function() {
         var htmlData='<div id="qtn'+$.count+'" class="draggable ui-widget-content"';
 
         if (posX != null && posY != null){
-          // alert('x' + posX);
-          // alert('y' + posY);
           htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
         }
 
-        if(text_input != "")
-          htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag">'+text_input+'</div></div>';
-        else
-          htmlData += '><a href="#" class="delete"></a><div id="qtneditable'+$.count+'" class="editable flag" data-placeholder="Enter Question" ></div></div>';
+        if(text_input != ""){
+          htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="qtneditable'+$.count+'" class="editable flag">'+text_input+'</div></div>';
+        }
+        else{
+          htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="qtneditable'+$.count+'" class="editable flag" data-placeholder="Enter Question" ></div></div>';
+        }
 
         var temp = $.count;
         var index = page_num;
+
         if(index <= 0) {
           $("#page" + $.current_page).append(htmlData);
         }
@@ -107,7 +107,7 @@ $(function() {
           snap: false,
         })
         .resizable({
-          containment: "parent"
+          containment: "#workspace"
         });
         $('#qtneditable'+temp).click(function(){
             if ( $(this).is('.ui-draggable-dragging') ) {
@@ -126,7 +126,6 @@ $(function() {
           $.last_selected = $(this).attr('id');
           var color = rgba2hex($('#qtneditable'+temp).css('color'));
             $('#clr').val(color);
-            // alert($.hex);
             $('#clr').minicolors('settings',{});
         })
 
@@ -155,10 +154,10 @@ $(function() {
       }
       
       if(text_input != "") {
-        htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable">'+text_input+'</div></div>';
+        htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="inpeditable'+$.count+'" class="editable">'+text_input+'</div></div>';
       }
       else {
-        htmlData += '><a href="#" class="delete"></a><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
+        htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
       }
 
       var temp = $.count;
@@ -176,7 +175,7 @@ $(function() {
         snap: false,
       })
       .resizable({
-        containment: "parent"
+        containment: "#workspace"
       });
       $('#inpeditable'+temp).click(function(){
           if ( $(this).is('.ui-draggable-dragging') ) {
@@ -210,7 +209,7 @@ $(function() {
         htmlData += 'style="width:150px; height:60"';
       }
       
-      htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><a href="#" class="delete"></a></div>';
+      htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><i class="fi-x remove-icon pull-right"></i></div>';
       
       var temp = $.count;
       var index = page_num;
@@ -227,7 +226,7 @@ $(function() {
         cancel: false,
       })
       .resizable({
-        containment: "parent"
+        containment: "#workspace"
       });
       $('.default').click(function(){
         if ( $(this).is('.ui-draggable-dragging') ) {
@@ -268,7 +267,7 @@ $(function() {
         htmlData += 'style="height:25px; width:120px;"';
       }
       
-      htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div id="radbtneditable'+$.count+'"class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><a href="#" class="delete"></a></div>';
+      htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton"><div id="radbtneditable'+$.count+'"class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><i class="fi-x remove-icon pull-right"></i></div>';
       
       var temp = $.count;
       var index = page_num;
@@ -287,7 +286,7 @@ $(function() {
         snap: '.radiosnap'
       })
       .resizable({
-        containment: "parent"
+        containment: "#workspace"
       });
       $('.default').click(function(){
           if ( $(this).is('.ui-draggable-dragging') ) {
@@ -328,7 +327,7 @@ $(function() {
         htmlData += 'style="height:25px; width:120px;"';
       }
       
-      htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div id="chkboxeditable'+$.count+'" class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><a href="#" class="delete"></a></div>';
+      htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox"><div id="chkboxeditable'+$.count+'" class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div><i class="fi-x remove-icon pull-right"></i></div>';
       
       var temp = $.count;
       var index = page_num;
@@ -346,7 +345,7 @@ $(function() {
         snap: '.checksnap'
       })
       .resizable({
-        containment: "parent"
+        containment: "#workspace"
       });
       $('.default').click(function(){
           if ( $(this).is('.ui-draggable-dragging') ) {
@@ -384,7 +383,7 @@ $(function() {
         htmlData += 'style="height:34px; width:140px;"';
       }
 
-      htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><a href="#" class="delete"></a></div>';
+      htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
       
       var temp = $.count;
       var index = page_num;
@@ -463,7 +462,7 @@ $(function() {
         htmlData += 'style="height:25px; width:360px"';
       }
 
-      htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><a href="#" class="delete"></a></div>';
+      htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span><i class="fi-x remove-icon pull-right"></i></div>';
 
       var temp = $.count;
       var index = page_num;
@@ -527,7 +526,7 @@ $(function() {
           data[1] = xPos;
           data[2] = yPos;
           data[3] = "question";
-          data[4] = $('#qtneditable'+i).textContent;
+          data[4] = $('#qtneditable'+i).text();
           data[5] = $('#qtn'+i).css("width");
           data[6] = $('#qtn'+i).css("height");
           data[7] = rgb2hex($('#qtneditable'+i).css("color"));
@@ -556,7 +555,7 @@ $(function() {
           data[1] = xPos;
           data[2] = yPos;
           data[3] = "button";
-          data[4] = $('#btneditable'+i).textContent;
+          data[4] = $('#btneditable'+i).text();
           data[5] = $('#btn'+i).css("width");
           data[6] = $('#btn'+i).css("height");
           x.push(data);
@@ -570,7 +569,7 @@ $(function() {
           data[1] = xPos;
           data[2] = yPos;
           data[3] = "radio";
-          data[4] = $('#radbtneditable'+i).textContent;
+          data[4] = $('#radbtneditable'+i).text();
           data[5] = $('#radbtn'+i).css("width");
           data[6] = $('#radbtn'+i).css("height");
           x.push(data);
@@ -584,7 +583,7 @@ $(function() {
           data[1] = xPos;
           data[2] = yPos;
           data[3] = "checkbox";
-          data[4] = $('#chkboxeditable'+i).textContent;
+          data[4] = $('#chkboxeditable'+i).text();
           data[5] = $('#chkbox'+i).css("width");
           data[6] = $('#chkbox'+i).css("height");
           x.push(data);
@@ -735,7 +734,7 @@ $(function() {
       var htmlData = '<div id="page' + after_curr_page +'" class="pageframe" style="width:100%; height:100%"></div>';
       $('#page'+$.current_page).after(htmlData);
 
-      var htmlData = '<div id="slide'+ after_curr_page +'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';
+      var htmlData = '<div id="slide'+ after_curr_page +'" class="slideframe panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';
       $('#slide'+$.current_page).after(htmlData);
 
       $('#question').removeClass('disabled');

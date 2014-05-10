@@ -3,15 +3,6 @@
 
 </div>
 
-<!-- <div id="myModal" class="reveal-modal" data-reveal>
-  <h2>Awesome. I have it.</h2>
-  <p class="lead">Your couch.  It is mine.</p>
-  <p>Im a cool paragraph that lives inside of an even cooler modal. Wins</p>
-  <a class="close-reveal-modal">&#215;</a>
-</div>
-
-<a id="fak1" href="#" data-reveal-id="myModal" data-reveal>Click Me For A Modal</a> -->
-
 <?
 	if(isset($var)){
 		echo '<script>';
@@ -59,12 +50,7 @@
 			echo 'document.getElementById("page" + '.$index.').style.visibility =' ."'hidden';";
 		}
 
-		// for($index=1; $index<$total; $index++){
-			
-		// }
-
 		echo '$.page = '.$total.';';
-		// echo 'alert($.page);';
 	
 		echo '});';
 		echo '}) (jQuery);';
