@@ -1,8 +1,7 @@
-<div id="workspace" class="demo panel callout" style="min-width:576px; max-width:576px; height:432px; position:relative; margin:auto; vertical-align: middle; padding:5px; border:0px" data-eid='<?= $eid;?>'>
-
+<div style="position:absolute; right:0; z-index: 999; top: 40%;">
+<button type="button" id="next_page" style="margin:0;">Next</button>
 </div>
-<div class = "row" style="margin-top:80px">
-	<button type = "button" id = "next_page"> Next </button>
+<div id="workspace" class="demo panel callout" style="min-width:1280px; max-width:1280px; height:720px; position:absolute; vertical-align: middle; padding:0; border:0; margin:0 auto; left:0; right:0;" data-eid='<?= $eid;?>'>
 </div>
 <?
 	if(isset($var)){

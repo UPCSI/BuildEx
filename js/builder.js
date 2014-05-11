@@ -5,6 +5,8 @@ $(function() {
   $.page = 1;
   $.current_page = 1;
   $.last_selected = null;
+  $.start_time = 0;
+  $.end_time = 0;
   
   function rgba2hex(rgb){
    rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
@@ -15,11 +17,11 @@ $(function() {
   }
 
   function rgb2hex(rgb) {
-      rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-      function hex(x) {
-          return ("0" + parseInt(x).toString(16)).slice(-2);
-      }
-      return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+    rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+    function hex(x) {
+      return ("0" + parseInt(x).toString(16)).slice(-2);
+    }
+    return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
   }
 
   function checkQuestion() {
@@ -31,11 +33,14 @@ $(function() {
     }
   }
 
-  $(document).click(function(e){
+  $(document).click(function(){
     var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
     $('#'+$.last_selected).css('color', hex);
   });
 
+  $(document).ready(function(){
+    $.start_time = (Date.now())/1000;
+  });
 
   $('.color-picker').each( function() {
     $(this).minicolors({
@@ -770,9 +775,8 @@ $(function() {
     //styling 
     $("#slide"+($.current_page-1)).css('background', '#f2f2f2');
     $("#slide"+$.current_page).css('background', 'yellow');
-    
+    $.end_time = (Date.now()/1000);
   }); 
 
 });   
-
 }) (jQuery); 

@@ -7,7 +7,7 @@
 </style>
 
 <!-- Navigation Bar - Experiment Builder -->
-<div class="fixed">
+<div class="respondents">
 	<nav class="top-bar" data-topbar>
 		<ul class="title-area">
 			<li class="name">
