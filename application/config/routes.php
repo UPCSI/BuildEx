@@ -38,6 +38,8 @@
 |
 */
 
+$route['sign_in'] = "home/sign_in";
+
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 
