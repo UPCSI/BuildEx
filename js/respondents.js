@@ -18,16 +18,25 @@ function draw_question(posX, posY, text_input, page_num, width, height, color){
 	height = typeof height !== 'undefined' ? height : 40;
 	color = typeof color !== 'undefined' ? color : 000000;
 	color = '#' + color;	
+
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
 	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + $.page + '"';
 
 	if (posX !== null && posY !== null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:'+ width*workspace_width + 'px; height:'+ height*workspace_height +'px;"';
 	}
 
-	if(text_input !== "")
-		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder">'+text_input+'</div></div>';
-	else
-		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder" data-placeholder="Enter Question" ></div></div>';
+	if(text_input !== ""){
+		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
+	}
+	else{
+		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder" data-placeholder="Enter Question" style="font-size:'+new_font_size*14+'px;"></div></div>';
+	}
 
 	var temp = $.count;
 	var index = page_num;
@@ -50,20 +59,23 @@ function draw_text_input(posX, posY, text_input, page_num){
 	width = typeof width !== 'undefined' ? width : 200;
 	height = typeof height !== 'undefined' ? height : 40;
 
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
 
-	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + $.page + '"';
-	width = typeof width !== 'undefined' ? width : 200;
-	height = typeof height !== 'undefined' ? height : 40;
+	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + $.page + '"';	
 
 	if (posX !== null && posY !== null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px;  width:' + width + 'px; height:' + height + 'px"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%;  width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px"';
 	}
 	
 	if(text_input !== ""){
-		htmlData += '><div id="inpeditable'+$.count+'" class="text-holder">'+text_input+'</div></div>';
+		htmlData += '><div id="inpeditable'+$.count+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
 	}
 	else{
-		htmlData += '><div id="inpeditable'+$.count+'"class="text-holder" data-placeholder="Enter Input" ></div></div>';
+		htmlData += '><div id="inpeditable'+$.count+'"class="text-holder" data-placeholder="Enter Input" style="font-size:'+new_font_size*14+'px;"></div></div>';
 	}
 	var temp = $.count;
 	var index = page_num;
@@ -88,16 +100,22 @@ function draw_button(posX, posY, text_input, page_num){
 	width = typeof width !== 'undefined' ? width : 150;
 	height = typeof height !== 'undefined' ? height : 40;
 
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
 	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + $.page + '" ';
 
 	if (posX !== null && posY !== null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
 	}
 	else{
-		htmlData += 'style="width:150px; height:60"';
+		htmlData += 'style="width:150px; height:60px"';
 	}
 	
-	htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px">'+text_input+'</button></div>';
+	htmlData += '><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px; font-size:'+new_font_size*14+'px;">'+text_input+'</button></div>';
 	
 	var temp = $.count;
 
@@ -125,16 +143,21 @@ function draw_radio_button(posX, posY, text_input, page_num){
 	width = typeof width !== 'undefined' ? width : 120;
 	height = typeof height !== 'undefined' ? height : 25;
 
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
 	var htmlData='<div id="radbtn'+$.count+'" class="radiosnap static_obj"';
 	if (posX != null && posY != null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + workspace_height + 'px;"';
 	}
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	// faulty -- contentEditable=true data-ph="My Placeholder String"
-	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton">'+text_input+'</div>';
+	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -162,17 +185,21 @@ function draw_checkbox(posX, posY, text_input, page_num){
 	width = typeof width !== 'undefined' ? width : 200;
 	height = typeof height !== 'undefined' ? height : 40;
 
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
 	var htmlData='<div id="chkbox'+$.count+'" class="checksnap static_obj"';
 
 	if (posX != null && posY != null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + workspace_height + 'px;"';
 	}
-
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	// faulty -- contentEditable=true data-ph="My Placeholder String"
 	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox">'+text_input+'</div>';
 	
 	var temp = $.count;
@@ -198,15 +225,20 @@ function draw_slider(posX, posY, page_num){
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+	alert(zoomed_x);
 	var htmlData='<div id="sldr'+$.count+'" class="static_obj"';
 	if (posX != null && posY != null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:360px"';
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; height:'+25*workspace_height+'px; width:'+360*workspace_width+'px"';
 	}
 	else{
 		htmlData += 'style="height:25px; width:360px"';
 	}
 
-	// faulty -- contentEditable=true data-ph="My Placeholder String"
 	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span></div>';
 
 	var temp = $.count;

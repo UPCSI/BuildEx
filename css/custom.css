@@ -602,6 +602,31 @@ input.minicolors-input:focus {
     vertical-align: top;
 }
 
+.minicolors-panel {
+  width: 117px !important;
+  height: 101px !important;
+}
+
+.minicolors-grid {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.minicolors-grid-inner {
+  width: 100px !important;
+  height: 100px !important;
+}
+
+.minicolors-slider {
+  width: 14px !important;
+  height: 100px !important;
+  left: 102px !important;
+}
+
+.minicolors-picker {
+  width: 12px !important;
+}
+
 .remove-icon {
   position: absolute;
   visibility: hidden;
