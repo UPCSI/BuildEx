@@ -273,17 +273,25 @@ function draw_slider(posX, posY, page_num){
 		$.page = 1;
 		$.current_page = 1;
 		$.last_selected = null;
+		$.start_time = 0;
+		$.times = [];
+
+		$(document).ready(function(){
+			$.start_time = (Date.now())/1000;
+		});
 
 		$("#next_page").click(function(){
-			document.getElementById("page" + $.current_page).style.visibility = 'hidden';
+    		$("#page" + $.current_page).css('visibility','hidden');
 
 			if($.current_page < $.page){
 				$.current_page++;
 			}
 
-			document.getElementById("page" + $.current_page).style.visibility = 'visible';
-
-			// alert($.current_page);
+    		$("#page" + $.current_page).css('visibility','visible');  
+			$.end_time = (Date.now()/1000);
+			$.times.push($.end_time - $.start_time);
+			alert($.times);
+			$.start_time = (Date.now())/1000;
 		});
 	});
 })(jQuery);

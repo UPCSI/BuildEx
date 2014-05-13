@@ -38,10 +38,6 @@ $(function() {
     $('#'+$.last_selected).css('color', hex);
   });
 
-  $(document).ready(function(){
-    $.start_time = (Date.now())/1000;
-  });
-
   $('.color-picker').each( function() {
     $(this).minicolors({
       control: $(this).attr('data-control') || 'hue',
@@ -775,7 +771,6 @@ $(function() {
     //styling 
     $("#slide"+($.current_page-1)).css('background', '#f2f2f2');
     $("#slide"+$.current_page).css('background', 'yellow');
-    $.end_time = (Date.now()/1000);
   }); 
 
 });   
