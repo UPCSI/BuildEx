@@ -4,6 +4,8 @@ class SignUp extends CI_Controller{
 		parent::__construct();
 		$this->load->model('users_model');
 		$this->load->model('faculty_model');
+		$this->load->model('graduates_model');
+		$this->load->model('email_model');
 		$this->load->library('form_validation');
 	}
 
@@ -70,8 +72,6 @@ class SignUp extends CI_Controller{
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
 
-		$this->load->library('form_validation');
-		$this->load->model('graduates_model');
 		$rules = $this->graduates_model->rules;
 		$this->form_validation->set_rules($rules);
 
@@ -107,7 +107,6 @@ class SignUp extends CI_Controller{
 	}
 
 	public function confirm_email($email, $email_code){
-		$this->load->model('email_model');
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
 			$this->email_model->activate_user($email);
