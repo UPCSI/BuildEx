@@ -1,28 +1,29 @@
 <?php 
-class Signup extends CI_Controller{
+class SignUp extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('users_model');
+		$this->load->model('faculty_model');
+		$this->load->library('form_validation');
 	}
 
 	public function graduate(){
-		$data['title'] = "Sign Up - Graduate";
-		$data['main_content'] = 'guest/signup_graduate';
-		$this->load->view('_main_layout',$data);
+		$data['title'] = "Sign Up";
+		$data['role'] = "graduate";
+		$data['main_content'] = 'signup/index';
+		$this->load->view('main_layout',$data);
 	}
 
 	public function faculty(){
-		$data['title'] = "Sign Up - Faculty";
-		$data['main_content'] = 'guest/signup_faculty';
-		$this->load->view('_main_layout',$data);
+		$data['title'] = "Sign Up";
+		$data['role'] = "faculty";
+		$data['main_content'] = 'signup/index';
+		$this->load->view('main_layout',$data);
 	}
 
 	public function add_faculty(){
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-
-		$this->load->library('form_validation');
-		$this->load->model('faculty_model');
 		$rules = $this->faculty_model->rules;
 		$this->form_validation->set_rules($rules);
 

@@ -30,7 +30,7 @@ class Home extends CI_Controller{
 		return (bool) $this->session->userdata('logged_in');
 	}
 
-	public function logout() {	
+	public function logout(){	
 		$this->session->sess_destroy();
 		redirect('');
 	}
@@ -41,7 +41,7 @@ class Home extends CI_Controller{
 		$this->load->view('_main_layout', $data);			
 	}
 
-	function reset_password() {
+	public function reset_password() {
 		$this->load->library('form_validation');
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email');
 		
@@ -49,13 +49,15 @@ class Home extends CI_Controller{
 			$this->load->model('email_model');
 			$email = $this->input->post('email');
 			$reset = $this->email_model->edit_password($email);
-
-			if($reset)
+			if($reset){
 				echo "We just sent a temporary password to your email address.";
-			else
+			}
+			else{
 				echo "We don't recognize that email. Please try again.";
+			}
 		}
-
-		else echo "Invalid input.";
+		else{ 
+			echo "Invalid input.";
+		}
 	}
 }
