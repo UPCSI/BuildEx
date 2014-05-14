@@ -16,11 +16,11 @@
 			<li class="toggle-topbar menu-icon"><a href="#"><span></span></a></li>
 		</ul>
 
-		<section class="top-bar-section">
+		<!-- <section class="top-bar-section">
 			<ul class="left">
 				<li><a href="#" id="pauseButton" class = "button alert"> Pause </a></li>
 				<li><a href="#" id="resumeButton" class = "button success"> Resume </a></li>
 			</ul>
-		</section>
+		</section> -->
 	</nav>
 </div>

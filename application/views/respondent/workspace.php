@@ -4,8 +4,8 @@
 <div id="workspace" class="demo panel callout" style="min-width:1280px; max-width:1280px; height:720px; position:absolute; vertical-align: middle; padding:0; border:0; margin:0 auto; left:0; right:0;" data-eid='<?= $eid;?>'>
 </div>
 <?
-	if(isset($var)){
-		echo '<script>';
+	echo '<script>';
+	if(isset($var)){	
 		echo '(function($){ ';
 		echo '$(function() {';
 		$total = 0;
@@ -46,10 +46,13 @@
 			echo 'document.getElementById("page" + '.$index.').style.visibility =' ."'hidden';";
 		}
 
-		echo '$.page = '.$total.';';
-	
+		echo 'total_page = '.$total.';';
+
 		echo '});';
 		echo '}) (jQuery);';
-		echo '</script>';
 	}
+	else{
+		echo 'console.log("Empty");';
+	}
+	echo '</script>';
 ?>
