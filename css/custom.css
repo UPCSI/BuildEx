@@ -586,6 +586,7 @@ input.minicolors-input:focus {
     float:left;
     position:absolute; 
     cursor: move;
+    
 }
 
 [class^=slider] { 

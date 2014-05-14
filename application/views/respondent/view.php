@@ -1,5 +1,5 @@
 <div class = "row">
-	<div class = "large-6 columns" style = "padding-top:50px">
+	<div class = "large-6 columns">
 		<h1> Terms of Conditions </h1>
 		<p> You are going to be a subject for the experiment <strong><?php echo $experiment; ?></strong> created by <strong> <?php echo $author; ?> </strong> </p>
 		<br/>
@@ -17,10 +17,10 @@
 	<?php echo form_open("respond/agree");?>
 		<input type = "hidden" name = "slug" value = "<?php echo $slug; ?>">
 		<input type = "hidden" name = "eid" value = "<?php echo $eid; ?>">
-		<button type = "submit" class="small"> I agree </button> 
+		<button type = "submit" class="small" style="display:inline"> I agree </button> 
 	<?php echo form_close();?>
 
 	<?php echo form_open("respond/leave"); ?>
-		<button type = "submit" class="small"> Cancel </button>
+		<button type = "submit" class="small" style="display:inline"> Cancel </button>
 	<?php echo form_close(); ?>
 </div>

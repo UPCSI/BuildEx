@@ -43,7 +43,7 @@ class Respond extends CI_Controller{
 	public function agree(){
 		$eid = $this->input->post('eid');
 		$slug = $this->input->post('slug');
-		$this->session->set_userdata('respond_to',+$eid);
+		$this->session->set_userdata('respond_to',$eid);
 		$this->session->set_userdata('slug',$slug);
 		redirect('respond/fill_up');
 	}
@@ -119,7 +119,7 @@ class Respond extends CI_Controller{
 		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
 		$data['title'] = 'Respond';
 		$data['main_content'] = 'respondent/debrief';
-		$this->load->view('respondent/_view_layout', $data);
+		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
 	public function submit(){
@@ -143,6 +143,8 @@ class Respond extends CI_Controller{
 		$data['title'] = 'Complete';
 		$data['main_content'] = 'respondent/complete';
 		$this->load->view('respondent/_view_layout', $data);
+	
+		//when saving to db, add completed experiment = true
 	}
 
 
@@ -156,8 +158,12 @@ class Respond extends CI_Controller{
 		$this->load->view('respondent/_view_layout', $data);
 	}
 
-	public function pause(){
-		$eid = $this->input->post('eid');
+	public function interrupted(){
+		// $eid = $this->input->post('eid');
+
+		//save to db the state of exp if completed or not
+		$message = $this->input->post('done');
+		
 		/* not a priority */
 	}
 }

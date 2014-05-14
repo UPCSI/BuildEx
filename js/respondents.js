@@ -1,4 +1,5 @@
 var answer_cache = {};
+var total_page = 0;
 
 function clear_form(){
 	var my_form = document.getElementById("demographics");
@@ -25,7 +26,7 @@ function draw_question(posX, posY, text_input, page_num, width, height, color){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + $.page + '"';
+	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + total_page + '"';
 
 	if (posX !== null && posY !== null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:'+ width*workspace_width + 'px; height:'+ height*workspace_height +'px;"';
@@ -65,7 +66,7 @@ function draw_text_input(posX, posY, text_input, page_num){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + $.page + '"';	
+	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + total_page + '"';	
 
 	if (posX !== null && posY !== null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%;  width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px"';
@@ -106,7 +107,7 @@ function draw_button(posX, posY, text_input, page_num){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + $.page + '" ';
+	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + total_page + '" ';
 
 	if (posX !== null && posY !== null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
@@ -157,7 +158,7 @@ function draw_radio_button(posX, posY, text_input, page_num){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
+	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+ total_page +'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -200,7 +201,7 @@ function draw_checkbox(posX, posY, text_input, page_num){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox">'+text_input+'</div>';
+	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="checkbox">'+text_input+'</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -270,28 +271,65 @@ function draw_slider(posX, posY, page_num){
 (function($){
 	$(function() {
 		$.count = 1;
-		$.page = 1;
 		$.current_page = 1;
 		$.last_selected = null;
 		$.start_time = 0;
 		$.times = [];
+		$.unload_flagger = true;
+
+		function checkEndPage() {
+			if($.current_page+1 == total_page) {
+				$('#next_page').text('Done')
+				.css('padding-left',21).css('padding-right',21);
+			}
+			if($.current_page == total_page) {
+				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
+				$.unload_flagger = false;
+			}
+		}
+
+		$(window).on('beforeunload', function() {
+			if($.unload_flagger) {
+				$.ajax({
+					url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/interrupted',
+			        type:"POST",
+			        data:{
+			          'done' : 'false',
+			        },
+			        dataType: 'json',
+				});
+				return 'Exiting will not submit your form';
+			}
+		});
 
 		$(document).ready(function(){
 			$.start_time = (Date.now())/1000;
 		});
 
+		$("#debrief-btn").click(function() {
+			$.unload_flagger = false;
+		});
+		
 		$("#next_page").click(function(){
+			$.end_time = (Date.now()/1000);
+			$.times.push($.end_time - $.start_time);
+
+			if($.current_page != total_page){
+				$.start_time = (Date.now())/1000;
+			}
+			else if($.current_page == total_page){
+				$.unload_flagger = false;
+			}
+
+			checkEndPage();
+
     		$("#page" + $.current_page).css('visibility','hidden');
 
-			if($.current_page < $.page){
+			if($.current_page < total_page){
 				$.current_page++;
 			}
 
-    		$("#page" + $.current_page).css('visibility','visible');  
-			$.end_time = (Date.now()/1000);
-			$.times.push($.end_time - $.start_time);
-			alert($.times);
-			$.start_time = (Date.now())/1000;
+    		$("#page" + $.current_page).css('visibility','visible');		
 		});
 	});
 })(jQuery);
