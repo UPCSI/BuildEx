@@ -765,7 +765,8 @@ div.panel.dash-item {
 div.panel.dash-item > h1, div.panel.dash-item > p {
     color:#fff;
 }
-body.internal {
+
+div.internal {
     background-color: #3E3E3E;
 }
 

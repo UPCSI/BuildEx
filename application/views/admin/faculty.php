@@ -20,7 +20,7 @@
 		<tr>
 			<td>
 				<a href = "<?php echo site_url('faculty/view/'.$member->username); ?>">
-					<?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name)[0].'.'; ?> 
+					<?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name).'.'; ?> 
 				</a>
 			</td>
 			<td><?php echo $member->username; ?></td>
@@ -58,7 +58,7 @@
 			<tr>
 				<td>
 					<a href = "<?php echo site_url('faculty/view/'.$request->username); ?>">
-						<?php echo strtoupper($request->last_name).', '.ucwords($request->first_name).', '.ucfirst($request->middle_name)[0]; ?>
+						<?php echo strtoupper($request->last_name).', '.ucwords($request->first_name).', '.ucfirst($request->middle_name); ?>
 					</a>
 				</td>
 				<td><?php echo $request->username; ?></td>

@@ -1,6 +1,5 @@
-<?php $this->load->view('includes/header',$title); ?>
 <body class="internal">
-<?php $this->load->view('components/topbar_internal'); ?>
+<?php $this->load->view('users/_topbar'); ?>
 
 <div class = "main-body">
 	<div class = "row full legit">

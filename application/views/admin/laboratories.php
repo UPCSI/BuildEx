@@ -19,7 +19,7 @@
 			<?php foreach ($laboratories as $laboratory): ?>
 				<tr>
 					<td> <?php echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name); ?> </td>
-					<td> <?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name)[0].'.'); ?>
+					<td> <?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name).'.'); ?>
 					<td> <?php echo $laboratory->members_count; ?></td>
 					<td> <?php echo $laboratory->since; ?> </td>
 				</tr>

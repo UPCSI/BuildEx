@@ -15,7 +15,7 @@
 		<tr>
 			<td>
 				<a href = "<?php echo site_url('graduate/view/'.$graduate->username); ?>">
-					<?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name)[0].'.'; ?> 
+					<?php echo strtoupper($graduate->last_name).', '.ucwords($graduate->first_name).', '.ucfirst($graduate->middle_name).'.'; ?> 
 				</a>
 			</td>
 			<td><?php echo $graduate->username; ?></td>
