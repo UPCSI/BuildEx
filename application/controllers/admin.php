@@ -5,6 +5,10 @@ class Admin extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('admins_model');
+		$this->load->model('faculty_model');
+		$this->load->model('graduates_model');
+		$this->load->model('laboratories_model');
+		$this->load->model('respondents_model');
 	}
 	
 	public function index(){
@@ -55,7 +59,6 @@ class Admin extends MY_Controller{
 			$data['notification'] = null;
 		}
 		
-		
 		$this->load->view('main_layout',$data);
 	}
 
@@ -88,25 +91,21 @@ class Admin extends MY_Controller{
 	}
 
 	private function get_faculty_account_requests(){
-		$this->load->model('faculty_model');
 		$list = $this->faculty_model->get_all_account_requests();
 		return $list;
 	}
 
 	private function get_graduate_list(){
-		$this->load->model('graduates_model');
 		$list = $this->graduates_model->get_all_graduates();
 		return $list;
 	}
 
 	private function get_respondent_list(){
-		$this->load->model('respondents_model');
 		$list = $this->respondents_model->get_all_respondents();
 		return $list;
 	}
 
 	private function get_laboratories_list(){
-		$this->load->model('laboratories_model');
 		return $this->laboratories_model->get_all_laboratories();
 	}
 }
