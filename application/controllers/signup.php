@@ -13,7 +13,7 @@ class SignUp extends CI_Controller{
 		$data['title'] = "Sign Up";
 		$data['role'] = "graduate";
 		$notif = $this->session->flashdata('notification');
-		if(isset($notif)){
+		if($notif){
 			$data['notification'] = $notif;
 		}
 		$data['main_content'] = 'signup/index';
@@ -24,7 +24,7 @@ class SignUp extends CI_Controller{
 		$data['title'] = "Sign Up";
 		$data['role'] = "faculty";
 		$notif = $this->session->flashdata('notification');
-		if(isset($notif)){
+		if($notif){
 			$data['notification'] = $notif;
 		}
 		$data['main_content'] = 'signup/index';
