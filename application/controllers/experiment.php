@@ -16,7 +16,7 @@ class Experiment extends MY_Controller{
 		$role = $this->session->userdata('active_role');
 
 		$id = $this->session->userdata('active_id');
-		$eid  = 0;
+		$eid = 0;
 		if ($role == 'faculty'){
 			$eid = $this->experiments_model->add_faculty_experiment($id,$info);
 		}
@@ -26,9 +26,7 @@ class Experiment extends MY_Controller{
 
 		$success = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification',$success);
-		//redirect($role.'/experiments');
 		redirect('builder/app/'.$eid);
-		//echo $eid;
     }
 
 	public function delete_experiment($eid = 0){
@@ -45,7 +43,6 @@ class Experiment extends MY_Controller{
 			else if ($role == 'graduate'){
 				$status = $this->experiments_model->delete_graduates_experiment($id,$eid);
 			}
-
 			if($status){
 				$success = 'You have successfully deleted an experiment!';
 			}
@@ -57,14 +54,40 @@ class Experiment extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
-	/*
-		Temporary Edit function
-	*/
 	public function edit_experiment($eid = 0){
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/edit_experiment_form';
 		$this->load->view('_main_layout', $data);
+	}
+
+	public function publish($eid = 0){
+		if($eid == 0){
+			redirect(''); //implement where to redirect id $eid is nonexistent
+		}
+		$info['is_published'] = 'True';
+		$this->load->model('experiments_model');
+		if($this->experiments_model->update_experiment($eid,$info)){
+			$msg = "You have successfully published the experiment.";
+		}
+		else{
+			$msg = "Publication of experiment failed.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('faculty/view_experiment/'.$eid);
+	}
+
+	public function unpublish($eid){
+		$info['is_published'] = 'False';
+		$this->load->model('experiments_model');
+		if($this->experiments_model->update_experiment($eid,$info)){
+			$msg = "You have successfully unpublished the experiment.";
+		}
+		else{
+			$msg = "Unpublication of experiment failed.";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('faculty/view_experiment/'.$eid);
 	}
 
 	public function update_experiment($eid = 0){

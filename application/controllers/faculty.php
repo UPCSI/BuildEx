@@ -4,7 +4,12 @@ class Faculty extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('faculty_model');	
+		$this->load->model('faculty_model');
+		$this->load->model('laboratories_model');
+		$this->load->model('laboratoryheads_model');
+		$this->load->model('graduates_model');
+		$this->load->model('experiments_model');
+		$this->load->model('respondents_model');
 	}
 	
 	public function index(){
@@ -43,43 +48,53 @@ class Faculty extends MY_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function publish($eid = 0){
-		if($eid == 0){
-			redirect(''); //implement where to redirect id $eid is nonexistent
+	public function advisory(){
+		$fid = $this->session->userdata('active_id');
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'advisory_experiments';
+		$exp = $this->get_all_advisory_experiments($fid);
+		
+		if(isset($exp)){
+			$data['experiments'] = $this->get_all_advised_experiments($exp);
+			$data['requests'] = $this->get_all_request_experiments($exp);
 		}
-
-		$info['is_published'] = 'True';
-		$this->load->model('experiments_model');
-		if($this->experiments_model->update_experiment($eid,$info)){
-			$msg = "You have successfully published the experiment.";
+		$data['notification'] = $this->session->flashdata('notification');
+		if(!$data['notification']){
+			$data['notification'] = null;
 		}
-		else{
-			$msg = "Publication of experiment failed.";
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('faculty/view_experiment/'.$eid);
+		$this->load->view('main_layout',$data);
 	}
 
-	public function unpublish($eid){
-		$info['is_published'] = 'False';
-		$this->load->model('experiments_model');
-		if($this->experiments_model->update_experiment($eid,$info)){
-			$msg = "You have successfully unpublished the experiment.";
+	public function laboratory(){
+		$fid = $this->session->userdata('active_id');
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'laboratory';
+		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
+		if(isset($data['main_lab'])){
+			$labid = $data['main_lab']->labid;
+			$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
+			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
+			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 		}
-		else{
-			$msg = "Unpublication of experiment failed.";
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('faculty/view_experiment/'.$eid);
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
+		$this->load->view('main_layout',$data);
+	}
+
+	public function laboratories(){
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'laboratories';
+		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
+		$this->load->view("main_layout",$data);
 	}
 
 	public function view_experiment($eid = 0){
 		if($eid == 0){
 			redirect('');
-			//implement where to redirect if eid or gid is non-existent
 		}
-
-		$this->load->model('experiments_model');
+		
 		$fid = $this->session->userdata('fid');
 		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
@@ -96,10 +111,8 @@ class Faculty extends MY_Controller{
 	public function view_respondents($eid =0){
 		if($eid == 0){
 			redirect('');
-			//implement where to redirect if eid or gid is non-existent
 		}
 		
-		$this->load->model('respondents_model');
 		$data['respondents'] = $this->respondents_model->get_respondents($eid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view_respondents';
@@ -108,54 +121,8 @@ class Faculty extends MY_Controller{
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
-
 		$this->load->view('main_layout', $data);
 	}
-
-	public function advisory(){
-		$fid = $this->session->userdata('active_id');
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/advisory_experiments';
-		$exp = $this->get_all_advisory_experiments($fid);
-		if(isset($exp)){
-			$data['experiments'] = $this->get_all_advised_experiments($exp);
-			$data['requests'] = $this->get_all_request_experiments($exp);
-		}
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = null;
-		}
-
-		$this->load->view('main_layout',$data);
-	}
-
-	public function laboratory(){
-		$this->load->model('laboratories_model');
-		$this->load->model('laboratoryheads_model');
-		$this->load->model('graduates_model');
-		$fid = $this->session->userdata('active_id');
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/my_laboratory';
-		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
-		if(isset($data['main_lab'])){
-			$labid = $data['main_lab']->labid;
-			$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
-			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
-			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		}
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view('main_layout',$data);
-	}
-
-	public function laboratories(){
-		$this->load->model('laboratories_model');
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'laboratory/all';
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view("main_layout",$data);
-	}
-
 
 	public function view($username = null){
 		if(is_null($username)){
@@ -182,7 +149,6 @@ class Faculty extends MY_Controller{
 		if($eid == 0){
 			redirect(''); //redirect somewhere if $eid was not supplied
 		}
-		$this->load->model('experiments_model');
 		$info['is_published'] = "true";
 		$fid = $this->session->userdata('active_id');
 		if($this->experiments_model->advise_experiment($fid,$eid) && $this->experiments_model->update_experiment($eid,$info)){
@@ -200,7 +166,6 @@ class Faculty extends MY_Controller{
 		if($eid == 0){
 			redirect(''); //redirect somewhere if $eid was not supplied
 		}
-		$this->load->model('experiments_model');
 		$fid = $this->session->userdata('active_id');
 		if($this->experiments_model->reject_experiment($fid,$eid)){
 			$msg = "You have successfully rejected an experiment.";
@@ -218,7 +183,6 @@ class Faculty extends MY_Controller{
 			redirect('');
 			//implement where to redirect if labid is 0 or none
 		}
-		$this->load->model('laboratories_model');
 		$fid = $this->session->userdata('active_id');
 		$status = $this->laboratories_model->request_faculty_lab($labid,$fid);
 		if($status){
@@ -242,7 +206,6 @@ class Faculty extends MY_Controller{
 
 	public function confirm_faculty($fid = 0){
 		$data['title'] = 'Admin';
-		$this->load->model('faculty_model');
 		$faculty_info['account_status'] = 'true';
 		$status = $this->faculty_model->update_faculty($fid,$faculty_info);
 		if($status){
@@ -257,7 +220,6 @@ class Faculty extends MY_Controller{
 
 	public function reject_faculty($fid = 0){
 		$data['title'] = 'Admin';
-		$this->load->model('faculty_model');
 		$status = $this->faculty_model->delete_faculty($fid);
 		if($status){
 			$msg = 'Rejection complete!';
@@ -270,12 +232,10 @@ class Faculty extends MY_Controller{
 	}
 	
 	private function get_all_experiments($fid = 0){
-		$this->load->model('experiments_model');
 		return $this->experiments_model->get_all_faculty_experiments($fid);
 	}
 
 	private function get_all_advisory_experiments($fid = 0){
-		$this->load->model('experiments_model');
 		return $this->experiments_model->get_all_advisory_experiments($fid);
 	}
 
