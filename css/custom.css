@@ -635,7 +635,7 @@ input.minicolors-input:focus {
   right: 0 !important;
 }
 
-div[id*='btn'] > i, div[id*='radbtn'] > i, div[id*='chkbox'] > i, div[id*='dropdown'] > i, div[id*='sldr'] > i{
+div[id*='qtn'] > i, div[id*='inp'] > i, div[id*='btn'] > i, div[id*='radbtn'] > i, div[id*='chkbox'] > i, div[id*='dropdown'] > i, div[id*='sldr'] > i{
   position: absolute;
 }
 
@@ -656,6 +656,10 @@ div[id*='btn'] > i, div[id*='radbtn'] > i, div[id*='chkbox'] > i, div[id*='dropd
 
 .panel.pnl:hover .remove-icon{
   visibility: visible;
+}
+
+#newPage, #prevPage, #nextPage{
+  color: #FFF;
 }
 
 ul {

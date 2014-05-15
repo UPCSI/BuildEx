@@ -110,6 +110,7 @@ function draw_button(posX, posY, text_input, page_num){
 	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + total_page + '" ';
 
 	if (posX !== null && posY !== null){
+
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
 	}
 	else{
