@@ -121,6 +121,7 @@ function draw_button(posX, posY, text_input, page_num){
 >>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
 
 	if (posX !== null && posY !== null){
+
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
 	}
 	else{
