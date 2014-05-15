@@ -629,31 +629,19 @@ input.minicolors-input:focus {
 }
 
 .remove-icon {
-  position: absolute;
   visibility: hidden;
   font-size: 20px;
   top: 0 !important;
   right: 0 !important;
 }
 
-.slideframe {
-  position: relative !important;
+div[id*='btn'] > i, div[id*='radbtn'] > i, div[id*='chkbox'] > i, div[id*='dropdown'] > i, div[id*='sldr'] > i{
+  position: absolute;
 }
 
 .slide-title {
   padding: 20px;
   text-align: center
-}
-
-.delete { 
-    display:none;
-    position:absolute;
-    top:0;
-    right:0;
-    width:10px;
-    height:10px;
-    text-indent:-999px;
-    background:red; 
 }
 
 .draggable:hover .remove-icon { 

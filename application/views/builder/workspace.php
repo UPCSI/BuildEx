@@ -13,7 +13,7 @@
 		foreach ($pages as $page){
 			$total += 1;
 			$htmlData = '<div id="page' . $page->order .'" class="pageframe" style="width:100%; height:100%"><div>';
-			$htmlData1 = '<div id="slide'. $page->order .'" class="slideframe panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '. $page->order .'</p></div>';
+			$htmlData1 = '<div id="slide'. $page->order .'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '. $page->order .'</p></div>';
 			
 			if($page->order != 1) {
 				echo "$('.demo').append('" . $htmlData . "');";

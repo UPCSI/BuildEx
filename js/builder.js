@@ -718,7 +718,7 @@ $(function() {
       var htmlData = '<div id="page1" class="pageframe" style="width:100%; height:100%"></div>';
       $('#workspace').append(htmlData);
 
-      var htmlData = '<div id="slide1" class="slideframe panel pnl" style="background:yellow"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
+      var htmlData = '<div id="slide1" class="panel pnl" style="background:yellow"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
       $('.slides').append(htmlData);
     }
     else{
@@ -735,7 +735,7 @@ $(function() {
       var htmlData = '<div id="page' + after_curr_page +'" class="pageframe" style="width:100%; height:100%"></div>';
       $('#page'+$.current_page).after(htmlData);
 
-      var htmlData = '<div id="slide'+ after_curr_page +'" class="slideframe panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';
+      var htmlData = '<div id="slide'+ after_curr_page +'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '+ after_curr_page +'</p></div>';
       $('#slide'+$.current_page).after(htmlData);
 
       $('#question').removeClass('disabled');
