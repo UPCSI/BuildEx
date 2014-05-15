@@ -10,11 +10,11 @@ class Faculty extends MY_Controller{
 	public function index(){
 		if($this->session->userdata('active_role') == 'faculty'){
 			$data['title'] = 'Faculty';
-			$data['main_content'] = 'faculty/index';
-			$this->load->view('_main_layout_internal', $data);
+			$data['main_content'] = 'users/index';
+			$data['page'] = 'index';
+			$this->load->view('main_layout',$data);
 		}
 		else{
-			$role = $this->session->userdata('active_role');
 			redirect($this->session->userdata('active_role'));
 		}
 	}
@@ -25,20 +25,22 @@ class Faculty extends MY_Controller{
 		$data['faculty'] = $this->faculty_model->get_faculty_profile($this->session->userdata('active_id'));
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/profile';
-		$this->load->view('_main_layout_internal',$data);
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'profile';
+		$this->load->view('main_layout',$data);
 	}
 
 	public function experiments(){
 		$data['fid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['fid']);
 		$data['title'] = 'Faculty';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'experiments';
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
-		$data['main_content'] = 'faculty/experiments';
-		$this->load->view('_main_layout_internal',$data);
+		$this->load->view('main_layout',$data);
 	}
 
 	public function publish($eid = 0){
@@ -88,7 +90,7 @@ class Faculty extends MY_Controller{
 			$data['notification'] = null;
 		}
 
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function view_respondents($eid =0){
@@ -107,7 +109,7 @@ class Faculty extends MY_Controller{
 			$data['notification'] = null;
 		}
 
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function advisory(){
@@ -125,7 +127,7 @@ class Faculty extends MY_Controller{
 			$data['notification'] = null;
 		}
 
-		$this->load->view('_main_layout_internal',$data);
+		$this->load->view('main_layout',$data);
 	}
 
 	public function laboratory(){
@@ -143,7 +145,7 @@ class Faculty extends MY_Controller{
 			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
 		}
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view('_main_layout_internal',$data);
+		$this->load->view('main_layout',$data);
 	}
 
 	public function laboratories(){
@@ -151,7 +153,7 @@ class Faculty extends MY_Controller{
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'laboratory/all';
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view("_main_layout_internal",$data);
+		$this->load->view("main_layout",$data);
 	}
 
 
@@ -173,7 +175,7 @@ class Faculty extends MY_Controller{
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view';
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function confirm_experiment($eid = 0){
@@ -235,7 +237,7 @@ class Faculty extends MY_Controller{
 		$data['faculty_profile'] = $this->faculty_model->get_faculty_profile($fid);
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['main_content'] = 'contents/profile';
-		$this->load->view('_main_layout_internal', $data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function confirm_faculty($fid = 0){
