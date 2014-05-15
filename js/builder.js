@@ -71,8 +71,8 @@ $(function() {
   $('#question')
     .click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
       if(!$(this).hasClass('disabled')){
-        posX = typeof posX !== 'undefined' ? posX : 183;
-        posY = typeof posY !== 'undefined' ? posY : 191;
+        posX = typeof posX !== 'undefined' ? posX : 412;
+        posY = typeof posY !== 'undefined' ? posY : 268;
         page_num = typeof page_num !== 'undefined' ? page_num : 0;
         text_input = typeof text_input !== 'undefined' ? text_input : "";
         width = typeof width !== 'undefined' ? width : 200;
@@ -133,7 +133,7 @@ $(function() {
 
         document.getElementById('qtneditable'+$.count).style.color = color;   
         $('#question').addClass('disabled');    
-        
+
         $.count++;
       }
       else{
@@ -143,8 +143,8 @@ $(function() {
 
   $('#textinput')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 183;
-      posY = typeof posY !== 'undefined' ? posY : 191;
+      posX = typeof posX !== 'undefined' ? posX : 412;
+      posY = typeof posY !== 'undefined' ? posY : 268;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "";
       width = typeof width !== 'undefined' ? width : 200;
@@ -197,8 +197,8 @@ $(function() {
 
   $('#button')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 208;
-      posY = typeof posY !== 'undefined' ? posY : 191;
+      posX = typeof posX !== 'undefined' ? posX : 437;
+      posY = typeof posY !== 'undefined' ? posY : 268;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Button";
       width = typeof width !== 'undefined' ? width : 150;
@@ -255,8 +255,8 @@ $(function() {
 
   $('#radiobutton')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 223;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 452;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Radio Button";
       width = typeof width !== 'undefined' ? width : 120;
@@ -315,8 +315,8 @@ $(function() {
 
   $('#checkbox')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 223;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 452;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Checkbox";
       width = typeof width !== 'undefined' ? width : 120;
@@ -374,8 +374,8 @@ $(function() {
 
   $('#dropdown')
       .click(function(eventClick, posX, posY, page_num){
-      posX = typeof posX !== 'undefined' ? posX : 213;
-      posY = typeof posY !== 'undefined' ? posY : 194;
+      posX = typeof posX !== 'undefined' ? posX : 442;
+      posY = typeof posY !== 'undefined' ? posY : 271;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
       var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
@@ -451,8 +451,8 @@ $(function() {
 
   $('#slider')
       .click(function(eventClick, posX, posY, page_num, min, max){
-      posX = typeof posX !== 'undefined' ? posX : 120;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 332;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       min = typeof min !== 'undefined' ? min : 0;
       max = typeof max !== 'undefined' ? max : 1;
