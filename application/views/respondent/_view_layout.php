@@ -1,7 +1,7 @@
 <?php $this->load->view('includes/respondent_header',$title); ?>
 
 <body>
-<?php $this->load->view('components/topbar'); ?>
+<?php $this->load->view('respondent/topbar'); ?>
 
 <?php $this->load->view($main_content); ?>
 

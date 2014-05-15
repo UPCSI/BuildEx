@@ -237,6 +237,35 @@ class Faculty extends MY_Controller{
 		$data['main_content'] = 'contents/profile';
 		$this->load->view('_main_layout_internal', $data);
 	}
+
+	public function confirm_faculty($fid = 0){
+		$data['title'] = 'Admin';
+		$this->load->model('faculty_model');
+		$faculty_info['account_status'] = 'true';
+		$status = $this->faculty_model->update_faculty($fid,$faculty_info);
+		if($status){
+			$msg = 'Confirmation successful!';
+		}
+		else{
+			$msg = 'Confirmation failed!';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
+
+	public function reject_faculty($fid = 0){
+		$data['title'] = 'Admin';
+		$this->load->model('faculty_model');
+		$status = $this->faculty_model->delete_faculty($fid);
+		if($status){
+			$msg = 'Rejection complete!';
+		}
+		else{
+			$msg = 'Rejection failed!';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
 	
 	private function get_all_experiments($fid = 0){
 		$this->load->model('experiments_model');
@@ -249,7 +278,7 @@ class Faculty extends MY_Controller{
 	}
 
 	private function get_all_request_experiments($list){
-		$requests = [];
+		$requests = array();
 		foreach($list as $e){
 			if($e->advise_status == 'f'){
 				$requests[] = $e;
@@ -262,7 +291,7 @@ class Faculty extends MY_Controller{
 	}
 
 	private function get_all_advised_experiments($list){
-		$advisory = [];
+		$advisory = array();
 		foreach ($list as $e){
 			if($e->advise_status == 't'){
 				$advisory[] = $e;
