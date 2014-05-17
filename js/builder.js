@@ -249,7 +249,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#radiobutton')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -309,7 +309,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#checkbox')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -368,7 +368,7 @@ $(function() {
       });
 
       $.count++;
-    });
+  });
 
   $('#dropdown')
       .click(function(eventClick, posX, posY, page_num){

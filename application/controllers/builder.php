@@ -45,7 +45,6 @@ class Builder extends MY_Controller{
 		$eid = $this->input->post('eid');
 		$this->delete($eid);
 		$pid_list = array();
-		// $radio_list = array();
 
 		/* page */
 		$page['eid'] = $this->input->post('eid');
