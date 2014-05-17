@@ -104,7 +104,7 @@ class Respond extends CI_Controller{
 
 	public function debrief($slug){
 		/*shows the page after the last one*/
-		/*to debried the user and to confirm his inputs just in case*/
+		/*to debrief the user and to confirm his inputs just in case*/
 		$eid = $this->session->userdata('respond_to');
 		$exp = $this->experiments_model->get_experiment($eid);
 		$id = $this->faculty_model->get_faculty_by_experiment($eid);
