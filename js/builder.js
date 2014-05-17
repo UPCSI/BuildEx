@@ -28,7 +28,8 @@ $(function() {
     var check = $('#page'+$.current_page).find('div');
     if(check.hasClass('flag')){
       $('#question').addClass('disabled');
-    }else{
+    }
+    else{
       $('#question').removeClass('disabled');
     }
   }
@@ -70,8 +71,8 @@ $(function() {
   $('#question')
     .click(function(eventClick, posX, posY, text_input, page_num, width, height, color){
       if(!$(this).hasClass('disabled')){
-        posX = typeof posX !== 'undefined' ? posX : 183;
-        posY = typeof posY !== 'undefined' ? posY : 191;
+        posX = typeof posX !== 'undefined' ? posX : 412;
+        posY = typeof posY !== 'undefined' ? posY : 268;
         page_num = typeof page_num !== 'undefined' ? page_num : 0;
         text_input = typeof text_input !== 'undefined' ? text_input : "";
         width = typeof width !== 'undefined' ? width : 200;
@@ -132,6 +133,7 @@ $(function() {
 
         document.getElementById('qtneditable'+$.count).style.color = color;   
         $('#question').addClass('disabled');    
+
         $.count++;
       }
       else{
@@ -141,8 +143,8 @@ $(function() {
 
   $('#textinput')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 183;
-      posY = typeof posY !== 'undefined' ? posY : 191;
+      posX = typeof posX !== 'undefined' ? posX : 412;
+      posY = typeof posY !== 'undefined' ? posY : 268;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "";
       width = typeof width !== 'undefined' ? width : 200;
@@ -190,8 +192,8 @@ $(function() {
 
   $('#button')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 208;
-      posY = typeof posY !== 'undefined' ? posY : 191;
+      posX = typeof posX !== 'undefined' ? posX : 437;
+      posY = typeof posY !== 'undefined' ? posY : 268;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Button";
       width = typeof width !== 'undefined' ? width : 150;
@@ -248,8 +250,8 @@ $(function() {
 
   $('#radiobutton')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 223;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 452;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Radio Button";
       width = typeof width !== 'undefined' ? width : 120;
@@ -308,8 +310,8 @@ $(function() {
 
   $('#checkbox')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
-      posX = typeof posX !== 'undefined' ? posX : 223;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 452;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       text_input = typeof text_input !== 'undefined' ? text_input : "Checkbox";
       width = typeof width !== 'undefined' ? width : 120;
@@ -367,8 +369,8 @@ $(function() {
 
   $('#dropdown')
       .click(function(eventClick, posX, posY, page_num){
-      posX = typeof posX !== 'undefined' ? posX : 213;
-      posY = typeof posY !== 'undefined' ? posY : 194;
+      posX = typeof posX !== 'undefined' ? posX : 442;
+      posY = typeof posY !== 'undefined' ? posY : 271;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
       var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
@@ -444,8 +446,8 @@ $(function() {
 
   $('#slider')
       .click(function(eventClick, posX, posY, page_num, min, max){
-      posX = typeof posX !== 'undefined' ? posX : 120;
-      posY = typeof posY !== 'undefined' ? posY : 198;
+      posX = typeof posX !== 'undefined' ? posX : 332;
+      posY = typeof posY !== 'undefined' ? posY : 275;
       page_num = typeof page_num !== 'undefined' ? page_num : 0;
       min = typeof min !== 'undefined' ? min : 0;
       max = typeof max !== 'undefined' ? max : 1;
@@ -638,7 +640,7 @@ $(function() {
     var parent = $(this).parent();
     var id = parent.attr('id').substr(5,6);
     $('#slide' + $.current_page).css('background', '#f2f2f2');;
-    $(parent).css('background', 'yellow');
+    $(parent).css('background', '#2ecc71');
     $("#page" + $.current_page).css("visibility", "hidden");
     $("#page" + id).css("visibility", "visible");
     $.current_page = parseInt(id);
@@ -652,7 +654,7 @@ $(function() {
 
       var id = slide.substr(5,6);
       $('#slide' + $.current_page).css('background', '#f2f2f2');;
-      $(ui.item).css('background', 'yellow');
+      $(ui.item).css('background', '#2ecc71');
       $("#page" + $.current_page).css("visibility", "hidden");
       $("#page" + id).css("visibility", "visible");
     },
@@ -701,7 +703,7 @@ $(function() {
     if($.page != 1 && id == ($.current_page+1) || id == $.current_page){
       $("#page" + $.current_page).css('visibility', "visible");
       checkQuestion();
-      $("#slide"+$.current_page).css('background', 'yellow');
+      $("#slide"+$.current_page).css('background', '#2ecc71');
     }
     if($.page != 1){
       $.page--;
@@ -713,7 +715,7 @@ $(function() {
       var htmlData = '<div id="page1" class="pageframe" style="width:100%; height:100%"></div>';
       $('#workspace').append(htmlData);
 
-      var htmlData = '<div id="slide1" class="panel pnl" style="background:yellow"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
+      var htmlData = '<div id="slide1" class="panel pnl" style="background:#2ecc71"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide 1</p></div>';
       $('.slides').append(htmlData);
     }
     else{
@@ -749,7 +751,7 @@ $(function() {
     checkQuestion();
 
     //styling
-    $("#slide"+$.current_page).css('background', 'yellow');
+    $("#slide"+$.current_page).css('background', '#2ecc71');
     $("#slide"+($.current_page+1)).css('background', '#f2f2f2');
   });
 
@@ -765,7 +767,7 @@ $(function() {
 
     //styling 
     $("#slide"+($.current_page-1)).css('background', '#f2f2f2');
-    $("#slide"+$.current_page).css('background', 'yellow');
+    $("#slide"+$.current_page).css('background', '#2ecc71');
   }); 
 
 });   

@@ -8,14 +8,14 @@
 		echo '<script>';
 		echo '(function($){ ';
 		echo '$(function() {';
-		$total = 0;
+		$total = 1;
 		echo '$("#newPage").click();'; #initialize page1
 		foreach ($pages as $page){
-			$total += 1;
-			$htmlData = '<div id="page' . $page->order .'" class="pageframe" style="width:100%; height:100%"><div>';
-			$htmlData1 = '<div id="slide'. $page->order .'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '. $page->order .'</p></div>';
-			
 			if($page->order != 1) {
+				$total += 1;
+				$htmlData = '<div id="page' . $page->order .'" class="pageframe" style="width:100%; height:100%"><div>';
+				$htmlData1 = '<div id="slide'. $page->order .'" class="panel pnl"><i class="fi-x remove-icon pull-right"></i><p class="slide-title">Slide '. $page->order .'</p></div>';
+				
 				echo "$('.demo').append('" . $htmlData . "');";
 				echo "$('.slides').append('" . $htmlData1 . "');";
 			}
@@ -23,14 +23,14 @@
 		}
 
 		foreach ($var as $obj){
-			echo ' $("#question").removeClass("disabled");';
-			if($obj[3] == "question")
+			if($obj[3] == "question"){
+				echo '$("#question").removeClass("disabled");';
 				echo '$("#question").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0] .',' .$obj[6].',' .$obj[7] .',"' .$obj[5].'"]);';
-	
-			else if($obj[3] == "textinput")
+			}
+			else if($obj[3] == "textinput"){
 				echo '$("#textinput").trigger("click",['.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].',' .$obj[4].',' .$obj[5].']);';
-			
-			else if($obj[3] == "button")
+			}
+			else if($obj[3] == "button"){
 				echo '$("#button").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].']);';
 			
 			else if($obj[3] == "radio")
@@ -47,7 +47,7 @@
 		}
 
 		for($index=2; $index<=$total; $index++){
-			echo 'document.getElementById("page" + '.$index.').style.visibility =' ."'hidden';";
+			echo '$("#page" + '.$index.').css("visibility", "hidden");';
 		}
 
 		echo '$.page = '.$total.';';
