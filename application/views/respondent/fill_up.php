@@ -9,25 +9,25 @@
 			<legend>Personal Information</legend>
 
 			<label>First Name</label>
-			<input type="text" id="first_name" placeholder="First Name">
+			<input type="text" id="first_name"  required name = "first_name" placeholder="First Name">
 
 			<label>Middle Name</label>
-			<input type="text" id="middle_name" placeholder="Middle Name">
+			<input type="text" id="middle_name" required name = "middle_name" placeholder="Middle Name">
 
 			<label>Last Name</label>
-			<input type="text" id="last_name" placeholder="Last Name">
+			<input type="text" id="last_name" required name = "last_name" placeholder="Last Name">
 
 			<label>Age</label>
-			<input type="text" id="age" placeholder="18">
+			<input type="text" id="age" required name = "age" placeholder="18">
 
 			<label>Email</label>
-			<input type="text" id="email"  placeholder="yourname@example.com">
+			<input type="text" id="email"  required name = "email" placeholder="yourname@example.com">
 
 			<label>Address</label>
-			<input type="text" id="address" placeholder="#69 Salvador St., Brgy. Krus Na Ligas, Quezon City">
+			<input type="text" id="address" required name = "address" placeholder="#69 Salvador St., Brgy. Krus Na Ligas, Quezon City">
 
 			<label>Nationality</label>
-			<input type="text" id="nationality" placeholder="Filipino">
+			<input type="text" id="nationality" required name = "nationality" placeholder="Filipino">
 
 			<label>Civil Status</label>
 			<input type="radio" name = "civil_status" value = "0"> Single

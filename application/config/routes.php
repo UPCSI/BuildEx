@@ -37,11 +37,12 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$route['respond/(.+)'] = 'respond/view/$1';
-$route['respond/(.+)'] = 'respond/exp/$1';
-$route['respond/agree'] = 'respond/agree';
-$route['respond/form'] = 'respond/fill_up';
-$route['respond/register'] = 'respond/register';
+
+// $route['respond/(.+)'] = 'respond/view/$1';
+// $route['respond/(.+)'] = 'respond/exp/$1';
+// $route['respond/agree'] = 'respond/agree';
+// $route['respond/form'] = 'respond/fill_up';
+// $route['respond/register'] = 'respond/register';
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 

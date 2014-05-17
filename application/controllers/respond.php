@@ -47,7 +47,7 @@ class Respond extends CI_Controller{
 		$slug = $this->input->post('slug');
 		$this->session->set_userdata('respond_to',$eid);
 		$this->session->set_userdata('slug',$slug);
-		redirect('respond/form');
+		redirect('respond/fill_up');
 	}
 
 	public function fill_up(){
@@ -75,7 +75,7 @@ class Respond extends CI_Controller{
 		$rid = $this->respondents_model->add_respondent($info,$eid);
 		$this->session->set_userdata('rid',$rid);
 		$slug = $this->session->userdata('slug');
-		redirect('respond/'.$slug);
+		redirect('respond/exp/'.$slug);
 	}
 
 	public function exp($slug){
