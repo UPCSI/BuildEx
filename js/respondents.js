@@ -26,9 +26,6 @@ function draw_question(posX, posY, text_input, page_num, width, height, color){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-// <<<<<<< HEAD
-// 	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + $.page + '"';
-// =======
 	var htmlData='<div id="qtn'+$.count+'" class = "static_obj" data-page=" ' + total_page + '"';
 
 	if (posX !== null && posY !== null){
@@ -69,11 +66,7 @@ function draw_text_input(posX, posY, text_input, page_num, width, height){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-<<<<<<< HEAD
-	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + $.page + '"';	
-=======
-	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + total_page + '"';	
->>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
+	var htmlData='<div id="inp'+$.count+'" class = "static_obj" data-page="' + total_page + '"';
 
 	if (posX !== null && posY !== null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%;  width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px"';
@@ -110,11 +103,7 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
 
-<<<<<<< HEAD
-	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + $.page + '" ';
-=======
 	var htmlData='<div id="btn'+$.count+'" class="static_obj" ' + 'data-page="' + total_page + '" ';
->>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
 
 	if (posX !== null && posY !== null){
 
@@ -166,11 +155,7 @@ function draw_radio_button(posX, posY, text_input, page_num, width, height){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-<<<<<<< HEAD
-	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+$.page+'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
-=======
 	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+ total_page +'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
->>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
 	
 	var temp = $.count;
 	var index = page_num;
@@ -213,11 +198,7 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-<<<<<<< HEAD
-	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+$.page+'" value="checkbox">'+text_input+'</div>';
-=======
 	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="checkbox">'+text_input+'</div>';
->>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
 	
 	var temp = $.count;
 	var index = page_num;
@@ -247,11 +228,7 @@ function draw_slider(posX, posY, page_num, min, max){
 	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
 	zoomed_x = (posX/1024)*100; //hardcoded
 	zoomed_y = (posY/576)*100; //hardcoded
-<<<<<<< HEAD
-	alert(zoomed_x);
-=======
 
->>>>>>> 23349f9eddefa7266d369aa08f3f8c0f36c40185
 	var htmlData='<div id="sldr'+$.count+'" class="static_obj"';
 	if (posX != null && posY != null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; height:'+25*workspace_height+'px; width:'+360*workspace_width+'px"';
