@@ -108,22 +108,6 @@ class Faculty extends MY_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function view_respondents($eid =0){
-		if($eid == 0){
-			redirect('');
-		}
-		
-		$data['respondents'] = $this->respondents_model->get_respondents($eid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view_respondents';
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = null;
-		}
-		$this->load->view('main_layout', $data);
-	}
-
 	public function view($username = null){
 		if(is_null($username)){
 			redirect('');

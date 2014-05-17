@@ -5,7 +5,7 @@
 
 <?php $this->load->view($main_content); ?>
 
-<?php $this->load->view('components/sitemap'); ?>
+<?php $this->load->view('layouts/_sitemap'); ?>
 </body>
 
 <?php $this->load->view('includes/respondent_footer'); ?>

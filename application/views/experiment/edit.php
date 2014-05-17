@@ -2,7 +2,6 @@
 
 <fieldset>
 	<legend>Edit Experiment</legend>
-	<?php echo validation_errors();?>
 	<?php echo form_open('experiment/update_experiment/'.$experiment->eid) . "<br/>";?>
 
 	<label>Title</label><br/>

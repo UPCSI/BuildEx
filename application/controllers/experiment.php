@@ -5,6 +5,7 @@ class Experiment extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('experiments_model');
+		$this->load->model('respondents_model');
 	}
 
 	public function add_experiment() {
@@ -54,11 +55,12 @@ class Experiment extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
-	public function edit_experiment($eid = 0){
+	public function edit($eid = 0){
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/edit_experiment_form';
-		$this->load->view('_main_layout', $data);
+		$data['main_content'] = 'experiment/index';
+		$data['page'] = 'edit';
+		$this->load->view('main_layout', $data);
 	}
 
 	public function publish($eid = 0){
@@ -74,7 +76,7 @@ class Experiment extends MY_Controller{
 			$msg = "Publication of experiment failed.";
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('faculty/view_experiment/'.$eid);
+		redirect('experiment/view/'.$eid);
 	}
 
 	public function unpublish($eid){
@@ -87,7 +89,7 @@ class Experiment extends MY_Controller{
 			$msg = "Unpublication of experiment failed.";
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('faculty/view_experiment/'.$eid);
+		redirect('experiment/view/'.$eid);
 	}
 
 	public function update_experiment($eid = 0){
@@ -114,6 +116,20 @@ class Experiment extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
+	public function respondents($eid = 0){
+		$data['respondents'] = $this->respondents_model->get_respondents($eid);
+		$data['notification'] = $this->session->flashdata('notification');
+		
+		if(!$data['notification']){
+			$data['notification'] = null;
+		}
+
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'experiment/index';
+		$data['page'] = 'respondents';
+		$this->load->view('main_layout', $data);
+	}
+
 	public function view($eid = 0){
 		if($eid == 0){
 			redirect('');
@@ -121,7 +137,8 @@ class Experiment extends MY_Controller{
 		}
 		$data['experiment'] = $this->experiments_model->get_experiment($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/view';
-		$this->load->view('_main_layout_internal', $data);
+		$data['main_content'] = 'experiment/index';
+		$data['page'] = 'view';
+		$this->load->view('main_layout', $data);
 	}
 }

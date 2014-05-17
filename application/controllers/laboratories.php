@@ -27,8 +27,6 @@ class Laboratories extends MY_Controller{
 			$data['is_member'] = $this->laboratories_model->is_faculty_member($role_id);
 		}
 
-		$data['title'] = 'Laboratories';
-		$data['main_content'] = 'laboratory/view';
 		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
 		$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
 		$data['role'] = $this->session->userdata('active_role');
@@ -45,7 +43,10 @@ class Laboratories extends MY_Controller{
 			$data['notification'] = null;
 		}
 		
-		$this->load->view('_main_layout_internal',$data);
+		$data['title'] = 'Laboratories';
+		$data['main_content'] = 'laboratory/index';
+		$data['page'] = 'view';
+		$this->load->view('main_layout',$data);
 	}
 
 	public function add_lab(){

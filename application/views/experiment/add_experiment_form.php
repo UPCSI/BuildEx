@@ -1,7 +1,4 @@
 <h2>BuildEx: Experiment</h2>
-<? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
-
-
 <div id="builder" class="row full">
 	
 	<!-- Toolbar -->

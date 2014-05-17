@@ -32,12 +32,14 @@ class Respond extends CI_Controller{
 		}
 		$data['eid'] = $exp->eid;
 		$data['slug'] = $this->experiments_model->generate_slug($exp->title);
-		$data['title'] = 'Respond';
 		$data['experiment'] = $exp->title;
 		$data['description'] = $exp->description;
 		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
-		$data['main_content'] = 'respondent/view';
-		$this->load->view('respondent/_view_layout', $data);
+		
+		$data['title'] = 'Respond';
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'view';
+		$this->load->view('respondent/view_layout', $data);
 	}
 
 	public function agree(){
@@ -45,13 +47,14 @@ class Respond extends CI_Controller{
 		$slug = $this->input->post('slug');
 		$this->session->set_userdata('respond_to',$eid);
 		$this->session->set_userdata('slug',$slug);
-		redirect('respond/fill_up');
+		redirect('respond/form');
 	}
 
 	public function fill_up(){
 		$data['title'] = 'Respond';
-		$data['main_content'] = 'respondent/fill_up';
-		$this->load->view('respondent/_view_layout', $data);
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'fill_up';
+		$this->load->view('respondent/view_layout', $data);
 	}
 
 	public function register(){
@@ -72,7 +75,7 @@ class Respond extends CI_Controller{
 		$rid = $this->respondents_model->add_respondent($info,$eid);
 		$this->session->set_userdata('rid',$rid);
 		$slug = $this->session->userdata('slug');
-		redirect('respond/exp/'.$slug);
+		redirect('respond/'.$slug);
 	}
 
 	public function exp($slug){
@@ -147,7 +150,6 @@ class Respond extends CI_Controller{
 		//when saving to db, add completed experiment = true
 	}
 
-
 	public function leave(){
 		$this->session->unset_userdata('rid');
 		$this->session->unset_userdata('respond_to');
@@ -165,5 +167,14 @@ class Respond extends CI_Controller{
 		$message = $this->input->post('done');
 		
 		/* not a priority */
+	}
+
+	public function all($eid = 0){
+		if($eid == 0){
+
+		}
+		else{
+			
+		}
 	}
 }

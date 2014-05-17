@@ -4,7 +4,7 @@
 		<div class="titleholder">
 			<div class="row full">
 				<div class="large-12 column">
-					<h3> <?php echo anchor('faculty/view_experiment/'.$experiment->eid, $experiment->title); ?> </h3>
+					<h3> <?php echo anchor('experiment/view/'.$experiment->eid, $experiment->title); ?> </h3>
 				</div>
 			</div>
 		</div>
