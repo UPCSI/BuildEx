@@ -16,29 +16,32 @@
 		}
 
 		foreach ($var as $obj){
-			// echo 'alert("sending page " +' .$obj[3].');';
 			if($obj[3] == "question"){
 				echo 'draw_question('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[6].',' .$obj[7] .',"' .$obj[5].'");';
 			}
 			
 			else if($obj[3] == "textinput"){
-				echo 'draw_text_input('.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].');';
+				echo 'draw_text_input('.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].',' .$obj[4].',' .$obj[5].');';
 			}
+
 			else if($obj[3] == "button"){
-				echo 'draw_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+				echo 'draw_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
 			}
+
 			else if($obj[3] == "radio"){
-				echo 'draw_radio_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+				echo 'draw_radio_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
 			}
+
 			else if($obj[3] == "checkbox"){
-				echo 'draw_checkbox('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].');';
+				echo 'draw_checkbox('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
 			}
+
 			/*
 			else if($obj[3] == "dropdown")
 				echo '$("#dropdown").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';*/
 			
 			else if($obj[3] == "slider"){
-				echo 'draw_slider('.$obj[1].','.$obj[2].',' .$obj[0] .',' .$obj[4] .',' .$obj[5].');';	
+				echo 'draw_slider('.$obj[1].','.$obj[2].',' .$obj[0] .',' .$obj[4] .',' .$obj[5].',' .$obj[4] .',' .$obj[5].');';	
 			}
 		}
 

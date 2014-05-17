@@ -156,12 +156,7 @@ $(function() {
         htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
       }
       
-      if(text_input != "") {
-        htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="inpeditable'+$.count+'" class="editable">'+text_input+'</div></div>';
-      }
-      else {
-        htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
-      }
+      htmlData += '><i class="fi-x remove-icon pull-right"></i><div id="inpeditable'+$.count+'" class="editable" data-placeholder="Enter Input" ></div></div>';
 
       var temp = $.count;
       var index = page_num;
@@ -251,7 +246,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#radiobutton')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -311,7 +306,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#checkbox')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -370,7 +365,7 @@ $(function() {
       });
 
       $.count++;
-    });
+  });
 
   $('#dropdown')
       .click(function(eventClick, posX, posY, page_num){

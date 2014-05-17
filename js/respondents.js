@@ -55,7 +55,7 @@ function draw_question(posX, posY, text_input, page_num, width, height, color){
 	$.count++;
 }
 
-function draw_text_input(posX, posY, text_input, page_num){
+function draw_text_input(posX, posY, text_input, page_num, width, height){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -78,13 +78,9 @@ function draw_text_input(posX, posY, text_input, page_num){
 	if (posX !== null && posY !== null){
 		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%;  width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px"';
 	}
-	
-	if(text_input !== ""){
-		htmlData += '><div id="inpeditable'+$.count+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
-	}
-	else{
-		htmlData += '><div id="inpeditable'+$.count+'"class="text-holder" data-placeholder="Enter Input" style="font-size:'+new_font_size*14+'px;"></div></div>';
-	}
+
+	htmlData += '><div id="inpeditable'+$.count+'"class="text-holder" data-placeholder="Enter Input" style="font-size:'+new_font_size*14+'px;"></div></div>';
+
 	var temp = $.count;
 	var index = page_num;
 	if(index <= 0){
@@ -100,7 +96,7 @@ function draw_text_input(posX, posY, text_input, page_num){
 	$.count++;
 }
 
-function draw_button(posX, posY, text_input, page_num){
+function draw_button(posX, posY, text_input, page_num, width, height){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -148,7 +144,7 @@ function draw_button(posX, posY, text_input, page_num){
 	$.count++;
 }
 
-function draw_radio_button(posX, posY, text_input, page_num){
+function draw_radio_button(posX, posY, text_input, page_num, width, height){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -194,7 +190,7 @@ function draw_radio_button(posX, posY, text_input, page_num){
     $.count++;
 }
 
-function draw_checkbox(posX, posY, text_input, page_num){
+function draw_checkbox(posX, posY, text_input, page_num, width, height){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -241,7 +237,7 @@ function draw_checkbox(posX, posY, text_input, page_num){
     $.count++;
 }
 
-function draw_slider(posX, posY, page_num){
+function draw_slider(posX, posY, page_num, min, max){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
