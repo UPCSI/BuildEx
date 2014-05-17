@@ -2,7 +2,6 @@
 	<div data-alert class="alert-box info"> <?php echo $notification; ?> <a href="#" class="close">&times;</a> </div>
 <?php endif; ?>
 
-
 <div class = "row">
 	<div class = "large-12 column">
 		<h2 class = "white"> <?php echo $experiment->title; ?></h2>
@@ -13,6 +12,7 @@
 		<p class = "white"> <strong> Status: </strong><?php if($experiment->status == 'f'){echo 'On-going';}else{echo 'Complete';} ?> </p>
 		<p class = "white"> <strong> Is published: </strong><?php if($experiment->is_published == 'f'){echo 'False';}else{echo 'True';} ?> </p>
 
+		<br> <br>
 		<?php if($experiment->is_published == 'f'): ?>
 			<a class = "button small" href = "<?php echo site_url('experiment/publish/'.$experiment->eid); ?>"> Publish </a>
 		<?php else: ?>

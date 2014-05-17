@@ -35,16 +35,11 @@
 			<input type="radio" name = "civil_status" value = "2"> Separated
 			<input type="radio" name = "civil_status" value = "3"> Widowed
 			<br/>
-			<label>Gender</label>
+			<label>Sex</label>
 			<select name = "gender">
 				<optgroup>
-					<option value = "none"> 		None 		</option>
-					<option value = "bisexual"> 	Bisexual 	</option>
-					<option value = "female"> 		Female 		</option>
-					<option value = "gay"> 			Gay 		</option>
-					<option value = "lesbian"> 		Lesbian 	</option>
-					<option value = "male"> 		Male 		</option>
-					<option value = "transgender"> Transgender 	</option>
+					<option value = "none"> 		Male 		</option>
+					<option value = "bisexual"> 	Female 	</option>
 				</optgroup>
 			</select>
 	</div>

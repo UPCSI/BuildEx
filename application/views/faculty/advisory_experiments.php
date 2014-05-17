@@ -18,7 +18,9 @@
 	</div>
 <?php endif; ?>
 
-<h3>Graduates' Experiments</h3>
+<br>
+
+<h3 class = "white">Graduates' Experiments</h3>
 <?php if(isset($experiments)): ?>
 	<div class="row">
 		<div class="large-6 column">
@@ -26,10 +28,12 @@
 		</div>
 	</div>
 <?php else: ?>
-	<p> You are not advising any experiment. </p>
+	<p class = "white"> You are not advising any experiment. </p>
 <?php endif; ?>
 
-<h3 name="requests"> Experiments to be advised </h3>
+<br> <br>
+
+<h3 class = "white" name="requests"> Experiments to be advised </h3>
 <?php if(isset($requests)): ?>
 	<?php $data['experiments'] = $requests; ?>
 	<div class="row">
@@ -38,5 +42,5 @@
 		</div>
 	</div>
 <?php else: ?>
-	<p> You have no pending advisory requests. </p>
+	<p class = "white"> You have no pending advisory requests. </p>
 <?php endif; ?>

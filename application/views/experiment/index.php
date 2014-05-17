@@ -1,4 +1,3 @@
-<div class="internal">
 <?php $this->load->view('users/_topbar.php'); ?>
     <div class = "main-body">
         <div class = "row full legit">
@@ -39,4 +38,3 @@
     </div>
     <?php $this->load->view('layouts/_sitemap'); ?>
     <?php $this->load->view('includes/javascripts/foundation'); ?>
-</div>

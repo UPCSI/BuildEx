@@ -14,6 +14,7 @@
       <div class="tabs-content profile" data-equalizer>
         <div class="content active" id="panel2-1">
   	     <?php $this->load->view('faculty/_info'); ?>
+         <br>
 	       <?php $this->load->view('users/_roles'); ?>
         </div>
         <div class="content" id="panel2-2">

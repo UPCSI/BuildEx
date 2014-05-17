@@ -1,5 +1,5 @@
 <? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
-<div class="main-body" style="min-height:80%">
+<div class="main-body" style="min-height:80%; background:#fff">
 	<div class="row" style="text-align: left; padding-top:60px;">
 		<h1> Debriefing </h1>
 		<hr>

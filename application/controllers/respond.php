@@ -145,7 +145,7 @@ class Respond extends CI_Controller{
 
 		$data['title'] = 'Complete';
 		$data['main_content'] = 'respondent/complete';
-		$this->load->view('respondent/_view_layout', $data);
+		$this->load->view('respondent/view_layout', $data);
 	
 		//when saving to db, add completed experiment = true
 	}
@@ -157,7 +157,7 @@ class Respond extends CI_Controller{
 
 		$data['title'] = 'Good Bye';
 		$data['main_content'] = 'respondent/leave';
-		$this->load->view('respondent/_view_layout', $data);
+		$this->load->view('respondent/view_layout', $data);
 	}
 
 	public function interrupted(){

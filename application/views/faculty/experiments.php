@@ -18,12 +18,12 @@
 
 <?php if(isset($experiments)): ?>
 	<div class="row">
-		<div class="large-6 column">
+		<div class="large-12 column">
 			<?php $this->load->view('faculty/_experiments_list'); ?>
 		</div>	
 	</div>
 <?php else: ?>
-	<p> You have no experiments </p>
+	<p class = "white"> You have no experiments. </p>
 <?php endif; ?>
 
 <?php $this->load->view('faculty/_add_experiment_modal'); ?>
