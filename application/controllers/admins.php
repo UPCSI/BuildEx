@@ -6,6 +6,10 @@ class Admins extends User_Controller{
 		parent::__construct();
 		$this->role = 'admin';
 	}
+	/* Admin Pages */
+	public function administrators(){
+		return 0;
+	}
 
 	public function laboratories(){
 		$data['laboratories'] = $this->get_laboratories_list();
@@ -37,6 +41,15 @@ class Admins extends User_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
+	public function experiments(){
+		return 0;
+	}
+
+	public function respondents(){
+		return 0;
+	}
+	/* End of Admin Pages */
+	
 	/* REST Methods */
 	public function add(){
 		return 0;
@@ -69,6 +82,11 @@ class Admins extends User_Controller{
 		return $this->admin->get_all_admins();
 	}
 
+	private function get_laboratories_list(){
+		$this->load->model('laboratory_model','laboratory');
+		return $this->laboratory->get_all_laboratories();
+	}
+
 	private function get_faculty_list(){
 		$this->load->model('faculty_model','faculty');
 		return $this->faculty->get_all_faculty();
@@ -84,13 +102,12 @@ class Admins extends User_Controller{
 		return $this->graduate->get_all_graduates();
 	}
 
+	private function get_experiment_list(){
+		return 0;
+	}
+
 	private function get_respondent_list(){
 		$this->load->model('respondent_model','respondent');
 		return $this->respondent->get_all_respondents();
-	}
-
-	private function get_laboratories_list(){
-		$this->load->model('laboratory_model','laboratory');
-		return $this->laboratory->get_all_laboratories();
 	}
 }
