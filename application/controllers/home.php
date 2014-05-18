@@ -17,7 +17,7 @@ class Home extends CI_Controller{
 			$this->load->view('main_layout', $data);
 		}
 		else{
-			redirect($role[0]);
+			redirect($this->session->userdata('active_role'));
 		}
 	}
 
