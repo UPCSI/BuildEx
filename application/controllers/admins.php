@@ -37,7 +37,16 @@ class Admins extends User_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function edit_admin($uid = 0, $aid = 0){
+	/* REST Methods */
+	public function add(){
+		return 0;
+	}
+
+	public function create(){
+		return 0;
+	}
+
+	public function edit($uid = 0, $aid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
 		$data['admin_profile'] = $this->admins_model->get_admin_profile($aid);
@@ -46,33 +55,38 @@ class Admins extends User_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
+	public function update(){
+		return 0;
+	}
+
+	public function destroy(){
+		return 0;
+	}
+	/* End of REST Methods */
+
 	private function get_admin_list(){
 		$this->load->model('admin_model','admin');
-		$list = $this->admin->get_all_admins();
-		return $list;
+		return $this->admin->get_all_admins();
 	}
 
 	private function get_faculty_list(){
 		$this->load->model('faculty_model','faculty');
-		$list = $this->faculty->get_all_faculty();
-		return $list;
+		return $this->faculty->get_all_faculty();
 	}
 
 	private function get_faculty_account_requests(){
 		$this->load->model('faculty_model','faculty');
-		$list = $this->faculty->get_all_account_requests();
-		return $list;
+		return $this->faculty->get_all_account_requests();
 	}
 
 	private function get_graduate_list(){
 		$this->load->model('graduate_model','graduate');
-		$list = $this->graduate->get_all_graduates();
-		return $list;
+		return $this->graduate->get_all_graduates();
 	}
 
 	private function get_respondent_list(){
-		$list = $this->respondents_model->get_all_respondents();
-		return $list;
+		$this->load->model('respondent_model','respondent');
+		return $this->respondent->get_all_respondents();
 	}
 
 	private function get_laboratories_list(){
