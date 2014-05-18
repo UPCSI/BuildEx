@@ -1,6 +1,6 @@
 <?php
 
-class Respondents_model extends MY_Model{
+class Respondent_model extends MY_Model{
 	public function add_respondent($info,$eid){
 		$info['eid'] = $eid; 
 		$this->db->insert('Respondents',$info);

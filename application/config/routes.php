@@ -38,11 +38,13 @@
 |
 */
 
-// $route['respond/(.+)'] = 'respond/view/$1';
-// $route['respond/(.+)'] = 'respond/exp/$1';
-// $route['respond/agree'] = 'respond/agree';
-// $route['respond/form'] = 'respond/fill_up';
-// $route['respond/register'] = 'respond/register';
+// Externals
+$route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
+
+// Internals
+$route['admin'] = 'admins/index';
+$route['admin/(profile|graduates|faculty|laboratories)'] = 'admins/$1';
+
 $route['default_controller'] = 'home';
 $route['404_override'] = '';
 

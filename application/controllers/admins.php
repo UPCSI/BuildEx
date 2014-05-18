@@ -1,36 +1,10 @@
 <?php
 
-class Admin extends MY_Controller{
+class Admins extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admins_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('laboratories_model');
-		$this->load->model('respondents_model');
-	}
-	
-	public function index(){
-		if(in_array('admin',$this->session->userdata('role'))){
-			$data['title'] = 'Admin';
-			$data['main_content'] = 'users/index';
-			$data['page'] = 'index';
-			$this->load->view('main_layout',$data);
-		}
-		else{
-			redirect($this->session->userdata('active_role'));
-		}
-	}
-
-	public function profile(){
-		$username = $this->session->userdata('username');
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-		$data['roles'] = $this->session->userdata('role');
-		$data['title'] = 'Admin';
-		$data['main_content'] = 'users/index';
-		$data['page'] = 'profile';
-		$this->load->view('main_layout',$data);
+		$this->role = 'admin';
 	}
 
 	public function laboratories(){
@@ -38,12 +12,7 @@ class Admin extends MY_Controller{
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
 		$data['page'] = "laboratories";
-		
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = null;
-		}
-
 		$this->load->view('main_layout',$data);
 	}
 
@@ -53,12 +22,10 @@ class Admin extends MY_Controller{
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'faculty';
-
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
 			$data['notification'] = null;
 		}
-		
 		$this->load->view('main_layout',$data);
 	}
 
@@ -80,23 +47,26 @@ class Admin extends MY_Controller{
 	}
 
 	private function get_admin_list(){
-		$list = $this->admins_model->get_all_admins();
+		$this->load->model('admin_model','admin');
+		$list = $this->admin->get_all_admins();
 		return $list;
 	}
 
 	private function get_faculty_list(){
-		$this->load->model('faculty_model');
-		$list = $this->faculty_model->get_all_faculty();
+		$this->load->model('faculty_model','faculty');
+		$list = $this->faculty->get_all_faculty();
 		return $list;
 	}
 
 	private function get_faculty_account_requests(){
-		$list = $this->faculty_model->get_all_account_requests();
+		$this->load->model('faculty_model','faculty');
+		$list = $this->faculty->get_all_account_requests();
 		return $list;
 	}
 
 	private function get_graduate_list(){
-		$list = $this->graduates_model->get_all_graduates();
+		$this->load->model('graduate_model','graduate');
+		$list = $this->graduate->get_all_graduates();
 		return $list;
 	}
 
@@ -106,6 +76,7 @@ class Admin extends MY_Controller{
 	}
 
 	private function get_laboratories_list(){
-		return $this->laboratories_model->get_all_laboratories();
+		$this->load->model('laboratory_model','laboratory');
+		return $this->laboratory->get_all_laboratories();
 	}
 }

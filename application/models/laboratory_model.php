@@ -1,14 +1,14 @@
 <?php
 
-class Laboratories_model extends MY_Model{
+class Laboratory_model extends MY_Model{
 
 	public function add_laboratory($laboratory_info,$lab_head_info){
 		/*
 		* Inserts a laboratory to the database given the laboratory info 
 		* Returns the labid of the newly inserted laboratory
 		*/
-		$this->load->model('laboratoryheads_model');
-		$lid = $this->laboratoryheads_model->add_laboratory_head($lab_head_info);
+		$this->load->model('laboratory_head_model','laboratory_head');
+		$lid = $this->laboratory_head->add_laboratory_head($lab_head_info);
 
 		$this->db->insert('Laboratories',$laboratory_info);
 		$labid = $this->db->insert_id();

@@ -5,28 +5,7 @@ class Graduate extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('graduates_model');
-	}
-	
-	public function index() {
-		if(in_array('graduate',$this->session->userdata('role'))){
-			$data['title'] = 'Graduate';
-			$data['main_content'] = 'graduate/index';
-			$this->load->view('_main_layout_internal', $data);
-		}
-		else{
-			$role = $this->session->userdata('active_role');
-			redirect($role[0]);
-		}
-	}
-
-	public function profile(){
-		$username = $this->session->userdata('username');
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-		$data['graduate'] = $this->graduates_model->get_graduate_profile($this->session->userdata('active_id'));
-		$data['roles'] = $this->session->userdata('role');
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate/profile';
-		$this->load->view('_main_layout_internal',$data);
+		$this->role = 'graduate';
 	}
 
 	public function experiments(){

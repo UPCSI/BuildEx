@@ -10,29 +10,7 @@ class Faculty extends MY_Controller{
 		$this->load->model('graduates_model');
 		$this->load->model('experiments_model');
 		$this->load->model('respondents_model');
-	}
-	
-	public function index(){
-		if($this->session->userdata('active_role') == 'faculty'){
-			$data['title'] = 'Faculty';
-			$data['main_content'] = 'users/index';
-			$data['page'] = 'index';
-			$this->load->view('main_layout',$data);
-		}
-		else{
-			redirect($this->session->userdata('active_role'));
-		}
-	}
-
-	public function profile(){
-		$username = $this->session->userdata('username');
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-		$data['faculty'] = $this->faculty_model->get_faculty_profile($this->session->userdata('active_id'));
-		$data['roles'] = $this->session->userdata('role');
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'users/index';
-		$data['page'] = 'profile';
-		$this->load->view('main_layout',$data);
+		$this->role = 'faculty';
 	}
 
 	public function experiments(){

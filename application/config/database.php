@@ -4,8 +4,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'postgres';
-$db['default']['password'] = 'intelleq';//password of your database server. Change this. Leave it blank by default.
+$db['default']['username'] = 'neil';
+$db['default']['password'] = 'iamneil';//password of your database server. Change this. Leave it blank by default.
 $db['default']['database'] = 'buildex_db';
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';

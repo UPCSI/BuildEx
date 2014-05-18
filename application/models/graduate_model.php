@@ -1,6 +1,6 @@
 <?php
 
-class Graduates_model extends MY_Model{
+class Graduate_model extends MY_Model{
 	public $rules = array(
 		'fname' => array(
 			'field' => 'fname', 

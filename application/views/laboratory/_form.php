@@ -1,4 +1,4 @@
-<?php echo form_open("laboratories/add_lab");?>
+<?php echo form_open("laboratories/create");?>
     <fieldset>
         <legend>Create Laboratory</legend>
         <label>Lab Name</label><br/>

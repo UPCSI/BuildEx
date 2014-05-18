@@ -4,9 +4,6 @@ class Home extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admins_model');
-		$this->load->model('users_model');
-		$this->load->helper('debug_helper');
 	}
 
 	public function index(){
@@ -28,11 +25,6 @@ class Home extends CI_Controller{
 
 	public function is_logged_in(){
 		return (bool) $this->session->userdata('logged_in');
-	}
-
-	public function logout(){	
-		$this->session->sess_destroy();
-		redirect('');
 	}
 
 	public function reset(){

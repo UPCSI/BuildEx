@@ -63,7 +63,7 @@ $autoload['libraries'] = array('database','session', 'email');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','form','date','debug');
+$autoload['helper'] = array('url','form','date','debug','notification');
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array();
+$autoload['model'] = array('user_model');
 
 
 /* End of file autoload.php */

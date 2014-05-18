@@ -1,32 +1,13 @@
 <?php 
-class SignUp extends CI_Controller{
+class Sign_up extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('users_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('email_model');
-		$this->load->library('form_validation');
 	}
 
-	public function graduate(){
+	public function index($role = 'graduate'){
 		$data['title'] = "Sign Up";
-		$data['role'] = "graduate";
-		$notif = $this->session->flashdata('notification');
-		if($notif){
-			$data['notification'] = $notif;
-		}
-		$data['main_content'] = 'signup/index';
-		$this->load->view('main_layout',$data);
-	}
-
-	public function faculty(){
-		$data['title'] = "Sign Up";
-		$data['role'] = "faculty";
-		$notif = $this->session->flashdata('notification');
-		if($notif){
-			$data['notification'] = $notif;
-		}
+		$data['role'] = $role;
+		$data['notification'] = $this->session->flashdata('notification');	
 		$data['main_content'] = 'signup/index';
 		$this->load->view('main_layout',$data);
 	}

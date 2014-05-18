@@ -1,4 +1,4 @@
-<?php if(isset($notification)): ?>
+<?php if($notification): ?>
 	<div data-alert class = "alert-box">
 		<?php echo $notification; ?>
 		<a href="#" class="close">&times;</a>
