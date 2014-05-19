@@ -8,7 +8,13 @@ class Admins extends User_Controller{
 	}
 	/* Admin Pages */
 	public function administrators(){
-		return 0;
+		$this->load->model('admin_model','admin');
+		$data['admins'] = $this->admin->get_all();
+		$data['title'] = 'Admin';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'administrators';
+		$data['notification'] = $this->session->flashdata('notification');
+		$this->load->view('main_layout',$data);
 	}
 
 	public function laboratories(){
@@ -78,8 +84,7 @@ class Admins extends User_Controller{
 	/* End of REST Methods */
 
 	private function get_admin_list(){
-		$this->load->model('admin_model','admin');
-		return $this->admin->get_all_admins();
+		
 	}
 
 	private function get_laboratories_list(){

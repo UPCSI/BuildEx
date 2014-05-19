@@ -59,10 +59,7 @@ class Admin_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_all_admins(){
-		/*
-		* Returns an array containing all the information for each admin.
-		*/
+	public function get_all(){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		$q = $this->db->get('Admins');
