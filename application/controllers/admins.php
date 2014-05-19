@@ -5,10 +5,11 @@ class Admins extends User_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->role = 'admin';
+		$this->load->model('admin_model','admin');
 	}
+
 	/* Admin Pages */
 	public function administrators(){
-		$this->load->model('admin_model','admin');
 		$data['admins'] = $this->admin->get_all();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
@@ -62,7 +63,25 @@ class Admins extends User_Controller{
 	}
 
 	public function create(){
-		return 0;
+		$username = $this->input->post('username');
+		$email = $this->input->post('email');
+		if($this->user_model->is_unique($username, $email)){
+			$user_info = array(
+				'first_name' => $this->input->post('first_name'),
+				'middle_name' => $this->input->post('middle_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email_ad' => $email,
+				'username' => $username,
+				'password' => $this->input->post('password')
+			);
+			$this->admin->create($user_info);
+			$msg = 'Success!';
+		}
+		else{
+			$msg = 'Invalid input. Please try again.';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/administrators');
 	}
 
 	public function edit($uid = 0, $aid = 0){

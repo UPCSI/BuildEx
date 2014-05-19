@@ -185,7 +185,7 @@ class User_model extends MY_Model{
 		return $user->account_status;		
 	}
 
-	public function add_user($user_info){
+	public function create($user_info){
 		$user_info['password'] = $this->my_hash($user_info['password']);
 		$this->db->insert('Users',$user_info);
 		return $this->db->insert_id();

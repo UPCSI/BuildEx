@@ -6,11 +6,8 @@ class Admin_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function add_admin($uid = 0,$admin_info = null){
-		/*
-		* Inserts admin to the database
-		*/
-		$admin_info['uid'] = $uid;
+	public function create($user_info = null, $admin_info = null){
+		$admin_info['uid'] = $this->user_model->create($user_info);
 		$this->db->insert('Admins',$admin_info);
 		$aid = $this->db->insert_id();
 		return $aid;
