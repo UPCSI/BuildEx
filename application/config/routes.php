@@ -43,7 +43,7 @@ $route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
 
 // Internals
 $route['admin'] = 'admins/index';
-$route['admin/(profile|graduates|faculty|laboratories|administrators)'] = 'admins/$1';
+$route['admin/(.+)'] = 'admins/$1';
 
 $route['default_controller'] = 'home';
 $route['404_override'] = '';

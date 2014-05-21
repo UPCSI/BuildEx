@@ -18,6 +18,25 @@ class User_model extends MY_Model{
 			'rules' => 'trim|required|min_length[6]|max_length[16]'
 		)
 	);
+
+	/* CRUD */
+	public function create($user_info){
+		$user_info['password'] = $this->my_hash($user_info['password']);
+		$this->db->insert('Users',$user_info);
+		return $this->db->insert_id();
+	}
+
+	public function get($uid = 0, $username = null){
+		if($uid > 0){
+			$this->db->where('Users.uid', $uid);
+		}
+		else{
+			$this->db->where('Users.username', $username);
+		}
+		$q = $this->db->get('Users');
+		return $this->query_row_conversion($q);
+	}
+	/* END OF CRUD */
 	
 	public function is_valid_user($username = null, $password = null){
 		/*
@@ -185,11 +204,7 @@ class User_model extends MY_Model{
 		return $user->account_status;		
 	}
 
-	public function create($user_info){
-		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		return $this->db->insert_id();
-	}
+	
 
 	public function update_user($uid, $user_info){
 		$this->db->where('uid', $uid);
@@ -202,6 +217,8 @@ class User_model extends MY_Model{
 		$this->db->delete('Users');
 		return $this->is_rows_affected();
 	}
+
+	
 
 	public function get_user_profile($uid = 0, $username = null){
 		/*

@@ -4,7 +4,7 @@
             <tr>
                 <th width="200">Name</th>
                 <th width="150">Username</th>
-                <th width="150">Joined</th>
+                <th width="200">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +16,12 @@
                         </a>
                     </td>
                     <td><?php echo $member->username; ?></td>
-                    <td>mm-dd-yyyy</td>
+                    <td>
+                        <?php echo form_open('admin/destroy'); ?>
+                            <?php echo form_hidden('admin_id',$member->aid); ?>
+                            <button class = "button tiny" type="submit" value="delete">Delete</button>
+                        <?php echo form_close(); ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

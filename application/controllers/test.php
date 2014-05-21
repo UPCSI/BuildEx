@@ -3,19 +3,19 @@
 class Test extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admins_model');
-		$this->load->model('experiments_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('respondents_model');
-		$this->load->model('users_model');
+		$this->load->model('admin_model');
 	}
 
-	public function index(){
-		echo '<pre>';
-		var_dump($data);
-		echo '</pre>';
+	public function add_user(){
+		$user_info['username'] = 'test_user1';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'user_first';
+		$user_info['middle_name'] = 'user_middle';
+		$user_info['last_name'] = 'user_last';
+		$user_info['email_ad'] = 'user_email';
+		$this->user_model->create($user_info);
 	}
+
 
 	public function get_faculty(){
 		$username = 'mtcarreon';
@@ -63,12 +63,11 @@ class Test extends CI_Controller{
 	public function add_admin(){
 		$user_info['username'] = 'buildex.admin';
 		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Neil';
-		$user_info['middle_name'] = 'Muchillas';
-		$user_info['last_name'] = 'Calabroso';
-		$user_info['email_ad'] = 'nmcalabroso@up.edu.ph';
-		$uid = $this->users_model->add_user($user_info);
-		$aid = $this->admins_model->add_admin($uid);
+		$user_info['first_name'] = 'Sigmund';
+		$user_info['middle_name'] = 'Schlomo';
+		$user_info['last_name'] = 'Freud';
+		$user_info['email_ad'] = 'buildex.admin@test.com';
+		$aid = $this->admin_model->create($user_info,null);
 		echo '<pre>';
 		echo 'Admin added!';
 		echo 'aid: '.$aid;

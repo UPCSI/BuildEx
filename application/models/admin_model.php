@@ -6,23 +6,14 @@ class Admin_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function create($user_info = null, $admin_info = null){
-		$admin_info['uid'] = $this->user_model->create($user_info);
+	public function create($username = NULL){
+		$user = $this->user_model->get(0, $username);
+		$admin_info['uid'] = $user->uid;
 		$this->db->insert('Admins',$admin_info);
-		$aid = $this->db->insert_id();
-		return $aid;
+		return $this->db->insert_id();
 	}
 
-	public function delete_admin($aid = 0,$username = null){
-		/*
-		* Deletes an admin given its aid or username.
-		* Returns true if the actual delete happened,
-		* false otherwise.
-		*/
-		if($aid == 0 && is_null($username)){
-			return false;
-		}
-
+	public function destroy($aid = 0, $username = null){
 		if($aid > 0){
 			$this->db->where('aid',$aid);
 			$this->db->delete('Admins');

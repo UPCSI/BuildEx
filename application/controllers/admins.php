@@ -10,7 +10,7 @@ class Admins extends User_Controller{
 
 	/* Admin Pages */
 	public function administrators(){
-		$data['admins'] = $this->admin->get_all();
+		$data['admins'] = $this->get_admins_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'administrators';
@@ -41,7 +41,7 @@ class Admins extends User_Controller{
 	}
 
 	public function graduates(){
-		$data['graduates'] = $this->get_graduate_list();
+		$data['graduates'] = $this->get_graduates_list();
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'graduates';
@@ -58,23 +58,9 @@ class Admins extends User_Controller{
 	/* End of Admin Pages */
 	
 	/* REST Methods */
-	public function add(){
-		return 0;
-	}
-
 	public function create(){
 		$username = $this->input->post('username');
-		$email = $this->input->post('email');
-		if($this->user_model->is_unique($username, $email)){
-			$user_info = array(
-				'first_name' => $this->input->post('first_name'),
-				'middle_name' => $this->input->post('middle_name'),
-				'last_name' => $this->input->post('last_name'),
-				'email_ad' => $email,
-				'username' => $username,
-				'password' => $this->input->post('password')
-			);
-			$this->admin->create($user_info);
+		if($this->admin->create($username)){
 			$msg = 'Success!';
 		}
 		else{
@@ -88,22 +74,26 @@ class Admins extends User_Controller{
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
 		$data['admin_profile'] = $this->admins_model->get_admin_profile($aid);
-		$data['main_content'] = 'users/indexofile';
+		$data['main_content'] = 'users/index';
 		$data['experiments'] = -1;
 		$this->load->view('main_layout', $data);
 	}
 
-	public function update(){
-		return 0;
-	}
-
 	public function destroy(){
-		return 0;
+		$admin_id = $this->input->post('admin_id');
+		if($this->admin->destroy($admin_id, null)){
+			$msg = "Deletion successful!";
+		}
+		else{
+			$msg = "Deletion failed!";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/administrators');
 	}
 	/* End of REST Methods */
 
-	private function get_admin_list(){
-		
+	private function get_admins_list(){
+		return $this->admin->get_all();
 	}
 
 	private function get_laboratories_list(){
@@ -121,16 +111,16 @@ class Admins extends User_Controller{
 		return $this->faculty->get_all_account_requests();
 	}
 
-	private function get_graduate_list(){
+	private function get_graduates_list(){
 		$this->load->model('graduate_model','graduate');
 		return $this->graduate->get_all_graduates();
 	}
 
-	private function get_experiment_list(){
+	private function get_experiments_list(){
 		return 0;
 	}
 
-	private function get_respondent_list(){
+	private function get_respondents_list(){
 		$this->load->model('respondent_model','respondent');
 		return $this->respondent->get_all_respondents();
 	}
