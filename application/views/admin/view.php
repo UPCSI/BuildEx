@@ -1,6 +1,4 @@
-<h1> Profile </h1>
+<h1> <?php echo $user->username; ?> </h1>
 <div class = "profile-info">
     <?php $this->load->view('admin/_info'); ?>
 </div>
-
-<?php $this->load->view('users/_roles'); ?>

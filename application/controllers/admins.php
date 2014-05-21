@@ -70,15 +70,6 @@ class Admins extends User_Controller{
 		redirect('admin/administrators');
 	}
 
-	public function edit($uid = 0, $aid = 0){
-		$data['title'] = 'Profile';
-		$data['user_profile'] = $this->users_model->get_user_profile($uid);
-		$data['admin_profile'] = $this->admins_model->get_admin_profile($aid);
-		$data['main_content'] = 'users/index';
-		$data['experiments'] = -1;
-		$this->load->view('main_layout', $data);
-	}
-
 	public function destroy(){
 		$admin_id = $this->input->post('admin_id');
 		if($this->admin->destroy($admin_id, null)){
@@ -90,8 +81,18 @@ class Admins extends User_Controller{
 		$this->session->set_flashdata('notification',$msg);
 		redirect('admin/administrators');
 	}
+
+	public function view($username = null){
+		$user = $this->user_model->get(0,$username);
+		$data['user'] = $user;
+		$data['title'] = $user->username;
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'view';
+		$this->load->view('main_layout',$data);
+	}
 	/* End of REST Methods */
 
+	/* Private functions */
 	private function get_admins_list(){
 		return $this->admin->get_all();
 	}
@@ -124,4 +125,5 @@ class Admins extends User_Controller{
 		$this->load->model('respondent_model','respondent');
 		return $this->respondent->get_all_respondents();
 	}
+	/* End of private functions */
 }

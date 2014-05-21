@@ -6,6 +6,7 @@ class Admin_model extends MY_Model{
 		parent::__construct();
 	}
 
+	/* CRUD */
 	public function create($username = NULL){
 		$user = $this->user_model->get(0, $username);
 		$admin_info['uid'] = $user->uid;
@@ -27,6 +28,7 @@ class Admin_model extends MY_Model{
 		}
 		return $this->is_rows_affected();
 	}
+	/* END OF CRUD */
 
 	public function get_admin_profile($aid = 0,$username = null){ 
 		/*
