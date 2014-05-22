@@ -1,4 +1,4 @@
-<?php echo form_open("signup/add_faculty") . "<br/>";?>
+<?php echo form_open("faculty/create"); ?>
 	<div class="row">
 		<div class="large-4 columns">
 			<label>First Name</label>

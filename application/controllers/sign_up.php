@@ -12,41 +12,11 @@ class Sign_up extends CI_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function add_faculty(){
-		$username = $this->input->post('username');
-		$email = $this->input->post('email');
-		$rules = $this->faculty_model->rules;
-		$this->form_validation->set_rules($rules);
-
-		if($this->form_validation->run() && $this->users_model->is_unique($username, $email)) {
-			//$email .= '*';
-			$new_user = array(
-				'first_name' => $this->input->post('fname'),
-				'middle_name' => $this->input->post('mname'),
-				'last_name' => $this->input->post('lname'),
-				'email_ad' => $email,
-				'username' => $username,
-				'password' => $this->input->post('password')
-			);	
-
-			$faculty_info = array('faculty_num' =>$this->input->post('faculty_num'));
-
-			$this->faculty_model->add_faculty($new_user,$faculty_info);
-			redirect('');
-			/*if($this->faculty_model->add_faculty($new_user)){
-				$this->load->model('email_model');
-				$this->email_model->send_confirmation_email($email);
-				echo "To confirm your account, follow the link we've sent to your e-mail address.";
-			}
-
-			else
-				echo "A problem was encountered while creating your account. Please try again.";*/		}
-
-		else{
-			$msg = 'Invalid input. Please try again.';
-			$this->session->set_flashdata('notification',$msg);
-			redirect('signup/faculty');
-		}
+	public function success(){
+		$data['title'] = "Sign Up";
+		$data['notification'] = $this->session->flashdata('notification');	
+		$data['main_content'] = 'signup/success';
+		$this->load->view('main_layout',$data);
 	}
 
 	public function add_graduate(){

@@ -14,8 +14,8 @@
                 <li class="has-dropdown">
                     <a href="#">Sign Up</a>
                     <ul class="dropdown">
-                        <li><a href="<?php echo site_url('sign_up/graduate'); ?>">Sign Up as Student</a></li>
-                        <li><a href="<?php echo site_url('sign_up/faculty'); ?>">Sign Up as Faculty</a></li>
+                        <li><a href="<?php echo site_url('signup/graduate'); ?>">Sign Up as Student</a></li>
+                        <li><a href="<?php echo site_url('signup/faculty'); ?>">Sign Up as Faculty</a></li>
                     </ul>
                 </li>
             </ul>

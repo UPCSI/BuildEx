@@ -8,5 +8,5 @@
     <li><a href = "#"> Archive </a></li>
     <li><label>Laboratories</label></li>
     <li><a href = "<?php echo site_url('faculty/laboratory'); ?>"> My Laboratory </a></li>
-    <li><a href = "<?php echo site_url('faculty/laboratories'); ?>"> Other Laboratories </a></li> 
+    <li><a href = "<?php echo site_url('faculty/laboratories'); ?>"> Explore </a></li> 
 </ul>

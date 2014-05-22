@@ -10,8 +10,16 @@
         <section class="top-bar-section">
             <!-- Right Nav Section -->
             <ul class="right">
-                <li><a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" ><? echo $this->session->userdata('username'); ?></a></li>
-                <li><a href="<?php echo site_url('home/logout') ?>"> Logout </a></li>
+                <li>
+                    <a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" >
+                        <? echo $this->session->userdata('username'); ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo site_url($this->session->userdata('active_role').'/logout') ?>"> 
+                        Logout
+                    </a>
+                </li>
             </ul>
         </section>
     </nav>

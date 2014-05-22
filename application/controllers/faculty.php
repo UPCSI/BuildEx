@@ -1,18 +1,14 @@
 <?php
 
-class Faculty extends MY_Controller{
+class Faculty extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('faculty_model');
-		$this->load->model('laboratories_model');
-		$this->load->model('laboratoryheads_model');
-		$this->load->model('graduates_model');
-		$this->load->model('experiments_model');
-		$this->load->model('respondents_model');
+		$this->load->model('faculty_model','faculty');
 		$this->role = 'faculty';
 	}
 
+	/* Faculty Pages */
 	public function experiments(){
 		$data['fid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['fid']);
@@ -20,9 +16,6 @@ class Faculty extends MY_Controller{
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'experiments';
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = null;
-		}
 		$this->load->view('main_layout',$data);
 	}
 
@@ -67,7 +60,45 @@ class Faculty extends MY_Controller{
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
 		$this->load->view("main_layout",$data);
 	}
+	/* End of Faculty Pages */
 
+	/* REST functions */
+	public function create(){
+		$this->load->library('form_validation');
+		$username = $this->input->post('username');
+		$email = $this->input->post('email');
+		$rules = $this->faculty->rules;
+		print_var($rules);
+		$this->form_validation->set_rules($rules);
+
+		if($this->form_validation->run()){
+			if($this->user_model->is_unique($username, $email)){
+				$new_user = array(
+				'first_name' => $this->input->post('fname'),
+				'middle_name' => $this->input->post('mname'),
+				'last_name' => $this->input->post('lname'),
+				'email_ad' => $email,
+				'username' => $username,
+				'password' => $this->input->post('password')
+				);	
+				$faculty_info = array('faculty_num' => $this->input->post('faculty_num'));
+
+				if($this->faculty->create($new_user, $faculty_info)){
+					redirect('signup/success');	
+				}
+			}
+			else{
+				$msg = 'Username already taken.';
+			}
+		} 
+		else{
+			$msg = 'Invalid input. Please try again.';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('signup/faculty');
+	}
+
+	/* End of REST */
 	public function view_experiment($eid = 0){
 		if($eid == 0){
 			redirect('');

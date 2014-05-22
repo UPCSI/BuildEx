@@ -39,16 +39,11 @@ class Faculty_model extends MY_Model{
 		)
 	);
 
-	public function add_faculty($user_info = null, $faculty_info = null){
-		/*
-		* Inserts faculty to the database
-		*/
+	public function create($user_info = null, $faculty_info = null){
 		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		$uid = $this->db->insert_id();
-		$faculty_info['uid'] = $uid;
-		$this->db->insert('Faculty',$faculty_info);
-		return true;
+		$faculty_info['uid'] = $this->user_model->create($user_info);
+		$this->db->insert('Faculty', $faculty_info);
+		return $this->db->insert_id();
 	}
 
 

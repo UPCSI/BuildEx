@@ -39,7 +39,8 @@
 */
 
 // Externals
-$route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
+$route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
+$route['signup/(.+)'] = 'sign_up/$1';
 
 // Internals
 $route['admin'] = 'admins/index';

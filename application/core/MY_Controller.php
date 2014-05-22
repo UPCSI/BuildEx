@@ -4,11 +4,13 @@ class MY_Controller extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		if ($this->session->userdata('loggedin') == FALSE){
-			redirect('');
-		}
-        $this->role = 'admin';
 	}
+
+    public function secure_page(){
+        if (!$this->session->userdata('loggedin')){
+            redirect('');
+        }
+    }
 }
 
 class User_Controller extends MY_Controller{
