@@ -17,7 +17,7 @@ class MY_Model extends CI_Model{
 			return $data;
 		}
 
-		return null;
+		return NULL;
 	}
 
 	public function query_conversion($query){
@@ -31,7 +31,7 @@ class MY_Model extends CI_Model{
 			$query->free_result();
 			return $data;
 		}
-		return null;
+		return NULL;
 	}
 
 	public function my_hash($password){

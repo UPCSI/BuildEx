@@ -4,11 +4,12 @@ class Faculty_model extends MY_Model{
 	/* CRUD */
 	public function create($user_info = NULL, $faculty_id = 0){
 		$faculty_info['uid'] = $this->user_model->create($user_info);
+		$faculty_info['faculty_num'] = $faculty_id;
 		$this->db->insert('Faculty', $faculty_info);
 		return $this->db->insert_id();
 	}
 
-	public function destroy($fid = 0,$username = null){
+	public function destroy($fid = 0, $username = NULL){
 		if($fid > 0){
 			$this->db->where('fid',$fid);
 			$this->db->delete('Faculty');
@@ -23,7 +24,7 @@ class Faculty_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function update($fid = 0, $faculty_info = null){
+	public function update($fid = 0, $faculty_info = NULL){
 		$this->db->where('fid', $fid);
 		$this->db->update('Faculty', $faculty_info);
 		return $this->is_rows_affected();

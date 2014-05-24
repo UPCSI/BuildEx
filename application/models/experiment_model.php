@@ -6,7 +6,7 @@ class Experiments_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function add_faculty_experiment($fid = 0,$info = null){
+	public function add_faculty_experiment($fid = 0,$info = NULL){
 		/*
 		* Inserts the experiment to the database
 		* Returns the eid of that specific experiment.
@@ -20,7 +20,7 @@ class Experiments_model extends MY_Model{
 		return $conduct_info['eid'];
 	}
 
-	public function add_graduates_experiment($gid = 0,$info = null){
+	public function add_graduates_experiment($gid = 0,$info = NULL){
 		/*
 		* Inserts the experiment to the database
 		* Returns the eid of that specific experiment.
@@ -180,7 +180,7 @@ class Experiments_model extends MY_Model{
 		return false;
 	}
 
-	public function update_experiment($eid = 0, $info = null){
+	public function update_experiment($eid = 0, $info = NULL){
 		/*
 		* Updates an experiment with eid given an array of data
 		*/
@@ -189,7 +189,7 @@ class Experiments_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_all_faculty_experiments($fid = 0, $category = null){
+	public function get_all_faculty_experiments($fid = 0, $category = NULL){
 		/*
 		* Returns all facuty experiments by default. 
 		* If category is specified, it will filter it further.
@@ -258,7 +258,7 @@ class Experiments_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_all_graduates_experiments($gid = 0, $category = null){
+	public function get_all_graduates_experiments($gid = 0, $category = NULL){
 		/*
 		* Returns all graduate experiments by default. 
 		* If category is specified, it will filter it further.

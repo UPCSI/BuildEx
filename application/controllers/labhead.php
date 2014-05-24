@@ -71,7 +71,7 @@ class Labhead extends MY_Controller{
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 
 		$this->load->view('_main_layout_internal',$data);

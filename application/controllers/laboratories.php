@@ -8,11 +8,11 @@ class Laboratories extends MY_Controller{
 	}
 
 	/* REST Methods */
-	public function view($labid = null){
+	public function view($labid = NULL){
 		$role = $this->session->userdata('active_role');
 		$role_id = $this->session->userdata('active_id');
 
-		$data['is_member'] = null;
+		$data['is_member'] = NULL;
 		if($role == 'graduate'){
 			$data['is_member'] = $this->laboratories_model->is_graduate_member($role_id);
 		}
@@ -33,7 +33,7 @@ class Laboratories extends MY_Controller{
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 		
 		$data['title'] = 'Laboratories';

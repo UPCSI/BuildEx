@@ -38,7 +38,7 @@ class Laboratory_head_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_laboratory_head_profile($lid = 0,$username = null){
+	public function get_laboratory_head_profile($lid = 0,$username = NULL){
 		/*
 		* Returns the profile of a particular laboratory head 
 		* given its lid or username.

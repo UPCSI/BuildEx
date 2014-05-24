@@ -3,7 +3,8 @@
 class Test extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admin_model');
+		$this->load->model('admin_model','admin');
+		$this->load->model('faculty_model','faculty');
 	}
 
 	public function add_user(){
@@ -16,6 +17,35 @@ class Test extends CI_Controller{
 		$this->user_model->create($user_info);
 	}
 
+	public function add_admin(){
+		$user_info['username'] = 'buildex.admin';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Sigmund';
+		$user_info['middle_name'] = 'Schlomo';
+		$user_info['last_name'] = 'Freud';
+		$user_info['email_ad'] = 'buildex.admin@test.com';
+		$uid = $this->user_model->create($user_info);
+		$user = $this->user_model->get($uid, NULL);
+		$aid = $this->admin->create($user->username);
+		echo '<pre>';
+		echo 'Admin added!';
+		echo 'aid: '.$aid;
+		echo '</pre>';
+	}
+
+	public function add_faculty(){
+		$user_info['username'] = 'mtcarreon';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Mario';
+		$user_info['middle_name'] = 'Brothers';
+		$user_info['last_name'] = 'Carreon';
+		$user_info['email_ad'] = 'mtcarreon@up.edu.ph';
+		$faculty_id = 20110001;
+		$this->faculty->create($user_info, $faculty_id);
+		echo '<pre>';
+		echo 'Faculty added!';
+		echo '</pre>';
+	}
 
 	public function get_faculty(){
 		$username = 'mtcarreon';
@@ -34,18 +64,7 @@ class Test extends CI_Controller{
 		echo '</pre>';	
 	}
 
-	public function add_faculty(){
-		$user_info['username'] = 'mtcarreon';
-		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Mario';
-		$user_info['middle_name'] = 'Brothers';
-		$user_info['last_name'] = 'Carreon';
-		$user_info['email_ad'] = 'mtcarreon@up.edu.ph';
-		$this->faculty_model->add_faculty($user_info);
-		echo '<pre>';
-		echo 'Faculty added!';
-		echo '</pre>';
-	}
+	
 
 	public function add_graduate(){
 		$user_info['username'] = 'ebbernardino';
@@ -57,20 +76,6 @@ class Test extends CI_Controller{
 		$this->graduates_model->add_graduate($user_info);
 		echo '<pre>';
 		echo 'Graduate added!';
-		echo '</pre>';
-	}
-
-	public function add_admin(){
-		$user_info['username'] = 'buildex.admin';
-		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Sigmund';
-		$user_info['middle_name'] = 'Schlomo';
-		$user_info['last_name'] = 'Freud';
-		$user_info['email_ad'] = 'buildex.admin@test.com';
-		$aid = $this->admin_model->create($user_info,null);
-		echo '<pre>';
-		echo 'Admin added!';
-		echo 'aid: '.$aid;
 		echo '</pre>';
 	}
 

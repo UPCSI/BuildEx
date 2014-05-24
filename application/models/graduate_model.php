@@ -40,7 +40,7 @@ class Graduate_model extends MY_Model{
 	);
 
 
-	public function add_graduate($user_info = null, $graduate_info = null){
+	public function add_graduate($user_info = NULL, $graduate_info = NULL){
 		/*
 		* Inserts graduate to the database
 		*/
@@ -54,7 +54,7 @@ class Graduate_model extends MY_Model{
 	}
 
 
-	public function delete_graduate($gid = 0,$username = null){
+	public function delete_graduate($gid = 0,$username = NULL){
 		/*
 		* Deletes a graduate student given its fid or username.
 		* Returns true if the actual delete happened,
@@ -84,7 +84,7 @@ class Graduate_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_graduate_profile($gid = 0, $username = null){
+	public function get_graduate_profile($gid = 0, $username = NULL){
 		/*
 		* Returns the profile of a particular graduate given its 
 		* gid or username

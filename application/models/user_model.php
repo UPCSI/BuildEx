@@ -26,7 +26,7 @@ class User_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-	public function get($uid = 0, $username = null){
+	public function get($uid = 0, $username = NULL){
 		if($uid > 0){
 			$this->db->where('Users.uid', $uid);
 		}
@@ -38,7 +38,7 @@ class User_model extends MY_Model{
 	}
 	/* END OF CRUD */
 	
-	public function is_valid_user($username = null, $password = null){
+	public function is_valid_user($username = NULL, $password = NULL){
 		/*
 		* Returns true if there's an existing user with corresponding 
 		* username and password
@@ -220,7 +220,7 @@ class User_model extends MY_Model{
 
 	
 
-	public function get_user_profile($uid = 0, $username = null){
+	public function get_user_profile($uid = 0, $username = NULL){
 		/*
 		* Returns the profile of a particular user given its uid or username
 		*/

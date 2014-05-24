@@ -6,6 +6,7 @@
                 <th width="150">Username</th>
                 <th width="150">Faculty No.</th>
                 <th width="150">Joined</th>
+                <th width="150">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,12 @@
                     <td><?php echo $member->username; ?></td>
                     <td><?php echo $member->faculty_num;?></td>
                     <td>mm-dd-yyyy</td>
+                    <td>
+                    <?php echo form_open('faculty/destroy'); ?>
+                            <?php echo form_hidden('faculty_id',$member->fid); ?>
+                            <button class = "button tiny" type="submit" value="delete">&#x2717;</button>
+                        <?php echo form_close(); ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

@@ -14,7 +14,7 @@ class Builder_model extends MY_Model{
 		$query = $this->db->get('Objects');
 
 		if($query->num_rows == 0)
-			return null;
+			return NULL;
 
 		$objects = $this->query_conversion($query);
 		foreach($objects as $object){

@@ -35,7 +35,7 @@ class Admins extends User_Controller{
 		$data['page'] = 'faculty';
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 		$this->load->view('main_layout',$data);
 	}
@@ -72,7 +72,7 @@ class Admins extends User_Controller{
 
 	public function destroy(){
 		$admin_id = $this->input->post('admin_id');
-		if($this->admin->destroy($admin_id, null)){
+		if($this->admin->destroy($admin_id, NULL)){
 			$msg = "Deletion successful!";
 		}
 		else{
@@ -82,7 +82,7 @@ class Admins extends User_Controller{
 		redirect('admin/administrators');
 	}
 
-	public function view($username = null){
+	public function view($username = NULL){
 		$user = $this->user_model->get(0,$username);
 		$data['user'] = $user;
 		$data['title'] = $user->username;
@@ -117,10 +117,6 @@ class Admins extends User_Controller{
 		}
 		$this->session->set_flashdata('notification',$msg);
 		redirect('admin/faculty');
-	}
-
-	public function delete_faculty(){
-
 	}
 	/* End of Faculty */
 

@@ -32,7 +32,7 @@ class Faculty extends User_Controller{
 		}
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 		$this->load->view('main_layout',$data);
 	}
@@ -74,13 +74,13 @@ class Faculty extends User_Controller{
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 
 		$this->load->view('main_layout', $data);
 	}
 
-	public function view($username = null){
+	public function view($username = NULL){
 		if(is_null($username)){
 			redirect('');
 			//implement where to redirect if username is non-existent
@@ -195,6 +195,18 @@ class Faculty extends User_Controller{
 		$this->session->set_flashdata('notification',$msg);
 		redirect('signup/faculty');
 	}
+
+	public function destroy(){
+		$faculty_id = $this->input->post('faculty_id');
+		if($this->faculty->destroy($faculty_id, NULL)){
+			$msg = "Deletion successful!";
+		}
+		else{
+			$msg = "Deletion failed!";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
 	/* End of REST Methods */
 
 	/* Private Methods */
@@ -214,7 +226,7 @@ class Faculty extends User_Controller{
 			}
 		}
 		if(empty($requests)){
-			$requests = null;
+			$requests = NULL;
 		}
 		return $requests;
 	}
@@ -227,7 +239,7 @@ class Faculty extends User_Controller{
 			}
 		}
 		if(empty($advisory)){
-			$advisory = null;
+			$advisory = NULL;
 		}
 		return $advisory;
 	}

@@ -31,7 +31,7 @@ class Experiment extends MY_Controller{
     }
 
 	public function delete_experiment($eid = 0){
-		$success = null;
+		$success = NULL;
 		if($eid == 0){
 			$success = 'Experiment does not exist!';
 		}
@@ -121,7 +121,7 @@ class Experiment extends MY_Controller{
 		$data['notification'] = $this->session->flashdata('notification');
 		
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 
 		$data['title'] = 'Faculty';

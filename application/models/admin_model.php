@@ -14,7 +14,7 @@ class Admin_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-	public function destroy($aid = 0, $username = null){
+	public function destroy($aid = 0, $username = NULL){
 		if($aid > 0){
 			$this->db->where('aid',$aid);
 			$this->db->delete('Admins');
@@ -30,7 +30,7 @@ class Admin_model extends MY_Model{
 	}
 	/* END OF CRUD */
 
-	public function get_admin_profile($aid = 0,$username = null){ 
+	public function get_admin_profile($aid = 0,$username = NULL){ 
 		/*
 		* Returns the profile of a particular admin given its aid or username
 		*/

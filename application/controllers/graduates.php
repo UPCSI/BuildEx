@@ -14,7 +14,7 @@ class Graduate extends MY_Controller{
 		$data['title'] = 'Graduate';
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 		$data['main_content'] = 'graduate/experiments';
 		$this->load->view('_main_layout_internal',$data);
@@ -71,7 +71,7 @@ class Graduate extends MY_Controller{
 		redirect('laboratories/view/'.$labid);
 	}
 
-	public function view($username = null){
+	public function view($username = NULL){
 		if(is_null($username)){
 			redirect('');
 			//implement where to redirect if username is non-existent
@@ -102,7 +102,7 @@ class Graduate extends MY_Controller{
 
 		$data['notification'] = $this->session->flashdata('notification');
 		if(!$data['notification']){
-			$data['notification'] = null;
+			$data['notification'] = NULL;
 		}
 
 		$this->load->view('_main_layout_internal', $data);

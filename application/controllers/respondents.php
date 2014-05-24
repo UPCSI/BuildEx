@@ -25,10 +25,10 @@ class Respond extends CI_Controller{
 		
 		if(is_null($id)){
 			$id = $this->graduates_model->get_graduate_by_experiment($exp->eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,null);
+			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
 		}
 		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,null);
+			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
 		}
 		$data['eid'] = $exp->eid;
 		$data['slug'] = $this->experiments_model->generate_slug($exp->title);
@@ -148,10 +148,10 @@ class Respond extends CI_Controller{
 		
 		if(is_null($id)){
 			$id = $this->graduates_model->get_graduate_by_experiment($eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,null);
+			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
 		}
 		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,null);
+			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
 		}
 
 		$data['experiment'] = $exp->title;
