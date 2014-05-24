@@ -1,13 +1,14 @@
 <?php
 
-class Graduate extends MY_Controller{
+class Graduates extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('graduates_model');
+		$this->load->model('graduate_model','graduate');
 		$this->role = 'graduate';
 	}
 
+	/* Graduate Pages */
 	public function experiments(){
 		$data['gid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['gid']);
@@ -43,7 +44,38 @@ class Graduate extends MY_Controller{
 		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
 		$this->load->view("_main_layout_internal",$data);
 	}
+	/* End of Graduate Pages */
 
+	/* Rest Methods */
+	public function create(){
+		$this->load->library('form_validation');
+		$username = $this->input->post('username');
+		$email = $this->input->post('email');
+
+		if($this->user_model->is_unique($username, $email)){
+			$new_user = array(
+				'first_name' => $this->input->post('first_name'),
+				'middle_name' => $this->input->post('middle_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email_ad' => $email,
+				'username' => $username,
+				'password' => $this->input->post('password')
+			);	
+			$student_id = $this->input->post('student_num');
+
+			if($this->graduate->create($new_user, $student_id)){
+				redirect('signup/success');	
+			}
+		}
+		else{
+			$msg = 'Username already taken.';
+		}
+
+		$this->session->set_flashdata('notification',$msg);
+		redirect('signup/graduate');
+	}
+	/* End of REST Methods */
+	
 	public function edit_graduate($uid = 0, $gid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);

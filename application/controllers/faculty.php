@@ -165,33 +165,26 @@ class Faculty extends User_Controller{
 		$this->load->library('form_validation');
 		$username = $this->input->post('username');
 		$email = $this->input->post('email');
-		$rules = $this->faculty->rules;
-		print_var($rules);
-		$this->form_validation->set_rules($rules);
 
-		if($this->form_validation->run()){
-			if($this->user_model->is_unique($username, $email)){
-				$new_user = array(
-					'first_name' => $this->input->post('fname'),
-					'middle_name' => $this->input->post('mname'),
-					'last_name' => $this->input->post('lname'),
-					'email_ad' => $email,
-					'username' => $username,
-					'password' => $this->input->post('password')
-				);	
-				$faculty_info = array('faculty_num' => $this->input->post('faculty_num'));
+		if($this->user_model->is_unique($username, $email)){
+			$new_user = array(
+				'first_name' => $this->input->post('first_name'),
+				'middle_name' => $this->input->post('middle_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email_ad' => $email,
+				'username' => $username,
+				'password' => $this->input->post('password')
+			);	
+			$faculty_id = $this->input->post('faculty_num');
 
-				if($this->faculty->create($new_user, $faculty_info)){
-					redirect('signup/success');	
-				}
+			if($this->faculty->create($new_user, $faculty_id)){
+				redirect('signup/success');	
 			}
-			else{
-				$msg = 'Username already taken.';
-			}
-		} 
-		else{
-			$msg = 'Invalid input. Please try again.';
 		}
+		else{
+			$msg = 'Username already taken.';
+		}
+		
 		$this->session->set_flashdata('notification',$msg);
 		redirect('signup/faculty');
 	}

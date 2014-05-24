@@ -47,6 +47,21 @@ class Test extends CI_Controller{
 		echo '</pre>';
 	}
 
+	public function add_graduate(){
+		$user_info['username'] = 'ebbernardino';
+		$user_info['password'] = 'password';
+		$user_info['first_name'] = 'Emmargel';
+		$user_info['middle_name'] = 'Bartolome';
+		$user_info['last_name'] = 'Bernardino';
+		$user_info['email_ad'] = 'ebbernardino@feu.edu.ph';
+		$student_id = 20111001
+		$this->graduates_model->create($user_info, $student_id);
+		echo '<pre>';
+		echo 'Graduate added!';
+		echo '</pre>';
+	}
+
+
 	public function get_faculty(){
 		$username = 'mtcarreon';
 		$data = $this->faculty_model->get_faculty_profile($username);
@@ -66,19 +81,7 @@ class Test extends CI_Controller{
 
 	
 
-	public function add_graduate(){
-		$user_info['username'] = 'ebbernardino';
-		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Emmargel';
-		$user_info['middle_name'] = 'Bartolome';
-		$user_info['last_name'] = 'Bernardino';
-		$user_info['email_ad'] = 'ebbernardino@feu.edu.ph';
-		$this->graduates_model->add_graduate($user_info);
-		echo '<pre>';
-		echo 'Graduate added!';
-		echo '</pre>';
-	}
-
+	
 	public function delete_graduate(){
 		$username = 'ebbernardino';
 		$this->graduates_model->delete_graduate($username);

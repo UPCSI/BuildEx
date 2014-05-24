@@ -1,58 +1,14 @@
 <?php
 
 class Graduate_model extends MY_Model{
-	public $rules = array(
-		'fname' => array(
-			'field' => 'fname', 
-			'label' => 'fname', 
-			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
-		), 
-		'mname' => array(
-			'field' => 'mname', 
-			'label' => 'mname', 
-			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
-		),
-		'lname' => array(
-			'field' => 'lname', 
-			'label' => 'lname',
-			'rules' => 'trim|required|xss_clean|min_length[1]|max_length[32]'
-		), 
-		'email' => array(
-			'field' => 'email', 
-			'label' => 'email', 
-			'rules' => 'trim|required|xss_clean|min_length[4]|max_length[32]'
-		), 
-		'username' => array(
-			'field' => 'username', 
-			'label' => 'Username', 
-			'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'
-		), 
-		'password' => array(
-			'field' => 'password', 
-			'label' => 'Password', 
-			'rules' => 'trim|required|min_length[6]|max_length[16]'
-		),
-		'password2' => array(
-			'field' => 'password2', 
-			'label' => 'Password2', 
-			'rules' => 'trim|required|matches[password]'
-		)
-	);
 
-
-	public function add_graduate($user_info = NULL, $graduate_info = NULL){
-		/*
-		* Inserts graduate to the database
-		*/
-
-		$user_info['password'] = $this->my_hash($user_info['password']);
-		$this->db->insert('Users',$user_info);
-		$uid = $this->db->insert_id();
-		$graduate_info['uid'] = $uid;
-		$this->db->insert('Graduates',$graduate_info);
-		return true;
+	/* CRUD */
+	public function create($user_info = NULL, $student_id = 0){
+		$graduate_info['uid'] = $this->user_model->create($user_info);
+		$graduate_info['student_num'] = $student_id;
+		$this->db->insert('Graduates', $graduate_info);
+		return $this->db->insert_id();
 	}
-
 
 	public function delete_graduate($gid = 0,$username = NULL){
 		/*
@@ -103,6 +59,12 @@ class Graduate_model extends MY_Model{
 		}
 		$q = $this->db->get('Graduates');
 		return $this->query_row_conversion($q);
+	}
+	/* End of CRUD */
+
+	public function get_rules(){
+		//put form validation here
+		return 0;
 	}
 
 	public function get_graduate_by_experiment($eid = 0){
