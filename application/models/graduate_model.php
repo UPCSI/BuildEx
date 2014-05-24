@@ -10,16 +10,7 @@ class Graduate_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
-	public function delete_graduate($gid = 0,$username = NULL){
-		/*
-		* Deletes a graduate student given its fid or username.
-		* Returns true if the actual delete happened,
-		* false otherwise.
-		*/
-		if($gid == 0 && is_null($username)){
-			return false;
-		}
-
+	public function destroy($gid = 0, $username = NULL){
 		if($gid > 0){
 			$this->db->where('gid',$gid);
 			$this->db->delete('Graduates');

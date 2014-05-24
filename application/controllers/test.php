@@ -5,6 +5,7 @@ class Test extends CI_Controller{
 		parent::__construct();
 		$this->load->model('admin_model','admin');
 		$this->load->model('faculty_model','faculty');
+		$this->load->model('graduate_model','graduate');
 	}
 
 	public function add_user(){
@@ -39,7 +40,7 @@ class Test extends CI_Controller{
 		$user_info['first_name'] = 'Mario';
 		$user_info['middle_name'] = 'Brothers';
 		$user_info['last_name'] = 'Carreon';
-		$user_info['email_ad'] = 'mtcarreon@up.edu.ph';
+		$user_info['email_ad'] = 'mtcarreon@test.com';
 		$faculty_id = 20110001;
 		$this->faculty->create($user_info, $faculty_id);
 		echo '<pre>';
@@ -48,14 +49,14 @@ class Test extends CI_Controller{
 	}
 
 	public function add_graduate(){
-		$user_info['username'] = 'ebbernardino';
+		$user_info['username'] = 'moshen';
 		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Emmargel';
-		$user_info['middle_name'] = 'Bartolome';
-		$user_info['last_name'] = 'Bernardino';
-		$user_info['email_ad'] = 'ebbernardino@feu.edu.ph';
-		$student_id = 20111001
-		$this->graduates_model->create($user_info, $student_id);
+		$user_info['first_name'] = 'Mara';
+		$user_info['middle_name'] = 'Mara';
+		$user_info['last_name'] = 'Shen';
+		$user_info['email_ad'] = 'moshen@test.com';
+		$student_id = 20110002;
+		$this->graduate->create($user_info, $student_id);
 		echo '<pre>';
 		echo 'Graduate added!';
 		echo '</pre>';

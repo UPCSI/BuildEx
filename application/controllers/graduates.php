@@ -70,12 +70,23 @@ class Graduates extends MY_Controller{
 		else{
 			$msg = 'Username already taken.';
 		}
-
 		$this->session->set_flashdata('notification',$msg);
 		redirect('signup/graduate');
 	}
+
+	public function destroy(){
+		$graduate_id = $this->input->post('graduate_id');
+		if($this->graduate->destroy($graduate_id, NULL)){
+			$msg = "Deletion successful!";
+		}
+		else{
+			$msg = "Deletion failed!";
+		}
+		$this->session->set_flashdata('notification', $msg);
+		redirect('admin/graduates');
+	}
 	/* End of REST Methods */
-	
+
 	public function edit_graduate($uid = 0, $gid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);

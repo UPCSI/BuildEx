@@ -34,9 +34,6 @@ class Admins extends User_Controller{
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'faculty';
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
 		$this->load->view('main_layout',$data);
 	}
 
@@ -45,6 +42,7 @@ class Admins extends User_Controller{
 		$data['title'] = 'Admin';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'graduates';
+		$data['notification'] = $this->session->flashdata('notification');
 		$this->load->view('main_layout',$data);
 	}
 
