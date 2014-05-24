@@ -109,7 +109,6 @@ section.main-section > div.row {
 .main-body {
   background-color: #3E3E3E;
   min-height:95%;
-  height: 95%;
 }
 
 .main-body > div.row.full.legit {
@@ -634,6 +633,10 @@ input.minicolors-input:focus {
   font-size: 20px;
   top: 0 !important;
   right: 0 !important;
+}
+
+.experiment {
+  float: left !important;
 }
 
 div[id*='qtn'] > i, div[id*='inp'] > i, div[id*='btn'] > i, div[id*='radbtn'] > i, div[id*='chkbox'] > i, div[id*='dropdown'] > i, div[id*='sldr'] > i{
