@@ -92,6 +92,38 @@ class Admins extends User_Controller{
 	}
 	/* End of REST Methods */
 
+	/* Faculty */
+	public function confirm_faculty(){
+		$this->load->model('faculty_model','faculty');
+		$fid = $this->input->post('faculty_id');
+		if($this->faculty->confirm($fid,$faculty_info)){
+			$msg = 'Confirmation successful!';
+		}
+		else{
+			$msg = 'Confirmation failed!';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
+
+	public function reject_faculty(){
+		$this->load->model('faculty_model','faculty');
+		$fid = $this->input->post('faculty_id');
+		if($this->faculty->reject($fid)){
+			$msg = 'Rejection complete!';
+		}
+		else{
+			$msg = 'Rejection failed!';
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
+
+	public function delete_faculty(){
+
+	}
+	/* End of Faculty */
+
 	/* Private functions */
 	private function get_admins_list(){
 		return $this->admin->get_all();

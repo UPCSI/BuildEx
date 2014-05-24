@@ -2,17 +2,13 @@
 
 class Laboratory_head_model extends MY_Model{
 
-	public function add_laboratory_head($labhead_info){
+	/* CRUD */
+	public function create($labhead_info){
 		$this->db->insert('LaboratoryHeads',$labhead_info);
 		return $this->db->insert_id();
 	}
 
 	public function delete_laboratory_head($lid =0,$username){
-		/*
-		* Deletes a laboratory head given its lid or username.
-		* Returns true if the actual delete happened,
-		* false otherwise.
-		*/
 		if(lid == 0 && is_null($username)){
 			return false;
 		}
@@ -61,6 +57,7 @@ class Laboratory_head_model extends MY_Model{
 		$q = $this->db->get('LaboratoryHeads');
 		return $this->query_row_conversion($q);
 	}
+	/* End of CRUD */
 
 	public function get_laboratory_head_of_lab($labid = 0){
 		$this->db->select('*');

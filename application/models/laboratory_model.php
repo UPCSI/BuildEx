@@ -2,13 +2,25 @@
 
 class Laboratory_model extends MY_Model{
 
-	public function add_laboratory($laboratory_info,$lab_head_info){
-		/*
-		* Inserts a laboratory to the database given the laboratory info 
-		* Returns the labid of the newly inserted laboratory
-		*/
+	public function __construct(){
+		parent::__construct();
 		$this->load->model('laboratory_head_model','laboratory_head');
-		$lid = $this->laboratory_head->add_laboratory_head($lab_head_info);
+		$this->load->model('faculty_model', 'faculty');
+	}
+
+	/* CRUD Methods */
+	public function create($laboratory_info = NULL, $faculty_username = NULL){
+		$faculty = $this->faculty->get(0, $faculty_username);
+		
+		if(isset($faculty)){
+			$lab_head_info['uid'] = $faculty->uid;
+		}
+		else{
+			return FALSE;
+		}
+
+		$this->load->model('laboratory_head_model','laboratory_head');
+		$lid = $this->laboratory_head->create($lab_head_info);
 
 		$this->db->insert('Laboratories',$laboratory_info);
 		$labid = $this->db->insert_id();
@@ -17,23 +29,13 @@ class Laboratory_model extends MY_Model{
 		return $labid;
 	}
 
-	public function delete_laboratory($labid){
-		/*
-		* Deletes a laboratory given its labid.
-		* Returns true if the actual delete happened,
-		* false otherwise.
-		*/
+	public function destroy($labid = 0){
 		$this->db->where('labid',$labid);
 		$this->db->delete('Laboratories');
 		return $this->is_rows_affected();
 	}
 
 	public function update_laboratory($labid, $laboratory_info){
-		/*
-		* Updates a laboratory given its labid.
-		* Returns true if the actual update happened,
-		* false otherwise.
-		*/
 		$this->db->where('labid', $labid);
 		$this->db->update('Laboratories', $laboratory_info);
 		return $this->is_rows_affected();
@@ -45,6 +47,7 @@ class Laboratory_model extends MY_Model{
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
+	/* End of CRUD */
 
 	public function get_graduate_laboratory($gid,$cond = "true"){
 		$this->db->select('Laboratories.*');

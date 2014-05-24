@@ -13,7 +13,7 @@
                 <tr>
                     <td>
                         <a href = "<?php echo site_url('faculty/view/'.$member->username); ?>">
-                            <?php echo strtoupper($member->last_name).', '.ucwords($member->first_name).', '.ucfirst($member->middle_name).'.'; ?> 
+                            <?php echo format_full_name($member); ?> 
                         </a>
                     </td>
                     <td><?php echo $member->username; ?></td>

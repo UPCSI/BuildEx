@@ -6,6 +6,7 @@
                 <td width ="200"> Lab Head </td>
                 <td width ="150"> No. of Members </td>
                 <td width ="150"> Since </td>
+                <td width ="200"> Actions </td>
             </tr>
         </thead>
         <tbody>
@@ -15,6 +16,12 @@
                     <td> <?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name).'.'); ?>
                     <td> <?php echo $laboratory->members_count; ?></td>
                     <td> <?php echo $laboratory->since; ?> </td>
+                    <td>
+                        <?php echo form_open('laboratories/destroy'); ?>
+                            <?php echo form_hidden('lab_id', $laboratory->labid); ?>
+                            <button class = "button tiny" type="submit" value="delete">&#x2717;</button>
+                        <?php echo form_close(); ?>
+                    </td> 
                 </tr>
             <?php endforeach; ?>
         </tbody>

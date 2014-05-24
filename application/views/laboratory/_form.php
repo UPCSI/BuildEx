@@ -2,13 +2,17 @@
     <fieldset>
         <legend>Create Laboratory</legend>
         <label>Lab Name</label><br/>
-        <input type="text" id="lab_name" required name="lab_name" placeholder = "My Laboratory"><br/><br/>
+        
+        <input type="text" id="laboratory" required name="laboratory" placeholder = "My Laboratory">
+        <br/>
 
         <label>Description</label><br/>
-        <input type="text" id="description" required name="description" placeholder = "Description"><br/><br/>
+        <input type="text" id="description" required name="description" placeholder = "Description">
+        <br/>
 
         <label>Lab Head</label><br/>
-        <input type="text" id="lab_head" required name="lab_head" placeholder = "Lab Head"><br/><br/>
+        <input type="text" id="faculty" required name="faculty" placeholder = "Name of faculty member">
+        <br/>
 
         <input class = "button small" type="submit" value="Create">
     </fieldset>

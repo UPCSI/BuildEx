@@ -19,7 +19,7 @@ if ( ! function_exists('format_full_name'))
     {
         $format = strtoupper($user->last_name).', ';
         $format = $format.ucwords($user->first_name).' ';
-        $format = $format.ucwords($user->$middle_name);
+        $format = $format.ucwords($user->middle_name);
         return $format;
     }
 }

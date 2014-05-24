@@ -19,7 +19,7 @@
                     <td>
                         <?php echo form_open('admin/destroy'); ?>
                             <?php echo form_hidden('admin_id',$member->aid); ?>
-                            <button class = "button tiny" type="submit" value="delete">Delete</button>
+                            <button class = "button tiny" type="submit" value="delete">&#x2717;</button>
                         <?php echo form_close(); ?>
                     </td>
                 </tr>

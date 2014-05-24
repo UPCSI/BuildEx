@@ -62,43 +62,6 @@ class Faculty extends User_Controller{
 	}
 	/* End of Faculty Pages */
 
-	/* REST functions */
-	public function create(){
-		$this->load->library('form_validation');
-		$username = $this->input->post('username');
-		$email = $this->input->post('email');
-		$rules = $this->faculty->rules;
-		print_var($rules);
-		$this->form_validation->set_rules($rules);
-
-		if($this->form_validation->run()){
-			if($this->user_model->is_unique($username, $email)){
-				$new_user = array(
-				'first_name' => $this->input->post('fname'),
-				'middle_name' => $this->input->post('mname'),
-				'last_name' => $this->input->post('lname'),
-				'email_ad' => $email,
-				'username' => $username,
-				'password' => $this->input->post('password')
-				);	
-				$faculty_info = array('faculty_num' => $this->input->post('faculty_num'));
-
-				if($this->faculty->create($new_user, $faculty_info)){
-					redirect('signup/success');	
-				}
-			}
-			else{
-				$msg = 'Username already taken.';
-			}
-		} 
-		else{
-			$msg = 'Invalid input. Please try again.';
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('signup/faculty');
-	}
-
-	/* End of REST */
 	public function view_experiment($eid = 0){
 		if($eid == 0){
 			redirect('');
@@ -197,33 +160,44 @@ class Faculty extends User_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function confirm_faculty($fid = 0){
-		$data['title'] = 'Admin';
-		$faculty_info['account_status'] = 'true';
-		$status = $this->faculty_model->update_faculty($fid,$faculty_info);
-		if($status){
-			$msg = 'Confirmation successful!';
-		}
-		else{
-			$msg = 'Confirmation failed!';
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/faculty');
-	}
+	/* REST Methods */
+	public function create(){
+		$this->load->library('form_validation');
+		$username = $this->input->post('username');
+		$email = $this->input->post('email');
+		$rules = $this->faculty->rules;
+		print_var($rules);
+		$this->form_validation->set_rules($rules);
 
-	public function reject_faculty($fid = 0){
-		$data['title'] = 'Admin';
-		$status = $this->faculty_model->delete_faculty($fid);
-		if($status){
-			$msg = 'Rejection complete!';
-		}
+		if($this->form_validation->run()){
+			if($this->user_model->is_unique($username, $email)){
+				$new_user = array(
+					'first_name' => $this->input->post('fname'),
+					'middle_name' => $this->input->post('mname'),
+					'last_name' => $this->input->post('lname'),
+					'email_ad' => $email,
+					'username' => $username,
+					'password' => $this->input->post('password')
+				);	
+				$faculty_info = array('faculty_num' => $this->input->post('faculty_num'));
+
+				if($this->faculty->create($new_user, $faculty_info)){
+					redirect('signup/success');	
+				}
+			}
+			else{
+				$msg = 'Username already taken.';
+			}
+		} 
 		else{
-			$msg = 'Rejection failed!';
+			$msg = 'Invalid input. Please try again.';
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/faculty');
+		redirect('signup/faculty');
 	}
-	
+	/* End of REST Methods */
+
+	/* Private Methods */
 	private function get_all_experiments($fid = 0){
 		return $this->experiments_model->get_all_faculty_experiments($fid);
 	}
@@ -257,4 +231,5 @@ class Faculty extends User_Controller{
 		}
 		return $advisory;
 	}
+	/* End of Private Methods*/
 }
