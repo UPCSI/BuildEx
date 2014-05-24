@@ -47,7 +47,12 @@ class Admins extends User_Controller{
 	}
 
 	public function experiments(){
-		return 0;
+		$data['experiments'] = $this->get_experiments_list();
+		$data['title'] = 'Admin';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'experiments';
+		$data['notification'] = $this->session->flashdata('notification');
+		$this->load->view('main_layout',$data);
 	}
 
 	public function respondents(){
@@ -120,31 +125,32 @@ class Admins extends User_Controller{
 
 	/* Private functions */
 	private function get_admins_list(){
-		return $this->admin->get_all();
+		return $this->admin->all();
 	}
 
 	private function get_laboratories_list(){
-		$this->load->model('laboratory_model','laboratory');
+		$this->load->model('laboratory_model', 'laboratory');
 		return $this->laboratory->get_all_laboratories();
 	}
 
 	private function get_faculty_list(){
-		$this->load->model('faculty_model','faculty');
+		$this->load->model('faculty_model', 'faculty');
 		return $this->faculty->get_all_faculty();
 	}
 
 	private function get_faculty_account_requests(){
-		$this->load->model('faculty_model','faculty');
+		$this->load->model('faculty_model', 'faculty');
 		return $this->faculty->get_all_account_requests();
 	}
 
 	private function get_graduates_list(){
-		$this->load->model('graduate_model','graduate');
+		$this->load->model('graduate_model', 'graduate');
 		return $this->graduate->get_all_graduates();
 	}
 
 	private function get_experiments_list(){
-		return 0;
+		$this->load->model('experiment_model', 'experiment');
+		return $this->experiment->all();
 	}
 
 	private function get_respondents_list(){

@@ -8,6 +8,11 @@ class Test extends CI_Controller{
 		$this->load->model('graduate_model','graduate');
 	}
 
+	public function confirm_type(){
+		$a = $this->admin->all();
+		echo gettype($a);
+	}
+
 	public function add_user(){
 		$user_info['username'] = 'test_user1';
 		$user_info['password'] = 'password';

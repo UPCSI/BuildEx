@@ -1,6 +1,6 @@
 <?php
 
-class Experiments_model extends MY_Model{
+class Experiment_model extends MY_Model{
 
 	public function __construct(){
 		parent::__construct();
@@ -321,22 +321,54 @@ class Experiments_model extends MY_Model{
 	}
 
 	/* Admin Functionalities */
+	public function all(){
+		$all = array();
+		$faculty_exp = $this->all_faculty_experiments();
+		$graduates_exp = $this->all_graduate_experiments();
 
-	public function get_all_experiments(){
-		//$this->db->select('eid,title,category,description,target_count,current_count,status,is_published,privacy');
-		$this->db->select('Experiments.*');
+		if(isset($faculty_exp)){
+			array_merge($all, $faculty_exp);
+		}
+
+		if(isset($graduates_exp)){
+			array_merge($all, $faculty_exp);
+		}
+
+		if(empty($all)){
+			return null;
+		}
+		
+		return $all;
+	}
+
+	public function all_faculty_experiments(){
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
+		$this->db->join('Laboratories', 'Laboratories.labid = faculty_member_of.labid');
 		$q = $this->db->get('Experiments');
+
 		return $this->query_conversion($q);
 	}
 
-	public function get_all_active_experiments(){
+	public function all_graduate_experiments(){
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+		$this->db->join('graduates_member_of', 'graduates_member_of.gid = Graduates.gid');
+		$this->db->join('Laboratories', 'Laboratories.labid = graduates_member_of.labid');
+		$q = $this->db->get('Experiments');
+
+		return $this->query_conversion($q);
+	}
+
+	public function all_active_experiments(){
 		$this->db->select('Experiments.*');
 		$this->db->where('status','t');
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}
 
-	public function get_all_inactive_experiments(){
+	public function all_inactive_experiments(){
 		$this->db->select('*');
 		$this->db->where('status','f');
 		$q = $this->db->get('Experiments');

@@ -30,7 +30,7 @@ class Admin_model extends MY_Model{
 	}
 	/* END OF CRUD */
 
-	public function get_admin_profile($aid = 0,$username = NULL){ 
+	public function get($aid = 0,$username = NULL){ 
 		/*
 		* Returns the profile of a particular admin given its aid or username
 		*/
@@ -49,7 +49,7 @@ class Admin_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_all(){
+	public function all(){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		$q = $this->db->get('Admins');
