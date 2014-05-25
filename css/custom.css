@@ -612,13 +612,13 @@ input.minicolors-input:focus {
 }
 
 .minicolors-panel {
-  width: 117px !important;
-  height: 101px !important;
+  width: 98% !important;
+  height: 142px !important;
 }
 
 .minicolors-grid {
-  width: 100px !important;
-  height: 100px !important;
+  width: 140px !important;
+  height: 140px !important;
 }
 
 .minicolors-grid-inner {
@@ -627,13 +627,13 @@ input.minicolors-input:focus {
 }
 
 .minicolors-slider {
-  width: 14px !important;
-  height: 100px !important;
-  left: 102px !important;
+  width: 16px !important;
+  height: 140px !important;
+  left: 142px !important;
 }
 
 .minicolors-picker {
-  width: 12px !important;
+  width: 14px !important;
 }
 
 .remove-icon {
