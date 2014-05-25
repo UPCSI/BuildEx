@@ -98,7 +98,7 @@ section.main-section > div.row {
   max-width:90%;
 }
 
-.row.full.legit {
+.row.full.main-workspace {
   max-width:100%;
 }
 
@@ -111,14 +111,22 @@ section.main-section > div.row {
   min-height:95%;
 }
 
-.main-body > div.row.full.legit {
+.main-body > div.row.full.main-workspace {
   min-height: 100%;
   height: 100%;
 }
 
-.main-body > div.row.full.legit > div {
+.main-body > div.row.full.main-workspace > div {
   min-height: 100%;
   height: 100%;
+}
+
+.row.full.main-workspace > .large-11{
+  width: 88.66667% !important;
+}
+
+.row.full.main-workspace > .large-1{
+  width: 11.33333% !important;
 }
 
 .sidebar {

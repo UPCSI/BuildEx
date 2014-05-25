@@ -1,6 +1,6 @@
 <?php $this->load->view('users/_topbar.php'); ?>
     <div class = "main-body">
-        <div class = "row full legit">
+        <div class = "row full main-workspace">
             <div class = "large-2 medium-3 columns sidebar show-for-medium-up">
                 <?php $this->load->view('users/_sidebar'); ?>
             </div>

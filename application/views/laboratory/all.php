@@ -19,7 +19,7 @@
 		<div class="row">
 		<div class="large-12 columns">
 		<button class="button lab expand" onClick="location.href='<?php echo site_url('laboratories/view/'.$laboratory->labid,$laboratory->name); ?>'">
-			<div class="row full legit">
+			<div class="row full main-workspace">
 				<div class="large-8 medium-8 small-8 column">
 					<?php echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name); ?> <br/>
 					<?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name)[0].'.'); ?> <br/>

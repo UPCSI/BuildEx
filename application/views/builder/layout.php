@@ -5,9 +5,9 @@ $this->load->view('builder/topbar');
 
 ?>
 
-<div class="row full legit" style="min-height:100%;height:100%">
+<div class="row full main-workspace" style="min-height:100%;height:100%">
 	<div class="large-11 medium-11 small-11 columns unpad-h" style="min-height:100%;height:100%">
-		<div class="row full legit" style="min-height:80%;height:80%">
+		<div class="row full main-workspace" style="min-height:80%;height:80%">
 			<div class="large-2 medium-2 small-2 column unmar-v" style="min-height:100%;height:100%;margin-top:10px;margin-bottom:10px;margin-top:0px;margin-bottom:0px;">
 				<div class="slides panel callout" style="min-height:90%;height:90%;overflow-y:auto;margin-bottom:0px;">
 				</div>
@@ -28,7 +28,7 @@ $this->load->view('builder/topbar');
 				<?php $this->load->view($main_content); ?>
 			</div>
 		</div>
-		<div class="row full legit" style="min-height:20%;height:20%;margin-left:0px;margin-right:0px;background:#252525">
+		<div class="row full main-workspace" style="min-height:20%;height:20%;margin-left:0px;margin-right:0px;background:#252525">
 			<div class="large-12 medium-12 small-12 column unpad-h" style="top: -1px;">
 				<?php $this->load->view('builder/elements'); ?>
 			</div>
