@@ -24,7 +24,7 @@ class Admins extends User_Controller{
 		$data['main_content'] = 'users/index';
 		$data['page'] = "laboratories";
 		$data['notification'] = $this->session->flashdata('notification');
-		$this->load->view('main_layout',$data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function faculty(){

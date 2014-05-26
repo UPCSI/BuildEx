@@ -56,20 +56,20 @@ class Faculty_model extends MY_Model{
 
 	public function reject($fid = 0){
 		return $this->destroy($fid);
-	} 
+	}
+
+	public function is_confirmed($fid = 0){
+		$faculty = $this->faculty->get($fid, NULL);
+		return $faculty->account_status == 't';
+	}
 	
 	public function get_all_lab_faculty($labid = 0){
-		/*
-		* Given the labid of the laboratory
-		* this function will return all the faculty in
-		* that lab.
-		*/
 		$this->db->select('Users.*,Faculty.*');
-		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
-		$this->db->join('Users','Users.uid = Faculty.uid');
-		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
-		$this->db->where('Laboratories.labid',$labid);
-		$this->db->where('faculty_member_of.status','t');
+		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->join('Laboratories', 'Laboratories.labid = faculty_member_of.labid');
+		$this->db->where('Laboratories.labid', $labid);
+		$this->db->where('faculty_member_of.status', 't');
 		$q = $this->db->get('Faculty');
 
 		return $this->query_conversion($q);

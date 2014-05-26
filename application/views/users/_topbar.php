@@ -12,7 +12,7 @@
             <ul class="right">
                 <li>
                     <a href="<?php echo site_url($this->session->userdata('active_role').'/profile'); ?>" >
-                        <? echo $this->session->userdata('username'); ?>
+                        <?php echo $this->session->userdata('username'); ?>
                     </a>
                 </li>
                 <li>

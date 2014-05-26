@@ -20,7 +20,7 @@ class User_Controller extends MY_Controller{
     }
 
     public function index(){
-        if (in_array($this->role,$this->session->userdata('role'))){
+        if (array_key_exists($this->role, $this->session->userdata('roles'))){
             $data['title'] = ucfirst($this->role);
             $data['main_content'] = 'users/index';
             $data['page'] = 'home';
@@ -35,7 +35,7 @@ class User_Controller extends MY_Controller{
         $this->load->model('user_model','user');
         $username = $this->session->userdata('username');
         $data['user'] = $this->user->get_user_profile(0,$username);
-        $data['roles'] = $this->session->userdata('role');
+        $data['roles'] = array_keys($this->session->userdata('roles'));
         $data['title'] = ucfirst($this->role);
         $data['main_content'] = 'users/index';
         $data['page'] = 'profile';

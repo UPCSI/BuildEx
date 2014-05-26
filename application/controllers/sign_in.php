@@ -14,33 +14,31 @@ class Sign_in extends CI_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function validate_user(){
-		$rules = $this->user_model->rules;
-		$this->form_validation->set_rules($rules);
+	public function validate(){
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
 
-		if($this->form_validation->run()) {
-			$username = $this->input->post('username');
-			$password = $this->input->post('password');
+		if($this->user_model->is_valid_user($username, $password)){
+			print_var($this->session->userdata);
+			$this->user_model->set_session_data($username);
+			$roles = $this->session->userdata('roles');
+			$active_role = $this->session->userdata('active_role');
+			$active_id = $roles[$active_role];
 
-			if($this->user_model->is_valid_user($username, $password)){
-				$this->user_model->set_session_data($username);
-				$active_role = $this->session->userdata('active_role');
-
-				if($active_role == 'faculty' && $this->user_model->confirmed_faculty() == "t"){
-					redirect('faculty');
-				}
-				else if($active_role != 'faculty'){
-					redirect($active_role);
-				}
-				else{
-					$new_session['logged_in'] = FALSE;
-					$this->session->set_userdata($new_session);
-					redirect('');
-				}
+			if($active_role == 'faculty' && $this->faculty->is_confirmed($active_id) == "t"){
+				redirect('faculty');
+			}
+			else if($active_role != 'faculty'){
+				redirect($active_role);
+			}
+			else{
+				$new_session['logged_in'] = FALSE;
+				$this->session->set_userdata($new_session);
+				redirect('');
 			}
 		}
 		$msg = "Invalid username or password. Please try again.";
-		$this->session->set_flashdata('notification',$msg);
-		redirect('sign_in');
+		$this->session->set_flashdata('notification', $msg);
+		redirect('signin');
 	}
 }

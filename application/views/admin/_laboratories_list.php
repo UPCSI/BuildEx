@@ -13,7 +13,7 @@
             <?php foreach ($laboratories as $laboratory): ?>
                 <tr>
                     <td> <?php echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name); ?> </td>
-                    <td> <?php echo anchor('faculty/view/'.$laboratory->username,strtoupper($laboratory->last_name).', '.ucwords($laboratory->first_name).', '.ucfirst($laboratory->middle_name).'.'); ?>
+                    <td> <?php echo anchor('faculty/view/'.$laboratory->username, format_full_name($laboratory)); ?>
                     <td> <?php echo $laboratory->members_count; ?></td>
                     <td> <?php echo $laboratory->since; ?> </td>
                     <td>
@@ -28,4 +28,4 @@
     </table>
 <?php else: ?>
     <p> No Existing Laboratories. </p>
-<? endif; ?>
+<?php endif; ?>

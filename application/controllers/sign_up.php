@@ -23,11 +23,12 @@ class Sign_up extends CI_Controller{
 		$email_code = trim($email_code);
 		if($this->email_model->validate_email($email, $email_code)) {
 			$this->email_model->activate_user($email);
-			echo "You have successfully confirmed your e-mail address!";
+			$msg = "You have successfully confirmed your e-mail address!";
 		}
-
-		else
-			echo "A problem was encountered while validating your e-mail address. Please try again.";
+		else{
+			$msg = "A problem was encountered while validating your e-mail address. Please try again.";
+		}
+		$this->session->set_flashdata('notification', $msg);
 	}
 
 }

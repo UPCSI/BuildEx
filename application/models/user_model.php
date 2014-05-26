@@ -4,20 +4,19 @@ class User_model extends MY_Model{
 
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('admin_model','admin');
+		$this->load->model('graduate_model','graduate');
+		$this->load->model('laboratory_head_model','laboratory_head');
 	}
 
-	public $rules = array(
-		'username' => array(
-			'field' => 'username', 
-			'label' => 'Username', 
-			'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'
-		), 
-		'password' => array(
-			'field' => 'password', 
-			'label' => 'Password', 
-			'rules' => 'trim|required|min_length[6]|max_length[16]'
-		)
-	);
+	public function get_rules(){
+		return array('username' => array('field' => 'username', 
+					 					 'label' => 'Username', 
+										 'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'), 
+					 'password' => array('field' => 'password', 
+										 'label' => 'Password', 
+										 'rules' => 'trim|required|min_length[6]|max_length[16]'));
+	}
 
 	/* CRUD */
 	public function create($user_info){
@@ -39,126 +38,71 @@ class User_model extends MY_Model{
 	/* END OF CRUD */
 	
 	public function is_valid_user($username = NULL, $password = NULL){
-		/*
-		* Returns true if there's an existing user with corresponding 
-		* username and password
-		*/
-		$this->db->select('username','password');
-		$this->db->where('username',$username);
-		$this->db->where('password',$this->my_hash($password));
-		$q = $this->db->get('Users');
+		$user = $this->get(0, $username);
+		$hash_pass = $this->my_hash($password);
 
-		if($this->query_row_conversion($q)){
-			if(!$this->is_valid_email($username))
-				return false;
-			return true;
+		if(isset($user)){
+			if($user->password === $hash_pass){
+				return $this->is_valid_email($user->email_ad);
+			}
+			return $user->temp_password === $hash_pass;
 		}
-
-		$this->db->where('username',$username);
-		$this->db->where('temp_password',$this->my_hash($password));
-		$q = $this->db->get('Users');
-
-		if($this->query_row_conversion($q))
-			return true;
-
-		return false;
+		return FALSE;
 	}
 
-	public function set_session_data($username){
-		$this->db->where('username', $username);
-		$query = $this->db->get('Users');
-		$user = $query->row();
-		$data = array(
-			'uid' => $user->uid,
-			'username' => $user->username,
-			'fname' => $user->first_name,
-			'mname' => $user->middle_name,
-			'lname' => $user->last_name,
-			'email' => $user->email_ad,
-			'role'	=> $this->check_role($user->uid),
-			'aid' => NULL,
-			'lid' => NULL,
-			'fid' => NULL,
-			'gid' => NULL,
-			'loggedin' => TRUE
-		);
+	public function set_session_data($username = NULL){
+		$user = $this->get(0, $username);
 
-		/* get other id */
-		$role = $data['role'];
-		if(in_array('admin',$role)){
-			$this->db->where('uid', $data['uid']);
-			$query = $this->db->get('Admins');
-			$user = $query->row();
-			$data['aid'] = $user->aid;
+		$data = array('uid' => $user->uid,
+					  'username' => $user->username,
+					  'roles' => $this->get_roles($user->uid),
+					  'active_role' => NULL,
+					  'loggedin' => TRUE);
+
+		if(array_key_exists('admin', $data['roles'])){
 			$data['active_role'] = 'admin';
 		}
-
-		if(in_array('labhead',$role)){
-			$this->db->where('uid', $data['uid']);
-			$query = $this->db->get('LaboratoryHeads');
-			$user = $query->row();
-			$data['lid'] = $user->lid;
+		else if(array_key_exists('labhead', $data['roles'])){
 			$data['active_role'] = 'labhead';
-		}		
-
-		if(in_array('faculty',$role)){
-			$this->db->where('uid', $data['uid']);
-			$query = $this->db->get('Faculty');
-			$user = $query->row();
-			$data['fid'] = $user->fid;
+		}
+		else if(array_key_exists('faculty', $data['roles'])){
 			$data['active_role'] = 'faculty';
 		}
-
-		if(in_array('graduate',$role)){
-			$this->db->where('uid', $data['uid']);
-			$query = $this->db->get('Graduates');
-			$user = $query->row();
-			$data['gid'] = $user->gid;
+		else if(array_key_exists('graduate', $data['roles'])){
 			$data['active_role'] = 'graduate';
-		}		
-
-		/* get active_id */
-		$role = $data['role'][0];
-		if($role == 'admin')
-			$data['active_id'] = $data['aid'];
-
-		else if($role == 'labhead')
-			$data['active_id'] = $data['lid'];
-
-		else if($role == 'faculty')
-			$data['active_id'] = $data['fid'];
-
-		else if($role == 'graduate')
-			$data['active_id'] = $data['gid'];
-
-
+		}
 
 		$this->session->set_userdata($data);
 	}
 
-	public function check_role($uid){
-		$role = array();
+	public function get_roles($uid = 0){
+		$roles = array();
+
 		$query = $this->db->get_where('Admins', array('uid' => $uid));
-		if($query->num_rows == 1){
-			array_push($role, 'admin');
+		$admin = $this->query_row_conversion($query);
+		if(isset($admin)){
+			$roles['admin'] = $admin->aid;
 		}
 
 		$query = $this->db->get_where('LaboratoryHeads', array('uid' => $uid));
-		if($query->num_rows == 1){
-			array_push($role, 'labhead');
+		$labhead = $this->query_row_conversion($query);
+		if(isset($labhead)){
+			$roles['labhead'] = $labhead->lid;
 		}
 
 		$query = $this->db->get_where('Faculty', array('uid' => $uid));
-		if($query->num_rows == 1){
-			array_push($role, 'faculty');
+		$faculty = $this->query_row_conversion($query);
+		if(isset($faculty)){
+			$roles['faculty'] = $faculty->fid;
 		}
 
 		$query = $this->db->get_where('Graduates', array('uid' => $uid));
-		if($query->num_rows == 1){
-			array_push($role, 'graduate');
+		$graduate = $this->query_row_conversion($query);
+		if(isset($graduate)){
+			$roles['graduate'] = $graduate->gid;
 		}
 
-		return $role;
+		return $roles;
 	}
 
 	public function is_unique($username, $email){
@@ -184,27 +128,9 @@ class User_model extends MY_Model{
 		return true;
 	}
 
-	public function is_valid_email($username){
-		$this->db->where('username', $username);
-		$query = $this->db->get('Users');
-		$user = $query->row();
-		if(strcmp(substr($user->email_ad, -1),'*') == 0)
-			return false;
-		return true;
+	public function is_valid_email($email = NULL){
+		return strcmp(substr($email, -1), '*') != 0;
 	}
-
-	public function confirmed_faculty(){
-		/* 
-		* Checks if faculty has been confirmed by an admin.
-		*/
-
-		$this->db->where('fid', $this->session->userdata('active_id'));
-		$query = $this->db->get('Faculty');
-		$user = $query->row();
-		return $user->account_status;		
-	}
-
-	
 
 	public function update_user($uid, $user_info){
 		$this->db->where('uid', $uid);
