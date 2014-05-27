@@ -58,18 +58,18 @@ class User_model extends MY_Model{
 					  'roles' => $this->get_roles($user->uid),
 					  'active_role' => NULL,
 					  'loggedin' => TRUE);
-
-		if(array_key_exists('admin', $data['roles'])){
-			$data['active_role'] = 'admin';
-		}
-		else if(array_key_exists('labhead', $data['roles'])){
-			$data['active_role'] = 'labhead';
-		}
-		else if(array_key_exists('faculty', $data['roles'])){
+		
+		if(array_key_exists('faculty', $data['roles'])){
 			$data['active_role'] = 'faculty';
 		}
 		else if(array_key_exists('graduate', $data['roles'])){
 			$data['active_role'] = 'graduate';
+		}
+		else if(array_key_exists('admin', $data['roles'])){
+			$data['active_role'] = 'admin';
+		}
+		else if(array_key_exists('labhead', $data['roles'])){
+			$data['active_role'] = 'labhead';
 		}
 
 		$this->session->set_userdata($data);

@@ -5,6 +5,7 @@ class Sign_in extends CI_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('form_validation');
+		$this->load->model('faculty_model','faculty');
 	}
 
 	public function index(){
@@ -19,7 +20,6 @@ class Sign_in extends CI_Controller{
 		$password = $this->input->post('password');
 
 		if($this->user_model->is_valid_user($username, $password)){
-			print_var($this->session->userdata);
 			$this->user_model->set_session_data($username);
 			$roles = $this->session->userdata('roles');
 			$active_role = $this->session->userdata('active_role');
