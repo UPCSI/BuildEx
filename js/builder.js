@@ -643,6 +643,7 @@ $(function() {
         },
         dataType: 'json',
         complete: function(data) {
+          console.log(data.responseText);
           // window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
         },
       });

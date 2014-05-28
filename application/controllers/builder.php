@@ -39,126 +39,104 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
-		echo $message;
-		// if ($message == 'false')
-		// 	return;
+		if ($message == 'false')
+			return;
 		
-		// $eid = $this->input->post('eid');
-		// $this->delete($eid);
-		// $pid_list = array();
+		/* page */
+		$eid = $this->input->post('eid');
+		$this->delete($eid);
+		$pid_list = array();
+		$page['eid'] = $eid;
+		$total_pages = array_shift($message);
 
-		// /* page */
-		// $page['eid'] = $this->input->post('eid');
-		// $this->delete($page['eid']);
-		// $total_pages = array_shift($message);
+		for($index=1; $index <= $total_pages; $index++){
+			$page['eid'] = $eid;
+			$page['order'] = $index;
+			array_push($pid_list, $this->add_page($page));
+		}
 
-		// for($index=1; $index <= $total_pages; $index++){
-		// 	$page['eid'] = $eid;
-		// 	$page['order'] = $index;
-		// 	array_push($pid_list, $this->add_page($page));
-		// }
-
-		// /* object */
-		// foreach ($message as $item){
-		// 	$order = (int)substr($item['id'], 4);
-		// 	$object['pid'] = $pid_list[$order-1];
-		// 	$object['x_pos'] = (double)$item['xPos'];
-		// 	$object['y_pos'] = (double)$item['yPos'];
-		// 	$object['type'] = $item[3];
-
-		// 	if($object['type'] == "textinput"){
-		// 		$object['width'] = $item[4];
-		// 		$object['height'] = $item[5];				
-		// 	}
-
-		// 	else if ($object['type'] != "dropdown" and $object['type'] != "slider"){			
-		// 		$object['width'] = $item[5];
-		// 		$object['height'] = $item[6];
-		// 	}
-
+		/* object */
+		foreach ($message as $item){
+			$order = (int)substr($item['id'], 4);
+			$object['pid'] = $pid_list[$order-1];
+			$object['x_pos'] = (double)$item['xPos'];
+			$object['y_pos'] = (double)$item['yPos'];
+			$object['type'] = $item['type'];
 			
-		// 	$object['width'] = (double)substr($object['width'],0, -2);
-		// 	$object['height'] = (double)substr($object['height'],0, -2);
-		// 	$oid = $this->add_object($object);
+			if ($object['type'] == "question"){
+				$object['width'] = (double)substr($item['width'],0, -2);
+				$object['height'] = (double)substr($item['height'],0, -2);				
+			}
 
-		// 	/* question */
-		// 	if ($object['type'] == "question"){
-		// 		$label['oid'] = $oid;
-		// 		$label['text'] = $item[4];
-		// 		// $label['font'] = ;
-		// 		// $label['font_size'] = ;
-		// 		$label['font_color'] = substr($item[7],1);
+			else{
+				$object['width'] = 0;
+				$object['height'] = 0;
+			}
 
-		// 		$label_id = $this->add_label($label);
+			$oid = $this->add_object($object);
 
-		// 		$question['oid'] = $oid;
-		// 		$question['is_required'] = 'f';
-		// 		// $question['input'] = ;
-		// 		$question['label'] = $label_id;
+			/* question */
+			if ($object['type'] == "question"){
+				$label['oid'] = $oid;
+				$label['text'] = $item['text'];
+				$label['font_color'] = substr($item['color'],1);
+				$label_id = $this->add_label($label);
 
-		// 		$qid = $this->add_question($question);
-		// 	}
+				$question['oid'] = $oid;
+				$question['is_required'] = 'f';
+				$question['label'] = $label_id;
 
-		// 	 textinput 
-		// 	if ($object['type'] == "textinput"){
-		// 		$input_id = $this->save_input($oid, 'textinput');
+				$qid = $this->add_question($question);
+			}
 
-		// 		$textinput['input_id'] = $input_id;
-		// 		// $textinput['length'] = ;
-		// 		// $textinput['orientation'] = ;
+			/* textinput */ 
+			if ($object['type'] == "textinput"){
+				$input_id = $this->save_input($oid, 'textinput');
 
-		// 		$textinput_id = $this->add_textinput($textinput);
-		// 		$this->bind($object['pid'], $input_id);
-		// 	}
+				$textinput['input_id'] = $input_id;
+				$textinput_id = $this->add_textinput($textinput);
+				$this->bind($object['pid'], $input_id);
+			}
 
-		// 	/* button */
-		// 	if ($object['type'] == "button"){
-		// 		$button['oid'] = $oid;
-		// 		$button['text'] = $item[4];
-		// 		// $button['go_to'] = ;
-		// 		// $button['type'] = ;
+			/* button */
+			if ($object['type'] == "button"){
+				$button['oid'] = $oid;
+				$button['text'] = $item['text'];
+				$button_id = $this->add_button($button);
+			}
 
-		// 		$button_id = $this->add_button($button);
-		// 	}
+			/* radio */
+			if ($object['type'] == "radio"){
+				$input_id = $this->save_input($oid, 'radio');
+				$radio['input_id'] = $input_id;
+				$radio['choices'] = $item['text'];
 
-		// 	/* radio */
-		// 	if ($object['type'] == "radio"){
-		// 		$input_id = $this->save_input($oid, 'radio');
-		// 		$radio['input_id'] = $input_id;
-		// 		$radio['choices'] = $item[4];
-		// 		// $radio['orientation'] = ;
-
-		// 		$radio_id = $this->add_radio($radio);
-		// 		$this->bind($object['pid'], $input_id);
-		// 	}
+				$radio_id = $this->add_radio($radio);
+				$this->bind($object['pid'], $input_id);
+			}
 			
-		// 	/* checkbox */
-		// 	if ($object['type'] == "checkbox"){
-		// 		$input_id = $this->save_input($oid, 'checkbox');
-		// 		$checkbox['input_id'] = $input_id;
-		// 		$checkbox['choices'] = $item[4];
-		// 		// $checkbox['orientation'] = ;
+			/* checkbox */
+			if ($object['type'] == "checkbox"){
+				$input_id = $this->save_input($oid, 'checkbox');
+				$checkbox['input_id'] = $input_id;
+				$checkbox['choices'] = $item['text'];
 
-		// 		$checkbox_id = $this->add_checkbox($checkbox);
-		// 		$this->bind($object['pid'], $input_id);
-		// 	}
+				$checkbox_id = $this->add_checkbox($checkbox);
+				$this->bind($object['pid'], $input_id);
+			}
 
+			/* slider */
+			if ($object['type'] == "slider"){
+				$input_id = $this->save_input($oid, 'slider');
+				$slider['input_id'] = $input_id;
 
-		// 	/* slider */
-		// 	if ($object['type'] == "slider"){
-		// 		$this->session->set_userdata('fsd');
-		// 		$input_id = $this->save_input($oid, 'slider');
-		// 		$slider['input_id'] = $input_id;
-		// 		// $slider['type'] = ;
-		// 		$slider['min_num'] = (int)$item[4];
-		// 		$slider['max_num'] = (int)$item[5];
+				$slider['min_num'] = (int)$item['min'];
+				$slider['max_num'] = (int)$item['max'];
 
-		// 		$slider_id = $this->add_slider($slider);
-		// 		$this->bind($object['pid'], $input_id);
-		// 	}
-
-
-		// }
+				$slider_id = $this->add_slider($slider);
+				$this->bind($object['pid'], $input_id);
+			}
+		}	
 
 		// echo $this->session->userdata('active_role'); #for ajax
 	}
@@ -192,7 +170,6 @@ class Builder extends MY_Controller{
 	public function save_input($oid, $type){
 		$input['oid'] = $oid;
 		$input['type'] = $type;
-		// $input['helper'] = ;
 		return $this->add_input($input);		
 	}
 
