@@ -250,7 +250,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#radiobutton')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -310,7 +310,7 @@ $(function() {
       });
       
       $.count++;
-    });
+  });
 
   $('#checkbox')
       .click(function(eventClick, posX, posY, text_input, page_num, width, height){
@@ -369,7 +369,7 @@ $(function() {
       });
 
       $.count++;
-    });
+  });
 
   $('#dropdown')
       .click(function(eventClick, posX, posY, page_num){
@@ -546,71 +546,72 @@ $(function() {
             'id'      :   $('#inp'+i).parent().attr("id"),
             'xPos'    :   xPos,
             'yPos'    :   yPos,
-            'type'    :   "question",
-            'text'    :   $('#qtneditable'+i).text(),
-            'width'   :   $('#qtn'+i).css("width"),
-            'height'  :   $('#qtn'+i).css("height"),
-            'color'   :   rgb2hex($('#qtneditable'+i).css("color"))
+            'type'    :   "textinput",
+            'width'   :   $('#inp'+i).css("width"),
+            'height'  :   $('#inp'+i).css("height"),
           }
-          data[0]=$('#inp'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "textinput";
-          data[4] = $('#inp'+i).css("width");
-          data[5] = $('#inp'+i).css("height");
+
           x.push(data);
         }
 
         if ($('#btn'+i).offset() !== undefined){
           var xPos = $('#btn'+i).css('left') == 'auto' ? 5 : parseInt($('#btn'+i).css('left'));
           var yPos = $('#btn'+i).css('top') == 'auto' ? 5 : parseInt($('#btn'+i).css('top'));
-          var data = new Array();
-          data[0]=$('#btn'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "button";
-          data[4] = $('#btneditable'+i).text();
-          data[5] = $('#btn'+i).css("width");
-          data[6] = $('#btn'+i).css("height");
+          var data = {
+            'id'      :   $('#btn'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "button",
+            'text'    :   $('#btneditable'+i).text(),
+            'width'   :   $('#btn'+i).css("width"),
+            'height'  :   $('#btn'+i).css("height"),
+          }
+
           x.push(data);
         }
 
         if ($('#radbtn'+i).offset() !== undefined){
           var xPos = $('#radbtn'+i).css('left') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('left'));
           var yPos = $('#radbtn'+i).css('top') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('top'));
-          var data = new Array();
-          data[0]=$('#radbtn'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "radio";
-          data[4] = $('#radbtneditable'+i).text();
-          data[5] = $('#radbtn'+i).css("width");
-          data[6] = $('#radbtn'+i).css("height");
+          var data = {
+            'id'      :   $('#radbtn'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "radio",
+            'text'    :   $('#radbtneditable'+i).text(),
+            'width'   :   $('#radbtn'+i).css("width"),
+            'height'  :   $('#radbtn'+i).css("height"),
+          }
+
           x.push(data);
         }
 
         if ($('#chkbox'+i).offset() !== undefined){
           var xPos = $('#chkbox'+i).css('left') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('left'));
           var yPos = $('#chkbox'+i).css('top') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('top'));
-          var data = new Array();
-          data[0]=$('#chkbox'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "checkbox";
-          data[4] = $('#chkboxeditable'+i).text();
-          data[5] = $('#chkbox'+i).css("width");
-          data[6] = $('#chkbox'+i).css("height");
+          var data = {
+            'id'      :   $('#chkbox'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "checkbox",
+            'text'    :   $('#chkboxeditable'+i).text(),
+            'width'   :   $('#chkbox'+i).css("width"),
+            'height'  :   $('#chkbox'+i).css("height"),
+          }
+
           x.push(data);
         }
 
         if ($('#dropdown'+i).offset() !== undefined){
           var xPos = $('#dropdown'+i).css('left') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('left'));
           var yPos = $('#dropdown'+i).css('top') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('top'));
-          var data = new Array();
-          data[0]=$('#dropdown'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "dropdown";
+          var data = {
+            'id'      :   $('#dropdown'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "dropdown",
+          }
+
           x.push(data);
         }
 
@@ -618,15 +619,17 @@ $(function() {
           var xPos = $('#sldr'+i).css('left') == 'auto' ? 5 : parseInt($('#sldr'+i).css('left'));
           var yPos = $('#sldr'+i).css('top') == 'auto' ? 5 : parseInt($('#sldr'+i).css('top'));
           var data = new Array();
-          data[0]=$('#sldr'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "slider";
-          data[4] = $('#movingslider'+i).data('slider-range').split(',')[0];
-          data[5] = $('#movingslider'+i).data('slider-range').split(',')[1];
+          var data = {
+            'id'      :   $('#sldr'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "slider",
+            'min'     :   $('#movingslider'+i).data('slider-range').split(',')[0],
+            'max'   :   $('#movingslider'+i).data('slider-range').split(',')[1],
+          }
+
           x.push(data);
          }
-
       }
 
      console.log(x);
@@ -644,6 +647,7 @@ $(function() {
         },
       });
     }
+
     else{
       alert('Can\'t save, each slide should have a question');
     }
