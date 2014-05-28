@@ -19,31 +19,37 @@
 				echo "$('.demo').append('" . $htmlData . "');";
 				echo "$('.slides').append('" . $htmlData1 . "');";
 			}
-			
 		}
 
 		foreach ($var as $obj){
-			if($obj[3] == "question"){
+			// echo $obj['type'];
+			if($obj['type'] == "question"){
 				echo '$("#question").removeClass("disabled");';
-				echo '$("#question").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0] .',' .$obj[6].',' .$obj[7] .',"' .$obj[5].'"]);';
+				echo '$("#question").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'] .',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'"]);';
 			}
-			else if($obj[3] == "textinput"){
-				echo '$("#textinput").trigger("click",['.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].',' .$obj[4].',' .$obj[5].']);';
+
+			else if($obj['type'] == "textinput"){
+				echo '$("#textinput").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' ."" .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'"]);';
 			}
-			else if($obj[3] == "button"){
-				echo '$("#button").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].']);';
+			
+			else if($obj['type'] == "button"){
+				echo '$("#button").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'"]);';
 			}
-			else if($obj[3] == "radio"){
-				echo '$("#radiobutton").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
+			
+			else if($obj['type'] == "radio"){
+				echo '$("#radiobutton").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].']);';
 			}
-			else if($obj[3] == "checkbox"){
-				echo '$("#checkbox").trigger("click",['.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].']);';
+			
+			else if($obj['type'] == "checkbox"){
+				echo '$("#checkbox").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].']);';
 			}
-			else if($obj[3] == "dropdown"){
-				echo '$("#dropdown").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';
+			
+			else if($obj['type'] == "dropdown"){
+				echo '$("#dropdown").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].']);';
 			}
-			else if($obj[3] == "slider"){
-				echo '$("#slider").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0] .',' .$obj[4] .',' .$obj[5].']);';			
+			
+			else if($obj['type'] == "slider"){
+				echo '$("#slider").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].']);';
 			}
 		}
 
@@ -57,6 +63,7 @@
 		echo '}) (jQuery);';
 		echo '</script>';
 	}
+
 	else{
 		echo '<script>';
 		echo '(function($){ ';

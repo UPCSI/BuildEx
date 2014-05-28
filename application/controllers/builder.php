@@ -138,7 +138,7 @@ class Builder extends MY_Controller{
 			}
 		}	
 
-		// echo $this->session->userdata('active_role'); #for ajax
+		echo $this->session->userdata('active_role'); #for ajax
 	}
 
 	public function delete($eid){
