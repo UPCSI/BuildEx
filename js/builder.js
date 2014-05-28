@@ -53,7 +53,6 @@ $(function() {
         try {
           log = hex ? hex : 'transparent';
           if( opacity ) log += ', ' + opacity;
-          console.log(log);
         } catch(e) {}
       },
       theme: 'default'
@@ -502,8 +501,8 @@ $(function() {
       $.count++;
   });
 
+  /* returns array of objects, with the first item in the array being the total number of pages */
   $("#getObjectValues").click(function () {
-    //collect all question object
     var eid = $('#workspace').attr('data-eid');
     var x = new Array();
     var question_exists = false;
@@ -513,7 +512,9 @@ $(function() {
       var check = $('#page'+j).find('div');
       if(check.hasClass('flag')){
         question_exists = true;
-      }else{
+      }
+
+      else{
         question_exists = false;
         break;
       }
@@ -524,23 +525,33 @@ $(function() {
         if ($('#qtn'+i).offset() !== undefined){
           var xPos = $('#qtn'+i).css('left') == 'auto' ? 5 : parseInt($('#qtn'+i).css('left'));
           var yPos = $('#qtn'+i).css('top') == 'auto' ? 5 : parseInt($('#qtn'+i).css('top'));
-          var data = new Array();
-          data[0]=$('#qtn'+i).parent().attr("id");
-          data[1] = xPos;
-          data[2] = yPos;
-          data[3] = "question";
-          data[4] = $('#qtneditable'+i).text();
-          data[5] = $('#qtn'+i).css("width");
-          data[6] = $('#qtn'+i).css("height");
-          data[7] = rgb2hex($('#qtneditable'+i).css("color"));
+          var data = {
+            'id'      :   $('#qtn'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "question",
+            'text'    :   $('#qtneditable'+i).text(),
+            'width'   :   $('#qtn'+i).css("width"),
+            'height'  :   $('#qtn'+i).css("height"),
+            'color'   :   rgb2hex($('#qtneditable'+i).css("color"))
+          }
+
           x.push(data);
         }
-      }
-      for(i=1; i<$.count; i++){
+
         if ($('#inp'+i).offset() !== undefined){
           var xPos = $('#inp'+i).css('left') == 'auto' ? 5 : parseInt($('#inp'+i).css('left'));
           var yPos = $('#inp'+i).css('top') == 'auto' ? 5 : parseInt($('#inp'+i).css('top'));
-          var data = new Array();
+          var data = {
+            'id'      :   $('#inp'+i).parent().attr("id"),
+            'xPos'    :   xPos,
+            'yPos'    :   yPos,
+            'type'    :   "question",
+            'text'    :   $('#qtneditable'+i).text(),
+            'width'   :   $('#qtn'+i).css("width"),
+            'height'  :   $('#qtn'+i).css("height"),
+            'color'   :   rgb2hex($('#qtneditable'+i).css("color"))
+          }
           data[0]=$('#inp'+i).parent().attr("id");
           data[1] = xPos;
           data[2] = yPos;
@@ -615,7 +626,10 @@ $(function() {
           data[5] = $('#movingslider'+i).data('slider-range').split(',')[1];
           x.push(data);
          }
+
       }
+
+     console.log(x);
 
       $.ajax({
         url: window.location.protocol+"//"+window.location.host + '/BuildEx/builder/save',
@@ -625,8 +639,8 @@ $(function() {
           'eid':eid
         },
         dataType: 'json',
-        complete: function(data) {        
-          window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
+        complete: function(data) {
+          // window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
         },
       });
     }
@@ -637,7 +651,7 @@ $(function() {
   
   $('body').on('paste', '.ui-widget-content', function (e) {
       setTimeout(function() {
-          console.log($(e.target).html($(e.target).text()));
+          // console.log($(e.target).html($(e.target).text()));
       }, 0);
   });
 
