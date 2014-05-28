@@ -13,11 +13,12 @@ class Builder extends MY_Controller{
 	}
 
 	public function app($eid = 0){
-		/*this is the index of the app
-		* for the reason that we need the eid
-		* of the experiment for the app
-		* and it's not trivial to pass a variable
-		* from view to the controller index.
+		/*
+			this is the index of the app
+			for the reason that we need the eid
+			of the experiment for the app
+			and it's not trivial to pass a variable
+			from view to the controller index.
 		*/
 
 		$data['title'] = 'Experiment';
@@ -25,8 +26,6 @@ class Builder extends MY_Controller{
 		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 
-
-		// var_dump($data['var']);
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
 	}
@@ -37,6 +36,7 @@ class Builder extends MY_Controller{
 	------------------------------------------------------------------------------------
 */
 
+	/* saves all objects and pages */
 	public function save() {
 		$message = $this->input->post('msg');
 		if ($message == 'false')
@@ -151,12 +151,7 @@ class Builder extends MY_Controller{
 		return $this->builder_model->get_all_objects($eid);
 	}
 
-/*
-	------------------------------------------------------------------------------------
-	ADD TO TABLES
-	------------------------------------------------------------------------------------
-*/
-
+	/* bind an input with a question */
 	public function bind($pid, $input_id){
 		$this->load->model('builder_model');
 		$this->builder_model->bind($pid, $input_id);
@@ -172,6 +167,12 @@ class Builder extends MY_Controller{
 		$input['type'] = $type;
 		return $this->add_input($input);		
 	}
+
+/*
+	------------------------------------------------------------------------------------
+	ADD TO TABLES
+	------------------------------------------------------------------------------------
+*/
 
 	public function add_page($data){
 		$this->load->model('builder_model');

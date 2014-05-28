@@ -8,7 +8,7 @@
 		echo '(function($){ ';
 		echo '$(function() {';
 		$total = 1;
-		echo '$("#newPage").click();'; #initialize page1
+		echo '$("#newPage").click();'; // initialize page1
 		foreach ($pages as $page){
 			if($page->order != 1) {
 				$total += 1;
@@ -21,7 +21,6 @@
 		}
 
 		foreach ($var as $obj){
-			// echo $obj['type'];
 			if($obj['type'] == "question"){
 				echo '$("#question").removeClass("disabled");';
 				echo '$("#question").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'] .',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'"]);';
