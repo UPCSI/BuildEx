@@ -1,9 +1,8 @@
-<? //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
-<div id="workspace" class="demo panel callout" style="min-width:1024px; max-width:1024px; height:576px; margin:auto; vertical-align: middle; padding:0px; border:0px" data-eid='<?= $eid;?>'>
-
+<?php //echo '<pre>'; print_r($this->session->userdata); echo '</pre>'; ?>
+<div id="workspace" class="demo panel callout" style="min-width:1024px; max-width:1024px; height:576px; margin:auto; vertical-align: middle; padding:0px; border:0px" data-eid='<?php $eid;?>'>
 </div>
 
-<?
+<?php
 	if(isset($var)){
 		echo '<script>';
 		echo '(function($){ ';
