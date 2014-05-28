@@ -254,7 +254,7 @@
 			});
 
 			$('.default').click(function(){
-				if ( $(this).is('.ui-draggable-dragging') ) {
+				if ($(this).is('.ui-draggable-dragging') ) {
 						return;
 				}
 
@@ -565,6 +565,11 @@
 			}
 
 			if(question_exists){
+				/*
+						save all questions first! input objects are bound to questions in the db;
+						thus, all questions must exist in the db *before* other objects.
+				*/
+
 				for(i=1; i<$.count; i++){
 					if ($('#qtn'+i).offset() !== undefined){
 						var xPos = $('#qtn'+i).css('left') == 'auto' ? 5 : parseInt($('#qtn'+i).css('left'));
@@ -582,7 +587,9 @@
 
 						x.push(data);
 					}
+				}
 
+				for(i=1; i<$.count; i++){
 					if ($('#inp'+i).offset() !== undefined){
 						var xPos = $('#inp'+i).css('left') == 'auto' ? 5 : parseInt($('#inp'+i).css('left'));
 						var yPos = $('#inp'+i).css('top') == 'auto' ? 5 : parseInt($('#inp'+i).css('top'));
@@ -675,8 +682,6 @@
 						x.push(data);
 					 }
 				}
-
-			 console.log(x);
 
 				$.ajax({
 					url: window.location.protocol+"//"+window.location.host + '/BuildEx/builder/save',

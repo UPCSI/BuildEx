@@ -27,8 +27,8 @@ class Builder_model extends MY_Model{
 			$new_obj['xPos'] = $object->x_pos;
 			$new_obj['yPos'] = $object->y_pos;
 			$new_obj['type'] = $object->type;
-			$new_obj['width'] = $object->width ."px";
-			$new_obj['height'] = $object->height ."px";
+			$new_obj['width'] = $object->width;
+			$new_obj['height'] = $object->height;
 
 			if ($new_obj['type'] == "question"){
 				$label = $this->get_object($object->oid, 'Labels');
@@ -96,9 +96,7 @@ class Builder_model extends MY_Model{
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');
 		$this->db->join('Questions', 'Questions.oid = Objects.oid');
 		$query = $this->db->get('Objects');
-		// $this->session->set_userdata('dfsdf',$query);
 		$object = $this->query_row_conversion($query);
-		// $this->session->set_userdata('awrwe',$object);
 		$this->db->where('qid', $object->qid);
 		$this->db->update('Questions', array('input' => $input_id));
 	}

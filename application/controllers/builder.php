@@ -64,7 +64,7 @@ class Builder extends MY_Controller{
 			$object['y_pos'] = (double)$item['yPos'];
 			$object['type'] = $item['type'];
 			
-			if ($object['type'] == "question"){
+			if($object['type'] != "dropdown" && $object['type'] != "slider"){
 				$object['width'] = (double)substr($item['width'],0, -2);
 				$object['height'] = (double)substr($item['height'],0, -2);				
 			}
