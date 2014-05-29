@@ -93,17 +93,32 @@ class Respond extends CI_Controller{
 
 	public function save(){ //$rid,$qid
 		$message = $this->input->post('msg');
-		var_dump($message);
-
-/*		//save individual elements
 		$rid = $this->session->userdata('rid');
-		$qid = $this->input->post('qid');
+		$total_pages = array_shift($message);
+		$time = array_shift($message);
+		$responses = array();
 
-		$info = array('answer' => $this->input->post($qid));
-					#'duration' => $this->input->post('time_'.$qid));
+		foreach($message as $item){
+			$answer = array();
+			$answer['rid'] = $rid;
+			$answer['qid'] = $item['qid'];
+			// $answer['answer'] = $item[''];
+			$answer['duration'] = $time[$item['page']-1];
 
-		$this->respondents_model->add_response($info,$qid,$rid);
-*/	}
+			array_push($responses, $answer);
+		}
+
+		var_dump($responses);
+
+		//save individual elements
+		// $rid = $this->session->userdata('rid');
+		// $qid = $this->input->post('qid');
+
+		// $info = array('answer' => $this->input->post($qid));
+		// 			#'duration' => $this->input->post('time_'.$qid));
+
+		// $this->respondents_model->add_response($info,$qid,$rid);
+	}
 
 	public function debrief($slug){
 		/*shows the page after the last one*/

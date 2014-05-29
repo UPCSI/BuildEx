@@ -294,8 +294,7 @@ function save_input(){
 			}
 
 			x.push(data);
-			console.log(data);
-
+			// console.log(data);
 		}
 
 		if ($('#radbtn'+i).offset() !== undefined){
@@ -311,7 +310,7 @@ function save_input(){
 			}
 
 			x.push(data);
-			console.log(data);
+			// console.log(data);
 		}
 
 		if ($('#chkbox'+i).offset() !== undefined){
@@ -327,7 +326,7 @@ function save_input(){
 			}
 
 			x.push(data);
-			console.log(data);
+			// console.log(data);
 		}
 
 		if ($('#sldr'+i).offset() !== undefined){
@@ -342,23 +341,23 @@ function save_input(){
 			}
 
 			x.push(data);
-			console.log(data);
+			// console.log(data);
 		}
 	}
 
-	// $.ajax({
-	// 	url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/save',
-	// 	type:"POST",
-	// 	data:{
-	// 		'msg':x,
-	// 	},
+	$.ajax({
+		url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/save',
+		type:"POST",
+		data:{
+			'msg':x,
+		},
 
-	// 	dataType: 'json',
-	// 	complete: function(data) {
-	// 		// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
-	// 		console.log(data.responseText);
-	// 	},
-	// });
+		dataType: 'json',
+		complete: function(data) {
+			// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
+			console.log(data.responseText);
+		},
+	});
 }
 
 (function($){
