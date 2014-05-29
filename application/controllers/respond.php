@@ -102,8 +102,26 @@ class Respond extends CI_Controller{
 			$answer = array();
 			$answer['rid'] = $rid;
 			$answer['qid'] = $item['qid'];
-			// $answer['answer'] = $item[''];
 			$answer['duration'] = $time[$item['page']-1];
+
+			if($item['type'] == "text_input"){
+				$answer['answer'] = $item['text'];
+			}
+
+			else if($item['type'] == "radio" || $item['type'] == "checkbox"){
+				if($item['checked'] == "true"){
+					$answer['answer'] = $item['text'];
+				}
+
+				else{
+					continue;
+				}
+			}
+
+			else if($item['type'] == "slider"){
+				$answer['answer'] = $item['value'];
+			}
+
 
 			array_push($responses, $answer);
 		}
