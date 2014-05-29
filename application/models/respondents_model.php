@@ -51,4 +51,10 @@ class Respondents_model extends MY_Model{
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
 	}
+
+	public function save_responses($responses){
+		foreach($responses as $response){
+			$this->db->insert('Responses',$response);
+		}
+	}
 }

@@ -127,6 +127,7 @@ class Respond extends CI_Controller{
 		}
 
 		var_dump($responses);
+		$this->respondents_model->save_responses($responses);
 
 		//save individual elements
 		// $rid = $this->session->userdata('rid');
