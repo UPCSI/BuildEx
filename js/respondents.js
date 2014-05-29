@@ -40,11 +40,11 @@ function draw_question(posX, posY, text_input, page_num, width, height, color, q
 	}
 
 	if(text_input !== ""){
-		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
+		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" data-page="'+page_num+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
 	}
 
 	else{
-		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" class="text-holder" data-placeholder="Enter Question" style="font-size:'+new_font_size*14+'px;"></div></div>';
+		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" data-page="'+page_num+'" class="text-holder" data-placeholder="Enter Question" style="font-size:'+new_font_size*14+'px;"></div></div>';
 	}
 
 	var temp = $.count;
@@ -283,19 +283,28 @@ function save_input(){
 
 	for(i=1; i<=$.count; i++){
 		if ($('#inp'+i).offset() !== undefined){
+			page = $('#inp'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
 			var data = {
-				'page'		:	 $('#inp'+i).parent().attr("id").slice(4),
+				'qid'		:	 qid,
+				'page'		:	 page,
 				'type'		:	 "text_input",
 				'text'	 	:	 $('#inpeditable'+i).text(),
 			}
 
 			x.push(data);
 			console.log(data);
+
 		}
 
 		if ($('#radbtn'+i).offset() !== undefined){
+			page = $('#radbtn'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
 			var data = {
-				'page'		:	 $('#radbtn'+i).parent().attr("id").slice(4),
+				'qid'		:	 qid,
+				'page'		:	 page,
 				'type'		:	 "radio",
 				'text'	 	:	 $('#radbtneditable'+i).val(),
 				'checked'	:	 $('#radbtneditable'+i).prop('checked'),
@@ -306,8 +315,12 @@ function save_input(){
 		}
 
 		if ($('#chkbox'+i).offset() !== undefined){
+			page = $('#chkbox'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
 			var data = {
-				'page'		:	 $('#chkbox'+i).parent().attr("id").slice(4),
+				'qid'		:	 qid,
+				'page'		:	 page,
 				'type'		:	 "checkbox",
 				'text'	 	:	 $('#chkeditable'+i).val(),
 				'checked'	:	 $('#chkeditable'+i).prop('checked'),
@@ -318,8 +331,12 @@ function save_input(){
 		}
 
 		if ($('#sldr'+i).offset() !== undefined){
+			page = $('#sldr'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
 			var data = {
-				'page'		:	 $('#sldr'+i).parent().attr("id").slice(4),
+				'qid'		:	 qid,
+				'page'		:	 page,
 				'type'		:	 "slider",
 				'value'	 	:	 $('#sldrspan'+i).text(),
 			}
