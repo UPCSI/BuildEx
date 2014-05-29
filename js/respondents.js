@@ -1,5 +1,12 @@
 var answer_cache = {};
 var total_page = 0;
+var qid_list = Array();
+$.count = 1;
+$.current_page = 1;
+$.last_selected = null;
+$.start_time = 0;
+$.times = [];
+$.unload_flagger = true;
 
 function clear_form(){
 	var my_form = document.getElementById("demographics");
@@ -155,7 +162,7 @@ function draw_radio_button(posX, posY, text_input, page_num, width, height){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	htmlData += '><input type="radio" id="radeditable'+$.count+'" name="'+ total_page +'" value="radiobutton" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
+	htmlData += '><input type="radio" id="radbtneditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -198,7 +205,7 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 		htmlData += 'style="height:25px; width:120px;"';
 	}
 	
-	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="checkbox">'+text_input+'</div>';
+	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'">'+text_input+'</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -265,22 +272,84 @@ function draw_slider(posX, posY, page_num, min, max){
     $.count++;
 }
 
+function save_input(){
+	var x = new Array();
+	console.log(total_page + " pages.");
+	console.log($.times);
+
+	x.push(total_page);
+	x.push($.times);
+
+	for(i=1; i<=$.count; i++){
+		if ($('#qtn'+i).offset() !== undefined){
+		}
+
+		if ($('#inp'+i).offset() !== undefined){
+			var data = {
+				'page'		:	 $('#inp'+i).parent().attr("id").slice(4),
+				'type'		:	 "text_input",
+				'text'	 	:	 $('#inpeditable'+i).text(),
+			}
+
+			x.push(data);
+			console.log(data);
+		}
+
+		if ($('#btn'+i).offset() !== undefined){
+		}
+
+		if ($('#radbtn'+i).offset() !== undefined){
+			var data = {
+				'page'		:	 $('#radbtn'+i).parent().attr("id").slice(4),
+				'type'		:	 "radio",
+				'text'	 	:	 $('#radbtneditable'+i).val(),
+				'checked'	:	 $('#radbtneditable'+i).prop('checked'),
+			}
+
+			x.push(data);
+			console.log(data);
+		}
+
+		if ($('#chkbox'+i).offset() !== undefined){
+			var data = {
+				'page'		:	 $('#chkbox'+i).parent().attr("id").slice(4),
+				'type'		:	 "checkbox",
+				'text'	 	:	 $('#chkeditable'+i).val(),
+				'checked'	:	 $('#chkeditable'+i).prop('checked'),
+			}
+
+			x.push(data);
+			console.log(data);
+		}
+
+		if ($('#sldr'+i).offset() !== undefined){
+			var data = {
+				'page'		:	 $('#sldr'+i).parent().attr("id").slice(4),
+				'type'		:	 "slider",
+				'value'	 	:	 $('#sldrspan'+i).text(),
+			}
+
+			x.push(data);
+			console.log(data);
+		}
+	}
+
+
+
+	console.log("Done!");
+}
+
 (function($){
 	$(function() {
-		$.count = 1;
-		$.current_page = 1;
-		$.last_selected = null;
-		$.start_time = 0;
-		$.times = [];
-		$.unload_flagger = true;
-
 		function checkEndPage() {
 			if($.current_page+1 == total_page) {
 				$('#next_page').text('Done')
 				.css('padding-left',21).css('padding-right',21);
 			}
+
 			if($.current_page == total_page) {
-				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
+				save_input();
+				// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
 				$.unload_flagger = false;
 			}
 		}

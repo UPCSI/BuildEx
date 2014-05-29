@@ -580,9 +580,9 @@
 							'yPos'		:	 yPos,
 							'type'		:	 "question",
 							'text'		:	 $('#qtneditable'+i).text(),
-							'width'	 :	 $('#qtn'+i).css("width"),
+							'width'	 	:	 $('#qtn'+i).css("width"),
 							'height'	:	 $('#qtn'+i).css("height"),
-							'color'	 :	 rgb2hex($('#qtneditable'+i).css("color"))
+							'color'	 	:	 rgb2hex($('#qtneditable'+i).css("color"))
 						}
 
 						x.push(data);
@@ -598,7 +598,7 @@
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "textinput",
-							'width'	 :	 $('#inp'+i).css("width"),
+							'width'	 	:	 $('#inp'+i).css("width"),
 							'height'	:	 $('#inp'+i).css("height"),
 						}
 
@@ -614,7 +614,7 @@
 							'yPos'		:	 yPos,
 							'type'		:	 "button",
 							'text'		:	 $('#btneditable'+i).text(),
-							'width'	 :	 $('#btn'+i).css("width"),
+							'width'	 	:	 $('#btn'+i).css("width"),
 							'height'	:	 $('#btn'+i).css("height"),
 						}
 
@@ -630,7 +630,7 @@
 							'yPos'		:	 yPos,
 							'type'		:	 "radio",
 							'text'		:	 $('#radbtneditable'+i).text(),
-							'width'	 :	 $('#radbtn'+i).css("width"),
+							'width'	 	:	 $('#radbtn'+i).css("width"),
 							'height'	:	 $('#radbtn'+i).css("height"),
 						}
 
@@ -646,7 +646,7 @@
 							'yPos'		:	 yPos,
 							'type'		:	 "checkbox",
 							'text'		:	 $('#chkboxeditable'+i).text(),
-							'width'	 :	 $('#chkbox'+i).css("width"),
+							'width'	 	:	 $('#chkbox'+i).css("width"),
 							'height'	:	 $('#chkbox'+i).css("height"),
 						}
 
@@ -675,8 +675,8 @@
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "slider",
-							'min'		 :	 $('#movingslider'+i).data('slider-range').split(',')[0],
-							'max'	 :	 $('#movingslider'+i).data('slider-range').split(',')[1],
+							'min'		 	:	 $('#movingslider'+i).data('slider-range').split(',')[0],
+							'max'	 		:	 $('#movingslider'+i).data('slider-range').split(',')[1],
 						}
 
 						x.push(data);
