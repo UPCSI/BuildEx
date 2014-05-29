@@ -91,8 +91,11 @@ class Respond extends CI_Controller{
 		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
-	public function save($rid,$qid){
-		//save individual elements
+	public function save(){ //$rid,$qid
+		$message = $this->input->post('msg');
+		var_dump($message);
+
+/*		//save individual elements
 		$rid = $this->session->userdata('rid');
 		$qid = $this->input->post('qid');
 
@@ -100,7 +103,7 @@ class Respond extends CI_Controller{
 					#'duration' => $this->input->post('time_'.$qid));
 
 		$this->respondents_model->add_response($info,$qid,$rid);
-	}
+*/	}
 
 	public function debrief($slug){
 		/*shows the page after the last one*/

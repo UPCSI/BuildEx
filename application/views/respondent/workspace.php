@@ -17,7 +17,7 @@
 
 		foreach ($var as $obj){
 			if($obj['type'] == "question"){
-				echo 'draw_question('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'");';
+				echo 'draw_question('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'",'.$obj['qid'].');';
 			}
 			
 			else if($obj['type'] == "textinput"){

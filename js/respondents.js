@@ -17,7 +17,7 @@ function register_answer(qid,value){
 	answer_cache[qid] = value;
 }
 
-function draw_question(posX, posY, text_input, page_num, width, height, color){
+function draw_question(posX, posY, text_input, page_num, width, height, color, qid){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -40,10 +40,11 @@ function draw_question(posX, posY, text_input, page_num, width, height, color){
 	}
 
 	if(text_input !== ""){
-		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
+		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" class="text-holder" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div></div>';
 	}
+
 	else{
-		htmlData += '><div id="qtneditable'+$.count+'" class="text-holder" data-placeholder="Enter Question" style="font-size:'+new_font_size*14+'px;"></div></div>';
+		htmlData += '><div id="qtneditable'+$.count+'" value="'+qid+'" class="text-holder" data-placeholder="Enter Question" style="font-size:'+new_font_size*14+'px;"></div></div>';
 	}
 
 	var temp = $.count;
@@ -281,9 +282,6 @@ function save_input(){
 	x.push($.times);
 
 	for(i=1; i<=$.count; i++){
-		if ($('#qtn'+i).offset() !== undefined){
-		}
-
 		if ($('#inp'+i).offset() !== undefined){
 			var data = {
 				'page'		:	 $('#inp'+i).parent().attr("id").slice(4),
@@ -293,9 +291,6 @@ function save_input(){
 
 			x.push(data);
 			console.log(data);
-		}
-
-		if ($('#btn'+i).offset() !== undefined){
 		}
 
 		if ($('#radbtn'+i).offset() !== undefined){
@@ -334,9 +329,19 @@ function save_input(){
 		}
 	}
 
+	// $.ajax({
+	// 	url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/save',
+	// 	type:"POST",
+	// 	data:{
+	// 		'msg':x,
+	// 	},
 
-
-	console.log("Done!");
+	// 	dataType: 'json',
+	// 	complete: function(data) {
+	// 		// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
+	// 		console.log(data.responseText);
+	// 	},
+	// });
 }
 
 (function($){

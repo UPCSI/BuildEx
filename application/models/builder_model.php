@@ -34,6 +34,8 @@ class Builder_model extends MY_Model{
 				$label = $this->get_object($object->oid, 'Labels');
 				$new_obj['text'] = $label->text;
 				$new_obj['color'] = $label->font_color;
+				$question = $this->get_object($object->oid, 'Questions');
+				$new_obj['qid'] = $question->qid;
 			}
 
 			if ($new_obj['type'] == "button"){
