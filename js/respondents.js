@@ -354,8 +354,7 @@ function save_input(){
 
 		dataType: 'json',
 		complete: function(data) {
-			// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
-			console.log(data.responseText);
+			// console.log(data.responseText);
 		},
 	});
 }
@@ -370,7 +369,7 @@ function save_input(){
 
 			if($.current_page == total_page) {
 				save_input();
-				// window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
+				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
 				$.unload_flagger = false;
 			}
 		}
