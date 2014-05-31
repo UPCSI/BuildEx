@@ -3,9 +3,11 @@
     <div class="panel dash-item" style="padding:0;border-width:0">
       <div class="panel profile" style="min-height:180px;margin-bottom:0">
         <h4 class="white">
-          <strong> <?php echo strtoupper($user->last_name).' </strong>, '.ucwords($user->first_name).', '.ucfirst($user->middle_name); ?> </strong>
+          <strong> <?php echo format_full_name($faculty); ?> </strong>
         </h4>
-        <h5 class="white"> <?php echo $this->session->userdata('username'); ?> </h5>
+        <h5 class="white">
+          <?php echo $this->session->userdata('username'); ?>
+        </h5>
       </div>
       <dl class="tabs profile" data-tab>
         <dd class="active"><a href="#panel2-1">About</a></dd>

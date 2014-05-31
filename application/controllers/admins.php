@@ -9,6 +9,16 @@ class Admins extends User_Controller{
 	}
 
 	/* Admin Pages */
+	public function profile(){
+        $username = $this->session->userdata('username');
+        $data['admin'] = $this->admin->get(0, $username);
+        $data['roles'] = array_keys($this->session->userdata('roles'));
+        $data['title'] = 'Admin';
+        $data['main_content'] = 'users/index';
+        $data['page'] = 'profile';
+        $this->load->view('main_layout',$data);
+    }
+
 	public function administrators(){
 		$data['admins'] = $this->get_admins_list();
 		$data['title'] = 'Admin';

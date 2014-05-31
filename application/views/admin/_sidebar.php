@@ -1,5 +1,5 @@
 <ul class="off-canvas-list">
-  <li><label><?php echo SITENAME; ?> - Administrator</label></li>
+  <li><label><?php echo SITE_NAME; ?> - Administrator</label></li>
   <li><a href = "<?php echo site_url('admin'); ?>">Home</a></li>
   <li><a href = "<?php echo site_url('admin/profile'); ?>">Profile</a></li>
   <li><label>Listings</label></li>

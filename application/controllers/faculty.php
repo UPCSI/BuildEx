@@ -9,6 +9,16 @@ class Faculty extends User_Controller{
 	}
 
 	/* Faculty Pages */
+	public function profile(){
+        $username = $this->session->userdata('username');
+        $data['faculty'] = $this->faculty->get(0, $username);
+        $data['roles'] = array_keys($this->session->userdata('roles'));
+        $data['title'] = 'Faculty';
+        $data['main_content'] = 'users/index';
+        $data['page'] = 'profile';
+        $this->load->view('main_layout',$data);
+    }
+
 	public function experiments(){
 		$data['fid'] = $this->session->userdata('active_id');
 		$data['experiments'] = $this->get_all_experiments($data['fid']);

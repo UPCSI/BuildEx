@@ -31,7 +31,7 @@ class Faculty_model extends MY_Model{
 	}
 
 	public function get($fid = 0, $username = NULL){
-		$this->db->select('Faculty.*, Users.*'); //change Users
+		$this->db->select('Faculty.*, Users.*');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		if($fid > 0){
 			$this->db->where('Faculty.fid', $fid);

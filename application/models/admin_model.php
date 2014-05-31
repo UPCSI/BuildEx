@@ -14,6 +14,19 @@ class Admin_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
+	public function get($aid = 0, $username = NULL){
+		$this->db->select('Admins.*, Users.*');
+		$this->db->join('Users','Users.uid = Admins.uid');
+		if($aid > 0){
+			$this->db->where('Admins.aid', $aid);
+		}
+		else{
+			$this->db->where('Users.username', $username);
+		}
+		$q = $this->db->get('Admins');
+		return $this->query_row_conversion($q);
+	}
+
 	public function destroy($aid = 0, $username = NULL){
 		if($aid > 0){
 			$this->db->where('aid',$aid);
@@ -29,25 +42,6 @@ class Admin_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 	/* END OF CRUD */
-
-	public function get($aid = 0,$username = NULL){ 
-		/*
-		* Returns the profile of a particular admin given its aid or username
-		*/
-		if($aid == 0 && is_null($username)){
-			return false;
-		}
-		$this->db->select('Admins.*');
-		if($aid > 0){
-			$this->db->where('Admins.aid',$aid);
-		}
-		else{
-			$this->db->join('Users','Users.uid = Admins.uid');
-			$this->db->where('Users.username',$username);
-		}
-		$q = $this->db->get('Admins');
-		return $this->query_row_conversion($q);
-	}
 
 	public function all(){
 		$this->db->select('*');

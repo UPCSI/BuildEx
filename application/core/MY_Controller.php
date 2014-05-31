@@ -31,17 +31,6 @@ class User_Controller extends MY_Controller{
         }
     }
 
-    public function profile(){
-        $this->load->model('user_model','user');
-        $username = $this->session->userdata('username');
-        $data['user'] = $this->user->get_user_profile(0,$username);
-        $data['roles'] = array_keys($this->session->userdata('roles'));
-        $data['title'] = ucfirst($this->role);
-        $data['main_content'] = 'users/index';
-        $data['page'] = 'profile';
-        $this->load->view('main_layout',$data);
-    }
-
     public function logout(){   
         $this->session->sess_destroy();
         redirect('');
