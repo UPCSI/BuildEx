@@ -23,3 +23,25 @@ if ( ! function_exists('format_full_name'))
         return $format;
     }
 }
+
+if ( ! function_exists('role_id'))
+{
+    function role_id()
+    {
+        $CI =& get_instance();
+        $role = $CI->session->userdata('active_role');
+        $roles = $CI->session->userdata('roles');
+        return intval($roles[$role]);
+    }
+}
+
+if ( ! function_exists('role'))
+{
+    function role()
+    {
+        $CI =& get_instance();
+        return $CI->session->userdata('active_role');
+    }
+}
+
+

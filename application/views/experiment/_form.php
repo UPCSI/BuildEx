@@ -1,4 +1,4 @@
-<?php echo form_open("experiment/add_experiment");?>
+<?php echo form_open("experiments/create");?>
 	<fieldset>
 		<legend> Create Experiment </legend>
 		<label>Title</label>

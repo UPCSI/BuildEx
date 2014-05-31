@@ -1,9 +1,5 @@
 <h1 class="white"> Experiments </h1>
-<!-- Notification Handling Part-->
-<?php if(isset($notification)): ?>
-	<div data-alert class="alert-box info"> <?php echo $notification; ?>
-	<a href="#" class="close">&times;</a> </div>
-<?php endif; ?>
+<?php $this->load->view('layouts/_notification'); ?>
 
 <div class="row">
 	<div class="large-6 medium-6 small-6 column">

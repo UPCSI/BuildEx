@@ -1,32 +1,21 @@
 <?php
 
-class Experiment extends MY_Controller{
+class Experiments extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('experiments_model');
-		$this->load->model('respondents_model');
+		$this->load->model('experiment_model','experiment');
 	}
 
-	public function add_experiment() {
+	/* REST Methods */
+	public function create() {
 		$info['title'] = $this->input->post('title');
-		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
-		$info['privacy'] = $this->input->post('privacy');
-		$role = $this->session->userdata('active_role');
+		$eid = $this->experiment->create($info);
 
-		$id = $this->session->userdata('active_id');
-		$eid = 0;
-		if ($role == 'faculty'){
-			$eid = $this->experiments_model->add_faculty_experiment($id,$info);
-		}
-		else if ($role == 'graduate'){
-			$eid = $this->experiments_model->add_graduates_experiment($id,$info);
-		}
-
-		$success = 'You have successfully created an experiment!';
-		$this->session->set_flashdata('notification',$success);
+		$msg = 'You have successfully created an experiment!';
+		$this->session->set_flashdata('notification', $success);
 		redirect('builder/app/'.$eid);
     }
 
@@ -62,6 +51,7 @@ class Experiment extends MY_Controller{
 		$data['page'] = 'edit';
 		$this->load->view('main_layout', $data);
 	}
+	/* END of REST Methods */
 
 	public function publish($eid = 0){
 		if($eid == 0){

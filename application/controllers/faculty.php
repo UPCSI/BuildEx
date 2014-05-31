@@ -20,8 +20,8 @@ class Faculty extends User_Controller{
     }
 
 	public function experiments(){
-		$data['fid'] = $this->session->userdata('active_id');
-		$data['experiments'] = $this->get_all_experiments($data['fid']);
+		$fid = role_id();
+		$data['experiments'] = $this->faculty->get_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'experiments';
@@ -213,10 +213,6 @@ class Faculty extends User_Controller{
 	/* End of REST Methods */
 
 	/* Private Methods */
-	private function get_all_experiments($fid = 0){
-		return $this->experiments_model->get_all_faculty_experiments($fid);
-	}
-
 	private function get_all_advisory_experiments($fid = 0){
 		return $this->experiments_model->get_all_advisory_experiments($fid);
 	}

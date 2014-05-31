@@ -6,33 +6,44 @@ class Experiment_model extends MY_Model{
 		parent::__construct();
 	}
 
-	public function add_faculty_experiment($fid = 0,$info = NULL){
-		/*
-		* Inserts the experiment to the database
-		* Returns the eid of that specific experiment.
-		*/
-		$this->db->insert('Experiments',$info);
-		$conduct_info['eid'] = $this->db->insert_id();
-		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
-		$this->update_experiment($conduct_info['eid'],$new_info);
-		$conduct_info['fid'] = $fid;
-		$this->db->insert('faculty_conduct',$conduct_info);
-		return $conduct_info['eid'];
+	/* CRUD Methods */
+	public function create($info = NULL){
+		$this->db->insert('Experiments', $info);
+		$eid = $this->db->insert_id();
+
+		$new_info['url'] = $this->generate_url($eid, $info['title']);
+		$this->update($eid, $new_info);
+
+		$this->assign_to(role(), role_id(), $eid);
+		
+		return $eid;
 	}
 
-	public function add_graduates_experiment($gid = 0,$info = NULL){
-		/*
-		* Inserts the experiment to the database
-		* Returns the eid of that specific experiment.
-		*/
-		$info['url'] = $this->generate_url($gid,$info['title']);
-		$this->db->insert('Experiments',$info);
-		$conduct_info['eid'] = $this->db->insert_id();
-		$new_info['url'] = $this->generate_url($conduct_info['eid'],$info['title']);
-		$this->update_experiment($conduct_info['eid'],$new_info);
-		$conduct_info['gid'] = $gid;
-		$this->db->insert('graduates_conduct',$conduct_info);
-		return $conduct_info['eid'];
+	public function update($eid = 0, $info = NULL){
+		$this->db->where('eid', $eid);
+		$this->db->update('Experiments', $info);
+		return $this->is_rows_affected();
+	}
+	/* END of CRUD Methods */
+
+	/* PRIVATE METHODS */
+	private function generate_url($eid,$title){
+		$str = strval($eid).$title;
+		return base64_encode($str);
+	}
+	/* END OF PRIVATE METHODS */
+
+	public function assign_to($role = NULL, $id = 0, $eid = 0){
+		$conduct_info['eid'] = $eid;
+		if($role == 'faculty'){
+			$conduct_info['fid'] = $id;
+			$this->db->insert('faculty_conduct', $conduct_info);
+		}
+		else if($role == 'graduate'){
+			$conduct_info['gid'] = $id;
+			$this->db->insert('graduates_conduct', $conduct_info);
+		}
+		return $this->is_rows_affected();
 	}
 
 	public function delete_faculty_experiment($fid = 0, $eid = 0){
@@ -180,33 +191,6 @@ class Experiment_model extends MY_Model{
 		return false;
 	}
 
-	public function update_experiment($eid = 0, $info = NULL){
-		/*
-		* Updates an experiment with eid given an array of data
-		*/
-		$this->db->where('eid', $eid);
-		$this->db->update('Experiments', $info);
-		return $this->is_rows_affected();
-	}
-
-	public function get_all_faculty_experiments($fid = 0, $category = NULL){
-		/*
-		* Returns all facuty experiments by default. 
-		* If category is specified, it will filter it further.
-		*/
-		$this->db->select('Experiments.*');
-		$this->db->join('faculty_conduct','faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty','Faculty.fid = faculty_conduct.fid');
-		$this->db->where('Faculty.fid',$fid);
-		if(isset($category)){
-			$this->db->where('Experiments.category',$category);
-		}
-
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-
 	public function get_all_advisory_experiments($fid = 0){
 		$this->db->select('Users.uid,Users.username,Users.first_name,Users.middle_name,Users.last_name,Graduates.gid,advise.status as advise_status,Experiments.*');
 		$this->db->join('advise','advise.eid = Experiments.eid');
@@ -235,14 +219,7 @@ class Experiment_model extends MY_Model{
 		return $slug;
 
 	}
-
-	private function generate_url($eid,$title){
-		$str = strval($eid).$title;
-		return base64_encode($str);
-	}
-
 	
-
 	public function advise_experiment($fid,$eid){
 		$info['status'] = "true";
 		$this->db->where('fid', $fid);

@@ -47,7 +47,17 @@ class Faculty_model extends MY_Model{
 	public function get_rules(){
 		//put form validation here
 		return 0;
-	}	
+	}
+
+	public function get_experiments($fid = 0, $category = NULL){
+		$this->db->select('Experiments.*');
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->where('Faculty.fid',$fid);
+		$q = $this->db->get('Experiments');
+
+		return $this->query_conversion($q);
+	}
 
 	public function confirm($fid = 0){
 		$faculty_info['account_status'] = 'true';
