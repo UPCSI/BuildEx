@@ -1,6 +1,6 @@
 <div class="row vcenter30 show-for-large-up"></div>
 
-<h1 class="white"><strong> Lorem ipsum dolor sit amet </strong></h1>
+<h1 class="white"><strong> <?php echo SITE_NAME; ?> </strong></h1>
 
 <div style="background-color:rgba(255, 255, 255,0.13);padding:0px 10px 10px">
     <h3 class="white" style="line-height:110%">
