@@ -1,25 +1,20 @@
 # BuildEx
 
-##Important!
+## Experiment Builder
 
-Upon creating the commit message, 
-"the body should provide a meaningful commit message, which:
-- uses the imperative, present tense: "change", not "changed" or "changes"."
-Git recommends that format.
-
-buildex_db_struct.sql is the real schema and structure of our database.
-buildex_db_data.sql is the dump data of our database. This will serve as out test case(s) source.
-
-Import first the structure before getting on the data.
-
-## Installation
+## Setting up the Environment
 
 ### Requirements
 
-Download and Install Bitnami's Stack (LAPP for Linux/MAPP for Mac/WAPP for Windows)
+Download and Install Bitnami's Stack (LAPP for Linux/ MAPP for Mac/ WAPP for Windows):
+
 http://www.bitnami.com/article/apache-php-and-postgresql-all-in-one
 
-Clone this repository in install/dir/lappstackdir/apache2/htdocs/
+Clone this repository in:
+
+```
+install/dir/lappstackdir/apache2/htdocs/
+```
 
 In Linux/Mac, permission issues might appear. Use chmod to htdocs folder to fix this.
 
@@ -29,7 +24,7 @@ In Linux/Mac, permission issues might appear. Use chmod to htdocs folder to fix 
 sudo chmod 777 htdocs/ 
 ```
 
-Go to the cloned folder. Create a file in BuildEx/application/config and name it database.php
+Go to the cloned folder. Create a file in BuildEx/application/config and name it ```database.php```
 
 Copy-paste the following, make sure to supply the correct username and password:
 
@@ -40,8 +35,8 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'postgres';
-$db['default']['password'] = 'intelleq';//password of your database server. Change this. Leave it blank by default.
+$db['default']['username'] = '<username>';
+$db['default']['password'] = '<password>';
 $db['default']['database'] = 'buildex_db';
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';
@@ -69,18 +64,28 @@ sudo ./manager-linux-x64.run #change x64 depending on your installation
 
 On your browser, go to http://localhost/phppgadmin.
 
-Log-in the postgreSQL server with default username "postgres" and your own specified password from the installation of lappstack.
+Log-in the postgreSQL server with your own specified username and password from the installation of lappstack.
+```
+default username: postgres
+default password: <none> #just leave it blank
+```
 
-Click 'Create database' just below the table 'Actions on multiple lines'.
+Click 'Create database'.
 
 Name it 'buildex_db', without the ''. Leave all the default settings and click the 'Create' Button.
 
-Import the exported database file buildex_db.sql to phppgAdmin. It's located in the directory of the cloned project.
+## Manual Migration
 
-NOTE: If you can't see the import button, try this:
-  From the side tab, click PostGreSQL
-  Click now the 'buildex_db' database and go to the 'SQL' tab.
-  Click the 'Choose File' and select the buildex_db.sql then click 'Execute'
+Import the database files to phppgAdmin:
+
+First, import ```buildex_db_struct.sql```.
+
+Then, import ```buildex_db_data.sql```.
+
+NOTE:
+If you can't see the import button, try this:
+From the side tab, click PostGreSQL
+Click now the 'buildex_db' database and go to the 'SQL' tab.
 
 On your browser, go to http://localhost/BuildEx/. A welcome page should appear.
 
