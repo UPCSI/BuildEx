@@ -2,7 +2,7 @@
     <div class="row full">
         <div class="large-12 columns">
             <h2 class="white">
-                <strong>About <span style="color:#3498db">CS 192</span></strong>
+                <strong>About <span style="color:#3498db"><?php echo SITE_NAME; ?></span></strong>
             </h2>
         </div>
     </div>

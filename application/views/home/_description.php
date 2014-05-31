@@ -1,7 +1,9 @@
 <div class="titleholder">
     <div class="row full">
         <div class="large-12 columns">
-            <h2 class="white"><strong>What is <span style="color:#3498db">CS 192</span>?</strong></h2>
+            <h2 class="white">
+                <strong>What is <span style="color:#3498db"><?php echo SITE_NAME; ?></span>?</strong>
+            </h2>
         </div>
     </div>
 </div>

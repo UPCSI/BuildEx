@@ -5,8 +5,8 @@ $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
 $db['default']['username'] = 'neil';
-$db['default']['password'] = 'password';//password of your database server. Change this. Leave it blank by default.
-$db['default']['database'] = 'buildex.db';
+$db['default']['password'] = 'iamneil';
+$db['default']['database'] = 'buildex_db';
 $db['default']['dbdriver'] = 'postgre';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;

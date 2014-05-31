@@ -15,7 +15,7 @@
                       </section>
 
                       <section class="right tab-bar-section">
-                        <h1 class="title">CS 192</h1>
+                        <h1 class="title"><?php echo SITE_NAME; ?></h1>
                       </section>
                     </nav>
 

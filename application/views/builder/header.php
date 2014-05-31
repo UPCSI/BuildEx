@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><?php echo $title ?> | BuildEx</title>
+<title><?php echo $title ?> | <?php echo SITE_NAME; ?></title>
 
 <!-- wow much CSS -->
 <link rel="stylesheet" href="<?php echo site_url('css/normalize.css'); ?>">

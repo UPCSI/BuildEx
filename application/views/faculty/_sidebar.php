@@ -1,5 +1,5 @@
 <ul class="off-canvas-list">
-    <li><label>CS 192 - Faculty</label></li>
+    <li><label><?php echo SITE_NAME; ?> - Faculty</label></li>
     <li><a href = "<?php echo site_url('faculty'); ?>"> Home </a></li>
     <li><a href = "<?php echo site_url('faculty/profile'); ?>"> Profile </a></li>
     <li><label>Records</label></li>

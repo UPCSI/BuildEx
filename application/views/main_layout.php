@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title ?> | BuildEx</title>
+    <title><?php echo $title ?> | <?php echo SITE_NAME; ?></title>
 
     <?php $this->load->view('includes/stylesheets/global'); ?>
     <?php if(isset($other_css)): ?>

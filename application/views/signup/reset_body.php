@@ -1,4 +1,4 @@
-<h2>BuildEx: Reset Password</h2>
+<h2><?php echo SITE_NAME; ?>: Reset Password</h2>
 
  <fieldset>
 	<legend>We'll give you a temporary one!</legend>
