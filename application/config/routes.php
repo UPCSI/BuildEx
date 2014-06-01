@@ -37,6 +37,8 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['default_controller'] = 'home';
+$route['404_override'] = '';
 
 // Externals
 $route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
@@ -47,8 +49,8 @@ $route['signin/(.+)'] = 'sign_in/$1';
 $route['admin'] = 'admins/index';
 $route['admin/(.+)'] = 'admins/$1';
 
-$route['default_controller'] = 'home';
-$route['404_override'] = '';
-
+// Experiments
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9])+'] = 'experiments/view/$1/$2/$3';
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9])+/edit'] = 'experiments/edit/$1/$2/$3';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

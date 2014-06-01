@@ -50,7 +50,6 @@ class Faculty_model extends MY_Model{
 	}
 
 	public function get_experiments($fid = 0, $category = NULL){
-		$this->db->select('Experiments.*');
 		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
 		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
 		$this->db->where('Faculty.fid',$fid);

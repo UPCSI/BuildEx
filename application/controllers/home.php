@@ -10,11 +10,10 @@ class Home extends CI_Controller{
 		if(!$this->is_logged_in()){
 			$data['title'] = 'Home';
 			$data['main_content'] = 'home/index';
-			$role = $this->session->userdata('role');
 			$this->load->view('main_layout', $data);
 		}
 		else{
-			redirect($this->session->userdata('active_role'));
+			redirect(role());
 		}
 	}
 

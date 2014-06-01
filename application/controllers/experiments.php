@@ -4,7 +4,7 @@ class Experiments extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('experiment_model','experiment');
+		$this->load->model('experiment_model', 'experiment');
 	}
 
 	/* REST Methods */
@@ -19,7 +19,7 @@ class Experiments extends MY_Controller{
 		redirect('builder/app/'.$eid);
     }
 
-	public function delete_experiment($eid = 0){
+    public function delete_experiment($eid = 0){
 		$success = NULL;
 		if($eid == 0){
 			$success = 'Experiment does not exist!';
@@ -44,8 +44,19 @@ class Experiments extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
-	public function edit($eid = 0){
-		$data['experiment'] = $this->experiments_model->get_experiment($eid);
+    public function view($role = NULL, $id = 0, $eid = 0){
+    	//insert authorization here
+    	$data['role'] = $role;
+    	$data['id'] = $id;
+		$data['experiment'] = $this->experiment->get($eid);
+		$data['title'] = 'Experiment';
+		$data['main_content'] = 'experiment/index';
+		$data['page'] = 'view';
+		$this->load->view('main_layout', $data);
+	}
+
+	public function edit($role = NULL, $id = 0, $eid = 0){
+		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'edit';
@@ -117,18 +128,6 @@ class Experiments extends MY_Controller{
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'respondents';
-		$this->load->view('main_layout', $data);
-	}
-
-	public function view($eid = 0){
-		if($eid == 0){
-			redirect('');
-			//implement where to redirect if eid is non-existent
-		}
-		$data['experiment'] = $this->experiments_model->get_experiment($eid);
-		$data['title'] = 'Experiment';
-		$data['main_content'] = 'experiment/index';
-		$data['page'] = 'view';
 		$this->load->view('main_layout', $data);
 	}
 }

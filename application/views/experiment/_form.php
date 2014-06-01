@@ -1,6 +1,6 @@
-<?php echo form_open("experiments/create");?>
+<?php echo form_open("experiments/{$action}");?>
 	<fieldset>
-		<legend> Create Experiment </legend>
+		<legend> Experiment </legend>
 		<label>Title</label>
 		<input type="text" id="title" required name="title" placeholder="Title">
 

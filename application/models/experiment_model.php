@@ -19,19 +19,24 @@ class Experiment_model extends MY_Model{
 		return $eid;
 	}
 
+	public function get($eid = 0){
+		$this->db->where('eid',$eid);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
 	public function update($eid = 0, $info = NULL){
 		$this->db->where('eid', $eid);
 		$this->db->update('Experiments', $info);
 		return $this->is_rows_affected();
 	}
-	/* END of CRUD Methods */
 
-	/* PRIVATE METHODS */
-	private function generate_url($eid,$title){
-		$str = strval($eid).$title;
-		return base64_encode($str);
+	public function destroy($eid = 0){
+		$this->db->where('eid', $eid);
+		$this->db->delete('Experiments');
+		return $this->is_rows_affected();
 	}
-	/* END OF PRIVATE METHODS */
+	/* END of CRUD Methods */
 
 	public function assign_to($role = NULL, $id = 0, $eid = 0){
 		$conduct_info['eid'] = $eid;
@@ -47,12 +52,6 @@ class Experiment_model extends MY_Model{
 	}
 
 	public function delete_faculty_experiment($fid = 0, $eid = 0){
-		/*
-		* Deletes an experiment given the fid of the faculty
-		* and the eid of the target experiment.
-		* Returns true if the actual delete happened
-		* false otherwise.
-		*/
 		$q = "DELETE FROM \"Experiments\" AS e
 			  USING \"Faculty\" AS f, faculty_conduct AS fc
 			  WHERE f.fid = fc.fid AND
@@ -82,13 +81,13 @@ class Experiment_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get_experiment($eid = 0){
-		/*
-		* Returns an experiment given its eid
-		*/
-		$this->db->select('*');
-		$this->db->where('eid',$eid);
+	public function get_faculty_experiment($fid = 0, $eid = 0){
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->where('Experiments.eid',$eid);
+		$this->db->where('Faculty.fid',$fid);
 		$q = $this->db->get('Experiments');
+
 		return $this->query_row_conversion($q);
 	}
 
@@ -103,20 +102,7 @@ class Experiment_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_faculty_experiment($fid = 0, $eid = 0){
-		/*
-		* Returns all the fields of an experiment
-		* given the fid of a faculty
-		*/
-		$this->db->select('Experiments.*');
-		$this->db->join('faculty_conduct','faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty','Faculty.fid = faculty_conduct.fid');
-		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Faculty.fid',$fid);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_row_conversion($q);
-	}
+	
 
 	public function get_graduates_experiment($gid = 0, $eid = 0){
 		/*
@@ -351,4 +337,11 @@ class Experiment_model extends MY_Model{
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}
+
+	/* PRIVATE METHODS */
+	private function generate_url($eid,$title){
+		$str = strval($eid).$title;
+		return base64_encode($str);
+	}
+	/* END OF PRIVATE METHODS */
 }

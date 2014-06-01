@@ -19,7 +19,7 @@
 			<p class = "white"> <strong> URL: </strong> <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>"> <?php echo site_url('respond/view/'.$experiment->url); ?> </a></p>
 			<a class = "button small" href = "<?php echo site_url('experiment/unpublish/'.$experiment->eid); ?>"> Unpublish </a>
 		<?php endif; ?>
-		<a class = "button small" href = "<?php echo site_url('experiment/edit_experiment/'.$experiment->eid); ?>"> Edit </a>
+		<?php echo anchor(format_experiment_link($role, $id, $experiment).'/edit', 'Edit', 'class = "button small"'); ?>
 		<a class = "button small" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
 	</div>
 </div>

@@ -72,6 +72,58 @@ class Faculty extends User_Controller{
 	}
 	/* End of Faculty Pages */
 
+	/* REST Methods */
+	public function create(){
+		$this->load->library('form_validation');
+		$username = $this->input->post('username');
+		$email = $this->input->post('email');
+
+		if($this->user_model->is_unique($username, $email)){
+			$new_user = array(
+				'first_name' => $this->input->post('first_name'),
+				'middle_name' => $this->input->post('middle_name'),
+				'last_name' => $this->input->post('last_name'),
+				'email_ad' => $email,
+				'username' => $username,
+				'password' => $this->input->post('password')
+			);	
+			$faculty_id = $this->input->post('faculty_num');
+
+			if($this->faculty->create($new_user, $faculty_id)){
+				redirect('signup/success');	
+			}
+		}
+		else{
+			$msg = 'Username already taken.';
+		}
+		
+		$this->session->set_flashdata('notification',$msg);
+		redirect('signup/faculty');
+	}
+
+	public function destroy(){
+		$faculty_id = $this->input->post('faculty_id');
+		if($this->faculty->destroy($faculty_id, NULL)){
+			$msg = "Deletion successful!";
+		}
+		else{
+			$msg = "Deletion failed!";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
+
+	public function view($username = NULL){
+		$data['user'] = $this->users_model->get_user_profile(0,$username);
+		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
+		$fid = $data['faculty']->fid;
+		$data['experiments'] = $this->get_all_experiments($fid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'faculty/view';
+		$this->load->view('main_layout', $data);
+	}
+	/* End of REST Methods */
+
 	public function view_experiment($eid = 0){
 		if($eid == 0){
 			redirect('');
@@ -87,27 +139,6 @@ class Faculty extends User_Controller{
 			$data['notification'] = NULL;
 		}
 
-		$this->load->view('main_layout', $data);
-	}
-
-	public function view($username = NULL){
-		if(is_null($username)){
-			redirect('');
-			//implement where to redirect if username is non-existent
-		}
-
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-
-		if(is_null($data['user'])){
-			redirect('');
-			//implement where to redirect if user is non-existent
-		}
-
-		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
-		$fid = $data['faculty']->fid;
-		$data['experiments'] = $this->get_all_experiments($fid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view';
 		$this->load->view('main_layout', $data);
 	}
 
@@ -169,48 +200,6 @@ class Faculty extends User_Controller{
 		$data['main_content'] = 'contents/profile';
 		$this->load->view('main_layout', $data);
 	}
-
-	/* REST Methods */
-	public function create(){
-		$this->load->library('form_validation');
-		$username = $this->input->post('username');
-		$email = $this->input->post('email');
-
-		if($this->user_model->is_unique($username, $email)){
-			$new_user = array(
-				'first_name' => $this->input->post('first_name'),
-				'middle_name' => $this->input->post('middle_name'),
-				'last_name' => $this->input->post('last_name'),
-				'email_ad' => $email,
-				'username' => $username,
-				'password' => $this->input->post('password')
-			);	
-			$faculty_id = $this->input->post('faculty_num');
-
-			if($this->faculty->create($new_user, $faculty_id)){
-				redirect('signup/success');	
-			}
-		}
-		else{
-			$msg = 'Username already taken.';
-		}
-		
-		$this->session->set_flashdata('notification',$msg);
-		redirect('signup/faculty');
-	}
-
-	public function destroy(){
-		$faculty_id = $this->input->post('faculty_id');
-		if($this->faculty->destroy($faculty_id, NULL)){
-			$msg = "Deletion successful!";
-		}
-		else{
-			$msg = "Deletion failed!";
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/faculty');
-	}
-	/* End of REST Methods */
 
 	/* Private Methods */
 	private function get_all_advisory_experiments($fid = 0){
