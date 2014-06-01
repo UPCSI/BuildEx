@@ -21,4 +21,7 @@
 		<span style='color:#36d077'><i class='fa fa-check-circle'></i> Published</span>
 	<?php endif; ?>
 </h5>
-<h5 class="actions"> <a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a> <a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Edit </a> </h5>	
+<h5 class="actions">
+	<a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Open </a>
+	<a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a>
+</h5>	
