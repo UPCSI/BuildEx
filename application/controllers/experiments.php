@@ -56,7 +56,6 @@ class Experiments extends MY_Controller{
 	}
 
 	public function view($role = NULL, $id = 0, $eid = 0){
-		//insert authorization here
 		$data['role'] = $role;
 		$data['id'] = $id;
 		$data['experiment'] = $this->experiment->get($eid);
