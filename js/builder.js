@@ -557,7 +557,6 @@
 				if(check.hasClass('flag')){
 					question_exists = true;
 				}
-
 				else{
 					question_exists = false;
 					break;
@@ -690,14 +689,20 @@
 						'msg':x,
 						'eid':eid
 					},
-
 					dataType: 'json',
+					beforeSend: function() {
+						$('.save-loading').css('opacity', '0.7');
+						$('.save-loading').css('display', 'inline-block');
+					},
 					complete: function(data) {
-						window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/' + data.responseText + '/experiments';
+						setTimeout(function() {
+							$('.save-loading').css('display', 'none');
+							$('.save-loading').css('opacity', '0');
+							$('.save-done').css('opacity', '0.7');
+						}, 500);
 					},
 				});
 			}
-
 			else{
 				alert("Can't save, each slide should have a question.");
 			}

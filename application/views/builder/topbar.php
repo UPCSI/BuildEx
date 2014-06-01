@@ -20,6 +20,10 @@
 			<ul class="left">
 				<li><a href="<? echo site_url($this->session->userdata('active_role').'/experiments'); ?>" class = "top-buttons">Back</a></li>
 				<li><a href="#" id = "getObjectValues" class = "top-buttons button success">Save Environment</a></li>
+				<li>
+					<span class="save-loading"><img src="<? echo site_url('images/loading.gif'); ?>"></span>
+					<span class="save-done"><i class="fi-check"></i></span>
+				</li>
 			</ul>
 		</section>
 	</nav>
