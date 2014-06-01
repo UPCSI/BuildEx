@@ -16,32 +16,32 @@
 		}
 
 		foreach ($var as $obj){
-			if($obj[3] == "question"){
-				echo 'draw_question('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[6].',' .$obj[7] .',"' .$obj[5].'");';
+			if($obj['type'] == "question"){
+				echo 'draw_question('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'",'.$obj['qid'].');';
 			}
 			
-			else if($obj[3] == "textinput"){
-				echo 'draw_text_input('.$obj[1].','.$obj[2].',"' ."" .'",'.$obj[0].',' .$obj[4].',' .$obj[5].');';
+			else if($obj['type'] == "textinput"){
+				echo 'draw_text_input('.$obj['xPos'].','.$obj['yPos'].',"' ."" .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
 			}
 
-			else if($obj[3] == "button"){
-				echo 'draw_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
+			else if($obj['type'] == "button"){
+				echo 'draw_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
 			}
 
-			else if($obj[3] == "radio"){
-				echo 'draw_radio_button('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
+			else if($obj['type'] == "radio"){
+				echo 'draw_radio_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
 			}
 
-			else if($obj[3] == "checkbox"){
-				echo 'draw_checkbox('.$obj[1].','.$obj[2].',"' .$obj[4] .'",'.$obj[0].',' .$obj[5].',' .$obj[6].');';
+			else if($obj['type'] == "checkbox"){
+				echo 'draw_checkbox('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
 			}
 
-			/*
-			else if($obj[3] == "dropdown")
-				echo '$("#dropdown").trigger("click",['.$obj[1].','.$obj[2].',' .$obj[0].']);';*/
+			// else if($obj['type'] == "dropdown"){
+			// 	echo 'draw_dropdwon('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].'");';
+			// }
 			
-			else if($obj[3] == "slider"){
-				echo 'draw_slider('.$obj[1].','.$obj[2].',' .$obj[0] .',' .$obj[4] .',' .$obj[5].',' .$obj[4] .',' .$obj[5].');';	
+			else if($obj['type'] == "slider"){
+				echo 'draw_slider('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].');';
 			}
 		}
 

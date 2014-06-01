@@ -31,7 +31,6 @@ class Respondents_model extends MY_Model{
 		$this->db->where('eid',$eid);
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
-
 	}
 
 	public function add_response($info,$qid,$rid){
@@ -51,5 +50,11 @@ class Respondents_model extends MY_Model{
 	public function get_all_respondents(){
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
+	}
+
+	public function save_responses($responses){
+		foreach($responses as $response){
+			$this->db->insert('Responses',$response);
+		}
 	}
 }

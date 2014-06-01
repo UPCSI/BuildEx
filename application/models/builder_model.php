@@ -22,36 +22,43 @@ class Builder_model extends MY_Model{
 			$query = $this->db->get('Pages');
 			$order = $this->query_row_conversion($query);
 
-			$new_obj = array($order->order, $object->x_pos, $object->y_pos, $object->type);
-			if ($new_obj[3] == "question"){
+			$new_obj = array();
+			$new_obj['page'] = $object->order;
+			$new_obj['xPos'] = $object->x_pos;
+			$new_obj['yPos'] = $object->y_pos;
+			$new_obj['type'] = $object->type;
+			$new_obj['width'] = $object->width;
+			$new_obj['height'] = $object->height;
+
+			if ($new_obj['type'] == "question"){
 				$label = $this->get_object($object->oid, 'Labels');
-				array_push($new_obj, $label->text);
-				array_push($new_obj, $label->font_color);
+				$new_obj['text'] = $label->text;
+				$new_obj['color'] = $label->font_color;
+				$question = $this->get_object($object->oid, 'Questions');
+				$new_obj['qid'] = $question->qid;
 			}
 
-			if ($new_obj[3] == "button"){
+			if ($new_obj['type'] == "button"){
 				$button = $this->get_object($object->oid, 'Buttons');
-				array_push($new_obj, $button->text);
+				$new_obj['text'] = $button->text;
 			}
 
-			if ($new_obj[3] == "radio"){
+			if ($new_obj['type'] == "radio"){
 				$radio = $this->get_input($object->oid, 'Radios');
-				array_push($new_obj, $radio->choices);
+				$new_obj['text'] = $radio->choices;
 			}
 
-			if ($new_obj[3] == "checkbox"){
+			if ($new_obj['type'] == "checkbox"){
 				$checkbox = $this->get_input($object->oid, 'Checkboxes');
-				array_push($new_obj, $checkbox->choices);
+				$new_obj['text'] = $checkbox->choices;
 			}
 
-			if ($new_obj[3] == "slider"){
+			if ($new_obj['type'] == "slider"){
 				$slider = $this->get_input($object->oid, 'Sliders');
-				array_push($new_obj, $slider->min_num);
-				array_push($new_obj, $slider->max_num);
+				$new_obj['min'] = $slider->min_num;
+				$new_obj['max'] = $slider->max_num;
 			}
 
-			array_push($new_obj, $object->width + "px");
-			array_push($new_obj, $object->height + "px");
 			array_push($data, $new_obj);
 		}
 
@@ -91,9 +98,7 @@ class Builder_model extends MY_Model{
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');
 		$this->db->join('Questions', 'Questions.oid = Objects.oid');
 		$query = $this->db->get('Objects');
-		// $this->session->set_userdata('dfsdf',$query);
 		$object = $this->query_row_conversion($query);
-		// $this->session->set_userdata('awrwe',$object);
 		$this->db->where('qid', $object->qid);
 		$this->db->update('Questions', array('input' => $input_id));
 	}

@@ -91,15 +91,52 @@ class Respond extends CI_Controller{
 		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
-	public function save($rid,$qid){
-		//save individual elements
+	public function save(){ //$rid,$qid
+		$message = $this->input->post('msg');
 		$rid = $this->session->userdata('rid');
-		$qid = $this->input->post('qid');
+		$total_pages = array_shift($message);
+		$time = array_shift($message);
+		$responses = array();
 
-		$info = array('answer' => $this->input->post($qid));
-					#'duration' => $this->input->post('time_'.$qid));
+		foreach($message as $item){
+			$answer = array();
+			$answer['rid'] = $rid;
+			$answer['qid'] = $item['qid'];
+			$answer['duration'] = $time[$item['page']-1];
 
-		$this->respondents_model->add_response($info,$qid,$rid);
+			if($item['type'] == "text_input"){
+				$answer['answer'] = $item['text'];
+			}
+
+			else if($item['type'] == "radio" || $item['type'] == "checkbox"){
+				if($item['checked'] == "true"){
+					$answer['answer'] = $item['text'];
+				}
+
+				else{
+					continue;
+				}
+			}
+
+			else if($item['type'] == "slider"){
+				$answer['answer'] = $item['value'];
+			}
+
+
+			array_push($responses, $answer);
+		}
+
+		var_dump($responses);
+		$this->respondents_model->save_responses($responses);
+
+		//save individual elements
+		// $rid = $this->session->userdata('rid');
+		// $qid = $this->input->post('qid');
+
+		// $info = array('answer' => $this->input->post($qid));
+		// 			#'duration' => $this->input->post('time_'.$qid));
+
+		// $this->respondents_model->add_response($info,$qid,$rid);
 	}
 
 	public function debrief($slug){

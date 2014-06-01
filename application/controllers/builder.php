@@ -13,11 +13,13 @@ class Builder extends MY_Controller{
 	}
 
 	public function app($eid = 0){
-		/*this is the index of the app
-		* for the reason that we need the eid
-		* of the experiment for the app
-		* and it's not trivial to pass a variable
-		* from view to the controller index.
+		/*
+			this is the index of the app
+			for the reason that we need the eid
+			of the experiment for the app
+			and it's not trivial to pass a variable
+			from view to the controller index.
+
 		*/
 
 		$data['title'] = 'Experiment';
@@ -25,8 +27,6 @@ class Builder extends MY_Controller{
 		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 
-
-		// var_dump($data['var']);
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
 	}
@@ -37,18 +37,17 @@ class Builder extends MY_Controller{
 	------------------------------------------------------------------------------------
 */
 
+	/* saves all objects and pages */
 	public function save() {
 		$message = $this->input->post('msg');
 		if ($message == 'false')
 			return;
 		
+		/* page */
 		$eid = $this->input->post('eid');
 		$this->delete($eid);
 		$pid_list = array();
-
-		/* page */
-		$page['eid'] = $this->input->post('eid');
-		$this->delete($page['eid']);
+		$page['eid'] = $eid;
 		$total_pages = array_shift($message);
 
 		for($index=1; $index <= $total_pages; $index++){
@@ -59,53 +58,43 @@ class Builder extends MY_Controller{
 
 		/* object */
 		foreach ($message as $item){
-			$order = (int)substr($item[0], 4);
+			$order = (int)substr($item['id'], 4);
 			$object['pid'] = $pid_list[$order-1];
-			$object['x_pos'] = (double)$item[1];
-			$object['y_pos'] = (double)$item[2];
-			$object['type'] = $item[3];
-
-			if($object['type'] == "textinput"){
-				$object['width'] = $item[4];
-				$object['height'] = $item[5];				
-			}
-
-			else if ($object['type'] != "dropdown" and $object['type'] != "slider"){			
-				$object['width'] = $item[5];
-				$object['height'] = $item[6];
-			}
-
+			$object['x_pos'] = (double)$item['xPos'];
+			$object['y_pos'] = (double)$item['yPos'];
+			$object['type'] = $item['type'];
 			
-			$object['width'] = (double)substr($object['width'],0, -2);
-			$object['height'] = (double)substr($object['height'],0, -2);
+			if($object['type'] != "dropdown" && $object['type'] != "slider"){
+				$object['width'] = (double)substr($item['width'],0, -2);
+				$object['height'] = (double)substr($item['height'],0, -2);				
+			}
+
+			else{
+				$object['width'] = 0;
+				$object['height'] = 0;
+			}
+
 			$oid = $this->add_object($object);
 
 			/* question */
 			if ($object['type'] == "question"){
 				$label['oid'] = $oid;
-				$label['text'] = $item[4];
-				// $label['font'] = ;
-				// $label['font_size'] = ;
-				$label['font_color'] = substr($item[7],1);
-
+				$label['text'] = $item['text'];
+				$label['font_color'] = substr($item['color'],1);
 				$label_id = $this->add_label($label);
 
 				$question['oid'] = $oid;
 				$question['is_required'] = 'f';
-				// $question['input'] = ;
 				$question['label'] = $label_id;
 
 				$qid = $this->add_question($question);
 			}
 
-			/* textinput */
+			/* textinput */ 
 			if ($object['type'] == "textinput"){
 				$input_id = $this->save_input($oid, 'textinput');
 
 				$textinput['input_id'] = $input_id;
-				// $textinput['length'] = ;
-				// $textinput['orientation'] = ;
-
 				$textinput_id = $this->add_textinput($textinput);
 				$this->bind($object['pid'], $input_id);
 			}
@@ -113,10 +102,7 @@ class Builder extends MY_Controller{
 			/* button */
 			if ($object['type'] == "button"){
 				$button['oid'] = $oid;
-				$button['text'] = $item[4];
-				// $button['go_to'] = ;
-				// $button['type'] = ;
-
+				$button['text'] = $item['text'];
 				$button_id = $this->add_button($button);
 			}
 
@@ -124,8 +110,7 @@ class Builder extends MY_Controller{
 			if ($object['type'] == "radio"){
 				$input_id = $this->save_input($oid, 'radio');
 				$radio['input_id'] = $input_id;
-				$radio['choices'] = $item[4];
-				// $radio['orientation'] = ;
+				$radio['choices'] = $item['text'];
 
 				$radio_id = $this->add_radio($radio);
 				$this->bind($object['pid'], $input_id);
@@ -135,29 +120,24 @@ class Builder extends MY_Controller{
 			if ($object['type'] == "checkbox"){
 				$input_id = $this->save_input($oid, 'checkbox');
 				$checkbox['input_id'] = $input_id;
-				$checkbox['choices'] = $item[4];
-				// $checkbox['orientation'] = ;
+				$checkbox['choices'] = $item['text'];
 
 				$checkbox_id = $this->add_checkbox($checkbox);
 				$this->bind($object['pid'], $input_id);
 			}
 
-
 			/* slider */
 			if ($object['type'] == "slider"){
-				$this->session->set_userdata('fsd');
 				$input_id = $this->save_input($oid, 'slider');
 				$slider['input_id'] = $input_id;
-				// $slider['type'] = ;
-				$slider['min_num'] = (int)$item[4];
-				$slider['max_num'] = (int)$item[5];
+
+				$slider['min_num'] = (int)$item['min'];
+				$slider['max_num'] = (int)$item['max'];
 
 				$slider_id = $this->add_slider($slider);
 				$this->bind($object['pid'], $input_id);
 			}
-
-
-		}
+		}	
 
 		echo $this->session->userdata('active_role'); #for ajax
 	}
@@ -172,12 +152,7 @@ class Builder extends MY_Controller{
 		return $this->builder_model->get_all_objects($eid);
 	}
 
-/*
-	------------------------------------------------------------------------------------
-	ADD TO TABLES
-	------------------------------------------------------------------------------------
-*/
-
+	/* bind an input with a question */
 	public function bind($pid, $input_id){
 		$this->load->model('builder_model');
 		$this->builder_model->bind($pid, $input_id);
@@ -191,9 +166,14 @@ class Builder extends MY_Controller{
 	public function save_input($oid, $type){
 		$input['oid'] = $oid;
 		$input['type'] = $type;
-		// $input['helper'] = ;
 		return $this->add_input($input);		
 	}
+
+/*
+	------------------------------------------------------------------------------------
+	ADD TO TABLES
+	------------------------------------------------------------------------------------
+*/
 
 	public function add_page($data){
 		$this->load->model('builder_model');
