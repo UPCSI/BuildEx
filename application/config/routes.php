@@ -51,6 +51,6 @@ $route['admin/(.+)'] = 'admins/$1';
 
 // Experiments
 $route['(graduate|faculty)/([0-9]+)/experiment/([0-9])+'] = 'experiments/view/$1/$2/$3';
-$route['(graduate|faculty)/([0-9]+)/experiment/([0-9])+/edit'] = 'experiments/edit/$1/$2/$3';
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9])+/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

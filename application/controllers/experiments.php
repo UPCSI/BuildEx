@@ -52,69 +52,61 @@ class Experiments extends MY_Controller{
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'view';
+		$data['notification'] = $this->session->flashdata('notification');
 		$this->load->view('main_layout', $data);
 	}
 
 	public function edit($role = NULL, $id = 0, $eid = 0){
+		$data['role'] = $role;
+    	$data['id'] = $id;
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'edit';
 		$this->load->view('main_layout', $data);
 	}
+
+	public function update($role = NULL, $id = 0, $eid = 0){
+		$info['title'] = $this->input->post('title');
+		$info['category'] = $this->input->post('category');
+		$info['description'] = $this->input->post('description');
+		$info['target_count'] = $this->input->post('target_count');
+
+		if($this->experiment->update($eid, $info)){
+			$msg = 'Experiment updated!';
+		}
+		else{
+			$msg = 'Failed to update!';
+		}
+	
+		$role = $this->session->userdata('active_role');
+		$this->session->set_flashdata('notification',$msg);
+		redirect("{$role}/{$id}/experiment/{$eid}");
+	}
 	/* END of REST Methods */
 
-	public function publish($eid = 0){
-		if($eid == 0){
-			redirect(''); //implement where to redirect id $eid is nonexistent
-		}
+	public function publish($role = NULL, $id = 0, $eid = 0){
 		$info['is_published'] = 'True';
-		$this->load->model('experiments_model');
-		if($this->experiments_model->update_experiment($eid,$info)){
+		if($this->experiment->update($eid, $info)){
 			$msg = "You have successfully published the experiment.";
 		}
 		else{
 			$msg = "Publication of experiment failed.";
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('experiment/view/'.$eid);
+		redirect("{$role}/{$id}/experiment/{$eid}");
 	}
 
-	public function unpublish($eid){
+	public function unpublish($role = NULL, $id = 0, $eid = 0){
 		$info['is_published'] = 'False';
-		$this->load->model('experiments_model');
-		if($this->experiments_model->update_experiment($eid,$info)){
+		if($this->experiment->update($eid, $info)){
 			$msg = "You have successfully unpublished the experiment.";
 		}
 		else{
 			$msg = "Unpublication of experiment failed.";
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('experiment/view/'.$eid);
-	}
-
-	public function update_experiment($eid = 0){
-		if($eid == 0){
-			$msg = 'Experiment does not exist!';
-		}
-		else{
-			$info['title'] = $this->input->post('title');
-			$info['category'] = $this->input->post('category');
-			$info['description'] = $this->input->post('description');
-			$info['target_count'] = $this->input->post('target_count');
-
-			$status = $this->experiments_model->update_experiment($eid, $info);
-			if($status){
-				$msg = 'Experiment updated!';
-			}
-			else{
-				$msg = 'Failed to update!';
-			}
-		}
-		
-		$role = $this->session->userdata('active_role');
-		$this->session->set_flashdata('notification',$msg);
-		redirect($role.'/experiments');
+		redirect("{$role}/{$id}/experiment/{$eid}");
 	}
 
 	public function respondents($eid = 0){
