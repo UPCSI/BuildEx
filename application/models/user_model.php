@@ -144,8 +144,6 @@ class User_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	
-
 	public function get_user_profile($uid = 0, $username = NULL){
 		/*
 		* Returns the profile of a particular user given its uid or username
@@ -177,6 +175,4 @@ class User_model extends MY_Model{
 
 		$this->session->set_userdata(array('active_id' => $id));
 	}
-
-
 }

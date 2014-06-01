@@ -21,6 +21,8 @@ class Faculty extends User_Controller{
 
 	public function experiments(){
 		$fid = role_id();
+		$data['role'] = 'faculty';
+		$data['id'] = $fid;
 		$data['experiments'] = $this->faculty->get_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';

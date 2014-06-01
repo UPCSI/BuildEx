@@ -8,14 +8,25 @@ class Experiments extends MY_Controller{
 	}
 
 	/* REST Methods */
-	public function create() {
+	public function add($role = NULL, $id = 0) {
+		$data['role'] = $role;
+    	$data['id'] = $id;
+		$data['experiment'] = NULL;
+		$data['title'] = 'Experiment';
+		$data['main_content'] = 'experiment/index';
+		$data['page'] = 'new';
+		$data['notification'] = $this->session->flashdata('notification');
+		$this->load->view('main_layout', $data);
+	}
+
+	public function create($role = NULL, $id = 0) {
 		$info['title'] = $this->input->post('title');
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
 		$eid = $this->experiment->create($info);
 
 		$msg = 'You have successfully created an experiment!';
-		$this->session->set_flashdata('notification', $success);
+		$this->session->set_flashdata('notification', $msg);
 		redirect('builder/app/'.$eid);
     }
 
@@ -44,10 +55,10 @@ class Experiments extends MY_Controller{
 		redirect($role.'/experiments');
 	}
 
-    public function view($role = NULL, $id = 0, $eid = 0){
-    	//insert authorization here
-    	$data['role'] = $role;
-    	$data['id'] = $id;
+	public function view($role = NULL, $id = 0, $eid = 0){
+		//insert authorization here
+		$data['role'] = $role;
+		$data['id'] = $id;
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';

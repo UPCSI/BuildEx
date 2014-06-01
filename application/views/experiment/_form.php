@@ -1,4 +1,4 @@
-<?php echo form_open("experiments/{$action}");?>
+<?php echo form_open(format_experiment_link($role, $id, $experiment)."/{$action}");?>
 	<fieldset>
 		<legend> Experiment </legend>
 		<label>Title</label>

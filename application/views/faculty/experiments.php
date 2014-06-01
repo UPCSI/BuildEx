@@ -6,9 +6,7 @@
 		<h3 class="white">My Experiments</h3>
 	</div>
 	<div class="large-6 medium-6 small-6 column">
-		<a style="float:right" class = "button small" href="#" data-reveal-id="create_experiment_modal">
-			Create Experiment
-		</a>
+		<?php echo anchor(format_experiment_link($role, $id).'/add', 'Create Experiment', 'class = "button small"'); ?>
 	</div>
 </div>
 
@@ -19,5 +17,3 @@
 <?php else: ?>
 	<p class = "white"> You have no experiments. </p>
 <?php endif; ?>
-
-<?php $this->load->view('faculty/_add_experiment_modal'); ?>

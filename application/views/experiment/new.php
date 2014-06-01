@@ -1,0 +1,1 @@
+<?php $this->load->view('experiment/_form', array('action' => 'create')); ?>
