@@ -58,6 +58,16 @@ class Faculty_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
+	public function get_experiment($fid = 0, $eid){
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->where('Experiments.eid', $eid);
+		$this->db->where('Faculty.fid', $fid);
+		$q = $this->db->get('Experiments');
+
+		return $this->query_row_conversion($q);
+	}
+
 	public function confirm($fid = 0){
 		$faculty_info['account_status'] = 'true';
 		return $this->update($fid, $faculty_info);

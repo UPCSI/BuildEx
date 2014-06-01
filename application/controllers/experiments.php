@@ -28,30 +28,16 @@ class Experiments extends MY_Controller{
 		$msg = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification', $msg);
 		redirect('builder/app/'.$eid);
-    }
+	}
 
-    public function delete_experiment($eid = 0){
-		$success = NULL;
-		if($eid == 0){
-			$success = 'Experiment does not exist!';
+	public function destroy($role = NULL, $id = 0, $eid = 0){
+		if($this->experiment->destroy($eid)){
+			$msg = 'You have successfully deleted an experiment!';
 		}
 		else{
-			$role = $this->session->userdata('active_role');
-			$id = $this->session->userdata('active_id');
-			if($role == 'faculty'){
-				$status = $this->experiments_model->delete_faculty_experiment($id,$eid);
-			}
-			else if ($role == 'graduate'){
-				$status = $this->experiments_model->delete_graduates_experiment($id,$eid);
-			}
-			if($status){
-				$success = 'You have successfully deleted an experiment!';
-			}
-			else{
-				$success = 'Error in deleting experiment. Please try again later.';
-			}
+			$msg = 'Error in deleting experiment.';
 		}
-		$this->session->set_flashdata('notification',$success);
+		$this->session->set_flashdata('notification',$msg);
 		redirect($role.'/experiments');
 	}
 

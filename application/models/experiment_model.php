@@ -51,58 +51,13 @@ class Experiment_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function delete_faculty_experiment($fid = 0, $eid = 0){
-		$q = "DELETE FROM \"Experiments\" AS e
-			  USING \"Faculty\" AS f, faculty_conduct AS fc
-			  WHERE f.fid = fc.fid AND
-			  e.eid = fc.eid AND
-			  fc.fid = ? AND
-			  e.eid = ?";
-
-		$this->db->query($q,array($fid,$eid));
-		return $this->is_rows_affected();
-	}
-
-	public function delete_graduates_experiment($gid = 0, $eid = 0){
-		/*
-		* Deletes an experiment given the gid of the graduate
-		* and the eid of the target experiment.
-		* Returns true if the actual delete happened
-		* false otherwise.
-		*/
-		$q = "DELETE FROM \"Experiments\" AS e
-			  USING \"Graduates\" AS g, graduates_conduct AS gc
-			  WHERE g.gid = gc.gid AND
-			  e.eid = gc.eid AND
-			  gc.gid = ? AND
-			  e.eid = ?";
-
-		$this->db->query($q,array($gid,$eid));
-		return $this->is_rows_affected();
-	}
-
-	public function get_faculty_experiment($fid = 0, $eid = 0){
-		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
-		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Faculty.fid',$fid);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_row_conversion($q);
-	}
-
 	public function get_experiment_by_hash($url){
-		/*
-		* Returns an experiment given its url(hash)
-		*/
 		$this->db->select('*');
 		$this->db->where('url',$url);
 		$this->db->where('is_published','t');
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
-
-	
 
 	public function get_graduates_experiment($gid = 0, $eid = 0){
 		/*

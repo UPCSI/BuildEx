@@ -22,6 +22,9 @@
 	<?php endif; ?>
 </h5>
 <h5 class="actions">
-	<a class = "button tiny" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Open </a>
-	<a class = "button tiny" href = "<?php echo site_url('experiment/delete_experiment/'.$experiment->eid); ?>"> Delete </a>
+	<?php echo anchor("builder/app/{$experiment->eid}", 'Open', 'class = "button tiny"'); ?>
+	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/destroy'); ?>
+        <?php echo form_hidden('experiment_id', $experiment->eid); ?>
+  		<button class = "button tiny" type="submit" value="delete"> Delete </button>
+    <?php echo form_close(); ?>
 </h5>	
