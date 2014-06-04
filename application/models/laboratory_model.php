@@ -68,6 +68,15 @@ class Laboratory_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
+	public function get_laboratory_head($labid = 0){
+		$this->db->join('Users', 'Users.uid = LaboratoryHeads.uid');
+		$this->db->join('manage', 'manage.lid = LaboratoryHeads.lid');
+		$this->db->join('Laboratories', 'Laboratories.labid = manage.labid');
+		$this->db->where('Laboratories.labid', $labid);
+		$q = $this->db->get('LaboratoryHeads');
+		return $this->query_row_conversion($q);
+	}
+
 	public function get_labhead_laboratory($lid){
 		$this->db->select('Laboratories.*');
 		$this->db->join('manage','manage.lid = LaboratoryHeads.lid');
