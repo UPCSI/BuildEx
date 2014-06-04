@@ -21,7 +21,7 @@ class Faculty extends User_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function advisory(){
+	public function advisories(){
 		$fid = $this->session->userdata('active_id');
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
@@ -39,20 +39,8 @@ class Faculty extends User_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function laboratory(){
-		$fid = $this->session->userdata('active_id');
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'users/index';
-		$data['page'] = 'laboratory';
-		$data['main_lab'] = $this->laboratories_model->get_faculty_laboratory($fid);
-		if(isset($data['main_lab'])){
-			$labid = $data['main_lab']->labid;
-			$data['lab_head'] = $this->laboratoryheads_model->get_laboratory_head_of_lab($labid);
-			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
-			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		}
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view('main_layout',$data);
+	public function archives(){
+		/*to be implemented*/	
 	}
 
 	public function laboratories(){
@@ -106,17 +94,21 @@ class Faculty extends User_Controller{
 	}
 
 	public function view($username = NULL){
-		$username = $this->session->userdata('username');
         $data['faculty'] = $this->faculty->get(0, $username);
-        $fid = $data['faculty']->fid;
-        $data['roles'] = array_keys($this->session->userdata('roles'));
-        $data['experiments'] = $this->faculty->get_experiments($fid);
-        $data['title'] = 'Faculty';
-        $data['main_content'] = 'faculty/index';
-        $data['page'] = 'view';
-        $data['notification'] = $this->session->flashdata('notification');
-        $this->load->view('main_layout',$data);
-	}
+        if(isset($data['faculty'])){
+        	$fid = $data['faculty']->fid;
+	        $data['roles'] = array_keys($this->session->userdata('roles'));
+	        $data['experiments'] = $this->faculty->get_experiments($fid);
+	        $data['title'] = 'Faculty';
+	        $data['main_content'] = 'faculty/index';
+	        $data['page'] = 'view';
+	        $data['notification'] = $this->session->flashdata('notification');
+	        $this->load->view('main_layout',$data);
+        }
+        else{
+        	show_404();
+        }
+    }
 	/* End of REST Methods */
 
 	public function view_experiment($eid = 0){
