@@ -38,7 +38,7 @@
 |
 */
 $route['default_controller'] = 'home';
-$route['404_override'] = '';
+$route['404_override'] = 'errors/errors_404';
 
 // Externals
 $route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
@@ -50,8 +50,13 @@ $route['signin/(.+)'] = 'sign_in/$1';
 $route['admin'] = 'admins/index';
 $route['admin/(.+)'] = 'admins/$1';
 
+$route['(graduate|faculty)/([0-9]+)/laboratory'] = '$1/laboratory/$1/$2';
+$route['(graduate|faculty)/logout'] = '$1/logout';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)'] = '$1/view/$2';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/([a-z]+)'] = '$1/$3/$2';
+
+//Laboratories
+$route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
 
 // Experiments
 $route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';

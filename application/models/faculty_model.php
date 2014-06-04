@@ -1,6 +1,7 @@
 <?php
 
 class Faculty_model extends MY_Model{
+	
 	/* CRUD */
 	public function create($user_info = NULL, $faculty_id = 0){
 		$faculty_info['uid'] = $this->user_model->create($user_info);
@@ -54,7 +55,6 @@ class Faculty_model extends MY_Model{
 		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
 		$this->db->where('Faculty.fid',$fid);
 		$q = $this->db->get('Experiments');
-
 		return $this->query_conversion($q);
 	}
 
@@ -64,7 +64,15 @@ class Faculty_model extends MY_Model{
 		$this->db->where('Experiments.eid', $eid);
 		$this->db->where('Faculty.fid', $fid);
 		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
 
+	public function get_laboratory($fid ,$cond = "true"){
+		$this->db->select('Laboratories.*');
+		$this->db->join('faculty_member_of', 'faculty_member_of.labid = Laboratories.labid');
+		$this->db->where('faculty_member_of.fid', $fid);
+		$this->db->where('faculty_member_of.status', $cond);
+		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);
 	}
 
@@ -80,18 +88,6 @@ class Faculty_model extends MY_Model{
 	public function is_confirmed($fid = 0){
 		$faculty = $this->faculty->get($fid, NULL);
 		return $faculty->account_status == 't';
-	}
-	
-	public function get_all_lab_faculty($labid = 0){
-		$this->db->select('Users.*,Faculty.*');
-		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
-		$this->db->join('Users', 'Users.uid = Faculty.uid');
-		$this->db->join('Laboratories', 'Laboratories.labid = faculty_member_of.labid');
-		$this->db->where('Laboratories.labid', $labid);
-		$this->db->where('faculty_member_of.status', 't');
-		$q = $this->db->get('Faculty');
-
-		return $this->query_conversion($q);
 	}
 
 	public function request_advise($fid,$eid){
@@ -109,9 +105,6 @@ class Faculty_model extends MY_Model{
 		return $res;
 	}
 
-	/* Laboratory Heads functionalities*/
-
-	/*Admin functionalities*/
 	public function get_all_faculty(){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
 		$this->db->where('Faculty.account_status','t');

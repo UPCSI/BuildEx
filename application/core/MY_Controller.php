@@ -31,6 +31,26 @@ class User_Controller extends MY_Controller{
         }
     }
 
+    public function laboratory($role = NULL, $id = 0){
+        $this->load->model('faculty_model', 'faculty');
+        $this->load->model('graduate_model', 'graduate');
+        if($role == 'faculty'){
+            $laboratory = $this->faculty->get_laboratory($id);
+        }
+        else if($role == 'graduate'){
+            $laboratory = $this->graduate->get_laboratory($id);
+        }
+
+        print_var($role);
+        print_var($id);
+        print_var($laboratory);
+        
+        if(isset($laboratory)){
+            $labid = $laboratory->labid;
+            redirect(laboratory_path($labid));
+        }
+    }
+
     public function logout(){   
         $this->session->sess_destroy();
         redirect('');

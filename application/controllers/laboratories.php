@@ -5,37 +5,16 @@ class Laboratories extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('laboratory_model','laboratory');
+		$this->load->model('laboratory_head_model','laboratory_head');
 	}
 
 	/* REST Methods */
-	public function view($labid = NULL){
-		$role = $this->session->userdata('active_role');
-		$role_id = $this->session->userdata('active_id');
-
-		$data['is_member'] = NULL;
-		if($role == 'graduate'){
-			$data['is_member'] = $this->laboratories_model->is_graduate_member($role_id);
-		}
-		else if($role == 'faculty'){
-			$data['is_member'] = $this->laboratories_model->is_faculty_member($role_id);
-		}
-
-		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
-		$data['lab_head'] = $this->laboratory_head_model->get_laboratory_head_of_lab($labid);
-		$data['role'] = $this->session->userdata('active_role');
-
-		if(is_null($data['laboratory'])){
-			redirect('');
-			//implement here where to redirect if $labid is an invalid laboratory
-		}
-		$data['faculty_members'] = $this->faculty->get_all_lab_faculty($labid);
-		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-
+	public function view($labid = 0){
+		$data['laboratory'] = $this->laboratory->get($labid);
+		$data['lab_head'] = $this->laboratory->get_laboratory_head($labid);
+		$data['faculty'] = $this->laboratory->get_all_faculty($labid);
+		$data['graduates'] = $this->laboratory->get_all_graduates($labid);
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
-		
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory/index';
 		$data['page'] = 'view';

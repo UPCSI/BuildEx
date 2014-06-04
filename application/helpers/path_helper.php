@@ -9,4 +9,12 @@ if ( ! function_exists('page_path')) {
         }
         return $path;
     }
+
+    function laboratory_path($labid = 0){
+        return "laboratory/{$labid}";
+    }
+
+    function faculty_path($username = NULL){
+        return "faculty/{$username}";
+    }
 }

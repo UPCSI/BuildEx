@@ -22,8 +22,8 @@ TABLE LaboratoryHeads:
 TABLE Faculty:
 	uid: references Users.uid
 	fid: integer PRIMARY AUTOINCREMENT
-	faculty_num: integer UNIQUE
 	account_status: boolean #{Admin Confirmed[true], Not Confirmed[false]}
+	faculty_num: integer UNIQUE
 
 TABLE Graduates:
 	uid: references Users.uid

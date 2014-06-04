@@ -59,6 +59,10 @@ class Laboratory_head_model extends MY_Model{
 	}
 	/* End of CRUD */
 
+	public function assign_to($lid = 0, $labid = 0){
+		return $this->db->insert('manage',array('lid'=>$lid, 'labid'=>$labid));
+	}
+
 	public function get_laboratory_head_of_lab($labid = 0){
 		$this->db->select('*');
 		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');

@@ -58,6 +58,15 @@ class Graduate_model extends MY_Model{
 		return 0;
 	}
 
+	public function get_laboratory($gid, $cond = "true"){
+		$this->db->select('Laboratories.*');
+		$this->db->join('graduates_member_of','graduates_member_of.labid = Laboratories.labid');
+		$this->db->where('graduates_member_of.gid',$gid);
+		$this->db->where('graduates_member_of.status', $cond);
+		$q = $this->db->get('Laboratories');
+		return $this->query_row_conversion($q);
+	}
+
 	public function get_graduate_by_experiment($eid = 0){
 		$this->db->select('Graduates.*');
 		$this->db->join('graduates_conduct','graduates_conduct.gid = Graduates.gid');
@@ -70,21 +79,6 @@ class Graduate_model extends MY_Model{
 	}
 
 	/*Laboratory Heads Functionalities*/
-	public function get_all_lab_graduates($labid = 0){
-		/*
-		* Given the labid of the laboratory
-		* this function will return all the graduates in
-		* that lab.
-		*/
-		$this->db->select('Users.*,Graduates.*,');
-		$this->db->join('graduates_member_of','graduates_member_of.gid = Graduates.gid');
-		$this->db->join('Users','Users.uid = Graduates.uid');
-		$this->db->join('Laboratories','Laboratories.labid = graduates_member_of.labid');
-		$this->db->where('Laboratories.labid',$labid);
-		$this->db->where('graduates_member_of.status','t');
-		$q = $this->db->get('Graduates');
-		return $this->query_conversion($q);
-	}
 	
 	/*Admin Functionalities*/
 	public function get_all_graduates(){
