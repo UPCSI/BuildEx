@@ -7,7 +7,7 @@ class Builder_model extends MY_Model{
 	}
 
 	function get_all_objects($eid){
-		$data = [];
+		$data = array();
 
 		$this->db->where('Pages.eid', $eid);
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');

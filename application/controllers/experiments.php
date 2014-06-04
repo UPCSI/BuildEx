@@ -8,6 +8,17 @@ class Experiments extends MY_Controller{
 	}
 
 	/* REST Methods */
+	public function index($role = NULL, $id = 0){
+		$data['role'] = $role;
+		$data['id'] = $id;
+		$data['experiments'] = $this->faculty->get_experiments($fid);
+		$data['title'] = 'Faculty';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'experiments';
+		$data['notification'] = $this->session->flashdata('notification');
+		$this->load->view('main_layout',$data);
+	}
+
 	public function add($role = NULL, $id = 0) {
 		$data['role'] = $role;
     	$data['id'] = $id;

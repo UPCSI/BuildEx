@@ -9,16 +9,6 @@ class Faculty extends User_Controller{
 	}
 
 	/* Faculty Pages */
-	public function profile(){
-        $username = $this->session->userdata('username');
-        $data['faculty'] = $this->faculty->get(0, $username);
-        $data['roles'] = array_keys($this->session->userdata('roles'));
-        $data['title'] = 'Faculty';
-        $data['main_content'] = 'users/index';
-        $data['page'] = 'profile';
-        $this->load->view('main_layout',$data);
-    }
-
 	public function experiments(){
 		$fid = role_id();
 		$data['role'] = 'faculty';
@@ -116,13 +106,16 @@ class Faculty extends User_Controller{
 	}
 
 	public function view($username = NULL){
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-		$data['faculty'] = $this->faculty_model->get_faculty_profile(0,$username);
-		$fid = $data['faculty']->fid;
-		$data['experiments'] = $this->get_all_experiments($fid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view';
-		$this->load->view('main_layout', $data);
+		$username = $this->session->userdata('username');
+        $data['faculty'] = $this->faculty->get(0, $username);
+        $fid = $data['faculty']->fid;
+        $data['roles'] = array_keys($this->session->userdata('roles'));
+        $data['experiments'] = $this->faculty->get_experiments($fid);
+        $data['title'] = 'Faculty';
+        $data['main_content'] = 'faculty/index';
+        $data['page'] = 'view';
+        $data['notification'] = $this->session->flashdata('notification');
+        $this->load->view('main_layout',$data);
 	}
 	/* End of REST Methods */
 

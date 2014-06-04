@@ -1,37 +1,28 @@
-<h1> Faculty </h1>
-<hr>
-<?php if(isset($user)): ?>
-	<h2> <?php echo strtoupper($user->last_name).', '.ucwords($user->first_name).', '.ucfirst($user->middle_name); ?> </h2>
-	<p><strong>Email Address: </strong> <?php echo $user->email_ad; ?></p>
-	<?php if(isset($faculty)): ?>
-		<p><strong>Faculty no:</strong> <?php echo $faculty->faculty_num; ?></p> 
-	<?php endif; ?>
-<?php endif; ?>
-<hr>
-<h2> Experiments </h2>
-<?php if(isset($experiments)): ?>
-	<table>
-		<thead>
-			<tr>
-				<td width = "200"> Experiment </td>
-				<td width = "125"> Respondents </td>
-				<td width = "125"> Quota </td>
-				<td width = "125"> Status </td>
-				<td width = "125"> Published </td>
-			</tr>
-		</thead>
-		<tbody>
-		<?php foreach ($experiments as $experiment):?>
-			<tr>
-				<td> <?php echo anchor('experiment/view/'.$experiment->eid, $experiment->title); ?> </td>
-				<td> <?php echo $experiment->current_count; ?> </td>
-				<td> <?php echo $experiment->target_count; ?> </td>
-				<td> <?php if($experiment->status == 'f'){ echo "On-Going";}else{ echo "Complete"; } ?> </td>
-				<td> <?php if($experiment->is_published == 'f'){ echo "False"; }else{ echo "True"; } ?> </td>
-			</tr>
-		<?php endforeach; ?>
-		</tbody>
-	</table>
-<?php else: ?>
-	<p> There are no experiments. </p>
-<?php endif; ?>
+<div class="row">
+  <div class="large-12 column">
+    <div class="panel dash-item" style="padding:0;border-width:0">
+      <div class="panel profile" style="min-height:180px;margin-bottom:0">
+        <h4 class="white">
+          <strong> <?php echo format_full_name($faculty); ?> </strong>
+        </h4>
+        <h5 class="white">
+          <?php echo $this->session->userdata('username'); ?>
+        </h5>
+      </div>
+      <dl class="tabs profile" data-tab>
+        <dd class="active"><a href="#panel2-1">About</a></dd>
+        <dd><a href="#panel2-2">Experiments</a></dd>
+      </dl>
+      <div class="tabs-content profile" data-equalizer>
+        <div class="content active" id="panel2-1">
+  	     <?php $this->load->view('faculty/_info'); ?>
+         <br>
+	       <?php $this->load->view('users/_roles'); ?>
+        </div>
+        <div class="content" id="panel2-2">
+          <?php $this->load->view('faculty/_top_experiments'); ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

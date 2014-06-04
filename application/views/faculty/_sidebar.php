@@ -1,12 +1,14 @@
 <ul class="off-canvas-list">
-    <li><label> <?php echo SITE_NAME; ?> - Faculty </label></li>
-    <li><a href = "<?php echo site_url('faculty'); ?>"> Home </a></li>
-    <li><a href = "<?php echo site_url('faculty/profile'); ?>"> Profile </a></li>
+    <li><label><?php echo SITE_NAME; ?> - Faculty</label></li>
+    <li><?php echo anchor(page_path(), 'Home'); ?></li>
+    <li><?php echo anchor(page_path(''), 'Profile'); ?></li>
+    
     <li><label>Records</label></li>
-    <li><a href = "<?php echo site_url('faculty/experiments'); ?>"> Experiments </a></li>
-    <li><a href = "<?php echo site_url('faculty/advisory'); ?>"> Advisory Experiments </a></li>
-    <li><a href = "#"> Archive </a></li>
+    <li><?php echo anchor('faculty/'.role_id().'/experiments', 'Experiments'); ?></li>
+    <li><?php echo anchor(page_path('advisories'), 'Advisory Experiments'); ?></li>
+    <li><?php echo anchor(page_path('archives'), 'Archives'); ?></li>
+
     <li><label>Laboratories</label></li>
-    <li><a href = "<?php echo site_url('faculty/laboratory'); ?>"> My Laboratory </a></li>
-    <li><a href = "<?php echo site_url('faculty/laboratories'); ?>"> Explore </a></li> 
+    <li><?php echo anchor(page_path('laboratory'), 'My Laboratory'); ?></li>
+    <li><?php echo anchor('explore', 'Explore'); ?></li> 
 </ul>

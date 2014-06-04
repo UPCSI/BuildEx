@@ -67,7 +67,7 @@ $autoload['helper'] = array('url',
                             'form',
                             'date',
                             'debug',
-                            'notification',
+                            'path',
                             'user',
                             'experiment');
 

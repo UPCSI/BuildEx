@@ -25,7 +25,7 @@
               <section class="main-section">
                   <div class="row">
                       <div class="large-12 columns">
-                          <?php $this->load->view('experiment/'.$page); ?>
+                          <?php $this->load->view('faculty/'.$page); ?>
                       </div>
                   </div>
               </section>
