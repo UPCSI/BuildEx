@@ -40,13 +40,13 @@ class Test extends CI_Controller{
 	}
 
 	public function add_faculty(){
-		$user_info['username'] = 'mtcarreon';
+		$user_info['username'] = 'ppzuniga';
 		$user_info['password'] = 'password';
-		$user_info['first_name'] = 'Mario';
-		$user_info['middle_name'] = 'Brothers';
-		$user_info['last_name'] = 'Carreon';
-		$user_info['email_ad'] = 'mtcarreon@test.com';
-		$faculty_id = 20110001;
+		$user_info['first_name'] = 'Philip';
+		$user_info['middle_name'] = 'Zuniga';
+		$user_info['last_name'] = 'Zuniga';
+		$user_info['email_ad'] = 'pzzuniga@test.com';
+		$faculty_id = 199700001;
 		$this->faculty->create($user_info, $faculty_id);
 		echo '<pre>';
 		echo 'Faculty added!';
