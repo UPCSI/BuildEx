@@ -140,12 +140,12 @@ class Admins extends User_Controller{
 
 	private function get_laboratories_list(){
 		$this->load->model('laboratory_model', 'laboratory');
-		return $this->laboratory->get_all_laboratories();
+		return $this->laboratory->all();
 	}
 
 	private function get_faculty_list(){
 		$this->load->model('faculty_model', 'faculty');
-		return $this->faculty->get_all_faculty();
+		return $this->faculty->all();
 	}
 
 	private function get_faculty_account_requests(){
@@ -155,7 +155,7 @@ class Admins extends User_Controller{
 
 	private function get_graduates_list(){
 		$this->load->model('graduate_model', 'graduate');
-		return $this->graduate->get_all_graduates();
+		return $this->graduate->all();
 	}
 
 	private function get_experiments_list(){
@@ -165,7 +165,7 @@ class Admins extends User_Controller{
 
 	private function get_respondents_list(){
 		$this->load->model('respondent_model','respondent');
-		return $this->respondent->get_all_respondents();
+		return $this->respondent->all();
 	}
 	/* End of private functions */
 }

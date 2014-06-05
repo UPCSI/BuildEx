@@ -1,13 +1,27 @@
 <?php
 
 class Respondent_model extends MY_Model{
-	public function add_respondent($info,$eid){
+
+	/* CRUD Methods */
+	public function create($info = NULL, $eid = 0){
 		$info['eid'] = $eid; 
 		$this->db->insert('Respondents',$info);
 		return $this->db->insert_id();
 	}
 
-	public function delete_respondent($eid, $rid){
+	public function get($rid = 0){
+		$this->db->select('*');
+		$this->db->where('rid',$rid);
+		$q = $this->db->get('Respondents');
+		return $this->query_row_conversion($q);
+	}
+
+	public function all(){
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);
+	}
+
+	public function destroy($eid = 0, $rid = 0){
 		$this->load->model('experiments_model');
 		$q = "DELETE FROM \"Respondents\" AS r
 			  USING \"Experiments\" AS e, answer AS a
@@ -25,6 +39,7 @@ class Respondent_model extends MY_Model{
 		$this->experiments_model->decrement_count($eid);
 		return true;
 	}
+	/* End of CRUD */
 
 	public function get_respondents($eid){
 		$this->db->select('*');
@@ -38,18 +53,6 @@ class Respondent_model extends MY_Model{
 		$info['qid'] = $qid;
 		$this->db->insert('Responses',$info);
 		return $this->db->insert_id();
-	}
-
-	public function get_respondent($rid = 0){
-		$this->db->select('*');
-		$this->db->where('rid',$rid);
-		$q = $this->db->get('Respondents');
-		return $this->query_row_conversion($q);
-	}
-
-	public function get_all_respondents(){
-		$q = $this->db->get('Respondents');
-		return $this->query_conversion($q);
 	}
 
 	public function save_responses($responses){

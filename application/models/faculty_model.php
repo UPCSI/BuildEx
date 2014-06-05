@@ -10,6 +10,33 @@ class Faculty_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
+	public function get($fid = 0, $username = NULL){
+		$this->db->select('Faculty.*, Users.*');
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		if($fid > 0){
+			$this->db->where('Faculty.fid', $fid);
+		}
+		else{
+			$this->db->where('Users.username', $username);
+		}
+		$q = $this->db->get('Faculty');
+		return $this->query_row_conversion($q);
+	}
+
+	public function all(){
+		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
+		$this->db->where('Faculty.account_status','t');
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		$q = $this->db->get('Faculty');
+		return $this->query_conversion($q);
+	}
+
+	public function update($fid = 0, $faculty_info = NULL){
+		$this->db->where('fid', $fid);
+		$this->db->update('Faculty', $faculty_info);
+		return $this->is_rows_affected();
+	}
+
 	public function destroy($fid = 0, $username = NULL){
 		if($fid > 0){
 			$this->db->where('fid',$fid);
@@ -23,25 +50,6 @@ class Faculty_model extends MY_Model{
 			$this->db->query($q,array($username));
 		}
 		return $this->is_rows_affected();
-	}
-
-	public function update($fid = 0, $faculty_info = NULL){
-		$this->db->where('fid', $fid);
-		$this->db->update('Faculty', $faculty_info);
-		return $this->is_rows_affected();
-	}
-
-	public function get($fid = 0, $username = NULL){
-		$this->db->select('Faculty.*, Users.*');
-		$this->db->join('Users','Users.uid = Faculty.uid');
-		if($fid > 0){
-			$this->db->where('Faculty.fid', $fid);
-		}
-		else{
-			$this->db->where('Users.username', $username);
-		}
-		$q = $this->db->get('Faculty');
-		return $this->query_row_conversion($q);
 	}
 	/* End of CRUD */
 
@@ -103,14 +111,6 @@ class Faculty_model extends MY_Model{
 		$res = $this->query_row_conversion($q);
 
 		return $res;
-	}
-
-	public function get_all_faculty(){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
-		$this->db->where('Faculty.account_status','t');
-		$this->db->join('Users','Users.uid = Faculty.uid');
-		$q = $this->db->get('Faculty');
-		return $this->query_conversion($q);
 	}
 
 	public function get_all_account_requests(){

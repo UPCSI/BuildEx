@@ -10,6 +10,30 @@ class Graduate_model extends MY_Model{
 		return $this->db->insert_id();
 	}
 
+	public function get($gid = 0, $username = NULL){
+		if($gid == 0 && is_null($username)){
+			return false;
+		}
+		$this->db->select('Graduates.*,Users.*');
+		$this->db->join('Users','Users.uid = Graduates.uid');
+		if($gid > 0){
+			$this->db->where('Graduates.gid',$gid);
+		}
+		else{
+			
+			$this->db->where('Users.username',$username);
+		}
+		$q = $this->db->get('Graduates');
+		return $this->query_row_conversion($q);
+	}
+
+	public function all(){
+		$this->db->select('*');
+		$this->db->join('Users','Users.uid = Graduates.uid');
+		$q = $this->db->get('Graduates');
+		return $this->query_conversion($q);	
+	}
+
 	public function destroy($gid = 0, $username = NULL){
 		if($gid > 0){
 			$this->db->where('gid',$gid);
@@ -29,27 +53,6 @@ class Graduate_model extends MY_Model{
 		$this->db->where('gid', $gid);
 		$this->db->update('Graduates', $graduates_info);
 		return $this->is_rows_affected();
-	}
-
-	public function get_graduate_profile($gid = 0, $username = NULL){
-		/*
-		* Returns the profile of a particular graduate given its 
-		* gid or username
-		*/
-		if($gid == 0 && is_null($username)){
-			return false;
-		}
-		$this->db->select('Graduates.*,Users.*');
-		$this->db->join('Users','Users.uid = Graduates.uid');
-		if($gid > 0){
-			$this->db->where('Graduates.gid',$gid);
-		}
-		else{
-			
-			$this->db->where('Users.username',$username);
-		}
-		$q = $this->db->get('Graduates');
-		return $this->query_row_conversion($q);
 	}
 	/* End of CRUD */
 
@@ -76,15 +79,5 @@ class Graduate_model extends MY_Model{
 		$res = $this->query_row_conversion($q);
 
 		return $this->get_faculty_profile($res->gid);
-	}
-
-	/*Laboratory Heads Functionalities*/
-	
-	/*Admin Functionalities*/
-	public function get_all_graduates(){
-		$this->db->select('*');
-		$this->db->join('Users','Users.uid = Graduates.uid');
-		$q = $this->db->get('Graduates');
-		return $this->query_conversion($q);	
 	}
 }

@@ -43,8 +43,14 @@ class Laboratory_model extends MY_Model{
 	}
 	/* End of CRUD */
 
-	/* Private Methods */
-	/* End of Privates */
+	public function all(){
+		$this->db->join('manage','manage.labid = Laboratories.labid');
+		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = manage.lid');
+		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');
+		$q = $this->db->get('Laboratories');
+		return $this->query_conversion($q);
+	}
+
 	public function get_all_faculty($labid = 0){
 		$this->db->select('Users.*,Faculty.*');
 		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
@@ -185,20 +191,7 @@ class Laboratory_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
-	/*Admin Functionalities*/
 	public function assign_laboratory_head($labid,$lid){
-		/*
-		* Assigns a lab head with lid to manage the laboratory with labid
-		*/
 		return $this->db->insert('manages',array('lid'=>$lid,'labid'=>$labid));
-	}
-
-	public function get_all_laboratories(){
-		$this->db->select('*');
-		$this->db->join('manage','manage.labid = Laboratories.labid');
-		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = manage.lid');
-		$this->db->join('Users','Users.uid = LaboratoryHeads.uid');
-		$q = $this->db->get('Laboratories');
-		return $this->query_conversion($q);
 	}
 }
