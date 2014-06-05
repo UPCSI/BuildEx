@@ -6,7 +6,7 @@
 		<h3 class="white">My Experiments</h3>
 	</div>
 	<div class="large-6 medium-6 small-6 column">
-		<?php echo anchor(format_experiment_link($role, $id).'/add', 'Create Experiment', 'class = "button small"'); ?>
+		<?php echo anchor(format_experiment_link($role, $id).'/add', 'Create Experiment', 'class = "button small pull-right"'); ?>
 	</div>
 </div>
 
