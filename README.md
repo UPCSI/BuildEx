@@ -89,4 +89,22 @@ Click now the 'buildex_db' database and go to the 'SQL' tab.
 
 On your browser, go to http://localhost/BuildEx/. A welcome page should appear.
 
+## Credentials
+
+### Admin
+
+```
+username: buildex.admin
+password: password
+```
+
+### Faculty
+
+```
+username: mtcarreon
+password: password
+```
+
+Note: Other roles are under development.
+
 Code.Code.Code. Start!
