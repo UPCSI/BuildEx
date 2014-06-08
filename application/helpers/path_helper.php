@@ -21,11 +21,21 @@ function graduate_path($graduate = NULL){
     return "graduate/{$graduate->username}";
 }
 
-function experiment_path($experiment = NULL) {
+function experiment_path($experiment = NULL, $action = 'view') {
     $link = NULL;
     if(isset($experiment)){
         $researcher = researcher_path($experiment);
         $link = "{$researcher}/experiment/{$experiment->eid}";
+        if($action != 'view'){
+            $link = $link.'/'.$action;
+        }
+    }
+    else{
+        if($action == 'add' || $action == 'create'){
+            $CI =& get_instance();
+            $researcher = role().'/'.role_id();
+            $link = "{$researcher}/experiment/{$action}";
+        }
     }
     return $link;
 }
@@ -35,7 +45,7 @@ function researcher_path($experiment = NULL){
         return "faculty/{$experiment->fid}";
     }
     else if(isset($experiment->gid)){
-        return "graduate/{$experiment->fid}";
+        return "graduate/{$experiment->gid}";
     }
 }
 

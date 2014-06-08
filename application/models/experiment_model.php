@@ -20,7 +20,10 @@ class Experiment_model extends MY_Model{
 	}
 
 	public function get($eid = 0){
-		$this->db->where('eid',$eid);
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->where('Experiments.eid', $eid);
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
