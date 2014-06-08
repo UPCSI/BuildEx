@@ -2,29 +2,29 @@
 <h5> 
 	<?php if($experiment->status == 'f'):?>
 		<?php if($experiment->is_published == 'f'): ?>
-			<span style='color:#f1c40f'><i class='fa fa-minus-circle'></i> Standby </span>
+			<span style='color:#f1c40f'><i class='fa fa-minus-circle'></i>Standby</span>
 		<?php else: ?>
-			<span style='color:#f1c40f'><i class='fa fa-play-circle'></i> Ongoing </span>
+			<span style='color:#f1c40f'><i class='fa fa-play-circle'></i>Ongoing</span>
 		<?php endif; ?>
 	<?php else: ?>
-		<span style='color:#36d077'><i class='fa fa-check-circle'></i> Complete </span>
+		<span style='color:#36d077'><i class='fa fa-check-circle'></i>Complete</span>
 	<?php endif; ?>
 </h5>
 <h5> 
 	<?php if($experiment->is_published == 'f'): ?>
 		<?php if($experiment->status == 'f'): ?>
-			<span style='color:#e74c3c'><i class='fa fa-times-circle'></i> Not published</span>
+			<span style='color:#e74c3c'><i class='fa fa-times-circle'></i>Not published</span>
 		<?php else: ?>
-			<span style='color:#f1c40f'><i class='fa fa-times-circle'></i> Closed</span>
+			<span style='color:#f1c40f'><i class='fa fa-times-circle'></i>Closed</span>
 		<?php endif; ?>
 	<?php else: ?>
-		<span style='color:#36d077'><i class='fa fa-check-circle'></i> Published</span>
+		<span style='color:#36d077'><i class='fa fa-check-circle'></i>Published</span>
 	<?php endif; ?>
 </h5>
 <h5 class="actions">
 	<?php echo anchor("builder/app/{$experiment->eid}", 'Open', 'class = "button tiny"'); ?>
-	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/destroy'); ?>
+	<?php echo form_open(experiment_path($experiment, 'destroy')); ?>
         <?php echo form_hidden('experiment_id', $experiment->eid); ?>
-  		<button class = "button tiny" type="submit" value="delete"> Delete </button>
+  		<button class = "button tiny" type="submit" value="delete">Delete</button>
     <?php echo form_close(); ?>
 </h5>	

@@ -2,7 +2,7 @@
 
 <fieldset>
 	<legend>Edit Experiment</legend>
-	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/update'); ?>
+	<?php echo form_open(experiment_path($experiment, 'update')); ?>
 
 		<label>Title</label><br/>
 		<input type="text" id="title" required name="title" value="<?php echo $experiment->title; ?>">

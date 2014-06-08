@@ -6,7 +6,7 @@
 				<div class="row full">
 					<div class="large-12 column">
 						<h3>
-							<?php echo anchor(format_experiment_link('faculty', $experiment->fid, $experiment), $experiment->title); ?>
+							<?php echo anchor(experiment_path($experiment), $experiment->title); ?>
 						</h3>
 					</div>
 				</div>

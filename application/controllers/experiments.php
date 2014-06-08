@@ -20,9 +20,8 @@ class Experiments extends MY_Controller{
 	}
 
 	public function add($role = NULL, $id = 0) {
-		$data['role'] = $role;
-    	$data['id'] = $id;
 		$data['experiment'] = NULL;
+		$data['action'] = 'create';
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'new';
@@ -35,13 +34,13 @@ class Experiments extends MY_Controller{
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
 		$eid = $this->experiment->create($info);
-
 		$msg = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification', $msg);
 		redirect('builder/app/'.$eid);
 	}
 
 	public function destroy($role = NULL, $id = 0, $eid = 0){
+		$eid = $this->input->post('experiment_id');
 		if($this->experiment->destroy($eid)){
 			$msg = 'You have successfully deleted an experiment!';
 		}
@@ -49,7 +48,7 @@ class Experiments extends MY_Controller{
 			$msg = 'Error in deleting experiment.';
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect($role.'/experiments');
+		redirect("{$role}/{$id}/experiments");
 	}
 
 	public function view($role = NULL, $id = 0, $eid = 0){
