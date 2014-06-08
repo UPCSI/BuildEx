@@ -5,20 +5,10 @@ class Admins extends User_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->role = 'admin';
-		$this->load->model('admin_model','admin');
+		$this->load->model('admin_model', 'admin');
 	}
 
 	/* Admin Pages */
-	public function profile(){
-        $username = $this->session->userdata('username');
-        $data['admin'] = $this->admin->get(0, $username);
-        $data['roles'] = array_keys($this->session->userdata('roles'));
-        $data['title'] = 'Admin';
-        $data['main_content'] = 'users/index';
-        $data['page'] = 'profile';
-        $this->load->view('main_layout',$data);
-    }
-
 	public function administrators(){
 		$data['admins'] = $this->get_admins_list();
 		$data['title'] = 'Admin';
@@ -96,12 +86,19 @@ class Admins extends User_Controller{
 	}
 
 	public function view($username = NULL){
-		$user = $this->user_model->get(0,$username);
-		$data['user'] = $user;
-		$data['title'] = $user->username;
-		$data['main_content'] = 'users/index';
-		$data['page'] = 'view';
-		$this->load->view('main_layout',$data);
+		$data['admin'] = $this->admin->get(0, $username);
+        if(isset($data['admin'])){
+        	$fid = $data['admin']->aid;
+	        $data['roles'] = array_keys($this->session->userdata('roles'));
+	        $data['title'] = 'Admin';
+	        $data['main_content'] = 'admin/index';
+	        $data['page'] = 'view';
+	        $data['notification'] = $this->session->flashdata('notification');
+	        $this->load->view('main_layout',$data);
+        }
+        else{
+        	show_404();
+        }
 	}
 	/* End of REST Methods */
 
@@ -140,12 +137,12 @@ class Admins extends User_Controller{
 
 	private function get_laboratories_list(){
 		$this->load->model('laboratory_model', 'laboratory');
-		return $this->laboratory->get_all_laboratories();
+		return $this->laboratory->all();
 	}
 
 	private function get_faculty_list(){
 		$this->load->model('faculty_model', 'faculty');
-		return $this->faculty->get_all_faculty();
+		return $this->faculty->all();
 	}
 
 	private function get_faculty_account_requests(){
@@ -155,7 +152,7 @@ class Admins extends User_Controller{
 
 	private function get_graduates_list(){
 		$this->load->model('graduate_model', 'graduate');
-		return $this->graduate->get_all_graduates();
+		return $this->graduate->all();
 	}
 
 	private function get_experiments_list(){
@@ -165,7 +162,7 @@ class Admins extends User_Controller{
 
 	private function get_respondents_list(){
 		$this->load->model('respondent_model','respondent');
-		return $this->respondent->get_all_respondents();
+		return $this->respondent->all();
 	}
 	/* End of private functions */
 }

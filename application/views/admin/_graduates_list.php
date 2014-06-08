@@ -12,11 +12,7 @@
         <tbody>
     <?php foreach ($graduates as $graduate):?>
         <tr>
-            <td>
-                <a href = "<?php echo site_url('graduates/view/'.$graduate->username); ?>">
-                    <?php echo format_full_name($graduate); ?> 
-                </a>
-            </td>
+            <td><?php echo anchor(graduate_path($graduate), format_full_name($graduate)); ?></td>
             <td><?php echo $graduate->username; ?></td>
             <td><?php echo $graduate->student_num;?></td>
             <td>mm-dd-yyyy</td>

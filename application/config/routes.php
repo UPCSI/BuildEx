@@ -48,7 +48,8 @@ $route['signin/(.+)'] = 'sign_in/$1';
 
 // Internals
 $route['admin'] = 'admins/index';
-$route['admin/(.+)'] = 'admins/$1';
+$route['admin/(administrators|laboratories|faculty|graduates|experiments|respondents|logout)'] = 'admins/$1';
+$route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
 $route['(graduate|faculty)/([0-9]+)/laboratory'] = '$1/laboratory/$1/$2';
 $route['(graduate|faculty)/logout'] = '$1/logout';

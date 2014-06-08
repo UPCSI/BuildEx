@@ -25,6 +25,25 @@ class Experiment_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
+	public function all(){
+		$all = array();
+		$faculty_exp = $this->all_faculty_experiments();
+		$graduates_exp = $this->all_graduate_experiments();
+
+		if(isset($faculty_exp)){
+			$all = array_merge($all, $faculty_exp);
+		}
+
+		if(isset($graduates_exp)){
+			$all = array_merge($all, $faculty_exp);
+		}
+
+		if(empty($all)){
+			return null;
+		}
+		return $all;
+	}
+
 	public function update($eid = 0, $info = NULL){
 		$this->db->where('eid', $eid);
 		$this->db->update('Experiments', $info);
@@ -49,6 +68,26 @@ class Experiment_model extends MY_Model{
 			$this->db->insert('graduates_conduct', $conduct_info);
 		}
 		return $this->is_rows_affected();
+	}
+
+	public function all_faculty_experiments(){
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
+		$this->db->join('Laboratories', 'Laboratories.labid = faculty_member_of.labid');
+		$q = $this->db->get('Experiments');
+		return $this->query_conversion($q);
+	}
+
+	public function all_graduate_experiments(){
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+		$this->db->join('Users', 'Users.uid = Graduates.gid');
+		$this->db->join('graduates_member_of', 'graduates_member_of.gid = Graduates.gid');
+		$this->db->join('Laboratories', 'Laboratories.labid = graduates_member_of.labid');
+		$q = $this->db->get('Experiments');
+		return $this->query_conversion($q);
 	}
 
 	public function get_experiment_by_hash($url){
@@ -233,47 +272,6 @@ class Experiment_model extends MY_Model{
 		$this->db->where('Laboratories.labid',$labid);
 		$this->db->where('Experiments.privacy',2);
 		$this->db->or_where('Experiments.privacy',3);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-
-	/* Admin Functionalities */
-	public function all(){
-		$all = array();
-		$faculty_exp = $this->all_faculty_experiments();
-		$graduates_exp = $this->all_graduate_experiments();
-
-		if(isset($faculty_exp)){
-			array_merge($all, $faculty_exp);
-		}
-
-		if(isset($graduates_exp)){
-			array_merge($all, $faculty_exp);
-		}
-
-		if(empty($all)){
-			return null;
-		}
-		
-		return $all;
-	}
-
-	public function all_faculty_experiments(){
-		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
-		$this->db->join('faculty_member_of', 'faculty_member_of.fid = Faculty.fid');
-		$this->db->join('Laboratories', 'Laboratories.labid = faculty_member_of.labid');
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-
-	public function all_graduate_experiments(){
-		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
-		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
-		$this->db->join('graduates_member_of', 'graduates_member_of.gid = Graduates.gid');
-		$this->db->join('Laboratories', 'Laboratories.labid = graduates_member_of.labid');
 		$q = $this->db->get('Experiments');
 
 		return $this->query_conversion($q);

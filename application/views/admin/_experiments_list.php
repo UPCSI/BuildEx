@@ -12,17 +12,11 @@
         <tbody>
             <?php foreach ($experiments as $experiment): ?>
                 <tr>
-                    <td>
-                        <a href = "<?php echo site_url('experiment/view/'.$experiment->eid); ?>">
-                            <?php echo $experiment->title; ?> 
-                        </a>
-                    </td>
-                    <td><?php echo $experiment->title; ?></td>
-                    <td>
-                        <?php echo $experiment->current_count.'/'.$experiment->target_count; ?>
-                    </td>
-                    <td> <?php echo $experiment->is_published; ?> </td>
-                    <td> <?php echo $experiment->name; ?> </td>
+                    <td><?php echo anchor(experiment_path($experiment), $experiment->title); ?></td>
+                    <td><?php echo anchor(researcher_path($experiment), researcher($experiment)); ?></td>
+                    <td><?php echo response_ratio($experiment); ?></td>
+                    <td><?php echo $experiment->is_published; ?></td>
+                    <td><?php echo $experiment->name; ?> </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

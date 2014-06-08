@@ -15,7 +15,6 @@ class Admin_model extends MY_Model{
 	}
 
 	public function get($aid = 0, $username = NULL){
-		$this->db->select('Admins.*, Users.*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		if($aid > 0){
 			$this->db->where('Admins.aid', $aid);
@@ -25,6 +24,12 @@ class Admin_model extends MY_Model{
 		}
 		$q = $this->db->get('Admins');
 		return $this->query_row_conversion($q);
+	}
+
+	public function all(){
+		$this->db->join('Users','Users.uid = Admins.uid');
+		$q = $this->db->get('Admins');
+		return $this->query_conversion($q);
 	}
 
 	public function destroy($aid = 0, $username = NULL){
@@ -42,11 +47,4 @@ class Admin_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 	/* END OF CRUD */
-
-	public function all(){
-		$this->db->select('*');
-		$this->db->join('Users','Users.uid = Admins.uid');
-		$q = $this->db->get('Admins');
-		return $this->query_conversion($q);
-	}
 }

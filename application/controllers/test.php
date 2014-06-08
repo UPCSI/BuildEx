@@ -23,8 +23,17 @@ class Test extends CI_Controller{
 		$this->user_model->create($user_info);
 	}
 
+	public function delete_user(){
+		$username = 'buildex.admin';
+		$status = $this->user_model->destroy(0, $username);
+		echo '<pre>';
+		echo 'Faculty deleted!';
+		echo 'Status: '.$status;
+		echo '</pre>';
+	}
+
 	public function add_admin(){
-		$user_info['username'] = 'buildex.admin';
+		$user_info['username'] = 'admin';
 		$user_info['password'] = 'password';
 		$user_info['first_name'] = 'Sigmund';
 		$user_info['middle_name'] = 'Schlomo';
@@ -84,8 +93,6 @@ class Test extends CI_Controller{
 		echo 'Status: '.$status;
 		echo '</pre>';	
 	}
-
-	
 
 	
 	public function delete_graduate(){

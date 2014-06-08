@@ -4,9 +4,9 @@ class User_model extends MY_Model{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('admin_model','admin');
-		$this->load->model('graduate_model','graduate');
-		$this->load->model('laboratory_head_model','laboratory_head');
+		$this->load->model('admin_model', 'admin');
+		$this->load->model('graduate_model', 'graduate');
+		$this->load->model('laboratory_head_model', 'laboratory_head');
 	}
 
 	public function get_rules(){
@@ -19,7 +19,7 @@ class User_model extends MY_Model{
 	}
 
 	/* CRUD */
-	public function create($user_info){
+	public function create($user_info = NULL){
 		$user_info['password'] = $this->my_hash($user_info['password']);
 		$this->db->insert('Users',$user_info);
 		return $this->db->insert_id();
@@ -34,6 +34,23 @@ class User_model extends MY_Model{
 		}
 		$q = $this->db->get('Users');
 		return $this->query_row_conversion($q);
+	}
+
+	public function update($uid = 0, $user_info = NULL){
+		$this->db->where('uid', $uid);
+		$this->db->update('Users', $user_info);
+		return $this->is_rows_affected();
+	}
+
+	public function destroy($uid = 0, $username){
+		if($uid > 0){
+			$this->db->where('Users.uid', $uid);
+		}
+		else{
+			$this->db->where('Users.username', $username);
+		}
+		$this->db->delete('Users');
+		return $this->is_rows_affected();
 	}
 	/* END OF CRUD */
 	
@@ -130,18 +147,6 @@ class User_model extends MY_Model{
 
 	public function is_valid_email($email = NULL){
 		return strcmp(substr($email, -1), '*') != 0;
-	}
-
-	public function update_user($uid, $user_info){
-		$this->db->where('uid', $uid);
-		$this->db->update('Users', $user_info);
-		return $this->is_rows_affected();
-	}
-
-	public function delete_user($uid){
-		$this->db->where('uid',$uid);
-		$this->db->delete('Users');
-		return $this->is_rows_affected();
 	}
 
 	public function get_user_profile($uid = 0, $username = NULL){

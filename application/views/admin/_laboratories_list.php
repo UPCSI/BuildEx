@@ -12,8 +12,8 @@
         <tbody>
             <?php foreach ($laboratories as $laboratory): ?>
                 <tr>
-                    <td> <?php echo anchor('laboratories/view/'.$laboratory->labid,$laboratory->name); ?> </td>
-                    <td> <?php echo anchor('faculty/view/'.$laboratory->username, format_full_name($laboratory)); ?>
+                    <td> <?php echo anchor(laboratory_path($laboratory), $laboratory->name); ?> </td>
+                    <td> <?php echo anchor(faculty_path($laboratory), format_full_name($laboratory)); ?>
                     <td> <?php echo $laboratory->members_count; ?></td>
                     <td> <?php echo $laboratory->since; ?> </td>
                     <td>
