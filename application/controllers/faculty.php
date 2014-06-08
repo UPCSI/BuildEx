@@ -81,18 +81,6 @@ class Faculty extends User_Controller{
 		redirect('signup/faculty');
 	}
 
-	public function destroy(){
-		$faculty_id = $this->input->post('faculty_id');
-		if($this->faculty->destroy($faculty_id, NULL)){
-			$msg = "Deletion successful!";
-		}
-		else{
-			$msg = "Deletion failed!";
-		}
-		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/faculty');
-	}
-
 	public function view($username = NULL){
         $data['faculty'] = $this->faculty->get(0, $username);
         if(isset($data['faculty'])){
@@ -109,6 +97,18 @@ class Faculty extends User_Controller{
         	show_404();
         }
     }
+
+	public function destroy(){
+		$faculty_id = $this->input->post('faculty_id');
+		if($this->faculty->destroy($faculty_id, NULL)){
+			$msg = "Deletion successful!";
+		}
+		else{
+			$msg = "Deletion failed!";
+		}
+		$this->session->set_flashdata('notification',$msg);
+		redirect('admin/faculty');
+	}
 	/* End of REST Methods */
 
 	public function view_experiment($eid = 0){

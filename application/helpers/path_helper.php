@@ -9,12 +9,16 @@ function page_path($page = NULL) {
     return $path;
 }
 
-function laboratory_path($labid = 0){
-    return "laboratory/{$labid}";
+function laboratory_path($laboratory = NULL){
+    return "laboratory/{$laboratory->labid}";
 }
 
-function faculty_path($username = NULL){
-    return "faculty/{$username}";
+function faculty_path($faculty = NULL){
+    return "faculty/{$faculty->username}";
+}
+
+function graduate_path($graduate = NULL){
+    return "graduate/{$graduate->username}";
 }
 
 function experiment_path($experiment = NULL) {
@@ -28,9 +32,15 @@ function experiment_path($experiment = NULL) {
 
 function researcher_path($experiment = NULL){
     if(isset($experiment->fid)){
-        return "faculty/{$experiment->username}";
+        return "faculty/{$experiment->fid}";
     }
     else if(isset($experiment->gid)){
-        return "graduate/{$experiment->username}";
+        return "graduate/{$experiment->fid}";
+    }
+}
+
+function admin_path($admin = NULL){
+    if(isset($admin)){
+        return "admin/{$admin->username}";
     }
 }

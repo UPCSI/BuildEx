@@ -8,17 +8,13 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($admins as $member):?>
+            <?php foreach ($admins as $admin):?>
                 <tr>
-                    <td>
-                        <a href = "<?php echo site_url('admin/view/'.$member->username); ?>">
-                            <?php echo format_short_name($member); ?> 
-                        </a>
-                    </td>
-                    <td><?php echo $member->username; ?></td>
+                    <td><?php echo anchor(admin_path($admin), format_short_name($admin)); ?></td>
+                    <td><?php echo $admin->username; ?></td>
                     <td>
                         <?php echo form_open('admin/destroy'); ?>
-                            <?php echo form_hidden('admin_id', $member->aid); ?>
+                            <?php echo form_hidden('admin_id', $admin->aid); ?>
                             <button class = "button tiny" type="submit" value="delete">&#x2717;</button>
                         <?php echo form_close(); ?>
                     </td>

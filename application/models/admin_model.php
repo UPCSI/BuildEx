@@ -15,7 +15,6 @@ class Admin_model extends MY_Model{
 	}
 
 	public function get($aid = 0, $username = NULL){
-		$this->db->select('Admins.*, Users.*');
 		$this->db->join('Users','Users.uid = Admins.uid');
 		if($aid > 0){
 			$this->db->where('Admins.aid', $aid);
