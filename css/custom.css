@@ -408,6 +408,12 @@ div.panel.exp > div.row > div.large-12.column > div.panel > h5.actions {
 
 div.panel.exp > div.row > div.large-12.column > div.panel > h5 > a.button.tiny {
   margin:0;
+  display: inline-block;
+}
+
+h5 .experiment_delete {
+  margin: 0;
+  display: inline-block;
 }
 
 div.panel.profile{

@@ -23,8 +23,8 @@
 </h5>
 <h5 class="actions">
 	<?php echo anchor("builder/app/{$experiment->eid}", 'Open', 'class = "button tiny"'); ?>
-	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/destroy'); ?>
-        <?php echo form_hidden('experiment_id', $experiment->eid); ?>
-  		<button class = "button tiny" type="submit" value="delete"> Delete </button>
-    <?php echo form_close(); ?>
-</h5>	
+	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/destroy', array('class' => 'experiment_delete')); ?>
+  	<?php echo form_hidden('experiment_id', $experiment->eid); ?>
+		<?php echo anchor('#', 'Delete', array('class' => 'button tiny')); ?>
+   <?php echo form_close(); ?>
+</h5>
