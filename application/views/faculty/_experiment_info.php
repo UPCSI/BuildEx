@@ -27,4 +27,4 @@
         <?php echo form_hidden('experiment_id', $experiment->eid); ?>
   		<button class = "button tiny" type="submit" value="delete">Delete</button>
     <?php echo form_close(); ?>
-</h5>	
+</h5>
