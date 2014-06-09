@@ -51,13 +51,14 @@ $route['admin'] = 'admins/index';
 $route['admin/(administrators|laboratories|faculty|graduates|experiments|respondents|logout)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
-$route['(graduate|faculty)/([0-9]+)/laboratory'] = '$1/laboratory/$1/$2';
+$route['(graduate|faculty)/([0-9]+)/laboratory'] = '$1/laboratory/$2';
 $route['(graduate|faculty)/logout'] = '$1/logout';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)'] = '$1/view/$2';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/([a-z]+)'] = '$1/$3/$2';
 
 //Laboratories
 $route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
+$route['explore'] = 'laboratories/index';
 
 // Experiments
 $route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
