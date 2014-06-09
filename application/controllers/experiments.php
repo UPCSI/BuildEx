@@ -21,7 +21,7 @@ class Experiments extends MY_Controller{
 
 	public function add($role = NULL, $id = 0) {
 		$data['role'] = $role;
-    	$data['id'] = $id;
+    $data['id'] = $id;
 		$data['experiment'] = NULL;
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';

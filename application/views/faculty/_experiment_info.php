@@ -26,5 +26,5 @@
 	<?php echo form_open(format_experiment_link($role, $id, $experiment).'/destroy', array('class' => 'experiment_delete')); ?>
   	<?php echo form_hidden('experiment_id', $experiment->eid); ?>
 		<?php echo anchor('#', 'Delete', array('class' => 'button tiny')); ?>
-   <?php echo form_close(); ?>
+	<?php echo form_close(); ?>
 </h5>
