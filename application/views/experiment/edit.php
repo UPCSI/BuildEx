@@ -3,7 +3,7 @@
 <fieldset>
 	<legend>Edit Experiment</legend>
 	<?php echo form_open(experiment_path($experiment, 'update')); ?>
-
+		<?php echo form_hidden('experiment_id', $experiment->eid); ?>
 		<label>Title</label><br/>
 		<input type="text" id="title" required name="title" value="<?php echo $experiment->title; ?>">
 

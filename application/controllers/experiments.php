@@ -39,7 +39,7 @@ class Experiments extends MY_Controller{
 		redirect('builder/app/'.$eid);
 	}
 
-	public function destroy($role = NULL, $id = 0, $eid = 0){
+	public function destroy($role = NULL, $id = 0){
 		$eid = $this->input->post('experiment_id');
 		if($this->experiment->destroy($eid)){
 			$msg = 'You have successfully deleted an experiment!';
@@ -52,8 +52,6 @@ class Experiments extends MY_Controller{
 	}
 
 	public function view($role = NULL, $id = 0, $eid = 0){
-		$data['role'] = $role;
-		$data['id'] = $id;
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
@@ -63,8 +61,6 @@ class Experiments extends MY_Controller{
 	}
 
 	public function edit($role = NULL, $id = 0, $eid = 0){
-		$data['role'] = $role;
-    	$data['id'] = $id;
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
@@ -72,7 +68,8 @@ class Experiments extends MY_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function update($role = NULL, $id = 0, $eid = 0){
+	public function update($role = NULL, $id = 0){
+		$eid = $this->input->post('experiment_id');
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');
 		$info['description'] = $this->input->post('description');
