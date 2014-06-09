@@ -13,8 +13,17 @@ function laboratory_path($laboratory = NULL){
     return "laboratory/{$laboratory->labid}";
 }
 
-function faculty_path($faculty = NULL){
-    return "faculty/{$faculty->username}";
+function faculty_path($faculty = NULL, $action = 'view'){
+    $link = NULL;
+    if(isset($faculty)){
+        if($action == 'view'){
+            $link = "faculty/{$faculty->username}";
+        }
+    }
+    else{
+
+    }
+    return $link;
 }
 
 function graduate_path($graduate = NULL){

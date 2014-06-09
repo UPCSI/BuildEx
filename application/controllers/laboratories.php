@@ -8,6 +8,14 @@ class Laboratories extends MY_Controller{
 		$this->load->model('laboratory_head_model','laboratory_head');
 	}
 
+	public function index(){
+		$data['laboratories'] = $this->laboratory->all();
+		$data['title'] = 'Explore';
+		$data['main_content'] = 'laboratory/index';
+		$data['page'] = 'all';
+		$this->load->view('main_layout', $data);
+	}
+
 	/* REST Methods */
 	public function view($labid = 0){
 		$data['laboratory'] = $this->laboratory->get($labid);
@@ -18,7 +26,7 @@ class Laboratories extends MY_Controller{
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory/index';
 		$data['page'] = 'view';
-		$this->load->view('main_layout',$data);
+		$this->load->view('main_layout', $data);
 	}
 
 	public function create(){
