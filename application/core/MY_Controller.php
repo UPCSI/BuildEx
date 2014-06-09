@@ -31,23 +31,18 @@ class User_Controller extends MY_Controller{
         }
     }
 
-    public function laboratory($role = NULL, $id = 0){
-        $this->load->model('faculty_model', 'faculty');
-        $this->load->model('graduate_model', 'graduate');
-        if($role == 'faculty'){
+    public function laboratory($id = 0){
+        if($this->role == 'faculty'){
+            $this->load->model('faculty_model', 'faculty');
             $laboratory = $this->faculty->get_laboratory($id);
         }
-        else if($role == 'graduate'){
+        else if($this->role == 'graduate'){
+            $this->load->model('graduate_model', 'graduate');
             $laboratory = $this->graduate->get_laboratory($id);
         }
-
-        print_var($role);
-        print_var($id);
-        print_var($laboratory);
         
         if(isset($laboratory)){
-            $labid = $laboratory->labid;
-            redirect(laboratory_path($labid));
+            redirect(laboratory_path($laboratory));
         }
     }
 
