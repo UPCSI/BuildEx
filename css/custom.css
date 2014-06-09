@@ -416,6 +416,10 @@ h5 .experiment_delete {
   display: inline-block;
 }
 
+h5 .experiment_delete a{
+  margin: 0;
+}
+
 div.panel.profile{
   background: #000000;
   background-image: url('../images/jumbo_grad.jpg');
