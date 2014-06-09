@@ -20,6 +20,8 @@ class Experiments extends MY_Controller{
 	}
 
 	public function add($role = NULL, $id = 0) {
+		$data['role'] = $role;
+    $data['id'] = $id;
 		$data['experiment'] = NULL;
 		$data['action'] = 'create';
 		$data['title'] = 'Experiment';
