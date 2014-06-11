@@ -703,9 +703,7 @@
 					},
 				});
 			}
-			else{
-				alert("Can't save, each slide should have a question.");
-			}
+
 		});
 		
 		$('body').on('paste', '.ui-widget-content', function (e) {
