@@ -691,12 +691,11 @@
 					},
 					dataType: 'json',
 					beforeSend: function() {
+						$('.save-done').css('opacity', '0');
 						$('.save-loading').css('opacity', '0.7');
-						$('.save-loading').css('display', 'inline-block');
 					},
 					complete: function(data) {
 						setTimeout(function() {
-							$('.save-loading').css('display', 'none');
 							$('.save-loading').css('opacity', '0');
 							$('.save-done').css('opacity', '0.7');
 						}, 500);
