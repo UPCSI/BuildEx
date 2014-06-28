@@ -40,6 +40,8 @@
 $route['default_controller'] = 'home';
 $route['404_override'] = 'errors/errors_404';
 
+$RESTFUL_ROUTES = 'create|update|destroy';
+
 // Externals
 $route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
 $route['signup/(.+)'] = 'sign_up/$1';
@@ -47,8 +49,11 @@ $route['signin'] = 'sign_in/index';
 $route['signin/(.+)'] = 'sign_in/$1';
 
 // Internals
+$ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
 $route['admin'] = 'admins/index';
-$route['admin/(administrators|laboratories|faculty|graduates|experiments|respondents|logout|confirm_faculty)'] = 'admins/$1';
+$route['admin/'.'('.$RESTFUL_ROUTES.')'] = 'admins/$1';
+$route['admin/'.'('.$ADMIN_PAGES.')'] = 'admins/$1';
+$route['admin/(logout|confirm_faculty)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
 $route['faculty/([0-9]+)/laboratory'] = 'faculty/laboratory/$1';
