@@ -66,8 +66,8 @@ class Graduate_model extends MY_Model{
 
 	public function get_laboratory($gid, $cond = "true"){
 		$this->db->select('Laboratories.*');
-		$this->db->join('graduates_member_of','graduates_member_of.labid = Laboratories.labid');
-		$this->db->where('graduates_member_of.gid',$gid);
+		$this->db->join('graduates_member_of', 'graduates_member_of.labid = Laboratories.labid');
+		$this->db->where('graduates_member_of.gid', $gid);
 		$this->db->where('graduates_member_of.status', $cond);
 		$q = $this->db->get('Laboratories');
 		return $this->query_row_conversion($q);

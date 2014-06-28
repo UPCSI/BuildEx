@@ -40,10 +40,14 @@ class User_Controller extends MY_Controller{
             $this->load->model('graduate_model', 'graduate');
             $laboratory = $this->graduate->get_laboratory($id);
         }
-        
+
         if(isset($laboratory)){
             redirect(laboratory_path($laboratory));
         }
+
+        $msg = 'You have no laboratory yet. Please join one.';
+        $this->session->set_flashdata('notification', $msg);
+        redirect('explore');
     }
 
     public function logout(){   
