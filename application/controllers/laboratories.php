@@ -23,6 +23,9 @@ class Laboratories extends MY_Controller{
 		$data['lab_head'] = $this->laboratory->get_laboratory_head($labid);
 		$data['faculty'] = $this->laboratory->get_all_faculty($labid);
 		$data['graduates'] = $this->laboratory->get_all_graduates($labid);
+		$data['has_lab'] = $this->laboratory->has_lab(role(), role_id());
+		$data['is_member'] = $this->laboratory->is_member($labid, role(), role_id());
+		$data['is_request_sent'] = $this->laboratory->is_request_sent($labid, role(), role_id());
 		$data['notification'] = $this->session->flashdata('notification');
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory/index';
@@ -56,5 +59,20 @@ class Laboratories extends MY_Controller{
 		}
 		$this->session->set_flashdata('notification',$msg);
 		redirect('admin/laboratories');
+	}
+	/* End of REST Methods */
+
+	public function apply($labid = 0){
+		$status = $this->laboratory->add_member($labid, role(), role_id());
+		
+		if($status){
+			$msg = "Request sent!";
+		}
+		else{
+			$msg = "Error sending the request";
+		}
+
+		$this->session->set_flashdata('notification', $msg);
+		redirect('laboratory/'.$labid);
 	}
 }

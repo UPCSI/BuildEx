@@ -8,4 +8,8 @@
 	<?php $this->load->view('laboratory/_graduates_list'); ?>
 <?php endif; ?>
 
-<?php $this->load->view('laboratory/_application_form'); ?>
+<?php if(isset($is_member)): ?>
+    <?php if(!$is_member && !$has_lab): ?>
+        <?php $this->load->view('laboratory/_application_form'); ?>
+    <?php endif; ?>
+<?php endif; ?>

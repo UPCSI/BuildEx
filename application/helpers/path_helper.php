@@ -9,8 +9,17 @@ function page_path($page = NULL) {
     return $path;
 }
 
-function laboratory_path($laboratory = NULL){
-    return "laboratory/{$laboratory->labid}";
+function laboratory_path($laboratory = NULL, $action = 'view'){
+    $link = NULL;
+    if(isset($laboratory)){
+        if($action == 'view'){
+            $link = "laboratory/{$laboratory->labid}";
+        }
+        else{
+            $link = "laboratory/{$laboratory->labid}/{$action}";
+        }
+    }
+    return $link;
 }
 
 function faculty_path($faculty = NULL, $action = 'view'){
@@ -19,9 +28,9 @@ function faculty_path($faculty = NULL, $action = 'view'){
         if($action == 'view'){
             $link = "faculty/{$faculty->username}";
         }
-    }
-    else{
-
+        else{
+            $link = "faculty/{$faculty->username}/{$action}";
+        }
     }
     return $link;
 }

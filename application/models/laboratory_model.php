@@ -24,10 +24,10 @@ class Laboratory_model extends MY_Model{
 		return FALSE;
 	}
 
-	public function destroy($labid = 0){
+	public function get($labid = 0){
 		$this->db->where('labid',$labid);
-		$this->db->delete('Laboratories');
-		return $this->is_rows_affected();
+		$q = $this->db->get('Laboratories');
+		return $this->query_row_conversion($q);
 	}
 
 	public function update($labid = 0, $laboratory_info = NULL){
@@ -36,10 +36,10 @@ class Laboratory_model extends MY_Model{
 		return $this->is_rows_affected();
 	}
 
-	public function get($labid = 0){
+	public function destroy($labid = 0){
 		$this->db->where('labid',$labid);
-		$q = $this->db->get('Laboratories');
-		return $this->query_row_conversion($q);
+		$this->db->delete('Laboratories');
+		return $this->is_rows_affected();
 	}
 	/* End of CRUD */
 
@@ -93,24 +93,90 @@ class Laboratory_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function is_graduate_member($gid){
-		$this->db->where('gid',$gid);
-		$this->db->where('status','true');
-		$q = $this->db->get('graduates_member_of');
-		if($q->num_rows() > 0){
-			return true;
+	public function has_lab($role = NULL, $id = 0){
+		if($role == 'faculty'){
+			return $this->has_faculty_lab($id);
 		}
-		return false;
+		else if($role == 'graduate'){
+			return $this->has_graduate_lab($id);
+		}
 	}
 
-	public function is_faculty_member($fid){
-		$this->db->where('fid',$fid);
-		$this->db->where('status','true');
-		$q = $this->db->get('faculty_member_of');
-		if($q->num_rows() > 0){
-			return true;
+	public function is_member($labid = 0, $role = NULL, $id = 0){
+		if($role == 'faculty'){
+			return $this->is_faculty_member($labid, $id);
 		}
-		return false;
+		else if($role == 'graduate'){
+			return $this->is_graduate_member($labid, $id);
+		}
+	}
+
+	public function is_request_sent($labid = 0, $role = NULL, $id = 0){
+		if($role == 'faculty'){
+			return $this->is_faculty_request_sent($labid, $id);
+		}
+		else if($role == 'graduate'){
+			return $this->is_graduate_request_sent($labid, $id);
+		}
+	}
+	
+	private function has_graduate_lab($gid = 0){
+		$this->db->where('gid', $gid);
+		$this->db->where('status', 'true');
+		$q = $this->db->get('graduates_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	private function has_faculty_lab($fid = 0){
+		$this->db->where('fid', $fid);
+		$this->db->where('status', 'true');
+		$q = $this->db->get('faculty_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	private function is_graduate_member($labid = 0, $gid = 0){
+		$this->db->where('labid', $labid);
+		$this->db->where('gid', $gid);
+		$this->db->where('status', 'true');
+		$q = $this->db->get('graduates_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	private function is_faculty_member($labid = 0, $fid = 0){
+		$this->db->where('labid', $labid);
+		$this->db->where('fid', $fid);
+		$this->db->where('status', 'true');
+		$q = $this->db->get('faculty_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	private function is_graduate_request_sent($labid = 0, $gid = 0){
+		$this->db->where('labid', $labid);
+		$this->db->where('gid', $gid);
+		$q = $this->db->get('graduates_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	private function is_faculty_request_sent($labid = 0, $fid = 0){
+		$this->db->where('labid', $labid);
+		$this->db->where('fid', $fid);
+		$q = $this->db->get('faculty_member_of');
+		
+		return $q->num_rows > 0;
+	}
+
+	public function add_member($labid = 0, $role = NULL, $id = 0){
+		if($role == 'faculty'){
+			return $this->add_faculty($labid, $id);
+		}
+		else if($role == 'graduate'){
+			return $this->add_graduate($labid, $id);
+		}
 	}
 
 	public function add_faculty($labid, $fid, $cond = 'false'){
@@ -159,20 +225,19 @@ class Laboratory_model extends MY_Model{
 		$this->db->update('Laboratories');
 	}
 
-	public function delete_other_faculty_requests($fid){
-		$this->db->where('faculty_member_of.fid',$fid);
-		$this->db->where('faculty_member_of.status',"false");
+	public function delete_other_faculty_requests($fid = 0){
+		$this->db->where('faculty_member_of.fid', $fid);
+		$this->db->where('faculty_member_of.status', 'false');
 		$this->db->delete('faculty_member_of');
 	}
 
-	public function delete_other_graduate_requests($gid){
-		$this->db->where('graduates_member_of.gid',$gid);
+	public function delete_other_graduate_requests($gid = 0){
+		$this->db->where('graduates_member_of.gid', $gid);
 		$this->db->where('graduates_member_of.status',"false");
 		$this->db->delete('graduates_member_of');
 	}
 
 	public function get_all_faculty_requests($labid){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num,since,labid');
 		$this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$this->db->where('labid',$labid);
@@ -182,7 +247,6 @@ class Laboratory_model extends MY_Model{
 	}
 
 	public function get_all_graduates_requests($labid){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num,since,labid');
 		$this->db->join('Graduates','Graduates.gid = graduates_member_of.gid');
 		$this->db->join('Users','Users.uid = Graduates.uid');
 		$this->db->where('labid',$labid);

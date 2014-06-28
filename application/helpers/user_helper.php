@@ -35,5 +35,3 @@ if ( ! function_exists('role')) {
         return $CI->session->userdata('active_role');
     }
 }
-
-

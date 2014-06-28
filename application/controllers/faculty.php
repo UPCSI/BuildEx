@@ -141,23 +141,6 @@ class Faculty extends User_Controller{
 		//Warning: Update of experiment happened before assigning it to be advised by the faculty
 	}
 
-	public function request_lab($labid = 0){
-		if($labid == 0 || is_null($labid)){
-			redirect('');
-			//implement where to redirect if labid is 0 or none
-		}
-		$fid = $this->session->userdata('active_id');
-		$status = $this->laboratories_model->request_faculty_lab($labid,$fid);
-		if($status){
-			$msg = "Request sent!";
-		}
-		else{
-			$msg = "Error sending the request";
-		}	
-		$this->session->set_flashdata('notification',$msg);
-		redirect(''); //implement where to redirect after a faculty request for a lab
-	}
-
 	public function edit_faculty($uid = 0, $fid = 0){
 		$data['title'] = 'Profile';
 		$data['user_profile'] = $this->users_model->get_user_profile($uid);
