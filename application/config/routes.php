@@ -67,9 +67,9 @@ $route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments
-$route['faculty/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/faculty/$2/$3';
-$route['faculty/([0-9]+)/experiment/(add|create)'] = 'experiments/$3/faculty/$2';
-$route['faculty/([0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/faculty/$2/$3';
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
+$route['(graduate|faculty)/([0-9]+)/experiment/(add|create)'] = 'experiments/$3/$1/$2';
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -10,15 +10,13 @@ class Graduates extends User_Controller{
 
 	/* Graduate Pages */
 	public function experiments(){
-		$data['gid'] = $this->session->userdata('active_id');
-		$data['experiments'] = $this->get_all_experiments($data['gid']);
+		$gid = role_id();
+		$data['experiments'] = $this->graduate->get_experiments($gid);
 		$data['title'] = 'Graduate';
+		$data['main_content'] = 'users/index';
+		$data['page'] = 'experiments';
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
-		$data['main_content'] = 'graduate/experiments';
-		$this->load->view('_main_layout_internal',$data);
+		$this->load->view('main_layout',$data);
 	}
 	/* End of Graduate Pages */
 
