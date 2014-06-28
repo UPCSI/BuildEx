@@ -56,12 +56,15 @@ $route['admin/'.'('.$ADMIN_PAGES.')'] = 'admins/$1';
 $route['admin/(logout|confirm_faculty)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
+$route['faculty'] = 'faculty/index';
+$route['faculty/'.'('.$RESTFUL_ROUTES.')'] = 'faculty/$1';
 $route['faculty/([0-9]+)/laboratory'] = 'faculty/laboratory/$1';
 $route['faculty/logout'] = 'faculty/logout';
 $route['faculty/([a-zA-Z0-9]+)'] = 'faculty/view/$1';
 $route['faculty/([a-zA-Z0-9]+)/([a-z]+)'] = 'faculty/$2/$1';
 
 $route['graduate'] = 'graduates/index';
+$route['graduate/'.'('.$RESTFUL_ROUTES.')'] = 'graduates/$1';
 $route['graduate/([0-9]+)/laboratory'] = 'graduates/laboratory/$1';
 $route['graduate/logout'] = 'graduates/logout';
 $route['graduate/([a-zA-Z0-9]+)'] = 'graduates/view/$1';
