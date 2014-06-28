@@ -4,7 +4,7 @@ class Faculty extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('faculty_model','faculty');
+		$this->load->model('faculty_model', 'faculty');
 		$this->role = 'faculty';
 	}
 
@@ -20,25 +20,14 @@ class Faculty extends User_Controller{
 	}
 
 	public function advisories(){
-		$fid = $this->session->userdata('active_id');
+		$fid = role_id();
+		$data['experiments'] = $this->faculty->get_advisory_experiments($fid, 't'); #confirmed
+		$data['requests'] = $this->faculty->get_advisory_experiments($fid, 'f'); #not confirmed
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'advisory_experiments';
-		$exp = $this->get_all_advisory_experiments($fid);
-		
-		if(isset($exp)){
-			$data['experiments'] = $this->get_all_advised_experiments($exp);
-			$data['requests'] = $this->get_all_request_experiments($exp);
-		}
 		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
 		$this->load->view('main_layout',$data);
-	}
-
-	public function archives(){
-		/*to be implemented*/	
 	}
 
 	public function laboratories(){
@@ -187,10 +176,6 @@ class Faculty extends User_Controller{
 	}
 
 	/* Private Methods */
-	private function get_all_advisory_experiments($fid = 0){
-		return $this->experiments_model->get_all_advisory_experiments($fid);
-	}
-
 	private function get_all_request_experiments($list){
 		$requests = array();
 		foreach($list as $e){

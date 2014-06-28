@@ -6,7 +6,6 @@
     <li><label>Records</label></li>
     <li><?php echo anchor('faculty/'.role_id().'/experiments', 'Experiments'); ?></li>
     <li><?php echo anchor('faculty/'.role_id().'/advisories', 'Advisory Experiments'); ?></li>
-    <li><?php echo anchor('faculty/'.role_id().'/archives', 'Archives'); ?></li>
 
     <li><label>Laboratories</label></li>
     <li><?php echo anchor('faculty/'.role_id().'/laboratory', 'My Laboratory'); ?></li>

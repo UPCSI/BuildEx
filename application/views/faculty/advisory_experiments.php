@@ -1,4 +1,5 @@
-<h1 class="white"> Experiments </h1>
+<h1 class="white">Advisory Experiments</h1>
+<?php $this->load->view('layouts/_notification'); ?>
 
 <div class="row">
 	<div class="large-12 column">
@@ -10,15 +11,7 @@
 	</div>
 </div>
 
-<!-- Notification Handling Part-->
-<?php if(isset($notification)): ?>
-	<div data-alert class="alert-box info">
-		<?php echo $notification; ?>
-		<a href="#" class="close">&times;</a>
-	</div>
-<?php endif; ?>
-
-<br>
+<br/>
 
 <h3 class = "white">Graduates' Experiments</h3>
 <?php if(isset($experiments)): ?>
@@ -31,14 +24,14 @@
 	<p class = "white"> You are not advising any experiment. </p>
 <?php endif; ?>
 
-<br> <br>
+<br/>
 
 <h3 class = "white" name="requests"> Experiments to be advised </h3>
 <?php if(isset($requests)): ?>
 	<?php $data['experiments'] = $requests; ?>
 	<div class="row">
 		<div class="large-6 column">
-			<?php $this->load->view('faculty/_experiments_list',$data); ?>
+			<?php $this->load->view('faculty/_experiments_list', $data); ?>
 		</div>
 	</div>
 <?php else: ?>

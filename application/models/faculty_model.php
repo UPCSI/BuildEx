@@ -66,7 +66,20 @@ class Faculty_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
-	public function get_experiment($fid = 0, $eid){
+	public function get_advisory_experiments($fid = 0, $is_confirmed = 't', $category = NULL){
+		$this->db->join('advise', 'advise.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = advise.fid');
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+		$this->db->join('Users', 'Users.uid = Graduates.uid');
+		$this->db->where('Faculty.fid', $fid);
+		$this->db->where('advise.status', $is_confirmed);
+		$q = $this->db->get('Experiments');
+
+		return $this->query_conversion($q);
+	}
+
+	public function get_experiment($fid = 0, $eid = 0){
 		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
 		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
 		$this->db->where('Experiments.eid', $eid);
@@ -104,7 +117,7 @@ class Faculty_model extends MY_Model{
 
 	public function get_faculty_by_experiment($eid = 0){
 		$this->db->select('Faculty.*');
-		$this->db->join('faculty_conduct','faculty_conduct.fid = Faculty.fid');
+		$this->db->join('faculty_conduct', 'faculty_conduct.fid = Faculty.fid');
 		$this->db->where('faculty_conduct.eid',$eid);
 		$q = $this->db->get('Faculty');
 
