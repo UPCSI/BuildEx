@@ -13,6 +13,7 @@ class Laboratories extends MY_Controller{
 		$data['title'] = 'Explore';
 		$data['main_content'] = 'laboratory/index';
 		$data['page'] = 'all';
+		$data['notification'] = $this->session->flashdata('notification');
 		$this->load->view('main_layout', $data);
 	}
 

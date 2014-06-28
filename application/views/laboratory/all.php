@@ -1,4 +1,5 @@
 <h1 class="white"> Laboratories </h1>
+<?php $this->load->view('layouts/_notification'); ?>
 
 <div class="row">
 	<div class="large-12 column">
