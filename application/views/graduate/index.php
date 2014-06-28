@@ -1,6 +1,40 @@
-<h1> Welcome! </h1>
-<p> You are currently logged in as <strong> <?php echo $this->session->userdata('username'); ?> </strong> with a role of <strong> <?php echo ucfirst($this->session->userdata('active_role')); ?> </strong> </p>
-<hr>
-<h2> Notifications </h2>
-<h3> Users </h3>
-	<p> There are 20 newly registered users for this week. </p>
+<?php $this->load->view('users/_topbar.php'); ?>
+<div class = "main-body">
+  <div class = "row full main-workspace">
+      <div class = "large-2 medium-3 columns sidebar show-for-medium-up">
+          <?php $this->load->view('users/_sidebar'); ?>
+      </div>
+
+      <div class ="large-10 medium-9 columns full">
+          <div class="off-canvas-wrap docs-wrap">
+            <div class="inner-wrap">
+              <nav class="tab-bar hide-for-medium-up">
+                <section class="left-small">
+                  <a class="left-off-canvas-toggle menu-icon"><span></span></a>
+                </section>
+
+                <section class="right tab-bar-section">
+                  <h1 class="title">CS 192</h1>
+                </section>
+              </nav>
+
+              <aside class="left-off-canvas-menu hide-for-medium-up">
+                <?php $this->load->view('users/_sidebar'); ?>
+              </aside>
+
+              <section class="main-section">
+                  <div class="row">
+                      <div class="large-12 columns">
+                          <?php $this->load->view('graduate/'.$page); ?>
+                      </div>
+                  </div>
+              </section>
+
+              <a class="exit-off-canvas"></a>
+            </div>
+          </div>                
+      </div>
+  </div>
+</div>
+<?php $this->load->view('layouts/_sitemap'); ?>
+<?php $this->load->view('includes/javascripts/foundation'); ?>

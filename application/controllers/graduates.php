@@ -1,10 +1,10 @@
 <?php
 
-class Graduates extends MY_Controller{
+class Graduates extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('graduate_model','graduate');
+		$this->load->model('graduate_model', 'graduate');
 		$this->role = 'graduate';
 	}
 
@@ -19,30 +19,6 @@ class Graduates extends MY_Controller{
 		}
 		$data['main_content'] = 'graduate/experiments';
 		$this->load->view('_main_layout_internal',$data);
-	}
-
-	public function laboratory(){
-		$this->load->model('laboratories_model');
-		$this->load->model('faculty_model');
-		$gid = $this->session->userdata('active_id');
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'graduate/my_laboratory';
-		$data['main_lab'] = $this->laboratories_model->get_graduate_laboratory($gid);
-		if(isset($data['main_lab'])){
-			$labid = $data['main_lab']->labid;
-			$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
-			$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
-		}
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view('_main_layout_internal',$data);
-	}
-
-	public function laboratories(){
-		$this->load->model('laboratories_model');
-		$data['title'] = 'Graduate';
-		$data['main_content'] = 'laboratory/all';
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view("_main_layout_internal",$data);
 	}
 	/* End of Graduate Pages */
 
@@ -74,6 +50,23 @@ class Graduates extends MY_Controller{
 		redirect('signup/graduate');
 	}
 
+	public function view($username = NULL){
+		$data['graduate'] = $this->graduate->get(0, $username);
+		if(isset($data['graduate'])){
+        	$gid = $data['graduate']->gid;
+	        $data['roles'] = array_keys($this->session->userdata('roles'));
+	        $data['experiments'] = $this->graduate->get_experiments($gid);
+	        $data['title'] = 'Graduate';
+	        $data['main_content'] = 'graduate/index';
+	        $data['page'] = 'view';
+	        $data['notification'] = $this->session->flashdata('notification');
+	        $this->load->view('main_layout', $data);
+        }
+        else{
+        	show_404();
+        }
+	}
+
 	public function destroy(){
 		$graduate_id = $this->input->post('graduate_id');
 		if($this->graduate->destroy($graduate_id, NULL)){
@@ -86,15 +79,6 @@ class Graduates extends MY_Controller{
 		redirect('admin/graduates');
 	}
 	/* End of REST Methods */
-
-	public function edit_graduate($uid = 0, $gid = 0){
-		$data['title'] = 'Profile';
-		$data['user_profile'] = $this->users_model->get_user_profile($uid);
-		$data['graduate_profile'] = $this->graduates_model->get_graduate_profile($gid);
-		$data['experiments'] = $this->get_all_experiments($gid);
-		$data['main_content'] = 'contents/profile';
-		$this->load->view('_main_layout_internal', $data);
-	}
 
 	public function request_lab($labid = 0){
 		if($labid == 0 || is_null($labid)){
@@ -114,23 +98,7 @@ class Graduates extends MY_Controller{
 		redirect('laboratories/view/'.$labid);
 	}
 
-	public function view($username = NULL){
-		if(is_null($username)){
-			redirect('');
-			//implement where to redirect if username is non-existent
-		}
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
-		if(is_null($data['user'])){
-			redirect('');
-			//implement where to redirect if user doesn't exist
-		}
-		$data['graduate'] = $this->graduates_model->get_graduate_profile(0,$username);
-		$gid = $data['graduate']->gid;
-		$data['title'] = 'Graduate';
-		$data['experiments'] = $this->get_all_experiments($gid);
-		$data['main_content'] = 'graduate/view';
-		$this->load->view('_main_layout_internal', $data);
-	}
+
 
 	public function view_experiment($eid = 0){
 		if($eid == 0){

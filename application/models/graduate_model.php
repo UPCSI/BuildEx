@@ -11,17 +11,12 @@ class Graduate_model extends MY_Model{
 	}
 
 	public function get($gid = 0, $username = NULL){
-		if($gid == 0 && is_null($username)){
-			return false;
-		}
-		$this->db->select('Graduates.*,Users.*');
-		$this->db->join('Users','Users.uid = Graduates.uid');
+		$this->db->join('Users', 'Users.uid = Graduates.uid');
 		if($gid > 0){
-			$this->db->where('Graduates.gid',$gid);
+			$this->db->where('Graduates.gid', $gid);
 		}
 		else{
-			
-			$this->db->where('Users.username',$username);
+			$this->db->where('Users.username', $username);
 		}
 		$q = $this->db->get('Graduates');
 		return $this->query_row_conversion($q);
@@ -59,6 +54,14 @@ class Graduate_model extends MY_Model{
 	public function get_rules(){
 		//put form validation here
 		return 0;
+	}
+
+	public function get_experiments($gid = 0, $category = NULL){
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+		$this->db->where('Graduates.gid',$gid);
+		$q = $this->db->get('Experiments');
+		return $this->query_conversion($q);
 	}
 
 	public function get_laboratory($gid, $cond = "true"){

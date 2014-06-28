@@ -29,14 +29,6 @@ class Faculty extends User_Controller{
 		$data['notification'] = $this->session->flashdata('notification');
 		$this->load->view('main_layout',$data);
 	}
-
-	public function laboratories(){
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'users/index';
-		$data['page'] = 'laboratories';
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view("main_layout",$data);
-	}
 	/* End of Faculty Pages */
 
 	/* REST Methods */

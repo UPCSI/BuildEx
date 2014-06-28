@@ -24,7 +24,7 @@ class User_Controller extends MY_Controller{
             $data['title'] = ucfirst($this->role);
             $data['main_content'] = 'users/index';
             $data['page'] = 'home';
-            $this->load->view('main_layout',$data);
+            $this->load->view('main_layout', $data);
         }
         else{
             redirect($this->session->userdata('active_role'));

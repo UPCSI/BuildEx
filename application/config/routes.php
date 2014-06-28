@@ -51,19 +51,25 @@ $route['admin'] = 'admins/index';
 $route['admin/(administrators|laboratories|faculty|graduates|experiments|respondents|logout|confirm_faculty)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
-$route['(graduate|faculty)/([0-9]+)/laboratory'] = '$1/laboratory/$2';
-$route['(graduate|faculty)/logout'] = '$1/logout';
-$route['(graduate|faculty)/([a-zA-Z0-9]+)'] = '$1/view/$2';
-$route['(graduate|faculty)/([a-zA-Z0-9]+)/([a-z]+)'] = '$1/$3/$2';
+$route['faculty/([0-9]+)/laboratory'] = 'faculty/laboratory/$1';
+$route['faculty/logout'] = 'faculty/logout';
+$route['faculty/([a-zA-Z0-9]+)'] = 'faculty/view/$1';
+$route['faculty/([a-zA-Z0-9]+)/([a-z]+)'] = 'faculty/$2/$1';
 
-//Laboratories
+$route['graduate'] = 'graduates/index';
+$route['graduate/([0-9]+)/laboratory'] = 'graduates/laboratory/$1';
+$route['graduate/logout'] = 'graduates/logout';
+$route['graduate/([a-zA-Z0-9]+)'] = 'graduates/view/$1';
+$route['graduate/([a-zA-Z0-9]+)/([a-z]+)'] = 'graduates/$2/$1';
+
+// Laboratories
 $route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments
-$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
-$route['(graduate|faculty)/([0-9]+)/experiment/(add|create)'] = 'experiments/$3/$1/$2';
-$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
+$route['faculty/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/faculty/$2/$3';
+$route['faculty/([0-9]+)/experiment/(add|create)'] = 'experiments/$3/faculty/$2';
+$route['faculty/([0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/faculty/$2/$3';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
