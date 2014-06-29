@@ -19,10 +19,26 @@ class Experiment_model extends MY_Model{
 		return $eid;
 	}
 
-	public function get($eid = 0){
+	public function get($role = NULL, $id = 0, $eid = 0){
+		if($role == 'graduate'){
+			return $this->get_graduate_experiment($id, $eid);
+		}
+		else if($role == 'faculty'){
+			return $this->get_faculty_experiment($id, $eid);
+		}
+	}
+
+	private function get_faculty_experiment($fid = 0, $eid = 0){
 		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
-		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->where('faculty_conduct.fid', $fid);
+		$this->db->where('Experiments.eid', $eid);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
+	private function get_graduate_experiment($gid = 0, $eid = 0){
+		$this->db->join('graduate_conduct', 'graduate_conduct.eid = Experiments.eid');
+		$this->db->where('graduate_conduct.gid', $gid);
 		$this->db->where('Experiments.eid', $eid);
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);

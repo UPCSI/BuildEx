@@ -54,7 +54,7 @@ class Experiments extends MY_Controller{
 	}
 
 	public function view($role = NULL, $id = 0, $eid = 0){
-		$data['experiment'] = $this->experiment->get($eid);
+		$data['experiment'] = $this->experiment->get($role, $id, $eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'view';
@@ -63,7 +63,7 @@ class Experiments extends MY_Controller{
 	}
 
 	public function edit($role = NULL, $id = 0, $eid = 0){
-		$data['experiment'] = $this->experiment->get($eid);
+		$data['experiment'] = $this->experiment->get($role, $id, $eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'edit';
@@ -92,12 +92,14 @@ class Experiments extends MY_Controller{
 
 	public function publish($role = NULL, $id = 0, $eid = 0){
 		$info['is_published'] = 'True';
+
 		if($this->experiment->update($eid, $info)){
 			$msg = "You have successfully published the experiment.";
 		}
 		else{
 			$msg = "Publication of experiment failed.";
 		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect("{$role}/{$id}/experiment/{$eid}");
 	}
