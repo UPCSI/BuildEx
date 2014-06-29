@@ -28,6 +28,28 @@ class Experiment_model extends MY_Model{
 		}
 	}
 
+	public function get_adviser($eid = 0){
+		$this->db->select('Users.*, Faculty.*, advise.*');
+		$this->db->join('advise', 'advise.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = advise.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->where('Experiments.eid', $eid);
+		$this->db->where('advise.status', 't');
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
+	public function get_requested_advisers($eid = 0){
+		$this->db->select('Users.*, Faculty.*, advise.*');
+		$this->db->join('advise', 'advise.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = advise.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
+		$this->db->where('Experiments.eid', $eid);
+		$this->db->where('advise.status', 'f');
+		$q = $this->db->get('Experiments');
+		return $this->query_conversion($q);
+	}
+
 	private function get_faculty_experiment($fid = 0, $eid = 0){
 		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
 		$this->db->where('faculty_conduct.fid', $fid);
@@ -132,14 +154,10 @@ class Experiment_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function request_experiment($eid,$fid){
-		/*
-		* Inserts a request of an experiment with eid
-		* for a faculty with fid.
-		*/
+	public function assign_adviser($eid = 0, $fid = 0){
 		$request_info['eid'] = $eid;
 		$request_info['fid'] = $fid;
-		return $this->db->insert('request',$request_info);
+		return $this->db->insert('advise', $request_info);
 	}
 
 

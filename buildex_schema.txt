@@ -51,6 +51,7 @@ TABLE Experiments:
 
 TABLE advise:
 	fid: integer references Faculty.fid
+	eid: integer references Experiments.eid
 	status: boolean #{Faculty
 	confirmed[true],not confirmed[false]}
 

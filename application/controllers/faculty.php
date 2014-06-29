@@ -90,24 +90,6 @@ class Faculty extends User_Controller{
 	}
 	/* End of REST Methods */
 
-	public function view_experiment($eid = 0){
-		if($eid == 0){
-			redirect('');
-		}
-		
-		$fid = $this->session->userdata('fid');
-		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view_experiment';
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
-
-		$this->load->view('main_layout', $data);
-	}
-
 	public function confirm_experiment($eid = 0){
 		if($eid == 0){
 			redirect(''); //redirect somewhere if $eid was not supplied

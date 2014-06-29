@@ -3,7 +3,7 @@
 $route['default_controller'] = 'home';
 $route['404_override'] = 'errors/errors_404';
 
-$RESTFUL_ROUTES = 'create|update|destroy';
+$RESTFUL_ROUTES = 'add|create|update|destroy';
 
 // Externals
 $route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
@@ -40,8 +40,8 @@ $route['explore'] = 'laboratories/index';
 
 // Experiments
 $route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
-$route['(graduate|faculty)/([0-9]+)/experiment/(add|create)'] = 'experiments/$3/$1/$2';
-$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
+$route['(graduate|faculty)/([0-9]+)/experiment/'.$RESTFUL_ROUTES] = 'experiments/$3/$1/$2';
+$route['(graduate|faculty)/([0-9]+)/experiment/([0-9]+)/([a-z_]+)'] = 'experiments/$4/$1/$2/$3';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -55,6 +55,12 @@ class Experiments extends MY_Controller{
 
 	public function view($role = NULL, $id = 0, $eid = 0){
 		$data['experiment'] = $this->experiment->get($role, $id, $eid);
+
+		if($role = 'graduate'){
+			$data['requested_advisers'] = $this->experiment->get_requested_advisers($eid);
+			$data['adviser'] = $this->experiment->get_adviser($eid);
+		}
+
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'view';
@@ -106,12 +112,36 @@ class Experiments extends MY_Controller{
 
 	public function unpublish($role = NULL, $id = 0, $eid = 0){
 		$info['is_published'] = 'False';
+
 		if($this->experiment->update($eid, $info)){
 			$msg = "You have successfully unpublished the experiment.";
 		}
 		else{
 			$msg = "Unpublication of experiment failed.";
 		}
+
+		$this->session->set_flashdata('notification',$msg);
+		redirect("{$role}/{$id}/experiment/{$eid}");
+	}
+
+	public function request_adviser($role = NULL, $id = 0, $eid = 0){
+		$this->load->model('faculty_model', 'faculty');
+
+		$faculty_username = $this->input->post('faculty_uname');
+		$faculty = $this->faculty->get(0, $faculty_username);
+
+		if(isset($faculty)){
+			if($this->experiment->assign_adviser($eid, $faculty->fid)){
+				$msg = 'Request sent!';
+			}
+			else{
+				$msg = 'Failed to request advise. Please try again later.';
+			}
+		}
+		else{
+			$msg = 'Faculty member does not exists.';
+		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect("{$role}/{$id}/experiment/{$eid}");
 	}

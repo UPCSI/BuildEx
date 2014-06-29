@@ -1,5 +1,9 @@
 <?php if($experiment->is_published == 'f'): ?>
-    <?php echo anchor(experiment_path($experiment, 'publish'), 'Publish', 'class = "button small"'); ?>
+    <?php if(role() == 'faculty'): ?>
+        <?php echo anchor(experiment_path($experiment, 'publish'), 'Publish', 'class = "button small"'); ?>
+    <?php elseif(role() == 'graduate'): ?>
+        <?php $this->load->view('experiment/_graduate_publish_modal'); ?>
+    <?php endif; ?>
 <?php else: ?>
     <p class = "white"><strong>URL:</strong>
         <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>">
