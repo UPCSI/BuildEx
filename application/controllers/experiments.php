@@ -132,7 +132,7 @@ class Experiments extends MY_Controller{
 
 		if(isset($faculty)){
 			if($this->experiment->assign_adviser($eid, $faculty->fid)){
-				$msg = 'Request sent!';
+				$msg = 'Request sent! Please wait for a faculty member to approve your request.';
 			}
 			else{
 				$msg = 'Failed to request advise. Please try again later.';
