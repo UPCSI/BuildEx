@@ -37,8 +37,8 @@ class Experiment_model extends MY_Model{
 	}
 
 	private function get_graduate_experiment($gid = 0, $eid = 0){
-		$this->db->join('graduate_conduct', 'graduate_conduct.eid = Experiments.eid');
-		$this->db->where('graduate_conduct.gid', $gid);
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->where('graduates_conduct.gid', $gid);
 		$this->db->where('Experiments.eid', $eid);
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
