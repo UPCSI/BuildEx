@@ -231,35 +231,24 @@ function draw_dropdown(posX, posY, page_num, options){
 	posY = typeof posY !== 'undefined' ? posY : 271;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
 
-	workspace_width = $('#workspace').width()/1024; //hardcoded
-	workspace_height = $('#workspace').height()/576; //hardcoded
-	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
-	zoomed_x = (posX/1024)*100; //hardcoded
-	zoomed_y = (posY/576)*100; //hardcoded
-
-
-	var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
+	var htmlData='<div id="dropdown'+$.count+'" class="static_obj"';
 
 	if (posX != null && posY != null){
-		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + workspace_height + 'px;"';
+		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:34px; width:140px;"';
 	}
 
 	else{
 		htmlData += 'style="height:34px; width:140px;"';
 	}
 
-	if(typeof options !== undefined){
-		htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+	htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+	if(options !== undefined){
 		options.forEach(function(choice){
 			htmlData += '<option value="'+choice+'">'+choice+'</option>';
 		});
-
-		htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
 	}
 
-	else{
-		htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
-	}
+	htmlData += '</div>';
 	
 	var temp = $.count;
 	var index = page_num;
@@ -271,6 +260,18 @@ function draw_dropdown(posX, posY, page_num, options){
 	else{
 		$("#page" + index).append(htmlData);
 	}
+
+	$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+
+	$('#drpeditable'+temp).on('change', function(){
+		$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+	});
+
+	$('#drpinput'+temp).blur(function(){
+			$('#drpeditable'+temp+' option:selected').remove();
+	});
+	
+	$.count++;
 }
 
 function draw_slider(posX, posY, page_num, min, max){
