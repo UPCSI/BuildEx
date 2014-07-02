@@ -377,6 +377,21 @@ function save_input(){
 			// console.log(data);
 		}
 
+		if ($('#dropdown'+i).offset() !== undefined){
+			page = $('#dropdown'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
+			var data = {
+				'qid'		:	 qid,
+				'page'		:	 page,
+				'type'		:	 "dropdown",
+				'selected'	:	 $('#drpeditable'+i).val(),
+			}
+
+			x.push(data);
+			// console.log(data);
+		}
+
 		if ($('#sldr'+i).offset() !== undefined){
 			page = $('#sldr'+i).parent().attr("id").slice(4);
 			question = $("div").find('[data-page="'+page+'"]');
@@ -402,7 +417,7 @@ function save_input(){
 
 		dataType: 'json',
 		complete: function(data) {
-			// console.log(data.responseText);
+			console.log(data.responseText);
 		},
 	});
 }
