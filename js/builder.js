@@ -412,6 +412,7 @@
 			posX = typeof posX !== 'undefined' ? posX : 442;
 			posY = typeof posY !== 'undefined' ? posY : 271;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			// options = typeof options !== 'undefined' ? options : undefined;
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
 
@@ -423,18 +424,18 @@
 				htmlData += 'style="height:34px; width:140px;"';
 			}
 
-			if(typeof options !== undefined){
-				htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+			if(options !== undefined){
 				options.forEach(function(choice){
 					htmlData += '<option value="'+choice+'">'+choice+'</option>';
 				});
-
-				htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
 			}
 
-			else{
-				htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
+			else{				
+				htmlData += '<option value="sample" selected="selected">Dropdown Menu</option>';
 			}
+
+			htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
 			
 			var temp = $.count;
 			var index = page_num;
