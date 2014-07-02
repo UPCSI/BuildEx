@@ -17,31 +17,32 @@
 
 		foreach ($var as $obj){
 			if($obj['type'] == "question"){
-				echo 'draw_question('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'",'.$obj['qid'].');';
+				echo '$("#question").removeClass("disabled");';
+				echo '$("#question").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'] .',"' .$obj['width'].'","' .$obj['height'] .'","' .$obj['color'].'"]);';
 			}
 
 			else if($obj['type'] == "textinput"){
-				echo 'draw_text_input('.$obj['xPos'].','.$obj['yPos'].',"' ."" .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
+				echo '$("#textinput").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' ."" .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'"]);';
 			}
 
 			else if($obj['type'] == "button"){
-				echo 'draw_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
+				echo '$("#button").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'"]);';
 			}
 
 			else if($obj['type'] == "radio"){
-				echo 'draw_radio_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
+				echo '$("#radiobutton").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].']);';
 			}
 
 			else if($obj['type'] == "checkbox"){
-				echo 'draw_checkbox('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
+				echo '$("#checkbox").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].']);';
 			}
 
 			else if($obj['type'] == "dropdown"){
-				echo 'draw_dropdown('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].','.json_encode($obj['options']).');';
+				echo '$("#dropdown").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].','.json_encode($obj['options']).']);';
 			}
 
 			else if($obj['type'] == "slider"){
-				echo 'draw_slider('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].');';
+				echo '$("#slider").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].']);';
 			}
 		}
 
