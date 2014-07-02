@@ -43,7 +43,7 @@
 			}
 			
 			else if($obj['type'] == "dropdown"){
-				echo '$("#dropdown").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].']);';
+				echo '$("#dropdown").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].','.json_encode($obj['options']).']);';
 			}
 
 			else if($obj['type'] == "slider"){

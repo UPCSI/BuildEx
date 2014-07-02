@@ -226,6 +226,53 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
     $.count++;
 }
 
+function draw_dropdown(posX, posY, page_num, options){
+	posX = typeof posX !== 'undefined' ? posX : 442;
+	posY = typeof posY !== 'undefined' ? posY : 271;
+	page_num = typeof page_num !== 'undefined' ? page_num : 0;
+
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
+
+	var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
+
+	if (posX != null && posY != null){
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + workspace_height + 'px;"';
+	}
+
+	else{
+		htmlData += 'style="height:34px; width:140px;"';
+	}
+
+	if(typeof options !== undefined){
+		htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+		options.forEach(function(choice){
+			htmlData += '<option value="'+choice+'">'+choice+'</option>';
+		});
+
+		htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
+	}
+
+	else{
+		htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
+	}
+	
+	var temp = $.count;
+	var index = page_num;
+
+	if(index <= 0){
+		$("#page" + $.current_page).append(htmlData);
+	}
+
+	else{
+		$("#page" + index).append(htmlData);
+	}
+}
+
 function draw_slider(posX, posY, page_num, min, max){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
