@@ -22,7 +22,7 @@
 	<?php endif; ?>
 </h5>
 <h5 class="actions">
-	<?php echo anchor("builder/app/{$experiment->eid}", 'Open', 'class = "button tiny"'); ?>
+	<?php echo anchor(experiment_path($faculty, $experiment, 'builder'), 'Open', 'class = "button tiny"'); ?>
 	<?php echo form_open(experiment_path($faculty, $experiment, 'destroy'), array('class' => 'experiment_delete')); ?>
 	 	<?php echo form_hidden('experiment_id', $experiment->eid); ?>
 		<?php echo anchor('#', 'Delete', array('class' => 'button tiny')); ?>

@@ -3,6 +3,7 @@
 class Builder extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
+		$this->load->model('experiment_model', 'experiment');
 	}
 
 	public function form($eid = 0){
@@ -12,21 +13,14 @@ class Builder extends MY_Controller{
 		$this->load->view('builder/_maker_layout',$data);
 	}
 
-	public function app($eid = 0){
-		/*
-			this is the index of the app
-			for the reason that we need the eid
-			of the experiment for the app
-			and it's not trivial to pass a variable
-			from view to the controller index.
-
-		*/
-
-		$data['title'] = 'Experiment';
-		$data['eid'] = $eid;
+	public function edit($role = NULL, $username = NULL, $eid = 0){
+		/* You can use the $role and $username variables for authorization purposes*/
+		$researcher_info = $this->user_model->get_researcher($role, $username);
+		$data['researcher'] = $researcher_info[0];
+		$data['experiment'] = $this->experiment->get($role, $researcher_info[1], $eid);
 		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
-
+		$data['title'] = 'Experiment';
 		$data['main_content'] = 'builder/workspace';
 		$this->load->view('builder/layout', $data);
 	}

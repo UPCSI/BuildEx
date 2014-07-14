@@ -27,6 +27,15 @@ function graduate_path($graduate = NULL){
     return "graduate/{$graduate->username}";
 }
 
+function experiments_path($researcher = NULL){
+    $link = NULL;
+    if(isset($researcher)){
+        $link = researcher_path($researcher);
+        $link = $link.'/experiments';
+    }
+    return $link;
+}
+
 function experiment_path($researcher, $experiment = NULL, $action = 'view'){
     $link = NULL;
     if(isset($experiment)){
