@@ -39,6 +39,7 @@ $route['explore'] = 'laboratories/index';
 // Experiments
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/(add|create)'] = 'experiments/$3/$1/$2';
+$route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/builder'] = 'builder/edit/$1/$2/$3';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
 
 /* End of file routes.php */
