@@ -53,7 +53,7 @@ class Experiments extends MY_Controller{
 		redirect("{$role}/{$id}/experiments");
 	}
 
-	public function view($role = NULL, $id = 0, $eid = 0){
+	public function view($role = NULL, $username = NULL, $eid = 0){
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
@@ -62,7 +62,7 @@ class Experiments extends MY_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function edit($role = NULL, $id = 0, $eid = 0){
+	public function edit($role = NULL, $username = NULL, $eid = 0){
 		$data['experiment'] = $this->experiment->get($eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
@@ -70,7 +70,7 @@ class Experiments extends MY_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function update($role = NULL, $id = 0){
+	public function update($role = NULL, $username = NULL){
 		$eid = $this->input->post('experiment_id');
 		$info['title'] = $this->input->post('title');
 		$info['category'] = $this->input->post('category');

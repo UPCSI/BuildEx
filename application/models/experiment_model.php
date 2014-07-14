@@ -32,18 +32,18 @@ class Experiment_model extends MY_Model{
 		$all = array();
 		$faculty_exp = $this->all_faculty_experiments();
 		$graduates_exp = $this->all_graduate_experiments();
-
 		if(isset($faculty_exp)){
 			$all = array_merge($all, $faculty_exp);
 		}
 
 		if(isset($graduates_exp)){
-			$all = array_merge($all, $faculty_exp);
+			$all = array_merge($all, $graduates_exp);
 		}
 
 		if(empty($all)){
 			return null;
 		}
+
 		return $all;
 	}
 
@@ -86,7 +86,7 @@ class Experiment_model extends MY_Model{
 	public function all_graduate_experiments(){
 		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
 		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
-		$this->db->join('Users', 'Users.uid = Graduates.gid');
+		$this->db->join('Users', 'Users.uid = Graduates.uid');
 		$this->db->join('graduates_member_of', 'graduates_member_of.gid = Graduates.gid');
 		$this->db->join('Laboratories', 'Laboratories.labid = graduates_member_of.labid');
 		$q = $this->db->get('Experiments');
