@@ -12,7 +12,7 @@
     <tbody>
       <?php foreach ($experiments as $experiment): ?>
         <tr>
-          <td><?php echo anchor(experiment_path($experiment), $experiment->title); ?></td>
+          <td><?php echo anchor(experiment_path($experiment, $experiment), $experiment->title); ?></td>
           <td><?php echo anchor(researcher_path($experiment), researcher($experiment)); ?></td>
           <td><?php echo response_ratio($experiment); ?></td>
           <td><?php echo $experiment->is_published; ?></td>
