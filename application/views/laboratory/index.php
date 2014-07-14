@@ -40,7 +40,3 @@
     <?php $this->load->view('layouts/_sitemap'); ?>
     <?php $this->load->view('includes/javascripts/foundation'); ?>
 </div>
-
-
-
-

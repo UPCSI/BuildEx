@@ -47,6 +47,11 @@ class User_Controller extends MY_Controller{
         if(isset($laboratory)){
             redirect(laboratory_path($laboratory));
         }
+        else{
+            $msg = "You don't have a laboratory yet. Please join one now.";
+            $this->session->set_flashdata('notification', $msg);
+            redirect('explore');
+        }
     }
 
     public function logout(){   

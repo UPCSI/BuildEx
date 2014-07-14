@@ -10,6 +10,7 @@ class Laboratories extends MY_Controller{
 
 	public function index(){
 		$data['laboratories'] = $this->laboratory->all();
+		$data['notification'] = $this->session->flashdata('notification');
 		$data['title'] = 'Explore';
 		$data['main_content'] = 'laboratory/index';
 		$data['page'] = 'all';

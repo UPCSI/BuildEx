@@ -1,3 +1,5 @@
+<?php $this->load->view('layouts/_notification'); ?>
+
 <h1 class="white"> Laboratories </h1>
 
 <div class="row">
