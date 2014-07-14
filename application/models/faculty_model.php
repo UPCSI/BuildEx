@@ -12,12 +12,14 @@ class Faculty_model extends MY_Model{
 
 	public function get($fid = 0, $username = NULL){
 		$this->db->join('Users','Users.uid = Faculty.uid');
+
 		if($fid > 0){
 			$this->db->where('Faculty.fid', $fid);
 		}
-		else{
+		else if(!is_null($username)){
 			$this->db->where('Users.username', $username);
 		}
+		
 		$q = $this->db->get('Faculty');
 		return $this->query_row_conversion($q);
 	}
@@ -60,7 +62,7 @@ class Faculty_model extends MY_Model{
 	public function get_experiments($fid = 0, $category = NULL){
 		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
 		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
-		$this->db->where('Faculty.fid',$fid);
+		$this->db->where('Faculty.fid', $fid);
 		$q = $this->db->get('Experiments');
 		return $this->query_conversion($q);
 	}

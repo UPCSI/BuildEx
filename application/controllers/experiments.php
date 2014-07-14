@@ -8,9 +8,9 @@ class Experiments extends MY_Controller{
 	}
 
 	/* REST Methods */
-	public function index($role = NULL, $id = 0){
+	public function index($role = NULL, $username = NULL){
 		$data['role'] = $role;
-		$data['id'] = $id;
+		$data['username'] = $username;
 		$data['experiments'] = $this->faculty->get_experiments($fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
@@ -54,7 +54,9 @@ class Experiments extends MY_Controller{
 	}
 
 	public function view($role = NULL, $username = NULL, $eid = 0){
-		$data['experiment'] = $this->experiment->get($eid);
+		$researcher_info = $this->user_model->get_researcher($role, $username);
+		$data['researcher'] = $researcher_info[0];		
+		$data['experiment'] = $this->experiment->get($role, $researcher_info[1], $eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'view';
@@ -63,7 +65,9 @@ class Experiments extends MY_Controller{
 	}
 
 	public function edit($role = NULL, $username = NULL, $eid = 0){
-		$data['experiment'] = $this->experiment->get($eid);
+		$researcher_info = $this->user_model->get_researcher($role, $username);
+		$data['researcher'] = $researcher_info[0];		
+		$data['experiment'] = $this->experiment->get($role, $researcher_info[1], $eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';
 		$data['page'] = 'edit';
@@ -86,7 +90,7 @@ class Experiments extends MY_Controller{
 	
 		$role = $this->session->userdata('active_role');
 		$this->session->set_flashdata('notification',$msg);
-		redirect("{$role}/{$id}/experiment/{$eid}");
+		redirect("{$role}/{$username}/experiment/{$eid}");
 	}
 	/* END of REST Methods */
 

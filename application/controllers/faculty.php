@@ -9,9 +9,10 @@ class Faculty extends User_Controller{
 	}
 
 	/* Faculty Pages */
-	public function experiments(){
-		$fid = role_id();
-		$data['experiments'] = $this->faculty->get_experiments($fid);
+	public function experiments($username = NULL){
+		$faculty = $this->faculty->get(0, $username);
+		$data['faculty'] = $faculty;
+		$data['experiments'] = $this->faculty->get_experiments($faculty->fid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'experiments';

@@ -6,6 +6,7 @@ class User_model extends MY_Model{
 		parent::__construct();
 		$this->load->model('admin_model', 'admin');
 		$this->load->model('graduate_model', 'graduate');
+		$this->load->model('faculty_model', 'faculty');
 		$this->load->model('laboratory_head_model', 'laboratory_head');
 	}
 
@@ -149,6 +150,19 @@ class User_model extends MY_Model{
 		return strcmp(substr($email, -1), '*') != 0;
 	}
 
+	public function get_researcher($role = NULL, $username = NULL) {
+		
+		if($role == 'faculty'){
+			$researcher = $this->faculty->get(0, $username);
+			$id = $researcher->fid;
+		}
+		else if($role == 'graduate'){
+			$researcher = $this->graduate->get(0, $username);
+			$id = $researcher->gid;
+		}
+
+		return array($researcher, $id);
+	}
 	public function get_user_profile($uid = 0, $username = NULL){
 		/*
 		* Returns the profile of a particular user given its uid or username

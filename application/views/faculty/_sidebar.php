@@ -4,10 +4,10 @@
     <li><?php echo anchor(page_path(''), 'Profile'); ?></li>
     
     <li><label>Records</label></li>
-    <li><?php echo anchor('faculty/'.role_id().'/experiments', 'Experiments'); ?></li>
-    <li><?php echo anchor('faculty/'.role_id().'/advisories', 'Advisory Experiments'); ?></li>
+    <li><?php echo anchor(current_namespace().'/experiments', 'Experiments'); ?></li>
+    <li><?php echo anchor(current_namespace().'/advisories', 'Advisory Experiments'); ?></li>
 
     <li><label>Laboratories</label></li>
-    <li><?php echo anchor('faculty/'.role_id().'/laboratory', 'My Laboratory'); ?></li>
+    <li><?php echo anchor(current_namespace().'/laboratory', 'My Laboratory'); ?></li>
     <li><?php echo anchor('explore', 'Explore'); ?></li> 
 </ul>

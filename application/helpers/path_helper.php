@@ -30,10 +30,10 @@ function graduate_path($graduate = NULL){
     return "graduate/{$graduate->username}";
 }
 
-function experiment_path($experiment = NULL, $action = 'view') {
+function experiment_path($researcher, $experiment = NULL, $action = 'view'){
     $link = NULL;
     if(isset($experiment)){
-        $researcher = researcher_path($experiment);
+        $researcher = researcher_path($researcher);
         $link = "{$researcher}/experiment/{$experiment->eid}";
         if($action != 'view'){
             $link = $link.'/'.$action;
@@ -49,12 +49,12 @@ function experiment_path($experiment = NULL, $action = 'view') {
     return $link;
 }
 
-function researcher_path($experiment = NULL){
-    if(isset($experiment->fid)){
-        return "faculty/{$experiment->fid}";
+function researcher_path($researcher = NULL){
+    if(isset($researcher->fid)){
+        return "faculty/{$researcher->username}";
     }
-    else if(isset($experiment->gid)){
-        return "graduate/{$experiment->gid}";
+    else if(isset($researcher->gid)){
+        return "graduate/{$researcher->username}";
     }
 }
 

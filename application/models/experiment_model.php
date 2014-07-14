@@ -10,19 +10,26 @@ class Experiment_model extends MY_Model{
 	public function create($info = NULL){
 		$this->db->insert('Experiments', $info);
 		$eid = $this->db->insert_id();
-
 		$new_info['url'] = $this->generate_url($eid, $info['title']);
 		$this->update($eid, $new_info);
-
 		$this->assign_to(role(), role_id(), $eid);
-		
 		return $eid;
 	}
 
-	public function get($eid = 0){
-		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
-		$this->db->join('Users', 'Users.uid = Faculty.uid');
+	public function get($role = NULL, $id = 0, $eid = 0){
+		
+		if($role == 'faculty'){
+			$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+			$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+			$this->db->where('Faculty.fid', $id);
+		}
+		else if($role == 'graduate'){
+			$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+			$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+			$this->db->where('Graduates.gid', $id);
+		}
+
+		$this->db->join('Users', 'Users.uid = '.ucfirst($role).'.uid');
 		$this->db->where('Experiments.eid', $eid);
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
