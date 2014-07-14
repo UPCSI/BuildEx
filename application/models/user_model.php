@@ -12,11 +12,11 @@ class User_model extends MY_Model{
 
 	public function get_rules(){
 		return array('username' => array('field' => 'username', 
-					 					 'label' => 'Username', 
-										 'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'), 
-					 'password' => array('field' => 'password', 
-										 'label' => 'Password', 
-										 'rules' => 'trim|required|min_length[6]|max_length[16]'));
+			 					 'label' => 'Username', 
+								 'rules' => 'trim|required|xss_clean|min_length[4]|max_length[16]'), 
+			 					 'password' => array('field' => 'password', 
+								 'label' => 'Password', 
+								 'rules' => 'trim|required|min_length[6]|max_length[16]'));
 	}
 
 	/* CRUD */
@@ -75,7 +75,7 @@ class User_model extends MY_Model{
 					  'username' => $user->username,
 					  'roles' => $this->get_roles($user->uid),
 					  'active_role' => NULL,
-					  'loggedin' => TRUE);
+					  'logged_in' => TRUE);
 		
 		if(array_key_exists('faculty', $data['roles'])){
 			$data['active_role'] = 'faculty';

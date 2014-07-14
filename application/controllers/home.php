@@ -23,7 +23,7 @@ class Home extends CI_Controller{
 	}
 
 	public function is_logged_in(){
-		return (bool) $this->session->userdata('logged_in');
+		return $this->session->userdata('logged_in');
 	}
 
 	public function reset(){

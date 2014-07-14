@@ -1,4 +1,4 @@
-<?php echo form_open("graduates/create"); ?>
+<?php echo form_open('graduates/create'); ?>
 	<div class="row">
 		<div class="large-4 columns">
 			<label>First Name</label>
