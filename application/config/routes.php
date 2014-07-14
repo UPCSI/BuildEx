@@ -51,11 +51,12 @@ $route['signin/(.+)'] = 'sign_in/$1';
 // Internals
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
 $route['admin'] = 'admins/index';
-$route['admin/'.'('.$RESTFUL_ROUTES.')'] = 'admins/$1';
+$route['admin/'."({$RESTFUL_ROUTES})"] = 'admins/$1';
 $route['admin/'.'('.$ADMIN_PAGES.')'] = 'admins/$1';
 $route['admin/(logout|confirm_faculty)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
+$route['faculty/'."({$RESTFUL_ROUTES})"] = 'faculty/$1';
 $route['faculty/([a-zA-Z0-9]+)/laboratory'] = 'faculty/laboratory/$1';
 $route['faculty/logout'] = 'faculty/logout';
 $route['faculty/([a-zA-Z0-9]+)'] = 'faculty/view/$1';
