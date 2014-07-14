@@ -31,7 +31,10 @@ class User_Controller extends MY_Controller{
         }
     }
 
-    public function laboratory($id = 0){
+    public function laboratory($username = NULL){
+        $researcher_info = $this->user_model->get_researcher($this->role, $username);
+        $id = $researcher_info[1];
+
         if($this->role == 'faculty'){
             $this->load->model('faculty_model', 'faculty');
             $laboratory = $this->faculty->get_laboratory($id);
