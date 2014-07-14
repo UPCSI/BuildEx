@@ -19,9 +19,9 @@ class Experiments extends MY_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function add($role = NULL, $id = 0) {
-		$data['role'] = $role;
-    $data['id'] = $id;
+	public function add($role = NULL, $username = NULL) {
+    $researcher_info = $this->user_model->get_researcher($role, $username);
+		$data['researcher'] = $researcher_info[0];
 		$data['experiment'] = NULL;
 		$data['action'] = 'create';
 		$data['title'] = 'Experiment';
@@ -31,7 +31,7 @@ class Experiments extends MY_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function create($role = NULL, $id = 0) {
+	public function create($role = NULL, $username = NULL) {
 		$info['title'] = $this->input->post('title');
 		$info['description'] = $this->input->post('description');
 		$info['target_count'] = $this->input->post('target_count');
@@ -55,7 +55,7 @@ class Experiments extends MY_Controller{
 
 	public function view($role = NULL, $username = NULL, $eid = 0){
 		$researcher_info = $this->user_model->get_researcher($role, $username);
-		$data['researcher'] = $researcher_info[0];		
+		$data['researcher'] = $researcher_info[0];
 		$data['experiment'] = $this->experiment->get($role, $researcher_info[1], $eid);
 		$data['title'] = 'Experiment';
 		$data['main_content'] = 'experiment/index';

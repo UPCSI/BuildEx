@@ -6,7 +6,7 @@
 		<h3 class="white">My Experiments</h3>
 	</div>
 	<div class="large-6 medium-6 small-6 column">
-		<?php echo anchor(experiment_path(NULL, 'add'), 'Create Experiment', 'class = "button small pull-right"'); ?>
+		<?php echo anchor(experiment_path($graduate, NULL, 'add'), 'Create Experiment', 'class = "button small pull-right"'); ?>
 	</div>
 </div>
 

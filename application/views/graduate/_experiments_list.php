@@ -6,7 +6,7 @@
                 <div class="row full">
                     <div class="large-12 column">
                         <h3>
-                            <?php echo anchor(experiment_path($experiment), $experiment->title); ?>
+                            <?php echo anchor(experiment_path($graduate, $experiment), $experiment->title); ?>
                         </h3>
                     </div>
                 </div>
@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="large-12 column">
                     <div class="panel">
-                        <?php $this->load->view('faculty/_experiment_info', $data); ?>
+                        <?php $this->load->view('graduate/_experiment_info', $data); ?>
                     </div>
                 </div>
             </div>

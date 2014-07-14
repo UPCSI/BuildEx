@@ -27,6 +27,7 @@ class Experiment_model extends MY_Model{
 			$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
 			$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
 			$this->db->where('Graduates.gid', $id);
+			$role = $role.'s';
 		}
 
 		$this->db->join('Users', 'Users.uid = '.ucfirst($role).'.uid');

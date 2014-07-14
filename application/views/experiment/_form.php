@@ -1,4 +1,4 @@
-<?php echo form_open(experiment_path($experiment, $action)); ?>
+<?php echo form_open(experiment_path($researcher, $experiment, $action)); ?>
 	<fieldset>
 		<legend> Experiment </legend>
 		<label>Title</label>

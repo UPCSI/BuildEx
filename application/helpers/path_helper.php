@@ -20,9 +20,6 @@ function faculty_path($faculty = NULL, $action = 'view'){
             $link = "faculty/{$faculty->username}";
         }
     }
-    else{
-
-    }
     return $link;
 }
 
@@ -41,8 +38,7 @@ function experiment_path($researcher, $experiment = NULL, $action = 'view'){
     }
     else{
         if($action == 'add' || $action == 'create'){
-            $CI =& get_instance();
-            $researcher = role().'/'.role_id();
+            $researcher = role().'/'.username();
             $link = "{$researcher}/experiment/{$action}";
         }
     }

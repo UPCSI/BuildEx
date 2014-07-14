@@ -34,3 +34,8 @@ function role() {
     $CI =& get_instance();
     return $CI->session->userdata('active_role');
 }
+
+function username() {
+    $CI =& get_instance();
+    return $CI->session->userdata('username');
+}

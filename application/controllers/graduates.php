@@ -9,9 +9,10 @@ class Graduates extends User_Controller{
 	}
 
 	/* Graduate Pages */
-	public function experiments(){
-		$gid = role_id();
-		$data['experiments'] = $this->graduate->get_experiments($gid);
+	public function experiments($username){
+		$graduate = $this->graduate->get(0, $username);
+		$data['graduate'] = $graduate;
+		$data['experiments'] = $this->graduate->get_experiments($graduate->gid);
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'experiments';
