@@ -1,79 +1,74 @@
 <?php
 
-class Respond extends CI_Controller{
+class Respondents extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('experiments_model');
-		$this->load->model('builder_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('users_model');
-		$this->load->model('respondents_model');
-		$this->load->model('builder_model');
+		$this->load->model('experiment_model', 'experiment');
+		$this->load->model('builder_model', 'builder');
+		$this->load->model('faculty_model', 'faculty');
+		$this->load->model('graduate_model', 'graduate');
+		$this->load->model('respondent_model', 'respondent');
 	}
 
-	public function view($hash){
-		$exp = $this->experiments_model->get_experiment_by_hash($hash); //experiment with given url(hash)
-		
-		if (is_null($exp)){
-			echo "Error 404: Page not found"; //handle this error
-			return 0;
-		}
+	/* REST Methods */
 
-		$id = $this->faculty_model->get_faculty_by_experiment($exp->eid);
-		
-		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($exp->eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
-		}
-		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
-		}
-		$data['eid'] = $exp->eid;
-		$data['slug'] = $this->experiments_model->generate_slug($exp->title);
-		$data['experiment'] = $exp->title;
-		$data['description'] = $exp->description;
-		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
-		
-		$data['title'] = 'Respond';
-		$data['main_content'] = 'respondent/index';
-		$data['page'] = 'view';
-		$this->load->view('respondent/view_layout', $data);
-	}
-
-	public function agree(){
+	public function create($eid = 0){
 		$eid = $this->input->post('eid');
 		$slug = $this->input->post('slug');
-		$this->session->set_userdata('respond_to',$eid);
-		$this->session->set_userdata('slug',$slug);
-		redirect('respond/fill_up');
+		$this->session->set_userdata('respond_to', $eid);
+		$this->session->set_userdata('slug', $slug);
+		redirect("respond/{$slug}/fill_out");
 	}
 
-	public function fill_up(){
+	public function add($eid = 0){
+		$experiment = $this->builder->get($eid);
+		
+		if(is_null($experiment)){
+		 	show_404();
+		}
+		else{
+			$data['experiment'] = $experiment;
+			$data['researcher'] = $this->experiment->get_researcher($experiment->eid);
+			$data['title'] = 'Respond';
+			$data['main_content'] = 'respondent/index';
+			$data['page'] = 'add';
+			$this->load->view('main_layout', $data);
+		}
+	}
+
+	public function view($rid = 0){
+		/* view */
+	}
+
+	public function destroy($rid = 0){
+
+	}
+
+	/* End of REST Methods */
+	public function fill_out($eid = 0){
 		$data['title'] = 'Respond';
 		$data['main_content'] = 'respondent/index';
-		$data['page'] = 'fill_up';
-		$this->load->view('respondent/view_layout', $data);
+		$data['page'] = 'fill_out';
+		$this->load->view('main_layout', $data);
 	}
 
 	public function register(){
 		$eid = $this->session->userdata('respond_to');
 		$info = array('first_name' => $this->input->post('first_name'),
-					'middle_name' => $this->input->post('middle_name'),
-					'last_name' => $this->input->post('last_name'),
-					'age' => +$this->input->post('age'),
-					'email_ad' => $this->input->post('email'),
-					'address' => $this->input->post('address'),
-					'nationality' => $this->input->post('nationality'),
-					'civil_status' => +$this->input->post('civil_status'),
-					'gender' => $this->input->post('gender'));
+									'middle_name' => $this->input->post('middle_name'),
+									'last_name' => $this->input->post('last_name'),
+									'age' => +$this->input->post('age'),
+									'email_ad' => $this->input->post('email'),
+									'address' => $this->input->post('address'),
+									'nationality' => $this->input->post('nationality'),
+									'civil_status' => +$this->input->post('civil_status'),
+									'gender' => $this->input->post('gender'));
 
 		$info['ip_addr'] = $this->session->userdata('ip_address');
 		$info['user_agent'] = $this->session->userdata('user_agent');
-
-		$rid = $this->respondents_model->add_respondent($info,$eid);
-		$this->session->set_userdata('rid',$rid);
+		$rid = $this->respondents_model->add_respondent($info, $eid);
+		$this->session->set_userdata('rid', $rid);
 		$slug = $this->session->userdata('slug');
 		redirect('respond/exp/'.$slug);
 	}

@@ -19,7 +19,5 @@
 <body>
     <?php $this->load->view($main_content); ?>
 </body>
-
     <?php $this->load->view('includes/javascripts/foundation'); ?>
-    
 </html>

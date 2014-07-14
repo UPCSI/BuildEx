@@ -68,3 +68,9 @@ function admin_path($admin = NULL){
         return "admin/{$admin->username}";
     }
 }
+
+function respond_path($experiment = NULL){
+    if(isset($experiment)){
+        return "respond/{$experiment->url}";
+    }
+}

@@ -1,18 +1,16 @@
 <?php
 
 class Builder extends MY_Controller{
+	
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('experiment_model', 'experiment');
+		$this->load->model('builder_model', 'builder');
+		$this->load->model('faculty_model', 'faculty');
+		$this->load->model('graduate_model', 'graduate');
 	}
 
-	public function form($eid = 0){
-		$data['title'] = 'Experiment';
-		$data['eid'] = $eid;
-		$data['main_content'] = 'builder/form_maker';
-		$this->load->view('builder/_maker_layout',$data);
-	}
-
+	/* REST Methods */
 	public function edit($role = NULL, $username = NULL, $eid = 0){
 		/* You can use the $role and $username variables for authorization purposes*/
 		$researcher_info = $this->user_model->get_researcher($role, $username);
@@ -25,13 +23,11 @@ class Builder extends MY_Controller{
 		$this->load->view('builder/layout', $data);
 	}
 
-/*
-	------------------------------------------------------------------------------------
-	SAVE
-	------------------------------------------------------------------------------------
-*/
+	public function view($eid = 0){
+		
+	}
+	/* End of REST Methods */
 
-	/* saves all objects and pages */
 	public function save() {
 		$message = $this->input->post('msg');
 		if ($message == 'false')

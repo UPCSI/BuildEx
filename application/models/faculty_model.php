@@ -116,21 +116,18 @@ class Faculty_model extends MY_Model{
 		return $this->db->insert('advise',array('fid'=>$fid,'eid'=>$eid));
 	}
 
-	public function get_faculty_by_experiment($eid = 0){
-		$this->db->select('Faculty.*');
+	public function get_by_experiment($eid = 0){
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
 		$this->db->join('faculty_conduct', 'faculty_conduct.fid = Faculty.fid');
-		$this->db->where('faculty_conduct.eid',$eid);
+		$this->db->where('faculty_conduct.eid', $eid);
 		$q = $this->db->get('Faculty');
-
-		$res = $this->query_row_conversion($q);
-
-		return $res;
+		return $this->query_row_conversion($q);
 	}
 
 	public function get_all_account_requests(){
 		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
 		$this->db->join('Users','Users.uid = Faculty.uid');
-		$this->db->where('Faculty.account_status','f');
+		$this->db->where('Faculty.account_status', 'f');
 		$q = $this->db->get('Faculty');
 		return $this->query_conversion($q);
 	}

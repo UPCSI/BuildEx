@@ -2,11 +2,18 @@
 
 class Builder_model extends MY_Model{
 
-	function __construct(){
+	public function __construct(){
 		parent::__construct();
 	}
 
-	function get_all_objects($eid){
+	/* CRUD Methods */
+	public function get($eid = 0){
+		$this->db->where('Experiments.eid', $eid);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
+	public function get_all_objects($eid){
 		$data = array();
 
 		$this->db->where('Pages.eid', $eid);
@@ -65,20 +72,20 @@ class Builder_model extends MY_Model{
 		return $data;
 	}
 
-	function get_all_pages($eid){
+	public function get_all_pages($eid){
 		$this->db->select("*");
 		$this->db->where('eid', $eid);
 		$query = $this->db->get('Pages');
 		return $this->query_conversion($query);
 	}
 
-	function get_object($oid, $table){
+	public function get_object($oid, $table){
 		$this->db->where('oid', $oid);
 		$query = $this->db->get($table);
 		return $this->query_row_conversion($query);
 	}
 
-	function get_input($oid, $table){
+	public function get_input($oid, $table){
 		$this->db->where('Inputs.oid', $oid);
 		$this->db->join('Inputs', $table.'.input_id = Inputs.input_id');
 		$query = $this->db->get($table);
@@ -87,12 +94,12 @@ class Builder_model extends MY_Model{
 		return $this->query_row_conversion($query);
 	}
 
-	function delete($eid){
+	public function delete($eid){
 		$this->db->where('eid',$eid);
 		$this->db->delete('Pages');		
 	}
 
-	function bind($pid, $input_id){
+	public function bind($pid, $input_id){
 		$this->db->select('*');
 		$this->db->where('Pages.pid', $pid);
 		$this->db->join('Pages', 'Pages.pid = Objects.pid');
@@ -103,62 +110,62 @@ class Builder_model extends MY_Model{
 		$this->db->update('Questions', array('input' => $input_id));
 	}
 
-	function add_page($data){
+	public function add_page($data){
 		$this->db->insert('Pages',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_object($data){
+	public function add_object($data){
 		$this->db->insert('Objects',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_label($data){
+	public function add_label($data){
 		$this->db->insert('Labels',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_textinput($data){
+	public function add_textinput($data){
 		$this->db->insert('Texts',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_button($data){
+	public function add_button($data){
 		$this->db->insert('Buttons',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_question($data){
+	public function add_question($data){
 		$this->db->insert('Questions',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_input($data){
+	public function add_input($data){
 		$this->db->insert('Inputs',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_text($data){
+	public function add_text($data){
 		$this->db->insert('Texts',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_radio($data){
+	public function add_radio($data){
 		$this->db->insert('Radios',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_checkbox($data){
+	public function add_checkbox($data){
 		$this->db->insert('Checkboxes',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_dropdown($data){
+	public function add_dropdown($data){
 		$this->db->insert('Dropdowns',$data);
 		return $this->db->insert_id();
 	}
 
-	function add_slider($data){
+	public function add_slider($data){
 		$this->db->insert('Sliders',$data);
 		return $this->db->insert_id();
 	}
