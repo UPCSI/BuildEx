@@ -10,6 +10,7 @@ $route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
 $route['signup/(.+)'] = 'sign_up/$1';
 $route['signin'] = 'sign_in/index';
 $route['signin/(.+)'] = 'sign_in/$1';
+$route['errors/faculty/waiting'] = 'sign_in/waiting';
 
 // Internals
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';

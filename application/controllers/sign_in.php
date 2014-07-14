@@ -25,20 +25,29 @@ class Sign_in extends CI_Controller{
 			$active_role = $this->session->userdata('active_role');
 			$active_id = $roles[$active_role];
 
-			if($active_role == 'faculty' && $this->faculty->is_confirmed($active_id) == "t"){
-				redirect('faculty');
+			if($active_role == 'faculty'){
+				if($this->faculty->is_confirmed($active_id) == 't'){
+					redirect('faculty');
+				}
+				else{
+					$new_session['logged_in'] = FALSE;
+					$this->session->set_userdata($new_session);
+					redirect('errors/faculty/waiting');
+				}
 			}
 			else if($active_role != 'faculty'){
 				redirect($active_role);
 			}
-			else{
-				$new_session['logged_in'] = FALSE;
-				$this->session->set_userdata($new_session);
-				redirect('');
-			}
 		}
-		$msg = "Invalid username or password. Please try again.";
+		$msg = 'Invalid username or password. Please try again.';
 		$this->session->set_flashdata('notification', $msg);
 		redirect('signin');
+	}
+
+	public function waiting(){
+		$data['title'] = 'Error';
+		$data['main_content'] = 'signin/faculty_waiting';
+		$data['notification'] = $this->session->flashdata('notification');	
+		$this->load->view('main_layout', $data);
 	}
 }
