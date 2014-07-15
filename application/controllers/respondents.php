@@ -107,62 +107,46 @@ class Respondents extends CI_Controller{
 		// $this->respondents_model->add_response($info,$qid,$rid);
 	}
 
-	public function debrief($slug){
-		/*shows the page after the last one*/
-		/*to debrief the user and to confirm his inputs just in case*/
-		$eid = $this->session->userdata('respond_to');
-		$exp = $this->experiments_model->get_experiment($eid);
-		$id = $this->faculty_model->get_faculty_by_experiment($eid);
-		
-		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
-		}
-		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
-		}
-
-		$data['experiment'] = $exp->title;
-		$data['description'] = $exp->description;
-		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
+	public function debrief($eid = 0, $slug = NULL){
+		$data['experiment'] = $this->builder->get($eid);
+		$data['researcher'] = $this->experiment->get_researcher($eid);
 		$data['title'] = 'Respond';
-		$data['main_content'] = 'respondent/debrief';
-		$this->load->view('respondent/_presentation_layout', $data);
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'debrief';
+		$this->load->view('main_layout', $data);
 	}
 
-	public function submit(){
-		$eid = $this->session->userdata('respond_to');
+	public function submit($eid = 0, $slug = NULL){
+		$eid = $this->input->post('experiment_id');
 		
-		if(!$this->experiments_model->increment_count($eid)){
-			var_dump('error!');//go to error page
+		if(!$this->experiment->increment_count($eid)){
+			var_dump('error!');
 			return 0;
 		}
-		/* last call before exiting */
-
-		/*perform form validations*/ //not priority
-		redirect('respond/complete');
+		redirect("respond/{$eid}/{$slug}/complete");
 	}
 
 	public function complete(){
 		$this->session->unset_userdata('rid');
 		$this->session->unset_userdata('respond_to');
-		$this->session->unset_userdata('eid');
+		$this->session->unset_userdata('agreed');
 
 		$data['title'] = 'Complete';
-		$data['main_content'] = 'respondent/complete';
-		$this->load->view('respondent/view_layout', $data);
-	
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'complete';
+		$this->load->view('main_layout', $data);
 		//when saving to db, add completed experiment = true
 	}
 
 	public function leave(){
 		$this->session->unset_userdata('rid');
 		$this->session->unset_userdata('respond_to');
-		$this->session->unset_userdata('eid');
+		$this->session->unset_userdata('agreed');
 
 		$data['title'] = 'Good Bye';
-		$data['main_content'] = 'respondent/leave';
-		$this->load->view('respondent/view_layout', $data);
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'leave';
+		$this->load->view('main_layout', $data);
 	}
 
 	public function interrupted(){
