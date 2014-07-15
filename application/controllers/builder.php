@@ -1,18 +1,16 @@
 <?php
 
 class Builder extends MY_Controller{
+	
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('experiment_model', 'experiment');
+		$this->load->model('builder_model', 'builder');
+		$this->load->model('faculty_model', 'faculty');
+		$this->load->model('graduate_model', 'graduate');
 	}
 
-	public function form($eid = 0){
-		$data['title'] = 'Experiment';
-		$data['eid'] = $eid;
-		$data['main_content'] = 'builder/form_maker';
-		$this->load->view('builder/_maker_layout',$data);
-	}
-
+	/* REST Methods */
 	public function edit($role = NULL, $username = NULL, $eid = 0){
 		/* You can use the $role and $username variables for authorization purposes*/
 		$researcher_info = $this->user_model->get_researcher($role, $username);
@@ -21,17 +19,31 @@ class Builder extends MY_Controller{
 		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'builder/workspace';
-		$this->load->view('builder/layout', $data);
+		$data['other_css'] = array('builder');
+		$data['other_js'] = array('builder');
+		$data['main_content'] = 'builder/index';
+		$data['page'] = 'edit';
+		$this->load->view('main_layout', $data);
 	}
 
-/*
-	------------------------------------------------------------------------------------
-	SAVE
-	------------------------------------------------------------------------------------
-*/
+	public function view($eid = 0, $slug = NULL){
+		if($this->is_agreed()){
+			$data['experiment'] = $this->builder->get($eid);
+			$data['pages'] = $this->builder->get_all_pages($eid);
+			$data['var'] = $this->builder->get_all_objects($eid);
+			$data['title'] = 'Respond';
+			$data['slug'] = $slug;
+			$data['other_css'] = array('builder');
+			$data['other_js'] = array('builder', 'respondent');
+			$data['main_content'] = 'builder/view';
+			$this->load->view('main_layout', $data);
+		}
+		else{
+			redirect("respond/{$eid}/{$slug}/terms");
+		}
+	}
+	/* End of REST Methods */
 
-	/* saves all objects and pages */
 	public function save() {
 		$message = $this->input->post('msg');
 		if ($message == 'false')
@@ -227,5 +239,9 @@ class Builder extends MY_Controller{
 	public function add_slider($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_slider($data);
+	}
+
+	private function is_agreed(){
+		return $this->session->userdata('agreed');
 	}
 }

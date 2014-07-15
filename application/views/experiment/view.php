@@ -12,10 +12,10 @@
 		<?php if($experiment->is_published == 'f'): ?>
 			<?php echo anchor(experiment_path($researcher, $experiment, 'publish'), 'Publish', 'class = "button small"'); ?>
 		<?php else: ?>
-			<p class = "white"> <strong> URL: </strong> <a href ="<?php echo site_url('respond/view/'.$experiment->url); ?>"> <?php echo site_url('respond/view/'.$experiment->url); ?> </a></p>
+			<p class = "white"><strong>URL:</strong><?php echo anchor(respond_path($experiment)); ?></p>
 			<?php echo anchor(experiment_path($researcher, $experiment, 'unpublish'), 'Unpublish', 'class = "button small"'); ?>
 		<?php endif; ?>
 		<?php echo anchor(experiment_path($researcher, $experiment, 'edit'), 'Edit', 'class = "button small"'); ?>
-		<a class = "button small" href = "<?php echo site_url('builder/app/'.$experiment->eid); ?>"> Go to Experiment Builder </a>
+		<a class = "button small" href = "<?php echo site_url(experiment_path($researcher, $experiment, 'builder')); ?>"> Go to Experiment Builder </a>
 	</div>
 </div>

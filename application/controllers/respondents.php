@@ -1,94 +1,63 @@
 <?php
 
-class Respond extends CI_Controller{
+class Respondents extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('experiments_model');
-		$this->load->model('builder_model');
-		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('users_model');
-		$this->load->model('respondents_model');
-		$this->load->model('builder_model');
+		$this->load->model('experiment_model', 'experiment');
+		$this->load->model('builder_model', 'builder');
+		$this->load->model('faculty_model', 'faculty');
+		$this->load->model('graduate_model', 'graduate');
+		$this->load->model('respondent_model', 'respondent');
 	}
 
-	public function view($hash){
-		$exp = $this->experiments_model->get_experiment_by_hash($hash); //experiment with given url(hash)
-		
-		if (is_null($exp)){
-			echo "Error 404: Page not found"; //handle this error
-			return 0;
-		}
-
-		$id = $this->faculty_model->get_faculty_by_experiment($exp->eid);
-		
-		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($exp->eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
-		}
-		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
-		}
-		$data['eid'] = $exp->eid;
-		$data['slug'] = $this->experiments_model->generate_slug($exp->title);
-		$data['experiment'] = $exp->title;
-		$data['description'] = $exp->description;
-		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
-		
+	/* REST Methods */
+	public function add($eid = 0, $slug = NULL){
+		$data['experiment'] = $this->builder->get($eid);
 		$data['title'] = 'Respond';
 		$data['main_content'] = 'respondent/index';
-		$data['page'] = 'view';
-		$this->load->view('respondent/view_layout', $data);
+		$data['page'] = 'add';
+		$this->load->view('main_layout', $data);
 	}
 
-	public function agree(){
-		$eid = $this->input->post('eid');
-		$slug = $this->input->post('slug');
-		$this->session->set_userdata('respond_to',$eid);
-		$this->session->set_userdata('slug',$slug);
-		redirect('respond/fill_up');
-	}
-
-	public function fill_up(){
-		$data['title'] = 'Respond';
-		$data['main_content'] = 'respondent/index';
-		$data['page'] = 'fill_up';
-		$this->load->view('respondent/view_layout', $data);
-	}
-
-	public function register(){
-		$eid = $this->session->userdata('respond_to');
+	public function create($eid = 0, $slug = NULL){
 		$info = array('first_name' => $this->input->post('first_name'),
-					'middle_name' => $this->input->post('middle_name'),
-					'last_name' => $this->input->post('last_name'),
-					'age' => +$this->input->post('age'),
-					'email_ad' => $this->input->post('email'),
-					'address' => $this->input->post('address'),
-					'nationality' => $this->input->post('nationality'),
-					'civil_status' => +$this->input->post('civil_status'),
-					'gender' => $this->input->post('gender'));
+									'middle_name' => $this->input->post('middle_name'),
+									'last_name' => $this->input->post('last_name'),
+									'age' => +$this->input->post('age'),
+									'email_ad' => $this->input->post('email'),
+									'address' => $this->input->post('address'),
+									'nationality' => $this->input->post('nationality'),
+									'civil_status' => +$this->input->post('civil_status'),
+									'gender' => $this->input->post('gender'));
 
 		$info['ip_addr'] = $this->session->userdata('ip_address');
 		$info['user_agent'] = $this->session->userdata('user_agent');
+		$rid = $this->respondent->create($eid, $info);
+		$this->session->set_userdata('rid', $rid);
+		redirect("respond/{$eid}/{$slug}");
+	}
+	/* End of REST Methods */
 
-		$rid = $this->respondents_model->add_respondent($info,$eid);
-		$this->session->set_userdata('rid',$rid);
-		$slug = $this->session->userdata('slug');
-		redirect('respond/exp/'.$slug);
+	public function agree($eid = 0, $slug = NULL){
+		$eid = $this->input->post('eid');
+		$this->session->set_userdata('agreed', TRUE);
+		redirect("respond/{$eid}/{$slug}/add");
 	}
 
-	public function exp($slug){
-		/*slide show of the experiment*/
-		$eid = $this->session->userdata('respond_to');
-		$data['eid'] = $eid;
-		$data['slug'] = $slug;
-		$data['exp'] = $this->experiments_model->get_experiment($eid);
-		$data['pages'] = $this->builder_model->get_all_pages($eid);
-		$data['var'] = $this->builder_model->get_all_objects($eid);
-		$data['title'] = "Respond";
-		$data['main_content'] = "respondent/workspace.php";
-		$this->load->view('respondent/_presentation_layout', $data);
+	public function terms($eid = 0, $slug = NULL){
+		$experiment = $this->builder->get($eid);
+		if(is_null($experiment)){
+		 	show_404();
+		}
+		else{
+			$data['experiment'] = $experiment;
+			$data['researcher'] = $this->experiment->get_researcher($experiment->eid);
+			$data['title'] = 'Respond';
+			$data['main_content'] = 'respondent/index';
+			$data['page'] = 'terms';
+			$this->load->view('main_layout', $data);
+		}
 	}
 
 	public function save(){ //$rid,$qid
@@ -112,7 +81,6 @@ class Respond extends CI_Controller{
 				if($item['checked'] == "true"){
 					$answer['answer'] = $item['text'];
 				}
-
 				else{
 					continue;
 				}
@@ -139,62 +107,46 @@ class Respond extends CI_Controller{
 		// $this->respondents_model->add_response($info,$qid,$rid);
 	}
 
-	public function debrief($slug){
-		/*shows the page after the last one*/
-		/*to debrief the user and to confirm his inputs just in case*/
-		$eid = $this->session->userdata('respond_to');
-		$exp = $this->experiments_model->get_experiment($eid);
-		$id = $this->faculty_model->get_faculty_by_experiment($eid);
-		
-		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,NULL);
-		}
-		else{
-			$author = $this->faculty_model->get_faculty_profile($id->fid,NULL);
-		}
-
-		$data['experiment'] = $exp->title;
-		$data['description'] = $exp->description;
-		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
+	public function debrief($eid = 0, $slug = NULL){
+		$data['experiment'] = $this->builder->get($eid);
+		$data['researcher'] = $this->experiment->get_researcher($eid);
 		$data['title'] = 'Respond';
-		$data['main_content'] = 'respondent/debrief';
-		$this->load->view('respondent/_presentation_layout', $data);
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'debrief';
+		$this->load->view('main_layout', $data);
 	}
 
-	public function submit(){
-		$eid = $this->session->userdata('respond_to');
+	public function submit($eid = 0, $slug = NULL){
+		$eid = $this->input->post('experiment_id');
 		
-		if(!$this->experiments_model->increment_count($eid)){
-			var_dump('error!');//go to error page
+		if(!$this->experiment->increment_count($eid)){
+			var_dump('error!');
 			return 0;
 		}
-		/* last call before exiting */
-
-		/*perform form validations*/ //not priority
-		redirect('respond/complete');
+		redirect("respond/{$eid}/{$slug}/complete");
 	}
 
 	public function complete(){
 		$this->session->unset_userdata('rid');
 		$this->session->unset_userdata('respond_to');
-		$this->session->unset_userdata('eid');
+		$this->session->unset_userdata('agreed');
 
 		$data['title'] = 'Complete';
-		$data['main_content'] = 'respondent/complete';
-		$this->load->view('respondent/view_layout', $data);
-	
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'complete';
+		$this->load->view('main_layout', $data);
 		//when saving to db, add completed experiment = true
 	}
 
 	public function leave(){
 		$this->session->unset_userdata('rid');
 		$this->session->unset_userdata('respond_to');
-		$this->session->unset_userdata('eid');
+		$this->session->unset_userdata('agreed');
 
 		$data['title'] = 'Good Bye';
-		$data['main_content'] = 'respondent/leave';
-		$this->load->view('respondent/view_layout', $data);
+		$data['main_content'] = 'respondent/index';
+		$data['page'] = 'leave';
+		$this->load->view('main_layout', $data);
 	}
 
 	public function interrupted(){

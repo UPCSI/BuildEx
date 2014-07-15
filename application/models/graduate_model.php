@@ -73,14 +73,11 @@ class Graduate_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_graduate_by_experiment($eid = 0){
-		$this->db->select('Graduates.*');
-		$this->db->join('graduates_conduct','graduates_conduct.gid = Graduates.gid');
-		$this->db->where('graduates_conduct.eid',$eid);
+	public function get_by_experiment($eid = 0){
+		$this->db->join('Users', 'Users.uid = Graduates.uid');
+		$this->db->join('graduates_conduct', 'graduates_conduct.gid = Graduates.gid');
+		$this->db->where('graduates_conduct.eid', $eid);
 		$q = $this->db->get('Graduates');
-
-		$res = $this->query_row_conversion($q);
-
-		return $this->get_faculty_profile($res->gid);
+		return $this->query_row_conversion($q);
 	}
 }

@@ -38,7 +38,7 @@ class Experiments extends MY_Controller{
 		$eid = $this->experiment->create($info);
 		$msg = 'You have successfully created an experiment!';
 		$this->session->set_flashdata('notification', $msg);
-		redirect('builder/app/'.$eid);
+		redirect("{$role}/{$username}/experiment/{$eid}/builder");
 	}
 
 	public function destroy($role = NULL, $id = 0){

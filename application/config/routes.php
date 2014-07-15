@@ -42,5 +42,13 @@ $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/(add|create)'] = 'experimen
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/builder'] = 'builder/edit/$1/$2/$3';
 $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
 
+// Respondents
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/'."({$RESTFUL_ROUTES})"] = 'respondents/$3/$1/$2';
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/add'] = 'respondents/add/$1/$2';
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/(terms|agree|debrief|submit|complete)'] = 'respondents/$3/$1/$2';
+$route['respond/leave'] = 'respondents/leave';
+// Builder
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)'] = 'builder/view/$1/$2';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
