@@ -32,6 +32,7 @@ class Builder extends MY_Controller{
 			$data['pages'] = $this->builder->get_all_pages($eid);
 			$data['var'] = $this->builder->get_all_objects($eid);
 			$data['title'] = 'Respond';
+			$data['slug'] = $slug;
 			$data['other_css'] = array('builder');
 			$data['other_js'] = array('builder', 'respondent');
 			$data['main_content'] = 'builder/view';

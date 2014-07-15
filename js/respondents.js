@@ -369,7 +369,7 @@ function save_input(){
 
 			if($.current_page == total_page) {
 				save_input();
-				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/debrief/some_string';
+				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
 				$.unload_flagger = false;
 			}
 		}

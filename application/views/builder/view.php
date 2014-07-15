@@ -5,7 +5,7 @@
     <button type="button" id="next_page" style="margin:0; padding-left:23px; padding-right:23px; padding-top:40px; padding-bottom:40px">Next</button>
   </div>
   
-  <div id="workspace" class="demo panel callout" style="min-width:1280px; max-width:1280px; height:720px; position:absolute; vertical-align: middle; padding:0; border:0; margin:0 auto; left:0; right:0;" data-eid="<?php echo $experiment->eid; ?>"></div>
+  <div id="workspace" class="demo panel callout" style="min-width:1280px; max-width:1280px; height:720px; position:absolute; vertical-align: middle; padding:0; border:0; margin:0 auto; left:0; right:0;" data-eid="<?php echo $experiment->eid; ?>" data-slug="<?php echo $slug; ?>"></div>
   <?php
     echo '<script>';
     if(isset($var)){  
