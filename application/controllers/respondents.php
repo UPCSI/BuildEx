@@ -20,8 +20,7 @@ class Respondents extends CI_Controller{
 		$this->load->view('main_layout', $data);
 	}
 
-	public function create($eid = 0){
-		$eid = $this->session->userdata('respond_to');
+	public function create($eid = 0, $slug = NULL){
 		$info = array('first_name' => $this->input->post('first_name'),
 									'middle_name' => $this->input->post('middle_name'),
 									'last_name' => $this->input->post('last_name'),
@@ -34,16 +33,14 @@ class Respondents extends CI_Controller{
 
 		$info['ip_addr'] = $this->session->userdata('ip_address');
 		$info['user_agent'] = $this->session->userdata('user_agent');
-		$rid = $this->respondents->add_respondent($info, $eid);
+		$rid = $this->respondent->create($eid, $info);
 		$this->session->set_userdata('rid', $rid);
-		$slug = $this->session->userdata('slug');
-		redirect('respond/exp/'.$slug);
+		redirect("respond/{$eid}/{$slug}");
 	}
 	/* End of REST Methods */
 
 	public function agree($eid = 0, $slug = NULL){
 		$eid = $this->input->post('eid');
-		$this->session->set_userdata('respond_to', $eid);
 		$this->session->set_userdata('agreed', TRUE);
 		redirect("respond/{$eid}/{$slug}/add");
 	}

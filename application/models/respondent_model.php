@@ -3,9 +3,9 @@
 class Respondent_model extends MY_Model{
 
 	/* CRUD Methods */
-	public function create($info = NULL, $eid = 0){
+	public function create($eid = 0, $info = NULL){
 		$info['eid'] = $eid; 
-		$this->db->insert('Respondents',$info);
+		$this->db->insert('Respondents', $info);
 		return $this->db->insert_id();
 	}
 
@@ -42,7 +42,6 @@ class Respondent_model extends MY_Model{
 	/* End of CRUD */
 
 	public function get_respondents($eid){
-		$this->db->select('*');
 		$this->db->where('eid',$eid);
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
