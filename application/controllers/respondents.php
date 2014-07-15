@@ -47,7 +47,6 @@ class Respondents extends CI_Controller{
 
 	public function terms($eid = 0, $slug = NULL){
 		$experiment = $this->builder->get($eid);
-		
 		if(is_null($experiment)){
 		 	show_404();
 		}
@@ -82,7 +81,6 @@ class Respondents extends CI_Controller{
 				if($item['checked'] == "true"){
 					$answer['answer'] = $item['text'];
 				}
-
 				else{
 					continue;
 				}

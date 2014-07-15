@@ -1,9 +1,4 @@
-<?php
-
-$this->load->view('builder/header',$title);
-$this->load->view('builder/topbar');
-
-?>
+<?php $this->load->view('builder/topbar'); ?>
 
 <div class="row full main-workspace" style="min-height:100%;height:100%">
 	<div class="large-11 medium-11 small-11 columns unpad-h" style="min-height:100%;height:100%">
@@ -25,7 +20,7 @@ $this->load->view('builder/topbar');
 			</div>
 
 			<div class="large-10 medium-10 small-10 column" style="min-height:100%;height:100%;overflow:auto;display:flex;line-height:initial;text-align:-webkit-center;">
-				<?php $this->load->view($main_content); ?>
+				<?php $this->load->view("builder/{$page}"); ?>
 			</div>
 		</div>
 		<div class="row full main-workspace" style="min-height:20%;height:20%;margin-left:0px;margin-right:0px;background:#252525">

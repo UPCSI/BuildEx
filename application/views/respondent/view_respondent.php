@@ -1,1 +1,0 @@
-<h1 class = "white"> Respondent </h1>

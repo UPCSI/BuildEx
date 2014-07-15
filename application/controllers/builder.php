@@ -19,20 +19,23 @@ class Builder extends MY_Controller{
 		$data['pages'] = $this->get_all_pages($eid);
 		$data['var'] = $this->get_all_objects($eid);
 		$data['title'] = 'Experiment';
-		$data['main_content'] = 'builder/workspace';
-		$this->load->view('builder/layout', $data);
+		$data['other_css'] = array('builder');
+		$data['other_js'] = array('builder');
+		$data['main_content'] = 'builder/index';
+		$data['page'] = 'edit';
+		$this->load->view('main_layout', $data);
 	}
 
 	public function view($eid = 0, $slug = NULL){
 		if($this->is_agreed()){
-			$data['eid'] = $eid;
-			$data['slug'] = $slug;
 			$data['experiment'] = $this->builder->get($eid);
 			$data['pages'] = $this->builder->get_all_pages($eid);
 			$data['var'] = $this->builder->get_all_objects($eid);
-			$data['title'] = "Respond";
-			$data['main_content'] = "respondent/workspace.php";
-			$this->load->view('respondent/_presentation_layout', $data);
+			$data['title'] = 'Respond';
+			$data['other_css'] = array('builder');
+			$data['other_js'] = array('builder', 'respondent');
+			$data['main_content'] = 'builder/view';
+			$this->load->view('main_layout', $data);
 		}
 		else{
 			redirect("respond/{$eid}/{$slug}/terms");
