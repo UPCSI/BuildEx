@@ -23,8 +23,20 @@ class Builder extends MY_Controller{
 		$this->load->view('builder/layout', $data);
 	}
 
-	public function view($eid = 0){
-		
+	public function view($eid = 0, $slug = NULL){
+		if($this->is_agreed()){
+			$data['eid'] = $eid;
+			$data['slug'] = $slug;
+			$data['experiment'] = $this->builder->get($eid);
+			$data['pages'] = $this->builder->get_all_pages($eid);
+			$data['var'] = $this->builder->get_all_objects($eid);
+			$data['title'] = "Respond";
+			$data['main_content'] = "respondent/workspace.php";
+			$this->load->view('respondent/_presentation_layout', $data);
+		}
+		else{
+			redirect("respond/{$eid}/{$slug}/terms");
+		}
 	}
 	/* End of REST Methods */
 
@@ -223,5 +235,9 @@ class Builder extends MY_Controller{
 	public function add_slider($data){
 		$this->load->model('builder_model');
 		return $this->builder_model->add_slider($data);
+	}
+
+	private function is_agreed(){
+		return $this->session->userdata('agreed');
 	}
 }

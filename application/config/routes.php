@@ -44,7 +44,8 @@ $route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'expe
 
 // Respondents
 $route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/'."({$RESTFUL_ROUTES})"] = 'respondents/$3/$1';
-$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/(fill_out|register)'] = 'respondents/$3/$1/$2';
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/add'] = 'respondents/add/$1/$2';
+$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/(terms|agree)'] = 'respondents/$3/$1/$2';
 
 // Builder
 $route['respond/([0-9]+)/([a-zA-Z0-9/-]+)'] = 'builder/view/$1/$2';

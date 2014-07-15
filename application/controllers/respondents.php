@@ -16,7 +16,7 @@ class Respondents extends CI_Controller{
 		$data['experiment'] = $this->builder->get($eid);
 		$data['title'] = 'Respond';
 		$data['main_content'] = 'respondent/index';
-		$data['page'] = 'fill_out';
+		$data['page'] = 'add';
 		$this->load->view('main_layout', $data);
 	}
 
@@ -39,25 +39,16 @@ class Respondents extends CI_Controller{
 		$slug = $this->session->userdata('slug');
 		redirect('respond/exp/'.$slug);
 	}
-
-	public function view($rid = 0){
-		/* view */
-	}
-
-	public function destroy($rid = 0){
-
-	}
-
 	/* End of REST Methods */
-	public function agree($eid = 0){
+
+	public function agree($eid = 0, $slug = NULL){
 		$eid = $this->input->post('eid');
-		$slug = $this->input->post('slug');
 		$this->session->set_userdata('respond_to', $eid);
-		$this->session->set_userdata('slug', $slug);
-		redirect("respond/{$slug}/fill_out");
+		$this->session->set_userdata('agreed', TRUE);
+		redirect("respond/{$eid}/{$slug}/add");
 	}
 
-	public function terms($eid = 0){
+	public function terms($eid = 0, $slug = NULL){
 		$experiment = $this->builder->get($eid);
 		
 		if(is_null($experiment)){
@@ -68,22 +59,9 @@ class Respondents extends CI_Controller{
 			$data['researcher'] = $this->experiment->get_researcher($experiment->eid);
 			$data['title'] = 'Respond';
 			$data['main_content'] = 'respondent/index';
-			$data['page'] = 'add';
+			$data['page'] = 'terms';
 			$this->load->view('main_layout', $data);
 		}
-	}
-
-	public function exp($slug){
-		/*slide show of the experiment*/
-		$eid = $this->session->userdata('respond_to');
-		$data['eid'] = $eid;
-		$data['slug'] = $slug;
-		$data['exp'] = $this->experiments_model->get_experiment($eid);
-		$data['pages'] = $this->builder_model->get_all_pages($eid);
-		$data['var'] = $this->builder_model->get_all_objects($eid);
-		$data['title'] = "Respond";
-		$data['main_content'] = "respondent/workspace.php";
-		$this->load->view('respondent/_presentation_layout', $data);
 	}
 
 	public function save(){ //$rid,$qid

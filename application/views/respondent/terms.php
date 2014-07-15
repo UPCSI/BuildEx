@@ -17,7 +17,7 @@
 </div>
 
 <div class = "row">
-  <?php echo form_open('respond/'.$experiment->url.'/create');?>
+  <?php echo form_open('respond/'.$experiment->url.'/agree');?>
     <input type = "hidden" name = "slug" value = "<?php echo $experiment->url; ?>">
     <input type = "hidden" name = "eid" value = "<?php echo $experiment->eid; ?>">
     <button type = "submit" class="small" style="display:inline"> I agree </button> 
