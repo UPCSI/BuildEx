@@ -12,48 +12,15 @@ class Respondents extends CI_Controller{
 	}
 
 	/* REST Methods */
-
-	public function create($eid = 0){
-		$eid = $this->input->post('eid');
-		$slug = $this->input->post('slug');
-		$this->session->set_userdata('respond_to', $eid);
-		$this->session->set_userdata('slug', $slug);
-		redirect("respond/{$slug}/fill_out");
-	}
-
-	public function add($eid = 0){
-		$experiment = $this->builder->get($eid);
-		
-		if(is_null($experiment)){
-		 	show_404();
-		}
-		else{
-			$data['experiment'] = $experiment;
-			$data['researcher'] = $this->experiment->get_researcher($experiment->eid);
-			$data['title'] = 'Respond';
-			$data['main_content'] = 'respondent/index';
-			$data['page'] = 'add';
-			$this->load->view('main_layout', $data);
-		}
-	}
-
-	public function view($rid = 0){
-		/* view */
-	}
-
-	public function destroy($rid = 0){
-
-	}
-
-	/* End of REST Methods */
-	public function fill_out($eid = 0){
+	public function add($eid = 0, $slug = NULL){
+		$data['experiment'] = $this->builder->get($eid);
 		$data['title'] = 'Respond';
 		$data['main_content'] = 'respondent/index';
 		$data['page'] = 'fill_out';
 		$this->load->view('main_layout', $data);
 	}
 
-	public function register(){
+	public function create($eid = 0){
 		$eid = $this->session->userdata('respond_to');
 		$info = array('first_name' => $this->input->post('first_name'),
 									'middle_name' => $this->input->post('middle_name'),
@@ -67,10 +34,43 @@ class Respondents extends CI_Controller{
 
 		$info['ip_addr'] = $this->session->userdata('ip_address');
 		$info['user_agent'] = $this->session->userdata('user_agent');
-		$rid = $this->respondents_model->add_respondent($info, $eid);
+		$rid = $this->respondents->add_respondent($info, $eid);
 		$this->session->set_userdata('rid', $rid);
 		$slug = $this->session->userdata('slug');
 		redirect('respond/exp/'.$slug);
+	}
+
+	public function view($rid = 0){
+		/* view */
+	}
+
+	public function destroy($rid = 0){
+
+	}
+
+	/* End of REST Methods */
+	public function agree($eid = 0){
+		$eid = $this->input->post('eid');
+		$slug = $this->input->post('slug');
+		$this->session->set_userdata('respond_to', $eid);
+		$this->session->set_userdata('slug', $slug);
+		redirect("respond/{$slug}/fill_out");
+	}
+
+	public function terms($eid = 0){
+		$experiment = $this->builder->get($eid);
+		
+		if(is_null($experiment)){
+		 	show_404();
+		}
+		else{
+			$data['experiment'] = $experiment;
+			$data['researcher'] = $this->experiment->get_researcher($experiment->eid);
+			$data['title'] = 'Respond';
+			$data['main_content'] = 'respondent/index';
+			$data['page'] = 'add';
+			$this->load->view('main_layout', $data);
+		}
 	}
 
 	public function exp($slug){

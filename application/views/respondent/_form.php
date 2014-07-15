@@ -1,4 +1,4 @@
-<form id = "demographics" action="<?php echo site_url('respond/register'); ?>" method = "post" accept-charset="utf-8">  
+<form id = "demographics" action="<?php echo site_url("respond/{$experiment->url}/register"); ?>" method = "post" accept-charset="utf-8">  
   <div class = "row">
     <fieldset>
       <legend>Personal Information</legend>
@@ -33,14 +33,14 @@
       <label>Sex</label>
       <select name = "gender">
         <optgroup>
-          <option value = "none">     Male    </option>
-          <option value = "bisexual">   Female  </option>
+          <option value = "none">Male</option>
+          <option value = "bisexual">Female</option>
         </optgroup>
       </select>
   </div>
   </fieldset>
   <div class = "row">
-    <button type="submit" class="small"> Submit </button>
-    <button type = "button" class = "small" onclick = "clear_form()"> Reset </button> <!-- clear all inputs -->
+    <button type="submit" class="small">Submit</button>
+    <button type = "button" class = "small" onclick = "clear_form()">Reset</button>
   </div>
 </form>
