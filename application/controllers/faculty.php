@@ -97,7 +97,7 @@ class Faculty extends User_Controller{
 		}
 		
 		$fid = $this->session->userdata('fid');
-		$data['experiment'] = $this->experiments_model->get_faculty_experiment($fid,$eid);
+		$data['experiment'] = $this->experiment_model->get_faculty_experiment($fid,$eid);
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'faculty/view_experiment';
 
@@ -115,7 +115,7 @@ class Faculty extends User_Controller{
 		}
 		$info['is_published'] = "true";
 		$fid = $this->session->userdata('active_id');
-		if($this->experiments_model->advise_experiment($fid,$eid) && $this->experiments_model->update_experiment($eid,$info)){
+		if($this->experiment_model->advise_experiment($fid,$eid) && $this->experiment_model->update_experiment($eid,$info)){
 			$msg = "You have successfully confirmed an experiment.";
 		}
 		else{
@@ -131,7 +131,7 @@ class Faculty extends User_Controller{
 			redirect(''); //redirect somewhere if $eid was not supplied
 		}
 		$fid = $this->session->userdata('active_id');
-		if($this->experiments_model->reject_experiment($fid,$eid)){
+		if($this->experiment_model->reject_experiment($fid,$eid)){
 			$msg = "You have successfully rejected an experiment.";
 		}
 		else{
@@ -161,7 +161,7 @@ class Faculty extends User_Controller{
 
 	public function edit_faculty($uid = 0, $fid = 0){
 		$data['title'] = 'Profile';
-		$data['user_profile'] = $this->users_model->get_user_profile($uid);
+		$data['user_profile'] = $this->user_model->get_user_profile($uid);
 		$data['faculty_profile'] = $this->faculty_model->get_faculty_profile($fid);
 		$data['experiments'] = $this->get_all_experiments($fid);
 		$data['main_content'] = 'contents/profile';

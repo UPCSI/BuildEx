@@ -119,7 +119,7 @@ class Experiments extends MY_Controller{
 	}
 
 	public function respondents($eid = 0){
-		$data['respondents'] = $this->respondents_model->get_respondents($eid);
+		$data['respondents'] = $this->respondent_model->get_respondents($eid);
 		$data['notification'] = $this->session->flashdata('notification');
 		
 		if(!$data['notification']){

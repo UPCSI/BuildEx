@@ -227,18 +227,26 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 }
 
 function draw_dropdown(posX, posY, page_num, options){
-	posX = typeof posX !== 'undefined' ? posX : 442;
-	posY = typeof posY !== 'undefined' ? posY : 271;
+	posX = typeof posX !== 'undefined' ? posX : null;
+	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
+	width = typeof width !== 'undefined' ? width : 140;
+	height = typeof height !== 'undefined' ? height : 34;
+
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
 
 	var htmlData='<div id="dropdown'+$.count+'" class="static_obj"';
 
 	if (posX != null && posY != null){
-		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:34px; width:140px;"';
-	}
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
 
+	}
 	else{
-		htmlData += 'style="height:34px; width:140px;"';
+		htmlData += 'style="width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
 	}
 
 	htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
@@ -414,8 +422,13 @@ function save_input(){
 		data:{
 			'msg':x,
 		},
-
-		dataType: 'json',
+		dataType: 'html',
+		error: function(e, text) {
+			console.log(text);
+		},
+		success: function(e, text) {
+			console.log(text);
+		},
 		complete: function(data) {
 			console.log(data.responseText);
 		},

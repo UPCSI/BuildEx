@@ -22,7 +22,7 @@ class Respondent_model extends MY_Model{
 	}
 
 	public function destroy($eid = 0, $rid = 0){
-		$this->load->model('experiments_model');
+		$this->load->model('experiment_model');
 		$q = "DELETE FROM \"Respondents\" AS r
 			  USING \"Experiments\" AS e, answer AS a
 			  WHERE e.eid = a.eid AND
@@ -36,7 +36,7 @@ class Respondent_model extends MY_Model{
 			return false;
 		}
 
-		$this->experiments_model->decrement_count($eid);
+		$this->experiment_model->decrement_count($eid);
 		return true;
 	}
 	/* End of CRUD */

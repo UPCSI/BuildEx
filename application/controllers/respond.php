@@ -4,17 +4,17 @@ class Respond extends CI_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('experiments_model');
+		$this->load->model('experiment_model');
 		$this->load->model('builder_model');
 		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
-		$this->load->model('users_model');
-		$this->load->model('respondents_model');
+		$this->load->model('graduate_model');
+		$this->load->model('user_model');
+		$this->load->model('respondent_model');
 		$this->load->model('builder_model');
 	}
 
 	public function view($hash){
-		$exp = $this->experiments_model->get_experiment_by_hash($hash); //experiment with given url(hash)
+		$exp = $this->experiment_model->get_experiment_by_hash($hash); //experiment with given url(hash)
 		
 		if (is_null($exp)){
 			echo "Error 404: Page not found"; //handle this error
@@ -24,14 +24,14 @@ class Respond extends CI_Controller{
 		$id = $this->faculty_model->get_faculty_by_experiment($exp->eid);
 		
 		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($exp->eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,null);
+			$id = $this->graduate_model->get_graduate_by_experiment($exp->eid);
+			$author = $this->graduate_model->get_graduate_profile($id->gid,null);
 		}
 		else{
 			$author = $this->faculty_model->get_faculty_profile($id->fid,null);
 		}
 		$data['eid'] = $exp->eid;
-		$data['slug'] = $this->experiments_model->generate_slug($exp->title);
+		$data['slug'] = $this->experiment_model->generate_slug($exp->title);
 		$data['experiment'] = $exp->title;
 		$data['description'] = $exp->description;
 		$data['author'] = strtoupper($author->last_name).', '.ucwords($author->first_name);
@@ -72,7 +72,7 @@ class Respond extends CI_Controller{
 		$info['ip_addr'] = $this->session->userdata('ip_address');
 		$info['user_agent'] = $this->session->userdata('user_agent');
 
-		$rid = $this->respondents_model->add_respondent($info,$eid);
+		$rid = $this->respondent_model->add_respondent($info,$eid);
 		$this->session->set_userdata('rid',$rid);
 		$slug = $this->session->userdata('slug');
 		redirect('respond/exp/'.$slug);
@@ -83,7 +83,7 @@ class Respond extends CI_Controller{
 		$eid = $this->session->userdata('respond_to');
 		$data['eid'] = $eid;
 		$data['slug'] = $slug;
-		$data['exp'] = $this->experiments_model->get_experiment($eid);
+		$data['exp'] = $this->experiment_model->get_experiment($eid);
 		$data['pages'] = $this->builder_model->get_all_pages($eid);
 		$data['var'] = $this->builder_model->get_all_objects($eid);
 		$data['title'] = "Respond";
@@ -129,19 +129,19 @@ class Respond extends CI_Controller{
 			array_push($responses, $answer);
 		}
 
-		$this->respondents_model->save_responses($responses);
+		$this->respondent_model->save_responses($responses);
 	}
 
 	public function debrief($slug){
 		/*shows the page after the last one*/
 		/*to debrief the user and to confirm his inputs just in case*/
 		$eid = $this->session->userdata('respond_to');
-		$exp = $this->experiments_model->get_experiment($eid);
+		$exp = $this->experiment_model->get_experiment($eid);
 		$id = $this->faculty_model->get_faculty_by_experiment($eid);
 		
 		if(is_null($id)){
-			$id = $this->graduates_model->get_graduate_by_experiment($eid);
-			$author = $this->graduates_model->get_graduate_profile($id->gid,null);
+			$id = $this->graduate_model->get_graduate_by_experiment($eid);
+			$author = $this->graduate_model->get_graduate_profile($id->gid,null);
 		}
 		else{
 			$author = $this->faculty_model->get_faculty_profile($id->fid,null);
@@ -158,7 +158,7 @@ class Respond extends CI_Controller{
 	public function submit(){
 		$eid = $this->session->userdata('respond_to');
 		
-		if(!$this->experiments_model->increment_count($eid)){
+		if(!$this->experiment_model->increment_count($eid)){
 			var_dump('error!');//go to error page
 			return 0;
 		}
