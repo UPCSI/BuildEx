@@ -33,8 +33,9 @@
       <label>Sex</label>
       <select name = "gender">
         <optgroup>
-          <option value = "none">Male</option>
-          <option value = "bisexual">Female</option>
+          <option value = "none">None</option>
+          <option value = "male">Male</option>
+          <option value = "female">Female</option>
         </optgroup>
       </select>
   </div>

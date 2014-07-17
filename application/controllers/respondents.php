@@ -37,6 +37,18 @@ class Respondents extends CI_Controller{
 		$this->session->set_userdata('rid', $rid);
 		redirect("respond/{$eid}/{$slug}");
 	}
+
+	public function destroy($eid = 0){
+		$rid = $this->input->post('respondent_id');
+		if($this->respondent->destroy($eid, $rid)){
+			$msg = 'You have successfully deleted a respondent!';
+		}
+		else{
+			$msg = 'Error deleting respondent.';
+		}
+		$this->session->set_flashdata('notification', $msg);
+		redirect("admin/respondents");
+	}
 	/* End of REST Methods */
 
 	public function agree($eid = 0, $slug = NULL){
