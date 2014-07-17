@@ -113,10 +113,15 @@ class Experiment_model extends MY_Model{
 		return $researcher;
 	}
 
-	public function get_experiment_by_hash($url){
-		$this->db->select('*');
-		$this->db->where('url',$url);
-		$this->db->where('is_published','t');
+	public function get_respondents($eid){
+		$this->db->where('eid', $eid);
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);
+	}
+
+	public function get_by_hash($url){
+		$this->db->where('url', $url);
+		$this->db->where('is_published', 't');
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}

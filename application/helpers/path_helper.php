@@ -83,12 +83,12 @@ function respond_path($experiment = NULL){
   }
 }
 
-function respondent_path($respondent = NULL, $action){
+function respondent_path($respondent = NULL, $action = 'view'){
   $link = NULL;
 
   if(isset($respondent)){
-    $link = experiment_path($respondent);
-    $link = "respond/{$respondent->url}";
+    $link = experiment_path($respondent, $respondent);
+    $link = "{$link}/respondent/{$respondent->rid}";
 
     if($action != 'view'){
       $link = "{$link}/{$action}";

@@ -15,35 +15,65 @@ class Respondent_model extends MY_Model{
 	}
 
 	public function get($rid = 0){
-		$this->db->select('*');
-		$this->db->where('rid',$rid);
+		$this->db->where('rid', $rid);
 		$q = $this->db->get('Respondents');
 		return $this->query_row_conversion($q);
 	}
 
 	public function all(){
-		$this->db->join('Experiments', 'Experiments.eid = Respondents.eid');
-		$q = $this->db->get('Respondents');
-		return $this->query_conversion($q);
+		$all = array();
+		$faculty_respondents = $this->all_faculty_respondents();
+		$graduates_respondents = $this->all_graduate_respondents();
+
+		if(isset($faculty_respondents)){
+			$all = array_merge($all, $faculty_respondents);
+		}
+
+		if(isset($graduates_respondents)){
+			$all = array_merge($all, $graduates_respondents);
+		}
+
+		if(empty($all)){
+			return NULL;
+		}
+
+		return $all;
 	}
 
 	public function destroy($eid = 0, $rid = 0){
-		$this->db->where('rid',$rid);
+		$this->db->where('rid', $rid);
+		$this->db->where('eid', $eid);
 		$this->db->delete('Respondents');
 		
-		if($this->db->affected_rows() == 0){
+		if(!$this->is_rows_affected()){
 			return false;
 		}
 
-		$this->experiments_model->decrement_count($eid);
+		$this->experiment->decrement_count($eid);
 		return true;
 	}
 	/* End of CRUD */
 
-	public function get_respondents($eid){
-		$this->db->where('eid',$eid);
+	public function all_faculty_respondents(){
+		$this->db->select('Experiments.*, Users.*, Respondents.*, Faculty.*');
+		$this->db->select('faculty_conduct.since AS conduct_since', FALSE);
+		$this->db->join('Experiments', 'Experiments.eid = Respondents.eid');
+		$this->db->join('faculty_conduct', 'faculty_conduct.eid = Experiments.eid');
+		$this->db->join('Faculty', 'Faculty.fid = faculty_conduct.fid');
+		$this->db->join('Users', 'Users.uid = Faculty.uid');
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
+	}
+
+	public function all_graduate_respondents(){
+		$this->db->select('Experiments.*, Users.*, Respondents.*, Graduates.*');
+		$this->db->select('graduates_conduct.since AS conduct_since', FALSE);
+		$this->db->join('Experiments', 'Experiments.eid = Respondents.eid');
+		$this->db->join('graduates_conduct', 'graduates_conduct.eid = Experiments.eid');
+		$this->db->join('Graduates', 'Graduates.gid = graduates_conduct.gid');
+		$this->db->join('Users', 'Users.uid = Graduates.uid');
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);	
 	}
 
 	public function add_response($info,$qid,$rid){

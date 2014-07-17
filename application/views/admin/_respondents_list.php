@@ -15,7 +15,7 @@
         <td><?php echo $respondent->title; ?></td>
         <td><?php echo $respondent->since;?></td>
         <td>
-          <?php echo form_open('respondents/destroy'); ?>
+          <?php echo form_open(respondent_path($respondent, 'destroy')); ?>
             <?php echo form_hidden('respondent_id', $respondent->rid); ?>
             <button class = "button tiny" type="submit" value="delete">&#x2717;</button>
           <?php echo form_close(); ?>

@@ -49,7 +49,7 @@ $route["{$EXPERIMENT_PATH}/([0-9]+)/([a-z]+)"] = 'experiments/$4/$1/$2/$3';
 $RESPOND_PATH = 'respond/([0-9]+)/([a-zA-Z0-9/-]+)';
 $RESPOND_PAGES = 'terms|agree|debrief|submit|complete';
 
-$route["{$EXPERIMENT_PATH}/([0-9]+)/respondent/([0-9]+)/"."({$RESTFUL_ROUTES})"] = 'respondents/$5/$1/$2/$3/$4';
+$route["{$EXPERIMENT_PATH}/([0-9]+)/respondent/([0-9]+)/destroy"] = 'respondents/destroy/$3';
 $route["{$RESPOND_PATH}/(add|create)"] = 'respondents/$3/$1/$2';
 $route["{$RESPOND_PATH}/({$RESPOND_PAGES})"] = 'respondents/$3/$1/$2';
 $route['respond/leave'] = 'respondents/leave';
