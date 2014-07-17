@@ -14,7 +14,11 @@ class Faculty extends User_Controller{
 		$fid = role_id();
 		$laboratory = $this->faculty->get_laboratory($fid);
 		$data['laboratory'] = $laboratory;
-		$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
+		
+		if(isset($laboratory)){
+			$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
+		}
+		
 		$data['experiments'] = $this->faculty->get_experiments($fid);
 		$data['title'] = ucfirst($this->role);
     $data['main_content'] = 'users/index';

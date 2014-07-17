@@ -5,10 +5,27 @@ class Graduates extends User_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('graduate_model', 'graduate');
+		$this->load->model('laboratory_model', 'laboratory');
 		$this->role = 'graduate';
 	}
 
 	/* Graduate Pages */
+	public function home(){
+		$gid = role_id();
+		$laboratory = $this->graduate->get_laboratory($gid);
+		$data['laboratory'] = $laboratory;
+
+		if(isset($laboratory)){
+			$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
+		}
+
+		$data['experiments'] = $this->graduate->get_experiments($gid);
+		$data['title'] = ucfirst($this->role);
+    $data['main_content'] = 'users/index';
+    $data['page'] = 'home';
+    $this->load->view('main_layout', $data);
+	}
+
 	public function experiments($username){
 		$graduate = $this->graduate->get(0, $username);
 		$data['graduate'] = $graduate;

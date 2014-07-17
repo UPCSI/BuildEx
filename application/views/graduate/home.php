@@ -5,10 +5,6 @@
             <p> You are currently logged in as <strong> <?php echo $this->session->userdata('username'); ?> </strong> with a role of <strong> <?php echo ucfirst($this->session->userdata('active_role')); ?> </strong> </p>
         </div>
 
-        <div class="panel dash-item" style="border-color:#f1c40f">
-            <?php $this->load->view('graduate/_notifications'); ?>
-        </div>
-
         <div class="panel dash-item" style="border-color:#0066dd">
             <?php $this->load->view('graduate/_experiments_summary'); ?>
         </div>
@@ -18,10 +14,6 @@
     <div class="large-6 column">
         <div class="panel dash-item" style="border-color:#0066dd">
             <?php $this->load->view('graduate/_laboratory_summary'); ?>
-        </div>
-
-        <div class="panel dash-item" style="border-color:#2ecc71">
-            <?php $this->load->view('graduate/_statistics'); ?>
         </div>
     </div>
 </div>

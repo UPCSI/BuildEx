@@ -24,7 +24,7 @@ $route['faculty/([a-zA-Z0-9]+)'] = 'faculty/view/$1';
 $route['faculty/([a-zA-Z0-9]+)/([a-z]+)'] = 'faculty/$2/$1';
 
 // Graduate
-$route['graduate'] = 'graduates/index';
+$route['graduate'] = 'graduates/home';
 $route['graduate/([a-zA-Z0-9]+)/laboratory'] = 'graduates/laboratory/$1';
 $route['graduate/logout'] = 'graduates/logout';
 $route['graduate/([a-zA-Z0-9]+)'] = 'graduates/view/$1';

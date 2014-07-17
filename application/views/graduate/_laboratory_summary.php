@@ -1,5 +1,8 @@
-<h1>NDSG</h1>
-<p> Networks and Distributed Systems <br/>
-Laboratory Head: mtcarreon <br/>
-Members: 25
-</p>
+<?php if(isset($laboratory)): ?>
+  <h1><?php echo $laboratory->name; ?></h1>
+  <p><?php echo $laboratory->description; ?></p>
+  <p>Laboratory Head: <?php echo anchor(faculty_path($laboratory_head), $laboratory_head->username); ?></p>
+  <p>Members: <?php echo '25'; ?></p>
+<?php else: ?>
+  <p>You have no laboratory yet. <?php echo anchor(site_url('explore'), 'Explore!'); ?></p>
+<?php endif; ?>
