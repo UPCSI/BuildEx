@@ -424,7 +424,7 @@
 				htmlData += 'style="height:34px; width:140px;"';
 			}
 
-			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0; height: 34px; width:140px;">';
 			if(options !== undefined){
 				options.forEach(function(choice){
 					htmlData += '<option value="'+choice+'">'+choice+'</option>';
@@ -456,14 +456,12 @@
 
 			.click(function(){
 				$(this).draggable( "option", "disabled", true );
-				$(this).attr('contenteditable','true');
 			});
 
 			$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
 
 			$('#drpinput'+temp).blur(function(){
 				$('#dropdown'+temp).draggable( 'option', 'disabled', false);
-				$('.draggable').attr('contenteditable','false');
 			});
 
 			$('#drpeditable'+temp).on('change', function(){
