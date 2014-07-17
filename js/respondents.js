@@ -437,6 +437,13 @@ function save_input(){
 
 (function($){
 	$(function() {
+		function changeTextBtn(){
+			if(total_page == 1) {
+				$('#next_page').text('Done')
+				.css('padding-left',21).css('padding-right',21);
+			}
+		}
+
 		function checkEndPage() {
 			if($.current_page+1 == total_page) {
 				$('#next_page').text('Done')
@@ -454,17 +461,18 @@ function save_input(){
 			if($.unload_flagger) {
 				$.ajax({
 					url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/interrupted',
-			        type:"POST",
-			        data:{
-			          'done' : 'false',
-			        },
-			        dataType: 'json',
+	        type:"POST",
+	        data:{
+	          'done' : 'false',
+	        },
+	        dataType: 'json',
 				});
 				return 'Exiting will not submit your form';
 			}
 		});
 
 		$(document).ready(function(){
+			changeTextBtn();
 			$.start_time = (Date.now())/1000;
 		});
 
@@ -485,13 +493,13 @@ function save_input(){
 
 			checkEndPage();
 
-    		$("#page" + $.current_page).css('visibility','hidden');
+    	$("#page" + $.current_page).css('visibility','hidden');
 
 			if($.current_page < total_page){
 				$.current_page++;
 			}
 
-    		$("#page" + $.current_page).css('visibility','visible');		
+    	$("#page" + $.current_page).css('visibility','visible');		
 		});
 	});
 })(jQuery);
