@@ -39,9 +39,9 @@
           echo 'draw_checkbox('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
         }
 
-        // else if($obj['type'] == "dropdown"){
-        //  echo 'draw_dropdwon('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].'");';
-        // }
+        else if($obj['type'] == "dropdown"){
+          echo 'draw_dropdown('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'].','.json_encode($obj['options']).');';
+        }
         
         else if($obj['type'] == "slider"){
           echo 'draw_slider('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].');';

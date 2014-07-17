@@ -132,6 +132,17 @@ class Builder extends MY_Controller{
 				$this->bind($object['pid'], $input_id);
 			}
 
+			/* dropdown */
+			if ($object['type'] == "dropdown"){
+				$input_id = $this->save_input($oid, 'dropdown');
+
+				foreach($item['options'] as $option){					
+					$dropdown['input_id'] = $input_id;
+					$dropdown['choices'] = $option;
+					$dropdown_id = $this->add_dropdown($dropdown);
+				}
+			}
+
 			/* slider */
 			if ($object['type'] == "slider"){
 				$input_id = $this->save_input($oid, 'slider');

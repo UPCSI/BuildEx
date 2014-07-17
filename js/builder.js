@@ -408,10 +408,11 @@
 		});
 
 		$('#dropdown')
-			.click(function(eventClick, posX, posY, page_num){
+			.click(function(eventClick, posX, posY, page_num, options){
 			posX = typeof posX !== 'undefined' ? posX : 442;
 			posY = typeof posY !== 'undefined' ? posY : 271;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
+			// options = typeof options !== 'undefined' ? options : undefined;
 
 			var htmlData='<div id="dropdown'+$.count+'" class="draggable ui-draggable"';
 
@@ -423,7 +424,18 @@
 				htmlData += 'style="height:34px; width:140px;"';
 			}
 
-			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0"> <option value="sample" selected="selected">Dropdown Menu</option><option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+			if(options !== undefined){
+				options.forEach(function(choice){
+					htmlData += '<option value="'+choice+'">'+choice+'</option>';
+				});
+			}
+
+			else{				
+				htmlData += '<option value="sample" selected="selected">Dropdown Menu</option>';
+			}
+
+			htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -589,11 +601,12 @@
 				}
 
 				for(i=1; i<$.count; i++){
+					//input
 					if ($('#inp'+i).offset() !== undefined){
 						var xPos = $('#inp'+i).css('left') == 'auto' ? 5 : parseInt($('#inp'+i).css('left'));
 						var yPos = $('#inp'+i).css('top') == 'auto' ? 5 : parseInt($('#inp'+i).css('top'));
 						var data = {
-							'id'			:	 $('#inp'+i).parent().attr("id"),
+							'id'		:	 $('#inp'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "textinput",
@@ -604,11 +617,12 @@
 						x.push(data);
 					}
 
+					//button
 					if ($('#btn'+i).offset() !== undefined){
 						var xPos = $('#btn'+i).css('left') == 'auto' ? 5 : parseInt($('#btn'+i).css('left'));
 						var yPos = $('#btn'+i).css('top') == 'auto' ? 5 : parseInt($('#btn'+i).css('top'));
 						var data = {
-							'id'			:	 $('#btn'+i).parent().attr("id"),
+							'id'		:	 $('#btn'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "button",
@@ -620,11 +634,12 @@
 						x.push(data);
 					}
 
+					//radio button
 					if ($('#radbtn'+i).offset() !== undefined){
 						var xPos = $('#radbtn'+i).css('left') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('left'));
 						var yPos = $('#radbtn'+i).css('top') == 'auto' ? 5 : parseInt($('#radbtn'+i).css('top'));
 						var data = {
-							'id'			:	 $('#radbtn'+i).parent().attr("id"),
+							'id'		:	 $('#radbtn'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "radio",
@@ -636,11 +651,12 @@
 						x.push(data);
 					}
 
+					//checkbox
 					if ($('#chkbox'+i).offset() !== undefined){
 						var xPos = $('#chkbox'+i).css('left') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('left'));
 						var yPos = $('#chkbox'+i).css('top') == 'auto' ? 5 : parseInt($('#chkbox'+i).css('top'));
 						var data = {
-							'id'			:	 $('#chkbox'+i).parent().attr("id"),
+							'id'		:	 $('#chkbox'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "checkbox",
@@ -652,30 +668,42 @@
 						x.push(data);
 					}
 
+					//dropdown
 					if ($('#dropdown'+i).offset() !== undefined){
+						var options = new Array();
+						$('#drpeditable'+i + " option").each(function(){
+							if($(this).val() != "addoption"){
+								options.push($(this).val());
+							}
+						});
+
+						console.log(options);
 						var xPos = $('#dropdown'+i).css('left') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('left'));
 						var yPos = $('#dropdown'+i).css('top') == 'auto' ? 5 : parseInt($('#dropdown'+i).css('top'));
 						var data = {
-							'id'			:	 $('#dropdown'+i).parent().attr("id"),
+							'id'		:	 $('#dropdown'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "dropdown",
+							'options'	: 	 options,
 						}
 
 						x.push(data);
+						console.log(data);
 					}
 
-					if ($('#sldr'+i).offset() !== undefined){
+					//slider
+					if ($('#sldr'+i).offset() !== undefined){						
 						var xPos = $('#sldr'+i).css('left') == 'auto' ? 5 : parseInt($('#sldr'+i).css('left'));
 						var yPos = $('#sldr'+i).css('top') == 'auto' ? 5 : parseInt($('#sldr'+i).css('top'));
 						var data = new Array();
 						var data = {
-							'id'			:	 $('#sldr'+i).parent().attr("id"),
+							'id'		:	 $('#sldr'+i).parent().attr("id"),
 							'xPos'		:	 xPos,
 							'yPos'		:	 yPos,
 							'type'		:	 "slider",
-							'min'		 	:	 $('#movingslider'+i).data('slider-range').split(',')[0],
-							'max'	 		:	 $('#movingslider'+i).data('slider-range').split(',')[1],
+							'min'		:	 $('#movingslider'+i).data('slider-range').split(',')[0],
+							'max'	 	:	 $('#movingslider'+i).data('slider-range').split(',')[1],
 						}
 
 						x.push(data);

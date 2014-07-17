@@ -55,7 +55,7 @@ function draw_question(posX, posY, text_input, page_num, width, height, color, q
 	else{
 		$("#page" + index).append(htmlData);
 	}
-	
+
 	document.getElementById('qtneditable'+$.count).style.color = color;	
 	$.count++;
 }
@@ -120,9 +120,9 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="width:150px; height:60px"';
 	}
-	
+
 	htmlData += '><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px; font-size:'+new_font_size*14+'px;">'+text_input+'</button></div>';
-	
+
 	var temp = $.count;
 
 	var index = page_num;
@@ -162,9 +162,9 @@ function draw_radio_button(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
-	
+
 	htmlData += '><input type="radio" id="radbtneditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
-	
+
 	var temp = $.count;
 	var index = page_num;
 
@@ -205,9 +205,9 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
-	
+
 	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'">'+text_input+'</div>';
-	
+
 	var temp = $.count;
 	var index = page_num;
 
@@ -224,6 +224,54 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
     });
     
     $.count++;
+}
+
+function draw_dropdown(posX, posY, page_num, options){
+	posX = typeof posX !== 'undefined' ? posX : 442;
+	posY = typeof posY !== 'undefined' ? posY : 271;
+	page_num = typeof page_num !== 'undefined' ? page_num : 0;
+
+	var htmlData='<div id="dropdown'+$.count+'" class="static_obj"';
+
+	if (posX != null && posY != null){
+		htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:34px; width:140px;"';
+	}
+
+	else{
+		htmlData += 'style="height:34px; width:140px;"';
+	}
+
+	htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+	if(options !== undefined){
+		options.forEach(function(choice){
+			htmlData += '<option value="'+choice+'">'+choice+'</option>';
+		});
+	}
+
+	htmlData += '</div>';
+	
+	var temp = $.count;
+	var index = page_num;
+
+	if(index <= 0){
+		$("#page" + $.current_page).append(htmlData);
+	}
+
+	else{
+		$("#page" + index).append(htmlData);
+	}
+
+	$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+
+	$('#drpeditable'+temp).on('change', function(){
+		$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+	});
+
+	$('#drpinput'+temp).blur(function(){
+			$('#drpeditable'+temp+' option:selected').remove();
+	});
+	
+	$.count++;
 }
 
 function draw_slider(posX, posY, page_num, min, max){
@@ -329,6 +377,21 @@ function save_input(){
 			// console.log(data);
 		}
 
+		if ($('#dropdown'+i).offset() !== undefined){
+			page = $('#dropdown'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
+			var data = {
+				'qid'		:	 qid,
+				'page'		:	 page,
+				'type'		:	 "dropdown",
+				'selected'	:	 $('#drpeditable'+i).val(),
+			}
+
+			x.push(data);
+			// console.log(data);
+		}
+
 		if ($('#sldr'+i).offset() !== undefined){
 			page = $('#sldr'+i).parent().attr("id").slice(4);
 			question = $("div").find('[data-page="'+page+'"]');
@@ -354,7 +417,7 @@ function save_input(){
 
 		dataType: 'json',
 		complete: function(data) {
-			// console.log(data.responseText);
+			console.log(data.responseText);
 		},
 	});
 }
