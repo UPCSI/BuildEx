@@ -75,11 +75,12 @@ var base_url = protocol + '//' + host;
 		});
 
 		$('#workspace').on('click', '.remove-icon', function(e){
+			alert("Are you sure you want to delete this?");
 			var parent = $(this).parent('div');
 			if(parent.attr('id').substr(0,3) == 'qtn'){
 				$('#question').removeClass('disabled');
 			}
-
+			
 			parent.remove();
 		});
 
@@ -436,11 +437,7 @@ var base_url = protocol + '//' + host;
 				});
 			}
 
-			else{				
-				htmlData += '<option value="sample" selected="selected">Dropdown Menu</option>';
-			}
-
-			htmlData += '<option value="addoption">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '<option value="addoption" selected="selected">Add Option</option> </select> <input id="drpinput'+$.count+'" type="text" name="" value="" placeholder="Add Option" style="color:#a9a9a9; position:absolute; width:125px; height:34px;"><i class="fi-x remove-icon pull-right"></i></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -463,10 +460,31 @@ var base_url = protocol + '//' + host;
 				$(this).draggable( "option", "disabled", true );
 			});
 
+			firstclick = true;
+
+			$('#drpinput'+temp).click(function() {
+				if(firstclick) {
+					$(this).val('').css('color','#000');
+					firstclick = false;
+				}
+			});
+
 			$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
 
-			$('#drpinput'+temp).blur(function(){
-				$('#dropdown'+temp).draggable( 'option', 'disabled', false);
+			$('#drpinput'+temp).keypress(function(e){
+				if(e.which == 13) {
+					$('#dropdown'+temp).draggable('option', 'disabled', false);
+					if($('#drpeditable'+temp+' option:selected').val() == 'addoption' && $('#drpinput'+temp).val() != ""){
+						var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
+						$('#drpeditable'+temp+' option').eq(-1).before(str);
+						$('#drpeditable'+temp+' option:last').attr('selected','selected');
+						$(this).val('');
+					}
+					else if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() == ""){
+						$('#drpeditable'+temp+' option:selected').remove();
+					}
+					$('#drpinput'+temp).blur();
+				}
 			});
 
 			$('#drpeditable'+temp).on('change', function(){
@@ -480,24 +498,13 @@ var base_url = protocol + '//' + host;
 			});
 
 			function edit(){
-					$('#drpeditable'+temp+' option:selected').text($('#drpinput'+temp).val());
-					$('#drpeditable'+temp+' option:selected').val($('#drpinput'+temp).val());
+				$('#drpeditable'+temp+' option:selected').text($('#drpinput'+temp).val());
+				$('#drpeditable'+temp+' option:selected').val($('#drpinput'+temp).val());
 			}
 
 			$('#drpinput'+temp).on('keyup', function(e){
-					if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() != ""){
-							edit();
-					}
-			});
-
-			$('#drpinput'+temp).blur(function(){
-				if($('#drpeditable'+temp+' option:selected').val() == 'addoption' && $('#drpinput'+temp).val() != ""){
-					var str = ' <option value="'+$('#drpinput'+temp).val() + '">'+ $('#drpinput'+temp).val() +'</option>';
-					$('#drpeditable'+temp+' option').eq(-1).before(str);
-					$('#drpeditable'+temp+' option:last').attr("selected", "selected");
-				}
-				else if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() == ""){
-					$('#drpeditable'+temp+' option:selected').remove();
+				if($('#drpeditable'+temp+' option:selected').val() != 'addoption' && $('#drpinput'+temp).val() != ""){
+						edit();
 				}
 			});
 			
@@ -796,6 +803,7 @@ var base_url = protocol + '//' + host;
 		});
 
 		$('.slides').on('click', '.remove-icon',function(e){
+			alert("Are you sure you want to delete this?");
 			id = $(this).parent().attr('id').substring(5);
 			$(this).parent('div').remove();
 			$('#page'+id).remove();
