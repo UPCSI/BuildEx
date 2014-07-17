@@ -51,4 +51,9 @@ class Home extends CI_Controller{
 			echo "Invalid input.";
 		}
 	}
+
+	public function logout(){   
+    $this->session->sess_destroy();
+    redirect('');
+  }
 }

@@ -1,4 +1,4 @@
-<?php echo form_open("signin/validate");?>
+<?php echo form_open("sign_in/validate");?>
     <label>Username</label>
     <input type="text" id="signInUsername" required name="username" placeholder="Enter username">
     <label>Password</label>

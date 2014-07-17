@@ -75,7 +75,7 @@ class Admins extends User_Controller{
       $msg = 'Invalid input. Please try again.';
     }
     $this->session->set_flashdata('notification',$msg);
-    redirect('admin/administrators');
+    redirect('admins/administrators');
   }
 
   public function destroy(){
@@ -87,7 +87,7 @@ class Admins extends User_Controller{
       $msg = "Deletion failed!";
     }
     $this->session->set_flashdata('notification',$msg);
-    redirect('admin/administrators');
+    redirect('admins/administrators');
   }
 
   public function view($username = NULL){
@@ -119,7 +119,7 @@ class Admins extends User_Controller{
       $msg = 'Confirmation failed!';
     }
     $this->session->set_flashdata('notification',$msg);
-    redirect('admin/faculty');
+    redirect('admins/faculty');
   }
 
   public function reject_faculty(){
@@ -132,7 +132,7 @@ class Admins extends User_Controller{
       $msg = 'Rejection failed!';
     }
     $this->session->set_flashdata('notification',$msg);
-    redirect('admin/faculty');
+    redirect('admins/faculty');
   }
   /* End of Faculty */
 

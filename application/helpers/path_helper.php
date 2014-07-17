@@ -11,8 +11,8 @@ function page_path($page = NULL) {
   return $path;
 }
 
-function laboratory_path($laboratory = NULL){
-  return "laboratory/{$laboratory->labid}";
+function laboratory_path($laboratory = NULL, $action = 'view'){
+  return "laboratory/{$laboratory->name}";
 }
 
 function faculty_path($faculty = NULL, $action = 'view'){
@@ -71,10 +71,20 @@ function researcher_path($researcher = NULL){
   }
 }
 
-function admin_path($admin = NULL){
+function admin_path($admin = NULL, $action = 'view'){
+  $link = NULL;
+
   if(isset($admin)){
-    return "admin/{$admin->username}";
+    $link = 'admin';
+
+    if($action == 'destroy'){
+      $link = "{$link}/{$action}";
+    }
+
+    $link = "{$link}/{$admin->username}";
   }
+
+  return $link;
 }
 
 function respond_path($experiment = NULL){

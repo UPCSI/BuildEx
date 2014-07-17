@@ -6,19 +6,14 @@ $route['404_override'] = 'errors/errors_404';
 $RESTFUL_ROUTES = 'create|update|destroy';
 
 // Externals
-$route['signup/(graduate|faculty)'] = 'sign_up/index/$1';
-$route['signup/(.+)'] = 'sign_up/$1';
-$route['signin'] = 'sign_in/index';
-$route['signin/(.+)'] = 'sign_in/$1';
+$route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
+$route['logout'] = 'home/logout';
 $route['errors/faculty/waiting'] = 'sign_in/waiting';
 
 // Internals
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
 
 $route['admin'] = 'admins/index';
-$route['admin/'."({$RESTFUL_ROUTES})"] = 'admins/$1';
-$route['admin/'.'('.$ADMIN_PAGES.')'] = 'admins/$1';
-$route['admin/(logout|confirm_faculty)'] = 'admins/$1';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
 $route['faculty/'."({$RESTFUL_ROUTES})"] = 'faculty/$1';
@@ -34,7 +29,7 @@ $route['graduate/([a-zA-Z0-9]+)'] = 'graduates/view/$1';
 $route['graduate/([a-zA-Z0-9]+)/([a-z]+)'] = 'graduates/$2/$1';
 
 // Laboratories
-$route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
+$route['laboratory/([a-zA-Z0-9]+)'] = 'laboratories/view/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments

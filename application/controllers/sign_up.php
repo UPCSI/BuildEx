@@ -8,14 +8,14 @@ class Sign_up extends CI_Controller{
 		$data['title'] = "Sign Up";
 		$data['role'] = $role;
 		$data['notification'] = $this->session->flashdata('notification');	
-		$data['main_content'] = 'signup/index';
+		$data['main_content'] = 'sign_up/index';
 		$this->load->view('main_layout',$data);
 	}
 
 	public function success(){
 		$data['title'] = "Sign Up";
 		$data['notification'] = $this->session->flashdata('notification');	
-		$data['main_content'] = 'signup/success';
+		$data['main_content'] = 'sign_up/success';
 		$this->load->view('main_layout',$data);
 	}
 

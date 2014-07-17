@@ -10,7 +10,7 @@ class Sign_in extends CI_Controller{
 
 	public function index(){
 		$data['title'] = 'Sign in';
-		$data['main_content'] = 'signin/index';
+		$data['main_content'] = 'sign_in/index';
 		$data['notification'] = $this->session->flashdata('notification');	
 		$this->load->view('main_layout', $data);
 	}
@@ -46,7 +46,7 @@ class Sign_in extends CI_Controller{
 
 	public function waiting(){
 		$data['title'] = 'Error';
-		$data['main_content'] = 'signin/faculty_waiting';
+		$data['main_content'] = 'sign_in/faculty_waiting';
 		$data['notification'] = $this->session->flashdata('notification');	
 		$this->load->view('main_layout', $data);
 	}

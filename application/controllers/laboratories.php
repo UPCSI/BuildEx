@@ -18,11 +18,12 @@ class Laboratories extends MY_Controller{
 	}
 
 	/* REST Methods */
-	public function view($labid = 0){
-		$data['laboratory'] = $this->laboratory->get($labid);
-		$data['lab_head'] = $this->laboratory->get_laboratory_head($labid);
-		$data['faculty'] = $this->laboratory->get_all_faculty($labid);
-		$data['graduates'] = $this->laboratory->get_all_graduates($labid);
+	public function view($name = NULL){
+		$laboratory = $this->laboratory->get(0, $name);
+		$data['laboratory'] = $laboratory;
+		$data['lab_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
+		$data['faculty'] = $this->laboratory->get_all_faculty($laboratory->labid);
+		$data['graduates'] = $this->laboratory->get_all_graduates($laboratory->labid);
 		$data['notification'] = $this->session->flashdata('notification');
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory/index';
@@ -43,7 +44,7 @@ class Laboratories extends MY_Controller{
 		}
 		
 		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/laboratories');
+		redirect('admins/laboratories');
 	}
 
 	public function destroy(){
@@ -55,6 +56,7 @@ class Laboratories extends MY_Controller{
 			$msg = "Deletion failed!";
 		}
 		$this->session->set_flashdata('notification',$msg);
-		redirect('admin/laboratories');
+		redirect('admins/laboratories');
 	}
+	/* End of REST Methods */
 }
