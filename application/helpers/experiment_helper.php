@@ -15,9 +15,11 @@ function researcher($experiment = NULL){
 function ongoing_experiments($experiments = NULL){
   $new_experiments = array();
 
-  foreach($experiments as $experiment){
-    if($experiment->status == 'f'){
-      array_push($new_experiments, $experiment);
+  if(isset($experiments)){
+    foreach($experiments as $experiment){
+      if($experiment->status == 'f'){
+        array_push($new_experiments, $experiment);
+      }
     }
   }
 
@@ -26,10 +28,12 @@ function ongoing_experiments($experiments = NULL){
 
 function complete_experiments($experiments = NULL){
   $new_experiments = array();
-
-  foreach($experiments as $experiment){
-    if($experiment->status == 't'){
-      array_push($new_experiments, $experiment);
+  
+  if(isset($experiments)){
+    foreach($experiments as $experiment){
+      if($experiment->status == 't'){
+        array_push($new_experiments, $experiment);
+      }
     }
   }
 

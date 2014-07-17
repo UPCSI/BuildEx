@@ -5,13 +5,16 @@ class Faculty extends User_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('faculty_model', 'faculty');
+		$this->load->model('laboratory_model', 'laboratory');
 		$this->role = 'faculty';
 	}
 
 	/* Faculty Pages */
 	public function home(){
 		$fid = role_id();
-		$data['laboratory'] = $this->faculty->get_laboratory($fid);
+		$laboratory = $this->faculty->get_laboratory($fid);
+		$data['laboratory'] = $laboratory;
+		$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
 		$data['experiments'] = $this->faculty->get_experiments($fid);
 		$data['title'] = ucfirst($this->role);
     $data['main_content'] = 'users/index';
