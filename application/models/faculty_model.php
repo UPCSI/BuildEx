@@ -89,7 +89,7 @@ class Faculty_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_laboratory($fid ,$cond = "true"){
+	public function get_laboratory($fid, $cond = "true"){
 		$this->db->select('Laboratories.*');
 		$this->db->join('faculty_member_of', 'faculty_member_of.labid = Laboratories.labid');
 		$this->db->where('faculty_member_of.fid', $fid);

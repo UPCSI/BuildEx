@@ -9,6 +9,13 @@ class Admins extends User_Controller{
   }
 
   /* Admin Pages */
+  public function home(){
+    $data['title'] = ucfirst($this->role);
+    $data['main_content'] = 'users/index';
+    $data['page'] = 'home';
+    $this->load->view('main_layout', $data);
+  }
+  
   public function administrators(){
     $data['admins'] = $this->get_admins_list();
     $data['title'] = 'Admin';

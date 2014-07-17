@@ -9,6 +9,16 @@ class Faculty extends User_Controller{
 	}
 
 	/* Faculty Pages */
+	public function home(){
+		$fid = role_id();
+		$data['laboratory'] = $this->faculty->get_laboratory($fid);
+		$data['experiments'] = $this->faculty->get_experiments($fid);
+		$data['title'] = ucfirst($this->role);
+    $data['main_content'] = 'users/index';
+    $data['page'] = 'home';
+    $this->load->view('main_layout', $data);
+	}
+
 	public function experiments($username = NULL){
 		$faculty = $this->faculty->get(0, $username);
 		$data['faculty'] = $faculty;
@@ -20,10 +30,10 @@ class Faculty extends User_Controller{
 		$this->load->view('main_layout',$data);
 	}
 
-	public function advisories(){
-		$fid = role_id();
-		$data['experiments'] = $this->faculty->get_advisory_experiments($fid, 't'); #confirmed
-		$data['requests'] = $this->faculty->get_advisory_experiments($fid, 'f'); #not confirmed
+	public function advisories($username = NULL){
+		$faculty = $this->faculty->get(0, $username);
+		$data['experiments'] = $this->faculty->get_advisory_experiments($faculty->fid, 't'); #confirmed
+		$data['requests'] = $this->faculty->get_advisory_experiments($faculty->fid, 'f'); #not confirmed
 		$data['title'] = 'Faculty';
 		$data['main_content'] = 'users/index';
 		$data['page'] = 'advisory_experiments';

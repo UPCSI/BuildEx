@@ -7,21 +7,23 @@ $RESTFUL_ROUTES = 'create|update|destroy';
 
 // Externals
 $route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
-$route['logout'] = 'home/logout';
 $route['errors/faculty/waiting'] = 'sign_in/waiting';
+$route['logout'] = 'home/logout';
 
-// Internals
+// Admin
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
 
-$route['admin'] = 'admins/index';
+$route['admin'] = 'admins/home';
 $route['admin/([a-zA-Z0-9]+)'] = 'admins/view/$1';
 
-$route['faculty/'."({$RESTFUL_ROUTES})"] = 'faculty/$1';
+// Faculty
+$route['faculty'] = 'faculty/home';
+$route["faculty/({$RESTFUL_ROUTES})"] = 'faculty/$1';
 $route['faculty/([a-zA-Z0-9]+)/laboratory'] = 'faculty/laboratory/$1';
-$route['faculty/logout'] = 'faculty/logout';
 $route['faculty/([a-zA-Z0-9]+)'] = 'faculty/view/$1';
 $route['faculty/([a-zA-Z0-9]+)/([a-z]+)'] = 'faculty/$2/$1';
 
+// Graduate
 $route['graduate'] = 'graduates/index';
 $route['graduate/([a-zA-Z0-9]+)/laboratory'] = 'graduates/laboratory/$1';
 $route['graduate/logout'] = 'graduates/logout';

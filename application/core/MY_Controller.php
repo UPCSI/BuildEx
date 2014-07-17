@@ -20,18 +20,6 @@ class User_Controller extends MY_Controller{
     $this->role = 'admin';
   }
 
-  public function index(){
-    if (array_key_exists($this->role, $this->session->userdata('roles'))){
-      $data['title'] = ucfirst($this->role);
-      $data['main_content'] = 'users/index';
-      $data['page'] = 'home';
-      $this->load->view('main_layout', $data);
-    }
-    else{
-      redirect($this->session->userdata('active_role'));
-    }
-  }
-
   public function laboratory($username = NULL){
     $researcher_info = $this->user_model->get_researcher($this->role, $username);
     $id = $researcher_info[1];
@@ -52,6 +40,12 @@ class User_Controller extends MY_Controller{
       $msg = "You don't have a laboratory yet. Please join one now.";
       $this->session->set_flashdata('notification', $msg);
       redirect('explore');
+    }
+  }
+
+  public function authenticate(){
+    if(!array_key_exists($this->role, $this->session->userdata('roles'))){
+      redirect($this->session->userdata('active_role'));    
     }
   }
 }

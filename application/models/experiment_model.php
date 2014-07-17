@@ -42,6 +42,7 @@ class Experiment_model extends MY_Model{
 		$all = array();
 		$faculty_exp = $this->all_faculty_experiments();
 		$graduates_exp = $this->all_graduate_experiments();
+		
 		if(isset($faculty_exp)){
 			$all = array_merge($all, $faculty_exp);
 		}
