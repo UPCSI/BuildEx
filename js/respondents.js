@@ -1,6 +1,11 @@
 var answer_cache = {};
 var total_page = 0;
 var qid_list = Array();
+var pathArray = window.location.href.split( '/' );
+var protocol = pathArray[0];				
+var host = pathArray[2];
+var base_url = protocol + '//' + host;
+
 $.count = 1;
 $.current_page = 1;
 $.last_selected = null;
@@ -336,7 +341,7 @@ function save_input(){
 
 	x.push(total_page);
 	x.push($.times);
-
+	
 	for(i=1; i<=$.count; i++){
 		if ($('#inp'+i).offset() !== undefined){
 			page = $('#inp'+i).parent().attr("id").slice(4);
@@ -417,7 +422,7 @@ function save_input(){
 	}
 
 	$.ajax({
-		url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/save',
+		url: base_url + '/BuildEx/respond/save',
 		type:"POST",
 		data:{
 			'msg':x,
@@ -450,9 +455,11 @@ function save_input(){
 				.css('padding-left',21).css('padding-right',21);
 			}
 
+			
+
 			if($.current_page == total_page) {
 				save_input();
-				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
+				window.location.href = base_url + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
 				$.unload_flagger = false;
 			}
 		}
@@ -460,7 +467,7 @@ function save_input(){
 		$(window).on('beforeunload', function() {
 			if($.unload_flagger) {
 				$.ajax({
-					url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/interrupted',
+					url: base_url + '/BuildEx/respond/interrupted',
 	        type:"POST",
 	        data:{
 	          'done' : 'false',

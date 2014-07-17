@@ -1,3 +1,8 @@
+var pathArray = window.location.href.split( '/' );
+var protocol = pathArray[0];				
+var host = pathArray[2];
+var base_url = protocol + '//' + host;
+
 (function($){ 
 
 	$(function() {
@@ -709,7 +714,7 @@
 				}
 
 				$.ajax({
-					url: window.location.protocol+"//"+window.location.host + '/BuildEx/builder/save',
+					url: base_url + '/BuildEx/builder/save',
 					type:"POST",
 					data:{
 						'msg':x,
