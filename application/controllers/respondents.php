@@ -98,25 +98,18 @@ class Respondents extends CI_Controller{
 				}
 			}
 
+			else if($item['type'] == "dropdown"){
+				$answer['answer'] = $item['selected'];
+			}
+
 			else if($item['type'] == "slider"){
 				$answer['answer'] = $item['value'];
 			}
 
-
 			array_push($responses, $answer);
 		}
 
-		var_dump($responses);
-		$this->respondents_model->save_responses($responses);
-
-		//save individual elements
-		// $rid = $this->session->userdata('rid');
-		// $qid = $this->input->post('qid');
-
-		// $info = array('answer' => $this->input->post($qid));
-		// 			#'duration' => $this->input->post('time_'.$qid));
-
-		// $this->respondents_model->add_response($info,$qid,$rid);
+		$this->respondent_model->save_responses($responses);
 	}
 
 	public function debrief($eid = 0, $slug = NULL){

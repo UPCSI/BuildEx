@@ -1,6 +1,11 @@
 var answer_cache = {};
 var total_page = 0;
 var qid_list = Array();
+var pathArray = window.location.href.split( '/' );
+var protocol = pathArray[0];				
+var host = pathArray[2];
+var base_url = protocol + '//' + host;
+
 $.count = 1;
 $.current_page = 1;
 $.last_selected = null;
@@ -55,7 +60,7 @@ function draw_question(posX, posY, text_input, page_num, width, height, color, q
 	else{
 		$("#page" + index).append(htmlData);
 	}
-	
+
 	document.getElementById('qtneditable'+$.count).style.color = color;	
 	$.count++;
 }
@@ -120,9 +125,9 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="width:150px; height:60px"';
 	}
-	
+
 	htmlData += '><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px; font-size:'+new_font_size*14+'px;">'+text_input+'</button></div>';
-	
+
 	var temp = $.count;
 
 	var index = page_num;
@@ -162,9 +167,9 @@ function draw_radio_button(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
-	
+
 	htmlData += '><input type="radio" id="radbtneditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'" style="font-size:'+new_font_size*14+'px;">'+text_input+'</div>';
-	
+
 	var temp = $.count;
 	var index = page_num;
 
@@ -205,9 +210,9 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 	else{
 		htmlData += 'style="height:25px; width:120px;"';
 	}
-	
+
 	htmlData += '><input type="checkbox" id="chkeditable'+$.count+'" name="'+ total_page +'" value="'+text_input+'">'+text_input+'</div>';
-	
+
 	var temp = $.count;
 	var index = page_num;
 
@@ -224,6 +229,62 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
     });
     
     $.count++;
+}
+
+function draw_dropdown(posX, posY, page_num, options){
+	posX = typeof posX !== 'undefined' ? posX : null;
+	posY = typeof posY !== 'undefined' ? posY : null;
+	page_num = typeof page_num !== 'undefined' ? page_num : 0;
+	width = typeof width !== 'undefined' ? width : 140;
+	height = typeof height !== 'undefined' ? height : 34;
+
+	workspace_width = $('#workspace').width()/1024; //hardcoded
+	workspace_height = $('#workspace').height()/576; //hardcoded
+	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
+	zoomed_x = (posX/1024)*100; //hardcoded
+	zoomed_y = (posY/576)*100; //hardcoded
+
+	var htmlData='<div id="dropdown'+$.count+'" class="static_obj"';
+
+	if (posX != null && posY != null){
+		htmlData += 'style="left:'+ zoomed_x +'%; top:'+ zoomed_y +'%; width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
+
+	}
+	else{
+		htmlData += 'style="width:' + width*workspace_width + 'px; height:' + height*workspace_height + 'px;"';
+	}
+
+	htmlData += '><select id="drpeditable'+$.count+'" style="position:absolute; top:0; left:0">';
+	if(options !== undefined){
+		options.forEach(function(choice){
+			htmlData += '<option value="'+choice+'">'+choice+'</option>';
+		});
+	}
+
+	htmlData += '</div>';
+	
+	var temp = $.count;
+	var index = page_num;
+
+	if(index <= 0){
+		$("#page" + $.current_page).append(htmlData);
+	}
+
+	else{
+		$("#page" + index).append(htmlData);
+	}
+
+	$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+
+	$('#drpeditable'+temp).on('change', function(){
+		$('#drpinput'+temp).val($('#drpeditable'+temp+' option:selected').text());
+	});
+
+	$('#drpinput'+temp).blur(function(){
+			$('#drpeditable'+temp+' option:selected').remove();
+	});
+	
+	$.count++;
 }
 
 function draw_slider(posX, posY, page_num, min, max){
@@ -280,7 +341,7 @@ function save_input(){
 
 	x.push(total_page);
 	x.push($.times);
-
+	
 	for(i=1; i<=$.count; i++){
 		if ($('#inp'+i).offset() !== undefined){
 			page = $('#inp'+i).parent().attr("id").slice(4);
@@ -329,6 +390,21 @@ function save_input(){
 			// console.log(data);
 		}
 
+		if ($('#dropdown'+i).offset() !== undefined){
+			page = $('#dropdown'+i).parent().attr("id").slice(4);
+			question = $("div").find('[data-page="'+page+'"]');
+			qid = question.attr('value');
+			var data = {
+				'qid'		:	 qid,
+				'page'		:	 page,
+				'type'		:	 "dropdown",
+				'selected'	:	 $('#drpeditable'+i).val(),
+			}
+
+			x.push(data);
+			// console.log(data);
+		}
+
 		if ($('#sldr'+i).offset() !== undefined){
 			page = $('#sldr'+i).parent().attr("id").slice(4);
 			question = $("div").find('[data-page="'+page+'"]');
@@ -346,30 +422,44 @@ function save_input(){
 	}
 
 	$.ajax({
-		url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/save',
+		url: base_url + '/BuildEx/respond/save',
 		type:"POST",
 		data:{
 			'msg':x,
 		},
-
-		dataType: 'json',
+		dataType: 'html',
+		error: function(e, text) {
+			console.log(text);
+		},
+		success: function(e, text) {
+			console.log(text);
+		},
 		complete: function(data) {
-			// console.log(data.responseText);
+			console.log(data.responseText);
 		},
 	});
 }
 
 (function($){
 	$(function() {
+		function changeTextBtn(){
+			if(total_page == 1) {
+				$('#next_page').text('Done')
+				.css('padding-left',21).css('padding-right',21);
+			}
+		}
+
 		function checkEndPage() {
 			if($.current_page+1 == total_page) {
 				$('#next_page').text('Done')
 				.css('padding-left',21).css('padding-right',21);
 			}
 
+			
+
 			if($.current_page == total_page) {
 				save_input();
-				window.location.href = window.location.protocol+"//"+window.location.host + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
+				window.location.href = base_url + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
 				$.unload_flagger = false;
 			}
 		}
@@ -377,18 +467,19 @@ function save_input(){
 		$(window).on('beforeunload', function() {
 			if($.unload_flagger) {
 				$.ajax({
-					url: window.location.protocol+"//"+window.location.host + '/BuildEx/respond/interrupted',
-			        type:"POST",
-			        data:{
-			          'done' : 'false',
-			        },
-			        dataType: 'json',
+					url: base_url + '/BuildEx/respond/interrupted',
+	        type:"POST",
+	        data:{
+	          'done' : 'false',
+	        },
+	        dataType: 'json',
 				});
 				return 'Exiting will not submit your form';
 			}
 		});
 
 		$(document).ready(function(){
+			changeTextBtn();
 			$.start_time = (Date.now())/1000;
 		});
 
@@ -409,13 +500,13 @@ function save_input(){
 
 			checkEndPage();
 
-    		$("#page" + $.current_page).css('visibility','hidden');
+    	$("#page" + $.current_page).css('visibility','hidden');
 
 			if($.current_page < total_page){
 				$.current_page++;
 			}
 
-    		$("#page" + $.current_page).css('visibility','visible');		
+    	$("#page" + $.current_page).css('visibility','visible');		
 		});
 	});
 })(jQuery);

@@ -97,7 +97,7 @@ class Test extends CI_Controller{
 	
 	public function delete_graduate(){
 		$username = 'ebbernardino';
-		$this->graduates_model->delete_graduate($username);
+		$this->graduate_model->delete_graduate($username);
 		echo '<pre>';
 		echo 'Graduate deleted!';
 		echo '</pre>';
@@ -105,7 +105,7 @@ class Test extends CI_Controller{
 
 	public function get_graduate(){
 		$username = 'ebbernardino';
-		$data = $this->graduates_model->get_graduate_profile($username);
+		$data = $this->graduate_model->get_graduate_profile($username);
 		echo '<pre>';
 		var_dump($data);
 		echo '</pre>';
@@ -116,7 +116,7 @@ class Test extends CI_Controller{
 		$info['category'] = 'Fucking experiment';
 		$info['target_count'] = 50;
 		$uid = 3;
-		$this->experiments_model->add_experiment($uid,$info);
+		$this->experiment_model->add_experiment($uid,$info);
 		echo '<pre>';
 		echo 'Experiment added!';
 		echo '</pre>';
@@ -125,7 +125,7 @@ class Test extends CI_Controller{
 	public function delete_experiment(){
 		$uid = 3;
 		$eid = 2;
-		$a = $this->experiments_model->delete_experiment($uid,$eid);
+		$a = $this->experiment_model->delete_experiment($uid,$eid);
 		echo '<pre>';
 		echo 'Experiment deleted!';
 		var_dump($a);
@@ -135,7 +135,7 @@ class Test extends CI_Controller{
 	public function get_experiment(){
 		$uid = 3;
 		$eid = 3;
-		$data = $this->experiments_model->get_experiment($uid,$eid);
+		$data = $this->experiment_model->get_experiment($uid,$eid);
 		echo '<pre>';
 		var_dump($data);
 		echo '</pre>';
@@ -148,8 +148,8 @@ class Test extends CI_Controller{
 		$info['last_name'] = 'Koothrappali';
 		$uid = 3;
 		$eid = 3;
-		$this->respondents_model->add_respondent($info,$eid);
-		$this->experiments_model->increment_count($uid,$eid);
+		$this->respondent_model->add_respondent($info,$eid);
+		$this->experiment_model->increment_count($uid,$eid);
 		echo '<pre>';
 		echo 'Experiment answered!';
 		echo '</pre>';
@@ -159,7 +159,7 @@ class Test extends CI_Controller{
 	public function delete_respondent(){
 		$rid = 4;
 		$eid = 3;
-		$a = $this->respondents_model->delete_respondent($eid,$rid);
+		$a = $this->respondent_model->delete_respondent($eid,$rid);
 		echo '<pre>';
 		echo 'Respondent deleted!';
 		var_dump($a);
@@ -168,7 +168,7 @@ class Test extends CI_Controller{
 
 	public function get_respondent(){
 		$rid = 2;
-		$res = $this->respondents_model->get_respondent($rid);
+		$res = $this->respondent_model->get_respondent($rid);
 		echo '<pre>';
 		echo 'Respondent: ';
 		var_dump($res);

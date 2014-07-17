@@ -104,9 +104,9 @@ class Graduates extends User_Controller{
 			redirect('');
 			//implement where to redirect if eid or gid is non-existent
 		}
-		$this->load->model('experiments_model');
+		$this->load->model('experiment_model');
 		$gid = $this->session->userdata('gid');
-		$data['experiment'] = $this->experiments_model->get_graduates_experiment($gid,$eid);
+		$data['experiment'] = $this->experiment_model->get_graduates_experiment($gid,$eid);
 		$data['title'] = 'Graduate';
 		$data['main_content'] = 'graduate/view_experiment';
 
@@ -144,7 +144,7 @@ class Graduates extends User_Controller{
 	}
 
 	private function get_all_experiments($gid = 0){
-		$this->load->model('experiments_model');
-		return $this->experiments_model->get_all_graduates_experiments($gid);	
+		$this->load->model('experiment_model');
+		return $this->experiment_model->get_all_graduates_experiments($gid);	
 	}
 }

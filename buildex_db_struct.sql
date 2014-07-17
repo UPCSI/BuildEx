@@ -731,14 +731,6 @@ ALTER TABLE ONLY "Checkboxes"
 
 
 --
--- Name: Dropdowns_input_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
---
-
-ALTER TABLE ONLY "Dropdowns"
-    ADD CONSTRAINT "Dropdowns_input_id_key" UNIQUE (input_id);
-
-
---
 -- Name: Dropdowns_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
 --
 

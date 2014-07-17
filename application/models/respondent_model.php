@@ -49,7 +49,7 @@ class Respondent_model extends MY_Model{
 			return false;
 		}
 
-		$this->experiment->decrement_count($eid);
+		$this->experiment_model->decrement_count($eid);
 		return true;
 	}
 	/* End of CRUD */

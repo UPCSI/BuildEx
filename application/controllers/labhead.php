@@ -28,7 +28,7 @@ class Labhead extends MY_Controller{
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
 		$data['lab_name'] = $lab->name;
 		$username = $this->session->userdata('username');
-		$data['user'] = $this->users_model->get_user_profile(0,$username);
+		$data['user'] = $this->user_model->get_user_profile(0,$username);
 		$data['roles'] = $this->session->userdata('role');
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/profile';
@@ -38,7 +38,7 @@ class Labhead extends MY_Controller{
 	public function laboratory(){
 		$data['modules'] = array('home','profile','laboratory');
 		$this->load->model('faculty_model');
-		$this->load->model('graduates_model');
+		$this->load->model('graduate_model');
 
 		$fid = $this->session->userdata('fid');
 		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
@@ -47,7 +47,7 @@ class Labhead extends MY_Controller{
 		$data['role'] = 'labhead';
 		$data['lab_name'] = $lab->name;
 		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
-		$data['graduates'] = $this->graduates_model->get_all_lab_graduates($labid);
+		$data['graduates'] = $this->graduate_model->get_all_lab_graduates($labid);
 
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/laboratory';

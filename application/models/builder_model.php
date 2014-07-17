@@ -60,6 +60,28 @@ class Builder_model extends MY_Model{
 				$new_obj['text'] = $checkbox->choices;
 			}
 
+			if ($new_obj['type'] == "dropdown"){
+				/*
+					we cannot use the get_input() method because each option for a single dropdown
+					is saved as one row in the Dropdowns table. Thus, input_id is not unique. (This
+					is because one dropdown object has several options, whereas in radio buttons and
+					checkboxes, one option is considered one object.)
+				*/
+
+				// $dropdown = $this->get_input($object->oid, 'Dropdowns');
+				$this->db->where('Inputs.oid', $object->oid);
+				$this->db->join('Inputs', 'Dropdowns'.'.input_id = Inputs.input_id');
+				$query = $this->db->get('Dropdowns');
+				$dropdown = $this->query_conversion($query);
+
+				$options = array();
+				foreach($dropdown as $choice){
+					array_push($options, $choice->choices);
+				}
+
+				$new_obj['options'] = $options;
+			}
+
 			if ($new_obj['type'] == "slider"){
 				$slider = $this->get_input($object->oid, 'Sliders');
 				$new_obj['min'] = $slider->min_num;
@@ -89,7 +111,6 @@ class Builder_model extends MY_Model{
 		$this->db->where('Inputs.oid', $oid);
 		$this->db->join('Inputs', $table.'.input_id = Inputs.input_id');
 		$query = $this->db->get($table);
-		$object = $this->query_row_conversion($query);
 
 		return $this->query_row_conversion($query);
 	}
