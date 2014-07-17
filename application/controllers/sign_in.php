@@ -41,7 +41,7 @@ class Sign_in extends CI_Controller{
 		}
 		$msg = 'Invalid username or password. Please try again.';
 		$this->session->set_flashdata('notification', $msg);
-		redirect('signin');
+		redirect('sign_in');
 	}
 
 	public function waiting(){

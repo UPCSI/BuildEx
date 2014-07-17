@@ -3,12 +3,11 @@
  <fieldset>
 	<legend>We'll give you a temporary one!</legend>
 	<?php echo validation_errors();?>
-	<?php echo form_open("login/reset_password") . "<br/>";?>
-
+	<?php echo form_open("sign_in/reset_password"); ?>
 	<label>Email</label>
 	<input type="text" id="resetEmail" required name="email" placeholder="Enter email">
 	<input type="submit" value="Reset">
 	<?php echo form_close();?>
 </fieldset><br/>
 
-<a href = "<?php echo site_url('login'); ?>"> Login </a><br/>
+<a href = "<?php echo site_url('sign_in'); ?>"> Login </a><br/>
