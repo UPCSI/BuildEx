@@ -14,6 +14,7 @@ $route['errors/faculty/waiting'] = 'sign_in/waiting';
 
 // Internals
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
+
 $route['admin'] = 'admins/index';
 $route['admin/'."({$RESTFUL_ROUTES})"] = 'admins/$1';
 $route['admin/'.'('.$ADMIN_PAGES.')'] = 'admins/$1';
@@ -37,18 +38,24 @@ $route['laboratory/([0-9]+)'] = 'laboratories/view/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments
-$route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)'] = 'experiments/view/$1/$2/$3';
-$route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/(add|create)'] = 'experiments/$3/$1/$2';
-$route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/builder'] = 'builder/edit/$1/$2/$3';
-$route['(graduate|faculty)/([a-zA-Z0-9]+)/experiment/([0-9]+)/([a-z]+)'] = 'experiments/$4/$1/$2/$3';
+$EXPERIMENT_PATH = '(graduate|faculty)/([a-zA-Z0-9]+)/experiment';
+
+$route["{$EXPERIMENT_PATH}/([0-9]+)"] = 'experiments/view/$1/$2/$3';
+$route["{$EXPERIMENT_PATH}/(add|create)"] = 'experiments/$3/$1/$2';
+$route["{$EXPERIMENT_PATH}/([0-9]+)/builder"] = 'builder/edit/$1/$2/$3';
+$route["{$EXPERIMENT_PATH}/([0-9]+)/([a-z]+)"] = 'experiments/$4/$1/$2/$3';
 
 // Respondents
-$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/'."({$RESTFUL_ROUTES})"] = 'respondents/$3/$1/$2';
-$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/add'] = 'respondents/add/$1/$2';
-$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)/(terms|agree|debrief|submit|complete)'] = 'respondents/$3/$1/$2';
+$RESPOND_PATH = 'respond/([0-9]+)/([a-zA-Z0-9/-]+)';
+$RESPOND_PAGES = 'terms|agree|debrief|submit|complete';
+
+$route["{$EXPERIMENT_PATH}/([0-9]+)/respondent/([0-9]+)/"."({$RESTFUL_ROUTES})"] = 'respondents/$5/$1/$2/$3/$4';
+$route["{$RESPOND_PATH}/(add|create)"] = 'respondents/$3/$1/$2';
+$route["{$RESPOND_PATH}/({$RESPOND_PAGES})"] = 'respondents/$3/$1/$2';
 $route['respond/leave'] = 'respondents/leave';
+
 // Builder
-$route['respond/([0-9]+)/([a-zA-Z0-9/-]+)'] = 'builder/view/$1/$2';
+$route[$RESPOND_PATH] = 'builder/view/$1/$2';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
