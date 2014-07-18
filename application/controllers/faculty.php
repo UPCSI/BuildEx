@@ -13,9 +13,9 @@ class Faculty extends User_Controller{
 	public function home(){
 		$fid = role_id();
 		$laboratory = $this->faculty->get_laboratory($fid);
-		$data['laboratory'] = $laboratory;
 		
 		if(isset($laboratory)){
+			$data['laboratory'] = $laboratory;
 			$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
 		}
 		
@@ -79,21 +79,23 @@ class Faculty extends User_Controller{
 	}
 
 	public function view($username = NULL){
-        $data['faculty'] = $this->faculty->get(0, $username);
-        if(isset($data['faculty'])){
-        	$fid = $data['faculty']->fid;
-	        $data['roles'] = array_keys($this->session->userdata('roles'));
-	        $data['experiments'] = $this->faculty->get_experiments($fid);
-	        $data['title'] = 'Faculty';
-	        $data['main_content'] = 'faculty/index';
-	        $data['page'] = 'view';
-	        $data['notification'] = $this->session->flashdata('notification');
-	        $this->load->view('main_layout',$data);
-        }
-        else{
-        	show_404();
-        }
+    $data['faculty'] = $this->faculty->get(0, $username);
+    
+    if(isset($data['faculty'])){
+    	$fid = $data['faculty']->fid;
+    	$uid = $data['faculty']->uid;
+      $data['roles'] = array_keys($this->user_model->get_roles($uid));
+      $data['experiments'] = $this->faculty->get_experiments($fid);
+      $data['title'] = 'Faculty';
+      $data['main_content'] = 'faculty/index';
+      $data['page'] = 'view';
+      $data['notification'] = $this->session->flashdata('notification');
+      $this->load->view('main_layout',$data);
     }
+    else{
+    	show_404();
+    }
+  }
 
 	public function destroy(){
 		$faculty_id = $this->input->post('faculty_id');
@@ -107,24 +109,6 @@ class Faculty extends User_Controller{
 		redirect('admin/faculty');
 	}
 	/* End of REST Methods */
-
-	public function view_experiment($eid = 0){
-		if($eid == 0){
-			redirect('');
-		}
-		
-		$fid = $this->session->userdata('fid');
-		$data['experiment'] = $this->experiment_model->get_faculty_experiment($fid,$eid);
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'faculty/view_experiment';
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
-
-		$this->load->view('main_layout', $data);
-	}
 
 	public function confirm_experiment($eid = 0){
 		if($eid == 0){
