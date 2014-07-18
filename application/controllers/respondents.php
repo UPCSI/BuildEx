@@ -109,7 +109,7 @@ class Respondents extends CI_Controller{
 			array_push($responses, $answer);
 		}
 
-		$this->respondent_model->save_responses($responses);
+		$this->respondent->save_responses($responses);
 	}
 
 	public function debrief($eid = 0, $slug = NULL){

@@ -422,19 +422,23 @@ function save_input(){
 	}
 
 	$.ajax({
-		url: base_url + '/BuildEx/respond/save',
+		url: base_url + '/BuildEx/respondents/save',
 		type:"POST",
+		async:false,
 		data:{
 			'msg':x,
 		},
 		dataType: 'html',
 		error: function(e, text) {
+			alert(text);
 			console.log(text);
 		},
 		success: function(e, text) {
+			alert(text);
 			console.log(text);
 		},
 		complete: function(data) {
+			alert(data.responseText);
 			console.log(data.responseText);
 		},
 	});
