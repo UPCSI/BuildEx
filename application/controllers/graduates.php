@@ -56,7 +56,7 @@ class Graduates extends User_Controller{
       $student_id = $this->input->post('student_num');
 
       if($this->graduate->create($new_user, $student_id)){
-        redirect('signup/success'); 
+        redirect('sign_up/success'); 
       }
     }
     else{

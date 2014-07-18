@@ -75,7 +75,7 @@ class Faculty extends User_Controller{
 		}
 		
 		$this->session->set_flashdata('notification',$msg);
-		redirect('signup/faculty');
+		redirect('sign_up/faculty');
 	}
 
 	public function view($username = NULL){
