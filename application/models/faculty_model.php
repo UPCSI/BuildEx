@@ -1,7 +1,7 @@
 <?php
 
 class Faculty_model extends MY_Model{
-	
+
 	/* CRUD Methods */
 	public function create($user_info = NULL, $faculty_id = 0){
 		$faculty_info['uid'] = $this->user_model->create($user_info);
@@ -113,8 +113,34 @@ class Faculty_model extends MY_Model{
 		return $faculty->account_status == 't';
 	}
 
-	public function request_advise($fid,$eid){
-		return $this->db->insert('advise',array('fid'=>$fid,'eid'=>$eid));
+	public function advise_experiment($fid = 0, $eid = 0){
+		$this->load->model('experiment_model', 'experiment');
+		$info['status'] = 't';
+		$this->db->where('fid', $fid);
+		$this->db->where('eid', $eid);
+		$this->db->update('advise', $info);
+		$experiment_info['is_published'] = 't';
+		$this->experiment->update($eid, $experiment_info);
+		return $this->is_rows_affected();
+	}
+
+	public function reject_experiment($fid,$eid){
+		$this->db->where('fid', $fid);
+		$this->db->where('eid', $eid);
+		$this->db->delete('advise');
+		return $this->is_rows_affected();
+	}
+
+	public function request_advise($fid = 0, $eid = 0){
+		$info = array('fid'=>$fid,'eid'=>$eid);
+		return $this->db->insert('advise', $info);
+	}
+
+	public function get_all_account_requests(){
+		$this->db->join('Users','Users.uid = Faculty.uid');
+		$this->db->where('Faculty.account_status', 'f');
+		$q = $this->db->get('Faculty');
+		return $this->query_conversion($q);
 	}
 
 	public function get_by_experiment($eid = 0){
@@ -123,13 +149,5 @@ class Faculty_model extends MY_Model{
 		$this->db->where('faculty_conduct.eid', $eid);
 		$q = $this->db->get('Faculty');
 		return $this->query_row_conversion($q);
-	}
-
-	public function get_all_account_requests(){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
-		$this->db->join('Users','Users.uid = Faculty.uid');
-		$this->db->where('Faculty.account_status', 'f');
-		$q = $this->db->get('Faculty');
-		return $this->query_conversion($q);
 	}
 }

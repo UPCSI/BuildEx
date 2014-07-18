@@ -10,8 +10,9 @@ class Labhead extends User_Controller{
 	/* LabHead Pages */
 	public function home(){
 		$lid = role_id();
-		$data['laboratory'] =  $this->laboratory_head->get_laboratory($lid);
-		$data['laboratory_head'] = $this->laboratory_head->get($lid);
+		$laboratory = $this->laboratory_head->get_laboratory($lid);
+		$data['laboratory'] = $laboratory;
+		$data['experiments'] = $this->laboratory->get_experiments($laboratory->labid);
 		$data['title'] = ucfirst($this->role);
     $data['main_content'] = 'users/index';
     $data['page'] = 'home';
@@ -48,13 +49,6 @@ class Labhead extends User_Controller{
 		$data['title'] = 'Lab Head';
 		$data['main_content'] = 'labhead/laboratory';
 		$this->load->view('_main_layout_internal',$data);
-	}
-
-	public function laboratories(){
-		$data['title'] = 'Faculty';
-		$data['main_content'] = 'laboratory/all';
-		$data['laboratories'] = $this->laboratories_model->get_all_laboratories();
-		$this->load->view("_main_layout_internal",$data);
 	}
 
 	public function requests(){

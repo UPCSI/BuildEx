@@ -69,7 +69,7 @@ class Experiment_model extends MY_Model{
 		$this->db->delete('Experiments');
 		return $this->is_rows_affected();
 	}
-	/* END of CRUD Methods */
+	/* End of CRUD Methods */
 
 	public function assign_to($role = NULL, $id = 0, $eid = 0){
 		$conduct_info['eid'] = $eid;
@@ -120,48 +120,14 @@ class Experiment_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
-	public function get_by_hash($url){
+	public function get_by_hash($url = NULL){
 		$this->db->where('url', $url);
 		$this->db->where('is_published', 't');
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_graduates_experiment($gid = 0, $eid = 0){
-		/*
-		* Returns all the fields of an experiment
-		* given the gid of a graduate
-		*/
-		$this->db->select('Experiments.*');
-		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
-		$this->db->join('Graduates','Graduates.gid = graduates_conduct.gid');
-		$this->db->where('Experiments.eid',$eid);
-		$this->db->where('Graduates.gid',$gid);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_row_conversion($q);
-	}
-
-	public function request_experiment($eid,$fid){
-		/*
-		* Inserts a request of an experiment with eid
-		* for a faculty with fid.
-		*/
-		$request_info['eid'] = $eid;
-		$request_info['fid'] = $fid;
-		return $this->db->insert('request',$request_info);
-	}
-
-
 	public function increment_count($eid = 0){
-		/*
-		* Given the eid of the experiment, this 
-		* method will update the number of respondents
-		* who participated.
-		*
-		* Returns true if the actual update happened
-		* false otherwise.
-		*/
 		$this->db->where('eid', $eid);
 		$this->db->set('current_count', 'current_count+1', FALSE);
 		$this->db->update('Experiments');
@@ -169,63 +135,15 @@ class Experiment_model extends MY_Model{
 	}
 
 	public function decrement_count($eid = 0){
-		/*
-		* Given the eid of the experiment,
-		* this method will update the 
-		* number of respondents who participated.
-		*
-		* Can be use if a researcher deletes an obsolete
-		* submission.
-		*
-		* Returns true if the actual update happened
-		* false otherwise.
-		*/
 		$this->db->where('eid', $eid);
 		$this->db->set('current_count', 'current_count-1', FALSE);
 		$this->db->update('Experiments');
 		return $this->is_rows_affected();
 	}
 
-	public function is_experiment_complete($eid = 0){
-		/*
-		* Returns true if an experiment with eid 
-		* is already completed; false otherwise
-		*/
-		$experiment = $this->get_experiment($eid);
-		if(isset($experiment)){
-			if($experiment->status == 't'){
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public function get_all_advisory_experiments($fid = 0){
-		$this->db->select('Users.uid,Users.username,Users.first_name,Users.middle_name,Users.last_name,Graduates.gid,advise.status as advise_status,Experiments.*');
-		$this->db->join('advise','advise.eid = Experiments.eid');
-		$this->db->join('Faculty','Faculty.fid = advise.fid');
-		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
-		$this->db->join('Graduates','Graduates.gid = graduates_conduct.gid');
-		$this->db->join('Users','Users.uid = Graduates.uid');
-		$this->db->where('Faculty.fid', $fid);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-	
-	public function advise_experiment($fid,$eid){
-		$info['status'] = "true";
-		$this->db->where('fid', $fid);
-		$this->db->where('eid', $eid);
-		$this->db->update('advise', $info);
-		return $this->is_rows_affected();
-	}
-
-	public function reject_experiment($fid,$eid){
-		$this->db->where('fid', $fid);
-		$this->db->where('eid', $eid);
-		$this->db->delete('advise');
-		return $this->is_rows_affected();
+	public function is_complete($eid = 0){
+		$experiment = $this->get($eid);
+		return isset($experiment) && $experiment->status == 't';
 	}
 
 	public function get_all_graduates_experiments($gid = 0, $category = NULL){
@@ -241,50 +159,6 @@ class Experiment_model extends MY_Model{
 			$this->db->where('Experiments.category',$category);
 		}
 
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-
-	public function get_all_faculty_laboratory_experiments($lid,$labid){
-		/*
-		* Given the lab head's lid and the labid of the laboratory
-		* it manages, this function will return all the public and within_lab
-		* experiments [faculty]
-		*/
-		$this->db->select('Experiments.*');
-		$this->db->join('faculty_conduct','faculty_conduct.eid = Experiments.eid');
-		$this->db->join('Faculty','Faculty.fid = faculty_conduct.fid');
-		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
-		$this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
-		$this->db->join('manages','manages.labid = Laboratories.labid');
-		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
-		$this->db->where('LaboratoryHeads.lid',$lid);
-		$this->db->where('Laboratories.labid',$labid);
-		$this->db->where('Experiments.privacy',2);
-		$this->db->or_where('Experiments.privacy',3);
-		$q = $this->db->get('Experiments');
-
-		return $this->query_conversion($q);
-	}
-
-	public function get_all_graduate_laboratory_experiments($lid,$labid){
-		/*
-		* Given the lab head's lid and the labid of the laboratory
-		* it manages, this function will return all the public and within_lab
-		* experiments [graduate]
-		*/
-		$this->db->select('Experiments.*');
-		$this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
-		$this->db->join('Graduates','Graduates.gid = graduates_conduct.fid');
-		$this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
-		$this->db->join('Laboratories','Laboratories.labid = graduates_member_of.labid');
-		$this->db->join('manages','manages.labid = Laboratories.labid');
-		$this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
-		$this->db->where('LaboratoryHeads.lid',$lid);
-		$this->db->where('Laboratories.labid',$labid);
-		$this->db->where('Experiments.privacy',2);
-		$this->db->or_where('Experiments.privacy',3);
 		$q = $this->db->get('Experiments');
 
 		return $this->query_conversion($q);

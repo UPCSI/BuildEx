@@ -85,6 +85,44 @@ class Laboratory_model extends MY_Model{
     return $this->query_conversion($q);
   }
 
+  public function get_all_experiments($labid = 0){
+
+  }
+
+  public function get_all_faculty_laboratory_experiments($labid = 0){
+    $this->db->select('Experiments.*');
+    $this->db->join('faculty_conduct','faculty_conduct.eid = Experiments.eid');
+    $this->db->join('Faculty','Faculty.fid = faculty_conduct.fid');
+    $this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
+    $this->db->join('Laboratories','Laboratories.labid = faculty_member_of.labid');
+    $this->db->join('manages','manages.labid = Laboratories.labid');
+    $this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
+    $this->db->where('LaboratoryHeads.lid',$lid);
+    $this->db->where('Laboratories.labid',$labid);
+    $this->db->where('Experiments.privacy',2);
+    $this->db->or_where('Experiments.privacy',3);
+    $q = $this->db->get('Experiments');
+
+    return $this->query_conversion($q);
+  }
+
+  public function get_all_graduate_laboratory_experiments($labid = 0){
+    $this->db->select('Experiments.*');
+    $this->db->join('graduates_conduct','graduates_conduct.eid = Experiments.eid');
+    $this->db->join('Graduates','Graduates.gid = graduates_conduct.fid');
+    $this->db->join('faculty_member_of','faculty_member_of.fid = Faculty.fid');
+    $this->db->join('Laboratories','Laboratories.labid = graduates_member_of.labid');
+    $this->db->join('manages','manages.labid = Laboratories.labid');
+    $this->db->join('LaboratoryHeads','LaboratoryHeads.lid = LaboratoryHeads.lid');
+    $this->db->where('LaboratoryHeads.lid',$lid);
+    $this->db->where('Laboratories.labid',$labid);
+    $this->db->where('Experiments.privacy',2);
+    $this->db->or_where('Experiments.privacy',3);
+    $q = $this->db->get('Experiments');
+
+    return $this->query_conversion($q);
+  }
+
   public function get_laboratory_head($labid = 0){
     $this->db->join('Users', 'Users.uid = LaboratoryHeads.uid');
     $this->db->join('manage', 'manage.lid = LaboratoryHeads.lid');
@@ -94,17 +132,7 @@ class Laboratory_model extends MY_Model{
     return $this->query_row_conversion($q);
   }
 
-  public function get_labhead_laboratory($lid){
-    $this->db->select('Laboratories.*');
-    $this->db->join('manage','manage.lid = LaboratoryHeads.lid');
-    $this->db->join('Laboratories','Laboratories.labid = manage.labid');
-    $this->db->join('Users','Users.uid = LaboratoryHeads.uid');
-    $this->db->where('LaboratoryHeads.lid',$lid);
-    $q = $this->db->get('LaboratoryHeads');
-    return $this->query_row_conversion($q);
-  }
-
-  public function is_graduate_member($gid){
+  public function is_graduate_member($gid = 0){
     $this->db->where('gid',$gid);
     $this->db->where('status','true');
     $q = $this->db->get('graduates_member_of');
@@ -114,7 +142,7 @@ class Laboratory_model extends MY_Model{
     return false;
   }
 
-  public function is_faculty_member($fid){
+  public function is_faculty_member($fid = 0){
     $this->db->where('fid',$fid);
     $this->db->where('status','true');
     $q = $this->db->get('faculty_member_of');

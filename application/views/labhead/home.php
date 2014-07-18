@@ -6,13 +6,13 @@
     </div>
 
     <div class="panel dash-item" style="border-color:#0066dd">
-      <?php $this->load->view('graduate/_experiments_summary'); ?>
+      <?php $this->load->view('labhead/_experiments_summary'); ?>
     </div>
   </div>
 
   <div class="large-6 column">
     <div class="panel dash-item" style="border-color:#0066dd">
-      <?php $this->load->view('graduate/_laboratory_summary'); ?>
+      <?php $this->load->view('labhead/_laboratory_summary'); ?>
     </div>
   </div>
 </div>

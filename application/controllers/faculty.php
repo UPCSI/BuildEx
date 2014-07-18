@@ -111,36 +111,31 @@ class Faculty extends User_Controller{
 	/* End of REST Methods */
 
 	public function confirm_experiment($eid = 0){
-		if($eid == 0){
-			redirect(''); //redirect somewhere if $eid was not supplied
-		}
-		$info['is_published'] = "true";
 		$fid = $this->session->userdata('active_id');
-		if($this->experiment_model->advise_experiment($fid,$eid) && $this->experiment_model->update_experiment($eid,$info)){
+
+		if($this->faculty->advise_experiment($fid, $eid)){
 			$msg = "You have successfully confirmed an experiment.";
 		}
 		else{
 			$msg = "Confirming an experiment failed.";
 		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect('faculty/advisory');
-		//Warning: Update of experiment happened before assigning it to be advised by the faculty
 	}
 
 	public function reject_experiment($eid = 0){
-		if($eid == 0){
-			redirect(''); //redirect somewhere if $eid was not supplied
-		}
 		$fid = $this->session->userdata('active_id');
-		if($this->experiment_model->reject_experiment($fid,$eid)){
+
+		if($this->faculty->reject_experiment($fid, $eid)){
 			$msg = "You have successfully rejected an experiment.";
 		}
 		else{
 			$msg = "Rejecting an experiment failed.";
 		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect('faculty/advisory');
-		//Warning: Update of experiment happened before assigning it to be advised by the faculty
 	}
 
 	public function request_lab($labid = 0){
