@@ -89,13 +89,19 @@ function admin_path($admin = NULL, $action = 'view'){
 
 function download_path() {
     $link = NULL;
-
 }
 
-function respond_path($experiment = NULL){
+function respond_path($experiment = NULL, $action = 'view'){
+  $link = NULL;
+
   if(isset($experiment)){
-    return "respond/{$experiment->url}";
+    $link = "respond/{$experiment->url}";
+    if($action != 'view'){
+      $link = "{$link}/{$action}";
+    }
   }
+
+  return $link;
 }
 
 function respondent_path($respondent = NULL, $action = 'view'){
