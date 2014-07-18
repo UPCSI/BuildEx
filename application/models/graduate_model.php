@@ -23,7 +23,6 @@ class Graduate_model extends MY_Model{
 	}
 
 	public function all(){
-		$this->db->select('*');
 		$this->db->join('Users','Users.uid = Graduates.uid');
 		$q = $this->db->get('Graduates');
 		return $this->query_conversion($q);	
@@ -66,7 +65,7 @@ class Graduate_model extends MY_Model{
 		return $this->query_conversion($q);
 	}
 
-	public function get_laboratory($gid, $cond = "true"){
+	public function get_laboratory($gid, $cond = 't'){
 		$this->db->select('Laboratories.*');
 		$this->db->join('graduates_member_of','graduates_member_of.labid = Laboratories.labid');
 		$this->db->where('graduates_member_of.gid',$gid);
