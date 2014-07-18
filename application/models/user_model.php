@@ -72,10 +72,10 @@ class User_model extends MY_Model{
 		$user = $this->get(0, $username);
 
 		$data = array('uid' => $user->uid,
-					  'username' => $user->username,
-					  'roles' => $this->get_roles($user->uid),
-					  'active_role' => NULL,
-					  'logged_in' => TRUE);
+								  'username' => $user->username,
+								  'roles' => $this->get_roles($user->uid),
+								  'active_role' => NULL,
+								  'logged_in' => TRUE);
 		
 		if(array_key_exists('faculty', $data['roles'])){
 			$data['active_role'] = 'faculty';
@@ -95,27 +95,31 @@ class User_model extends MY_Model{
 
 	public function get_roles($uid = 0){
 		$roles = array();
-
+		
 		$query = $this->db->get_where('Admins', array('uid' => $uid));
 		$admin = $this->query_row_conversion($query);
+
 		if(isset($admin)){
 			$roles['admin'] = $admin->aid;
 		}
 
 		$query = $this->db->get_where('LaboratoryHeads', array('uid' => $uid));
 		$labhead = $this->query_row_conversion($query);
+		
 		if(isset($labhead)){
 			$roles['labhead'] = $labhead->lid;
 		}
 
 		$query = $this->db->get_where('Faculty', array('uid' => $uid));
 		$faculty = $this->query_row_conversion($query);
+
 		if(isset($faculty)){
 			$roles['faculty'] = $faculty->fid;
 		}
 
 		$query = $this->db->get_where('Graduates', array('uid' => $uid));
 		$graduate = $this->query_row_conversion($query);
+
 		if(isset($graduate)){
 			$roles['graduate'] = $graduate->gid;
 		}

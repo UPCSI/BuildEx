@@ -17,7 +17,7 @@ class Home extends CI_Controller{
 		}
 	}
 
-	public function redirect($role){
+	public function change($role){
 		$this->user_model->switch_roles($role);
 		redirect($role);
 	}

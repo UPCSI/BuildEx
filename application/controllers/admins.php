@@ -102,7 +102,8 @@ class Admins extends User_Controller{
     
     if(isset($data['admin'])){
       $fid = $data['admin']->aid;
-      $data['roles'] = array_keys($this->session->userdata('roles'));
+      $uid = $data['admin']->uid;
+      $data['roles'] = array_keys($this->user_model->get_roles($uid));
       $data['title'] = 'Admin';
       $data['main_content'] = 'admin/index';
       $data['page'] = 'view';

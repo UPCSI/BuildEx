@@ -4,22 +4,24 @@ class Labhead extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('laboratories_model');
+		$this->load->model('laboratory_head_model', 'laboratory_head');
 	}
 	
-	public function index(){
-		$data['modules'] = array('home','profile','laboratory','confirm_faculty');
-		$fid = $this->session->userdata('fid');
-		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
-		$data['lab_name'] = $lab->name;
-		if($this->session->userdata('active_role') == 'labhead'){
-			$data['title'] = 'Lab Head';
-			$data['main_content'] = 'labhead/index';
-			$this->load->view('_main_layout_internal', $data);
+	/* LabHead Pages */
+	public function home(){
+		$fid = role_id();
+		$laboratory = $this->faculty->get_laboratory($fid);
+		$data['laboratory'] = $laboratory;
+		
+		if(isset($laboratory)){
+			$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
 		}
-		else{
-			redirect($this->session->userdata('active_role'));
-		}
+		
+		$data['experiments'] = $this->faculty->get_experiments($fid);
+		$data['title'] = ucfirst($this->role);
+    $data['main_content'] = 'users/index';
+    $data['page'] = 'home';
+    $this->load->view('main_layout', $data);
 	}
 
 	public function profile(){

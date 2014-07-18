@@ -9,6 +9,7 @@ $RESTFUL_ROUTES = 'create|update|destroy';
 $route['sign_up/(graduate|faculty)'] = 'sign_up/index/$1';
 $route['errors/faculty/waiting'] = 'sign_in/waiting';
 $route['logout'] = 'home/logout';
+$route['change/([a-z]+)'] = 'home/change/$1';
 
 // Admin
 $ADMIN_PAGES = 'administrators|laboratories|faculty|graduates|experiments|respondents';
