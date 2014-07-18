@@ -2,7 +2,7 @@
 
 class Faculty_model extends MY_Model{
 	
-	/* CRUD */
+	/* CRUD Methods */
 	public function create($user_info = NULL, $faculty_id = 0){
 		$faculty_info['uid'] = $this->user_model->create($user_info);
 		$faculty_info['faculty_num'] = $faculty_id;
@@ -25,7 +25,6 @@ class Faculty_model extends MY_Model{
 	}
 
 	public function all(){
-		$this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,fid,faculty_num');
 		$this->db->where('Faculty.account_status','t');
 		$this->db->join('Users','Users.uid = Faculty.uid');
 		$q = $this->db->get('Faculty');
@@ -91,7 +90,7 @@ class Faculty_model extends MY_Model{
 		return $this->query_row_conversion($q);
 	}
 
-	public function get_laboratory($fid, $cond = "true"){
+	public function get_laboratory($fid, $cond = 't'){
 		$this->db->select('Laboratories.*');
 		$this->db->join('faculty_member_of', 'faculty_member_of.labid = Laboratories.labid');
 		$this->db->where('faculty_member_of.fid', $fid);

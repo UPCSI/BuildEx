@@ -9,15 +9,9 @@ class Labhead extends MY_Controller{
 	
 	/* LabHead Pages */
 	public function home(){
-		$fid = role_id();
-		$laboratory = $this->faculty->get_laboratory($fid);
-		$data['laboratory'] = $laboratory;
-		
-		if(isset($laboratory)){
-			$data['laboratory_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
-		}
-		
-		$data['experiments'] = $this->faculty->get_experiments($fid);
+		$lid = role_id();
+		$data['laboratory'] =  $this->laboratory_head->get_laboratory($lid);
+		$data['laboratory_head'] = $this->laboratory_head->get($lid);
 		$data['title'] = ucfirst($this->role);
     $data['main_content'] = 'users/index';
     $data['page'] = 'home';
