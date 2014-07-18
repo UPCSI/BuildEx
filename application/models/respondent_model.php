@@ -88,4 +88,10 @@ class Respondent_model extends MY_Model{
 			$this->db->insert('Responses',$response);
 		}
 	}
+
+	public function get_responses($rid){
+		$this->db->where('rid', $rid);
+		$q = $this->db->get('Responses');
+		return $this->query_conversion($q);
+	}
 }
