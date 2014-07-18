@@ -49,13 +49,15 @@ class Laboratories extends MY_Controller{
 
 	public function destroy(){
 		$lab_id = $this->input->post('lab_id');
+
 		if($this->laboratory->destroy($lab_id)){
 			$msg = "Deletion successful!";
 		}
 		else{
 			$msg = "Deletion failed!";
 		}
-		$this->session->set_flashdata('notification',$msg);
+
+		$this->session->set_flashdata('notification', $msg);
 		redirect('admins/laboratories');
 	}
 	/* End of REST Methods */

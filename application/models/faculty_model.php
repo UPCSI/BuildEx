@@ -39,6 +39,7 @@ class Faculty_model extends MY_Model{
 	}
 
 	public function destroy($fid = 0, $username = NULL){
+		
 		if($fid > 0){
 			$this->db->where('fid',$fid);
 			$this->db->delete('Faculty');
@@ -50,6 +51,7 @@ class Faculty_model extends MY_Model{
 				  u.username = ?";
 			$this->db->query($q,array($username));
 		}
+		
 		return $this->is_rows_affected();
 	}
 	/* End of CRUD */
