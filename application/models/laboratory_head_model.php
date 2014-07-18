@@ -14,6 +14,7 @@ class Laboratory_head_model extends MY_Model{
 
   public function get($lid = 0, $username = NULL){
     $this->db->join('Users', 'Users.uid = LaboratoryHeads.uid');
+    $this->db->join('Faculty', 'Faculty.uid = Users.uid');
 
     if($lid > 0){
       $this->db->where('LaboratoryHeads.lid', $lid);

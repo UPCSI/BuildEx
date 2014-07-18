@@ -1,54 +1,24 @@
 <?php
 
-class Labhead extends User_Controller{
+class LabHeads extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('laboratory_head_model', 'laboratory_head');
+		$this->load->model('laboratory_model', 'laboratory');
+		$this->role = 'labhead';
 	}
 	
-	/* LabHead Pages */
+	/* Lab Head Pages */
 	public function home(){
 		$lid = role_id();
 		$laboratory = $this->laboratory_head->get_laboratory($lid);
 		$data['laboratory'] = $laboratory;
 		$data['experiments'] = $this->laboratory->get_experiments($laboratory->labid);
-		$data['title'] = ucfirst($this->role);
+		$data['title'] = 'LabHead';
     $data['main_content'] = 'users/index';
     $data['page'] = 'home';
     $this->load->view('main_layout', $data);
-	}
-
-	public function profile(){
-		$data['modules'] = array('home','profile','laboratory');
-		$fid = $this->session->userdata('fid');
-		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
-		$data['lab_name'] = $lab->name;
-		$username = $this->session->userdata('username');
-		$data['user'] = $this->user_model->get_user_profile(0,$username);
-		$data['roles'] = $this->session->userdata('role');
-		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/profile';
-		$this->load->view('_main_layout_internal',$data);
-	}
-
-	public function laboratory(){
-		$data['modules'] = array('home','profile','laboratory');
-		$this->load->model('faculty_model');
-		$this->load->model('graduate_model');
-
-		$fid = $this->session->userdata('fid');
-		$lab = $this->laboratories_model->get_faculty_laboratory($fid);
-		$labid = $lab->labid;
-		$data['laboratory'] = $this->laboratories_model->get_laboratory($labid);
-		$data['role'] = 'labhead';
-		$data['lab_name'] = $lab->name;
-		$data['faculty_members'] = $this->faculty_model->get_all_lab_faculty($labid);
-		$data['graduates'] = $this->graduate_model->get_all_lab_graduates($labid);
-
-		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/laboratory';
-		$this->load->view('_main_layout_internal',$data);
 	}
 
 	public function requests(){
@@ -66,11 +36,33 @@ class Labhead extends User_Controller{
 
 		$this->load->view('_main_layout_internal',$data);
 	}
+	/* End of Lab Head Pages */
+
+	/* REST Methods */
+	public function view($username = 0){
+		$data['laboratory_head'] = $this->laboratory_head->get(0, $username);
+    
+    if(isset($data['laboratory_head'])){
+    	$lid = $data['laboratory_head']->lid;
+    	$uid = $data['laboratory_head']->uid;
+      $data['roles'] = array_keys($this->user_model->get_roles($uid));
+      $data['title'] = 'LabHead';
+      $data['main_content'] = 'labhead/index';
+      $data['page'] = 'view';
+      $data['notification'] = $this->session->flashdata('notification');
+      $this->load->view('main_layout',$data);
+    }
+    else{
+    	show_404();
+    }
+	}
+	/* End of REST Methods */
 
 	public function confirm_faculty($labid = 0,$fid=0){
 		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
 		$labid = $query->labid;
 		$status = $this->laboratories_model->accept_faculty($labid,$fid);
+		
 		if($status){
 			$this->laboratories_model->increment_member_count($labid);
 			$this->laboratories_model->delete_other_faculty_requests($fid);
@@ -79,6 +71,7 @@ class Labhead extends User_Controller{
 		else{
 			$msg = "Error accepting faculty.";
 		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect('labhead/requests');
 	}
@@ -87,12 +80,14 @@ class Labhead extends User_Controller{
 		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
 		$labid = $query->labid;
 		$status = $this->laboratories_model->reject_faculty($labid,$fid);
+		
 		if($status){
 			$msg = "You have successfully rejected a faculty member from your lab.";
 		}
 		else{
 			$msg = "Error rejecting a faculty member.";
 		}
+
 		$this->session->set_flashdata('notification',$msg);
 		redirect('labhead/requests');	
 	}
