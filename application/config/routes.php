@@ -35,9 +35,11 @@ $route['graduate/([a-zA-Z0-9]+)/([a-z]+)'] = 'graduates/$2/$1';
 $route['labhead'] = 'labheads/home';
 $route['labhead/([a-zA-Z0-9]+)'] = 'labheads/view/$1';
 $route['labhead/([a-zA-Z0-9]+)/laboratory'] = 'labheads/laboratory/$1';
+$route['labhead/([a-zA-Z0-9]+)/laboratory/requests'] = 'labheads/requests/$1';
 
 // Laboratories
 $route['laboratory/([a-zA-Z0-9]+)'] = 'laboratories/view/$1';
+$route['laboratory/([a-zA-Z0-9]+)/requests'] = 'laboratories/requests/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments

@@ -12,7 +12,17 @@ function page_path($page = NULL) {
 }
 
 function laboratory_path($laboratory = NULL, $action = 'view'){
-  return "laboratory/{$laboratory->name}";
+  $link = NULL;
+
+  if(isset($laboratory)){
+    $link = "laboratory/{$laboratory->name}";
+
+    if($action != 'view'){
+      $link = "{$link}/{$action}";
+    }
+  }
+
+  return $link;
 }
 
 function faculty_path($faculty = NULL, $action = 'view'){

@@ -4,8 +4,8 @@ class Laboratories extends MY_Controller{
 
 	public function __construct(){
 		parent::__construct();
-		$this->load->model('laboratory_model','laboratory');
-		$this->load->model('laboratory_head_model','laboratory_head');
+		$this->load->model('laboratory_model', 'laboratory');
+		$this->load->model('laboratory_head_model', 'laboratory_head');
 	}
 
 	public function index(){
@@ -61,4 +61,16 @@ class Laboratories extends MY_Controller{
 		redirect('admins/laboratories');
 	}
 	/* End of REST Methods */
+
+	public function requests($name = NULL){
+		$laboratory = $this->laboratory->get(0, $name);
+		$data['laboratory'] = $laboratory;
+		$data['faculty_requests'] = $this->laboratory->get_faculty_requests($laboratory->labid);
+		$data['graduates_requests'] = $this->laboratory->get_graduates_requests($laboratory->labid);
+		$data['notification'] = $this->session->flashdata('notification');
+		$data['title'] = 'Laboratories';
+		$data['main_content'] = 'laboratory/index';
+		$data['page'] = 'requests';
+		$this->load->view('main_layout', $data);
+	}
 }

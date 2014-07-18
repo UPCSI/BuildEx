@@ -232,8 +232,7 @@ class Laboratory_model extends MY_Model{
     $this->db->delete('graduates_member_of');
   }
 
-  public function get_all_faculty_requests($labid){
-    $this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Faculty.fid,faculty_num,since,labid');
+  public function get_faculty_requests($labid = 0){
     $this->db->join('Faculty','Faculty.fid = faculty_member_of.fid');
     $this->db->join('Users','Users.uid = Faculty.uid');
     $this->db->where('labid',$labid);
@@ -242,8 +241,7 @@ class Laboratory_model extends MY_Model{
     return $this->query_conversion($q);
   }
 
-  public function get_all_graduates_requests($labid){
-    $this->db->select('Users.uid,username,first_name,middle_name,last_name,email_ad,Graduates.gid,student_num,since,labid');
+  public function get_graduates_requests($labid = 0){
     $this->db->join('Graduates','Graduates.gid = graduates_member_of.gid');
     $this->db->join('Users','Users.uid = Graduates.uid');
     $this->db->where('labid',$labid);

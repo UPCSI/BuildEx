@@ -24,31 +24,13 @@ class LabHeads extends User_Controller{
 	public function laboratory($username = NULL){
 		$lid = role_id();
 		$laboratory = $this->laboratory_head->get_laboratory($lid);
-
-		if(isset($laboratory)){
-      redirect(laboratory_path($laboratory));
-    }
-    else{
-      $msg = "You don't have a laboratory yet. Please join one now.";
-      $this->session->set_flashdata('notification', $msg);
-      redirect('explore');
-    }
+    redirect(laboratory_path($laboratory));
 	}
 
-	public function requests(){
-		$lab = $this->laboratories_model->get_labhead_laboratory($this->session->userdata('lid'));
-		$labid = $lab->labid;
-		$data['fac_requests'] = $this->laboratories_model->get_all_faculty_requests($labid);
-		$data['grad_requests'] = $this->laboratories_model->get_all_graduates_requests($labid);
-		$data['title'] = 'Lab Head';
-		$data['main_content'] = 'labhead/requests';
-
-		$data['notification'] = $this->session->flashdata('notification');
-		if(!$data['notification']){
-			$data['notification'] = NULL;
-		}
-
-		$this->load->view('_main_layout_internal',$data);
+	public function requests($username = NULL){
+		$lid = role_id();
+		$laboratory = $this->laboratory_head->get_laboratory($lid);
+		redirect(laboratory_path($laboratory, 'requests'));
 	}
 	/* End of Lab Head Pages */
 
