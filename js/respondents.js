@@ -1,11 +1,6 @@
 var answer_cache = {};
 var total_page = 0;
 var qid_list = Array();
-var pathArray = window.location.href.split( '/' );
-var protocol = pathArray[0];				
-var host = pathArray[2];
-var base_url = protocol + '//' + host;
-
 $.count = 1;
 $.current_page = 1;
 $.last_selected = null;
@@ -422,7 +417,7 @@ function save_input(){
 	}
 
 	$.ajax({
-		url: base_url + '/BuildEx/respondents/save',
+		url: js_site_url() + 'respondents/save',
 		type:"POST",
 		async:false,
 		data:{
@@ -430,15 +425,12 @@ function save_input(){
 		},
 		dataType: 'html',
 		error: function(e, text) {
-			alert(text);
 			console.log(text);
 		},
 		success: function(e, text) {
-			alert(text);
 			console.log(text);
 		},
 		complete: function(data) {
-			alert(data.responseText);
 			console.log(data.responseText);
 		},
 	});
@@ -457,13 +449,11 @@ function save_input(){
 			if($.current_page+1 == total_page) {
 				$('#next_page').text('Done')
 				.css('padding-left',21).css('padding-right',21);
-			}
-
-			
+			}		
 
 			if($.current_page == total_page) {
 				save_input();
-				window.location.href = base_url + '/BuildEx/respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
+				window.location.href = js_site_url() + 'respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
 				$.unload_flagger = false;
 			}
 		}
@@ -471,7 +461,7 @@ function save_input(){
 		$(window).on('beforeunload', function() {
 			if($.unload_flagger) {
 				$.ajax({
-					url: base_url + '/BuildEx/respond/interrupted',
+					url: js_site_url() + 'respond/interrupted',
 	        type:"POST",
 	        data:{
 	          'done' : 'false',
