@@ -4,7 +4,7 @@ class Laboratory_model extends MY_Model{
 
   public function __construct(){
     parent::__construct();
-    $this->load->model('laboratory_head_model','laboratory_head');
+    $this->load->model('laboratory_head_model', 'laboratory_head');
     $this->load->model('faculty_model', 'faculty');
   }
 
@@ -21,11 +21,14 @@ class Laboratory_model extends MY_Model{
       $this->add_faculty($labid, $faculty->fid, 'true');
       return $labid;
     }
+
     return FALSE;
   }
 
   public function destroy($labid = 0){
-    $this->db->where('labid',$labid);
+    $laboratory_head = $this->get_laboratory_head($labid);
+    $this->laboratory_head->destroy($laboratory_head->lid);
+    $this->db->where('labid', $labid);
     $this->db->delete('Laboratories');
     return $this->is_rows_affected();
   }
@@ -122,15 +125,29 @@ class Laboratory_model extends MY_Model{
   }
 
   public function add_faculty($labid, $fid, $cond = 'false'){
-    return $this->db->insert('faculty_member_of', array('labid'=>$labid,
-                              'fid'=>$fid,
-                              'status'=>$cond));
+    $info = array('labid'=>$labid,
+                  'fid'=>$fid,
+                  'status'=>$cond);
+
+    if($this->db->insert('faculty_member_of', $info)){
+      $this->increment_member_count($labid);
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
   public function add_graduate($labid, $gid, $cond = 'false'){
-    return $this->db->insert('graduates_member_of', array('labid'=>$labid,
-                                'gid'=>$gid,
-                                'status'=>$cond));
+    $info = array('labid'=>$labid,
+                  'gid'=>$gid,
+                  'status'=>$cond);
+
+    if($this->db->insert('graduates_member_of', $info)){
+      $this->increment_member_count($labid);
+      return TRUE;
+    }
+
+    return FALSE;
   }
 
   public function accept_faculty($labid, $fid){

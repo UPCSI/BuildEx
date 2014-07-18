@@ -30,6 +30,7 @@ class Graduate_model extends MY_Model{
 	}
 
 	public function destroy($gid = 0, $username = NULL){
+		
 		if($gid > 0){
 			$this->db->where('gid',$gid);
 			$this->db->delete('Graduates');
@@ -41,6 +42,7 @@ class Graduate_model extends MY_Model{
 				  u.username = ?";
 			$this->db->query($q,array($username));
 		}
+		
 		return $this->is_rows_affected();
 	}
 
