@@ -1,6 +1,6 @@
 <?php
 
-class Labhead extends MY_Controller{
+class Labhead extends User_Controller{
 
 	public function __construct(){
 		parent::__construct();
