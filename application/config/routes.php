@@ -34,7 +34,6 @@ $route['graduate/([a-zA-Z0-9]+)/([a-z]+)'] = 'graduates/$2/$1';
 // Laboratory Head
 $route['labhead'] = 'labhead/home';
 
-
 // Laboratories
 $route['laboratory/([a-zA-Z0-9]+)'] = 'laboratories/view/$1';
 $route['explore'] = 'laboratories/index';
