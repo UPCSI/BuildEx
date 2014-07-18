@@ -4,8 +4,6 @@ class Laboratory_head_model extends MY_Model{
 
   public function __construct(){
     parent::__construct();
-    $this->load->model('laboratory_head_model', 'laboratory_head');
-    $this->load->model('faculty_model', 'faculty');
   }
 
   /* CRUD Methods */
