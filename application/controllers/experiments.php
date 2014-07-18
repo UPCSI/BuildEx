@@ -5,6 +5,7 @@ class Experiments extends MY_Controller{
 	public function __construct(){
 		parent::__construct();
 		$this->load->model('experiment_model', 'experiment');
+		$this->load->model('respondent_model', 'respondent');
 	}
 
 	/* REST Methods */
@@ -116,6 +117,56 @@ class Experiments extends MY_Controller{
 		}
 		$this->session->set_flashdata('notification',$msg);
 		redirect("{$role}/{$id}/experiment/{$eid}");
+	}
+
+	public function download($role = NULL, $id = 0, $eid = 0) {
+		$this->load->helper('download');
+		$list = $this->respondent->get_respondents($eid);
+
+		$fp = fopen('php://output', 'w');
+		fputcsv($fp, array(
+	        'First Name',
+	        'Middle Name',
+	        'Last Name',
+	        'Response ID',
+	        'Question ID',
+	        'Answer',
+	        'Duration'
+    	));
+
+	    foreach ($list as $respondent) {
+	        fputcsv($fp, array(
+	            $respondent->first_name,
+	            $respondent->middle_name,
+	            $respondent->last_name,
+	        ));
+	        $query = $this->respondent->get_responses($respondent->rid);
+	        foreach($query as $response) {
+	        	fputcsv($fp, array(
+	        		'','','',
+	        		$response->response_id,
+	        		$response->qid,
+	        		$response->answer,
+	        		$response->duration
+	        	));
+	        }
+	    }
+
+	    $data = file_get_contents('php://output');
+	    $name = 'result.csv';
+
+		// Build the headers to push out the file properly.
+	    header('Pragma: public');     // required
+	    header('Expires: 0');         // no cache
+	    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+	    header('Cache-Control: private',false);
+	    header('Content-Disposition: attachment; filename="'.basename($name).'"');  // Add the file name
+	    header('Content-Transfer-Encoding: binary');
+	    header('Connection: close');
+	    exit();
+
+	    force_download($name, $data);
+	    fclose($fp);
 	}
 
 	public function respondents($eid = 0){
