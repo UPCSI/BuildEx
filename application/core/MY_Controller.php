@@ -32,10 +32,6 @@ class User_Controller extends MY_Controller{
       $this->load->model('graduate_model', 'graduate');
       $laboratory = $this->graduate->get_laboratory($id);
     }
-    else if($this->role == 'labhead'){
-      $this->load->model('laboratory_head_model', 'laboratory_head');
-      $laboratory = $this->laboratory_head->get_laboratory($id);
-    }
     
     if(isset($laboratory)){
       redirect(laboratory_path($laboratory));

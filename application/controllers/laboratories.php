@@ -22,8 +22,8 @@ class Laboratories extends MY_Controller{
 		$laboratory = $this->laboratory->get(0, $name);
 		$data['laboratory'] = $laboratory;
 		$data['lab_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
-		$data['faculty'] = $this->laboratory->get_all_faculty($laboratory->labid);
-		$data['graduates'] = $this->laboratory->get_all_graduates($laboratory->labid);
+		$data['faculty'] = $this->laboratory->get_faculty($laboratory->labid);
+		$data['graduates'] = $this->laboratory->get_graduates($laboratory->labid);
 		$data['notification'] = $this->session->flashdata('notification');
 		$data['title'] = 'Laboratories';
 		$data['main_content'] = 'laboratory/index';

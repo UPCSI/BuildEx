@@ -21,6 +21,20 @@ class LabHeads extends User_Controller{
     $this->load->view('main_layout', $data);
 	}
 
+	public function laboratory($username = NULL){
+		$lid = role_id();
+		$laboratory = $this->laboratory_head->get_laboratory($lid);
+
+		if(isset($laboratory)){
+      redirect(laboratory_path($laboratory));
+    }
+    else{
+      $msg = "You don't have a laboratory yet. Please join one now.";
+      $this->session->set_flashdata('notification', $msg);
+      redirect('explore');
+    }
+	}
+
 	public function requests(){
 		$lab = $this->laboratories_model->get_labhead_laboratory($this->session->userdata('lid'));
 		$labid = $lab->labid;
