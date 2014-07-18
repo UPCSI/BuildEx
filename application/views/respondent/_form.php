@@ -1,4 +1,4 @@
-<form id = "demographics" action="<?php echo site_url("respond/{$experiment->url}/create"); ?>" method = "post" accept-charset="utf-8">  
+<form id = "demographics" action="<?php echo site_url(respond_path($experiment, 'create')); ?>" method = "post" accept-charset="utf-8">  
   <div class = "row">
     <fieldset>
       <legend>Personal Information</legend>
