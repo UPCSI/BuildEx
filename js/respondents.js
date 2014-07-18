@@ -417,7 +417,7 @@ function save_input(){
 	}
 
 	$.ajax({
-		url: js_site_url() + 'respondents/save',
+		url: js_site_url() + 'respond/'+ $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/save',
 		type:"POST",
 		async:false,
 		data:{
