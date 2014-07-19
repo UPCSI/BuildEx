@@ -94,4 +94,10 @@ class Respondent_model extends MY_Model{
 		$q = $this->db->get('Responses');
 		return $this->query_conversion($q);
 	}
+
+	public function get_respondents($eid){
+		$this->db->where('eid', $eid);
+		$q = $this->db->get('Respondents');
+		return $this->query_conversion($q);
+	}
 }
