@@ -22,12 +22,14 @@
           <td><?php echo $member->faculty_num; ?></td>
           <td>mm-dd-yyyy</td>
           <td>
-            <?php echo form_open('labheads/accept_faculty'); ?>
+            <?php echo form_open('labheads/accept_faculty/'.$laboratory->name); ?>
+              <?php echo form_hidden('laboratory_id', $laboratory->labid); ?>
               <?php echo form_hidden('faculty_id', $member->fid); ?>
               <button class = "button tiny" type="submit" value="confirm">&#x2713;</button>
             <?php echo form_close(); ?>
 
-            <?php echo form_open('labheads/reject_faculty'); ?>
+            <?php echo form_open('labheads/reject_faculty/'.$laboratory->name); ?>
+              <?php echo form_hidden('laboratory_id', $laboratory->labid); ?>
               <?php echo form_hidden('faculty_id', $member->fid); ?>
               <button class = "button tiny" type="submit" value="reject">&#x2717;</button>
             <?php echo form_close(); ?>

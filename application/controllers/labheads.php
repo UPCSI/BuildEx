@@ -54,14 +54,11 @@ class LabHeads extends User_Controller{
 	}
 	/* End of REST Methods */
 
-	public function confirm_faculty($labid = 0,$fid=0){
-		$query = $this->laboratories_model->get_faculty_laboratory($fid,$cond = "false");
-		$labid = $query->labid;
-		$status = $this->laboratories_model->accept_faculty($labid,$fid);
+	public function accept_faculty($name = NULL){
+		$labid = $this->input->post('laboratory_id');
+		$fid = $this->input->post('faculty_id');
 		
-		if($status){
-			$this->laboratories_model->increment_member_count($labid);
-			$this->laboratories_model->delete_other_faculty_requests($fid);
+		if($this->laboratory->accept_faculty($labid, $fid)){
 			$msg = "You have successfully added a faculty member to your lab.";
 		}
 		else{
@@ -69,7 +66,7 @@ class LabHeads extends User_Controller{
 		}
 
 		$this->session->set_flashdata('notification',$msg);
-		redirect('labhead/requests');
+		redirect("laboratory/{$name}/requests");
 	}
 
 	public function reject_faculty($labid = 0,$fid=0){

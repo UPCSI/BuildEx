@@ -203,14 +203,14 @@ class Laboratory_model extends MY_Model{
   public function accept_faculty($labid, $fid){
     $this->db->where('labid', $labid);
     $this->db->where('fid', $fid);
-    $this->db->update('faculty_member_of',array('status'=>'true'));
+    $this->db->update('faculty_member_of', array('status'=>'t'));
     return $this->is_rows_affected();
   }
 
   public function accept_graduate($labid, $gid){
     $this->db->where('labid', $labid);
     $this->db->where('gid', $gid);
-    $this->db->update('graduates_member_of',array('status'=>'true'));
+    $this->db->update('graduates_member_of',array('status'=>'t'));
     return $this->is_rows_affected();
   }
 

@@ -1,12 +1,12 @@
 <h3 class = "white">Faculty Members</h3>
-<?php if(isset($faculty_members)): ?>
+<?php if(isset($faculty)): ?>
   <ol>
-  <?php foreach($faculty_members as $member): ?>
+  <?php foreach($faculty as $member): ?>
     <li>
-      <?php echo anchor(faculty_path($member->username, format_full_name($member))); ?>
+      <?php echo anchor(faculty_path($member), format_full_name($member)); ?>
     </li>
   <?php endforeach; ?>
   </ol>
 <?php else: ?>
-  <p>There are no faculty members.</p>
+  <p class="white">There are no faculty members.</p>
 <?php endif; ?>
