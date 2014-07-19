@@ -100,4 +100,22 @@ class Respondent_model extends MY_Model{
 		$q = $this->db->get('Respondents');
 		return $this->query_conversion($q);
 	}
+
+	public function get_question($qid){
+		$this->db->where('Questions.qid', $qid);
+		$this->db->join('Labels', 'Labels.oid = Questions.oid');
+		$q = $this->db->get('Questions');
+		return $this->query_row_conversion($q);
+	}
+
+	public function get_experiment($eid){
+		$this->db->where('eid', $eid);
+		$q = $this->db->get('Experiments');
+		return $this->query_row_conversion($q);
+	}
+
+
+
+
+
 }

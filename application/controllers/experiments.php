@@ -128,10 +128,10 @@ class Experiments extends MY_Controller{
 	        'First Name',
 	        'Middle Name',
 	        'Last Name',
-	        'Response ID',
-	        'Question ID',
+	        'Email',
+	        'Question',
 	        'Answer',
-	        'Duration'
+	        'Duration (seconds)'
     	));
 
 	    foreach ($list as $respondent) {
@@ -139,13 +139,14 @@ class Experiments extends MY_Controller{
 	            $respondent->first_name,
 	            $respondent->middle_name,
 	            $respondent->last_name,
+	            $respondent->email_ad,
 	        ));
 	        $query = $this->respondent->get_responses($respondent->rid);
+
 	        foreach($query as $response) {
 	        	fputcsv($fp, array(
-	        		'','','',
-	        		$response->response_id,
-	        		$response->qid,
+	        		'','','','',
+	        		$this->respondent->get_question($response->qid)->text,
 	        		$response->answer,
 	        		$response->duration
 	        	));
@@ -153,7 +154,7 @@ class Experiments extends MY_Controller{
 	    }
 
 	    $data = file_get_contents('php://output');
-	    $name = 'result.csv';
+	    $name = $this->respondent->get_experiment($respondent->eid)->title.'.csv';
 
 		// Build the headers to push out the file properly.
 	    header('Pragma: public');     // required
