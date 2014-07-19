@@ -39,7 +39,7 @@ $route['labhead/([a-zA-Z0-9]+)/laboratory/requests'] = 'labheads/requests/$1';
 
 // Laboratories
 $route['laboratory/([a-zA-Z0-9]+)'] = 'laboratories/view/$1';
-$route['laboratory/([a-zA-Z0-9]+)/requests'] = 'laboratories/requests/$1';
+$route['laboratory/([a-zA-Z0-9]+)/(requests|apply)'] = 'laboratories/$2/$1';
 $route['explore'] = 'laboratories/index';
 
 // Experiments

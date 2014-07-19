@@ -20,6 +20,7 @@ class Laboratories extends MY_Controller{
 	/* REST Methods */
 	public function view($name = NULL){
 		$laboratory = $this->laboratory->get(0, $name);
+		$data['is_member'] = $this->laboratory->is_member($laboratory->labid, role(), role_id());
 		$data['laboratory'] = $laboratory;
 		$data['lab_head'] = $this->laboratory->get_laboratory_head($laboratory->labid);
 		$data['faculty'] = $this->laboratory->get_faculty($laboratory->labid);
@@ -72,5 +73,19 @@ class Laboratories extends MY_Controller{
 		$data['main_content'] = 'laboratory/index';
 		$data['page'] = 'requests';
 		$this->load->view('main_layout', $data);
+	}
+
+	public function apply($name = NULL){
+		$labid = $this->input->post('laboratory_id');
+
+		if($this->laboratory->add_member($labid, role(), role_id())){
+			$msg = "Request sent!";
+		}
+		else{
+			$msg = "Error sending the request";
+		}	
+
+		$this->session->set_flashdata('notification',$msg);
+		redirect("laboratory/{$name}");
 	}
 }

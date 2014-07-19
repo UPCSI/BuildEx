@@ -140,27 +140,41 @@ class Laboratory_model extends MY_Model{
     return $this->query_row_conversion($q);
   }
 
-  public function is_graduate_member($gid = 0){
-    $this->db->where('gid',$gid);
-    $this->db->where('status','true');
-    $q = $this->db->get('graduates_member_of');
-    if($q->num_rows() > 0){
-      return true;
+  public function is_member($labid = 0, $role = NULL, $id = 0){
+    if($role == 'faculty'){
+      return $this->is_faculty_member($labid, $id);
     }
-    return false;
+    else if($role == 'graduate'){
+      return $this->is_graduate_member($labid, $id);
+    }
   }
 
-  public function is_faculty_member($fid = 0){
-    $this->db->where('fid',$fid);
-    $this->db->where('status','true');
+  public function is_faculty_member($labid = 0, $fid = 0){
+    $this->db->where('labid', $labid);
+    $this->db->where('fid', $fid);
+    $this->db->where('status', 't');
     $q = $this->db->get('faculty_member_of');
-    if($q->num_rows() > 0){
-      return true;
-    }
-    return false;
+    return $q->num_rows() > 0;
   }
 
-  public function add_faculty($labid, $fid, $cond = 'false'){
+  public function is_graduate_member($labid = 0, $gid = 0){
+    $this->db->where('labid', $labid);
+    $this->db->where('gid', $gid);
+    $this->db->where('status', 't');
+    $q = $this->db->get('graduates_member_of');
+    return $q->num_rows() > 0;
+  }
+
+  public function add_member($labid = 0, $role = NULL, $id = 0){
+    if($role == 'faculty'){
+      return $this->add_faculty($labid, $id);
+    }
+    else if($role == 'graduate'){
+      return $this->add_graduate($labid, $id);
+    }
+  }
+
+  public function add_faculty($labid = 0, $fid = 0, $cond = 'false'){
     $info = array('labid'=>$labid,
                   'fid'=>$fid,
                   'status'=>$cond);
@@ -173,7 +187,7 @@ class Laboratory_model extends MY_Model{
     return FALSE;
   }
 
-  public function add_graduate($labid, $gid, $cond = 'false'){
+  public function add_graduate($labid = 0, $gid = 0, $cond = 'false'){
     $info = array('labid'=>$labid,
                   'gid'=>$gid,
                   'status'=>$cond);
