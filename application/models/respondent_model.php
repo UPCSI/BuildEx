@@ -113,9 +113,4 @@ class Respondent_model extends MY_Model{
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
-
-
-
-
-
 }

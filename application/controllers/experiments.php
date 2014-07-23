@@ -124,50 +124,72 @@ class Experiments extends MY_Controller{
 		$list = $this->respondent->get_respondents($eid);
 
 		$fp = fopen('php://output', 'w');
-		fputcsv($fp, array(
-	        'First Name',
+		$fields = array(
+					'Timestamp',
+					'First Name',
 	        'Middle Name',
 	        'Last Name',
 	        'Email',
-	        'Question',
-	        'Answer',
-	        'Duration (seconds)'
-    	));
+	        'Age',
+	        'Address',
+	        'Nationality',
+	        'Birthdate',
+	        'Gender',
+	        'Civil Status',
+	        'IP Address',
+	        'User Agent'
+	        );
 
-	    foreach ($list as $respondent) {
-	        fputcsv($fp, array(
-	            $respondent->first_name,
-	            $respondent->middle_name,
-	            $respondent->last_name,
-	            $respondent->email_ad,
-	        ));
-	        $query = $this->respondent->get_responses($respondent->rid);
+		
 
-	        foreach($query as $response) {
-	        	fputcsv($fp, array(
-	        		'','','','',
-	        		$this->respondent->get_question($response->qid)->text,
-	        		$response->answer,
-	        		$response->duration
-	        	));
-	        }
-	    }
+		//change with the right questions
+		array_push($fields, 'q1','dur1','q2','dur2');
 
-	    $data = file_get_contents('php://output');
-	    $name = $this->respondent->get_experiment($respondent->eid)->title.'.csv';
 
-		// Build the headers to push out the file properly.
-	    header('Pragma: public');     // required
-	    header('Expires: 0');         // no cache
-	    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-	    header('Cache-Control: private',false);
-	    header('Content-Disposition: attachment; filename="'.basename($name).'"');  // Add the file name
-	    header('Content-Transfer-Encoding: binary');
-	    header('Connection: close');
-	    exit();
 
-	    force_download($name, $data);
-	    fclose($fp);
+		fputcsv($fp, $fields);
+
+    foreach ($list as $respondent) {
+    		$respondent_data = array(
+    				$respondent->since,
+    				$respondent->first_name,
+            $respondent->middle_name,
+            $respondent->last_name,
+            $respondent->email_ad,
+            $respondent->age,
+            $respondent->address,
+            $respondent->nationality,
+            $respondent->birthdate,
+            $respondent->gender,
+            $respondent->civil_status,
+            $respondent->ip_addr,
+            $respondent->user_agent,
+    			);
+
+    		$query = $this->respondent->get_responses($respondent->rid);
+
+    		foreach($query as $response) {
+        	array_push($respondent_data, $response->answer, $response->duration);
+        }
+
+        fputcsv($fp, $respondent_data);
+    }
+
+    $data = file_get_contents('php://output');
+    $name = $this->respondent->get_experiment($respondent->eid)->title.'.csv';
+
+	// Build the headers to push out the file properly.
+    header('Pragma: public');     // required
+    header('Expires: 0');         // no cache
+    header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+    header('Cache-Control: private',false);
+    header('Content-Disposition: attachment; filename="'.basename($name).'"');  // Add the file name
+    header('Content-Transfer-Encoding: binary');
+    header('Connection: close');
+    exit();
+
+    force_download($name, $data);
+    fclose($fp);
 	}
 
 	public function respondents($eid = 0){
