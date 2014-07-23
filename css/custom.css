@@ -614,9 +614,6 @@ div.minicolors {
 }
 
 input.minicolors-input {
- background-color: rgba(0,0,0,0);
- color: rgba(255,255,255,0.7);
- border: 0px;
  width: 100% !important;
  height: 100% !important;
  display: block !important;
@@ -626,6 +623,13 @@ input.minicolors-input {
 
 input.minicolors-input:focus {
  background-color: rgba(255,255,255,0.1);
+}
+
+input.settings {
+  background-color: rgba(0,0,0,0) !important;
+  color: rgba(255,255,255,0.7);
+  border: 0px;
+  box-shadow: none !important;
 }
 
 .respondents {
