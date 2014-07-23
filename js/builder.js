@@ -716,7 +716,7 @@
 				}
 
 				$.ajax({
-					url: js_site_url + 'builder/save',
+					url: js_site_url() + 'builder/save',
 					type:"POST",
 					data:{
 						'msg':x,
