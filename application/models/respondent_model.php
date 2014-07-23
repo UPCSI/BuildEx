@@ -113,4 +113,25 @@ class Respondent_model extends MY_Model{
 		$q = $this->db->get('Experiments');
 		return $this->query_row_conversion($q);
 	}
+
+	public function get_all_questions($eid){
+		$questions = array();
+
+		$this->db->where('Pages.eid', $eid);
+		$this->db->join('Pages', 'Pages.pid = Objects.pid');
+		$query = $this->db->get('Objects');
+		$objects = $this->query_conversion($query);
+
+		if($objects != NULL){
+			foreach($objects as $object){
+				if ($object->type == "question"){
+					$this->db->where('oid', $object->oid);
+					$query = $this->db->get('Labels');
+					$label = $this->query_row_conversion($query);
+					array_push($questions, $label->text);
+				}
+			}
+		}
+		return $questions;
+	}
 }

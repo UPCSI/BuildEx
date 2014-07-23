@@ -122,11 +122,16 @@ class Experiments extends MY_Controller{
 	public function download($role = NULL, $id = 0, $eid = 0) {
 		$this->load->helper('download');
 		$list = $this->respondent->get_respondents($eid);
+		$questions = $this->respondent->get_all_questions($eid);
+		$questions_and_durations = array();
+
+		foreach ($questions as $question) {
+			array_push($questions_and_durations, $question, 'Duration (seconds)');
+		}
 
 		$fp = fopen('php://output', 'w');
 		$fields = array(
 					'Timestamp',
-					'First Name',
 	        'Middle Name',
 	        'Last Name',
 	        'Email',
@@ -140,12 +145,7 @@ class Experiments extends MY_Controller{
 	        'User Agent'
 	        );
 
-		
-
-		//change with the right questions
-		array_push($fields, 'q1','dur1','q2','dur2');
-
-
+		$fields = array_merge($fields, $questions_and_durations);
 
 		fputcsv($fp, $fields);
 
@@ -178,7 +178,6 @@ class Experiments extends MY_Controller{
     $data = file_get_contents('php://output');
     $name = $this->respondent->get_experiment($respondent->eid)->title.'.csv';
 
-	// Build the headers to push out the file properly.
     header('Pragma: public');     // required
     header('Expires: 0');         // no cache
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
