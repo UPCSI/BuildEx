@@ -10,7 +10,6 @@
 		<?php echo form_open(site_url("respond/{$experiment->url}/submit"), array('id' => 'debrief')); ?>
 	 		<?php echo form_hidden('experiment_id', $experiment->eid); ?>
 			<button id="debrief-btn" type = "submit" class = "small">Submit</button>
-			<a href = "<?php echo site_url('respond/leave'); ?>" class = "button small">Cancel</a>
 		<?php echo form_close(); ?>
 	</div>
 </div>
