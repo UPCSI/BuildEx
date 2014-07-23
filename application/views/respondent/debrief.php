@@ -2,7 +2,7 @@
 	<div class="row" style="text-align: left; padding-top:60px;">
 		<h1>Debriefing</h1>
 		<hr>
-		<h2>Congratulations!</h2>
+		<h2>THANK YOU!</h2>
 		<h2>Title: <?php echo $experiment->title; ?></h2>
 		<h3>Description: <?php echo $experiment->description; ?></h3>
 		<h3>Author: <?php echo format_full_name($researcher); ?></h3> 
