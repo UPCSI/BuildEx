@@ -38,9 +38,54 @@
 			}
 		}
 
-		$(document).click(function(){
+		$(document).click(function(e) {
+			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [class^="track"], [class^="dragger"]')) {
+				$('.settings').prop('disabled', false);
+			}
+			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [class^="track"], [class^="dragger"]')) {
+				$('.settings').prop('disabled', false);
+			}
+			else {
+				$('.settings').prop('disabled', true);
+			}
+
+			var outside_workspace_and_sidebar = true;
+			
+			if(e.target.id) {
+				if(!($('.sidebar').find('#' + e.target.id).length > 0)) {
+					if($('#workspace').find('#' + e.target.id).length > 0) {
+						outside_workspace_and_sidebar = false;
+					}
+				}
+				else {
+					outside_workspace_and_sidebar = false;
+				}
+			}
+			if(e.target.className) {
+				if(!($('.sidebar').find('.' + e.target.className).length > 0)) {
+					if($('#workspace').find('.' + e.target.className).length > 0) {
+						outside_workspace_and_sidebar = false;
+					}
+				}
+				else {
+					outside_workspace_and_sidebar = false;
+				}
+			}
+			
+			if(outside_workspace_and_sidebar) {
+				$.last_selected = null;
+			}
+			
+		});
+
+		$('#workspace').click(function(e){
 			var hex = rgb2hex($('.minicolors-swatch-color').css('background-color'));
 			$('#'+$.last_selected).css('color', hex);
+
+			$.last_selected = e.target.id;
+			if($.last_selected == "") {
+				$.last_selected = e.target.className;
+			}
 		});
 
 		$('.color-picker').each( function() {
@@ -143,10 +188,9 @@
 
 					//styling
 					$('#qtneditable'+temp).click(function(){
-						$.last_selected = $(this).attr('id');
 						var color = rgba2hex($('#qtneditable'+temp).css('color'));
-							$('#clr').val(color);
-							$('#clr').minicolors('settings',{});
+						$('#clr').val(color);
+						$('#clr').minicolors('settings',{});
 					})
 
 					document.getElementById('qtneditable'+$.count).style.color = color;	 
@@ -223,7 +267,7 @@
 			width = typeof width !== 'undefined' ? width : 150;
 			height = typeof height !== 'undefined' ? height : 40;
 
-			var htmlData='<div id="btn'+$.count+'" class="draggable"';
+			var htmlData='<div id="btn'+$.count+'" class="draggable" btn-family ';
 
 			if (posX != null && posY != null){
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; width:' + width + 'px; height:' + height + 'px;"';
@@ -233,7 +277,7 @@
 				htmlData += 'style="width:150px; height:60"';
 			}
 			
-			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" btn-family style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><i class="fi-x remove-icon pull-right"></i></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -516,7 +560,7 @@
 			min = typeof min !== 'undefined' ? min : 0;
 			max = typeof max !== 'undefined' ? max : 1;
 
-			var htmlData='<div id="sldr'+$.count+'" class="draggable"';
+			var htmlData='<div id="sldr'+$.count+'" class="draggable sldr-family" ';
 			if (posX != null && posY != null){
 				htmlData += 'style="left:'+ posX +'px; top:'+ posY +'px; height:25px; width:400px"';
 			}
@@ -591,9 +635,8 @@
 			});
 
 			$('#sldr' + temp).find('*').addBack().mousedown(function() {
-				// console.log('1');
 				slider_range = $('#sldr' + temp).find('input').attr('data-slider-range');
-				$('#input_value').val(slider_range);
+				$('#property1').val(slider_range);
 			});
 
 			$.count++;
