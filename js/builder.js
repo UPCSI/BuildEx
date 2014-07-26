@@ -575,17 +575,10 @@
 	    });
 
 			$('#movingslider'+temp).simpleSlider(settings);
-			$('[data-slider]')
-		    .each(function () {
-		      var input = $(this);
-		      $('<span id="sldrspan'+$.count+'">')
-		        .addClass("output")
-		        .insertAfter($(this));
-		    })
+			$('#movingslider'+temp)
+				.after('<span id="sldrspan'+$.count+'" class="output">')
 		    .bind("slider:ready slider:changed", function (event, data) {
-		      $(this)
-		        .nextAll(".output:first")
-		          .html(data.value.toFixed(3));
+		      $(this).nextAll(".output:first").html(data.value.toFixed(3));
 		    });
 
 			$('#sldr'+temp).draggable({
@@ -597,12 +590,17 @@
 				containment: "#workspace"
 			});
 
-			
+			$('#sldr' + temp).find('*').addBack().mousedown(function() {
+				// console.log('1');
+				slider_range = $('#sldr' + temp).find('input').attr('data-slider-range');
+				$('#input_value').val(slider_range);
+			});
+
 			$.count++;
 		});
 
 		/* returns array of objects, with the first item in the array being the total number of pages */
-		$("#getObjectValues").click(function () {
+		$('#getObjectValues').click(function () {
 			var eid = $('#workspace').attr('data-eid');
 			var x = new Array();
 			var question_exists = false;
@@ -774,7 +772,6 @@
 					},
 				});
 			}
-
 		});
 		
 		$('body').on('paste', '.ui-widget-content', function (e) {
@@ -794,7 +791,7 @@
 			checkQuestion();
 		});
 
-		$( ".slides" ).sortable({
+		$('.slides').sortable({
 			start: function(event, ui){
 				var slide = ui.item.attr('id');
 				$.bef_ind = $('#'+slide).index();
@@ -866,7 +863,7 @@
 			}
 		});
 
-		$("#newPage").click(function(){
+		$('#newPage').click(function(){
 			if($.trim($('.slides').html()).length == 0){
 				var htmlData = '<div id="page1" class="pageframe" style="width:100%; height:100%"></div>';
 				$('#workspace').append(htmlData);
@@ -898,34 +895,34 @@
 			}
 		});
 
-		$("#prevPage").click(function(){
-			$("#page" + $.current_page).css('visibility','hidden');
+		$('#prevPage').click(function(){
+			$('#page' + $.current_page).css('visibility','hidden');
 
 			if($.current_page > 1){
 				$.current_page--;
 			}
 			
-			$("#page" + $.current_page).css('visibility','visible');
+			$('#page' + $.current_page).css('visibility','visible');
 			checkQuestion();
 
 			//styling
-			$("#slide"+$.current_page).css('background', '#2ecc71');
-			$("#slide"+($.current_page+1)).css('background', '#f2f2f2');
+			$('#slide'+$.current_page).css('background', '#2ecc71');
+			$('#slide'+($.current_page+1)).css('background', '#f2f2f2');
 		});
 
-		$("#nextPage").click(function(){
-			$("#page" + $.current_page).css('visibility','hidden');
+		$('#nextPage').click(function(){
+			$('#page' + $.current_page).css('visibility','hidden');
 
 			if($.current_page < $.page){
 				$.current_page++;
 			}
 
-			$("#page" + $.current_page).css('visibility','visible');	
+			$('#page' + $.current_page).css('visibility','visible');	
 			checkQuestion();
 
 			//styling 
-			$("#slide"+($.current_page-1)).css('background', '#f2f2f2');
-			$("#slide"+$.current_page).css('background', '#2ecc71');
+			$('#slide' + ($.current_page-1)).css('background', '#f2f2f2');
+			$('#slide' + $.current_page).css('background', '#2ecc71');
 		}); 
 	});	 
 
