@@ -80,10 +80,10 @@
 		}
 
 		$(document).click(function(e) {
-			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [class^="track"], [class^="dragger"]')) {
+			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [id^="slider"], [class^="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
 			}
-			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [class^="track"], [class^="dragger"]')) {
+			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [id^="slider"], [class^="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
 			}
 			else {
@@ -158,9 +158,12 @@
 			if(e.which == 13) {
 				new_range = $(this).val();
 				new_range_array_version = $(this).val().split(',');
+				el = $('.'+$.last_selected);
+				if(el.attr('class') == undefined) {
+					el = $('#'+$.last_selected);
+				}
 
-
-				sldr_parent = $('.'+$.last_selected).closest('[id^="sldr"]');
+				sldr_parent = el.closest('[id^="sldr"]');
 				sldr_input_field = sldr_parent.children('input');
 				sldr_span_element = sldr_input_field.siblings('span');
 				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
@@ -646,7 +649,7 @@
 			setSlider(temp);
 
 			$('#movingslider'+temp)
-				.after('<span id="sldrspan'+$.count+'" class="output">')
+				.after('<span id="sliderspan'+$.count+'" class="output">'+min+'</span>')
 		    .bind("slider:ready slider:changed", function (event, data) {
 		      $(this).nextAll(".output:first").html(data.value.toFixed(3));
 		    });

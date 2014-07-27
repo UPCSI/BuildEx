@@ -301,7 +301,7 @@ function draw_slider(posX, posY, page_num, min, max){
 		htmlData += 'style="height:25px; width:360px"';
 	}
 
-	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000"><span id="sldrspan'+$.count+'" class="output"></span></div>';
+	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'"><span id="sliderspan'+$.count+'" class="output"></span></div>';
 
 	var temp = $.count;
 	var index = page_num;
@@ -312,7 +312,7 @@ function draw_slider(posX, posY, page_num, min, max){
 		$("#page" + index).append(htmlData);
 
 	$('#movingslider'+temp).simpleSlider();
-	$('#sldrspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
+	$('#sliderspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
 	$('#movingslider'+temp)
 	    .bind("slider:ready slider:changed", function (event, data) {
 
@@ -408,7 +408,7 @@ function save_input(){
 				'qid'		:	 qid,
 				'page'		:	 page,
 				'type'		:	 "slider",
-				'value'	 	:	 $('#sldrspan'+i).text(),
+				'value'	 	:	 $('#sliderspan'+i).text(),
 			}
 
 			x.push(data);
