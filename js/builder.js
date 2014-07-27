@@ -193,6 +193,39 @@
 			sldr_input_field.data('slider-object').settings.snap = desired_state;
 		});
 
+		$('#property3').click(function(e) {
+			el = $('.'+$.last_selected);
+			if(el.attr('class') == undefined) {
+				el = $('#'+$.last_selected);
+			}
+
+			desired_state = $(this).is(':checked');
+			sldr_parent = el.closest('[id^="sldr"]');
+			sldr_input_field = sldr_parent.children('input');
+			sldr_input_field.attr('data-slider-highlight', desired_state);
+			sldr_input_field.data('slider-highlight', desired_state);
+			sldr_input_field.data('slider-object').settings.highlight = desired_state;
+
+			var item = $("<div>").addClass('highlight-track').css({
+        position: "absolute",
+        top: "50%",
+        userSelect: "none",
+        cursor: "pointer",
+        width: "0",
+        marginTop: sldr_parent.find('[class="track"]').outerHeight() / -2,
+      });
+
+      sldr_parent.find('[class="track"]').after(item);
+      sldr_input_field.data('slider-object').highlightTrack = item
+
+      item.mousedown(function(e){
+				return sldr_input_field.data('slider-object').trackEvent(e);
+			});
+
+			dragger_current_position = sldr_parent.find('[class="dragger"]').position().left;
+			item.width(dragger_current_position);
+		});
+
 		$('#workspace').on('click', '.remove-icon', function(e){
 			answer = confirm("Are you sure you want to delete this?");
 			if(answer) {
@@ -648,7 +681,7 @@
 				htmlData += 'style="height:25px; width:360px"';
 			}
 
-			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-step="1" data-slider-snap="true"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-step="1" data-slider-snap="true" data-slider-highlight="false"><i class="fi-x remove-icon pull-right"></i></div>';
 
 			var temp = $.count;
 			var index = page_num;
