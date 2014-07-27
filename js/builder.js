@@ -624,7 +624,7 @@
 				htmlData += 'style="height:25px; width:360px"';
 			}
 
-			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000" data-slider-snap="true"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-snap="true"><i class="fi-x remove-icon pull-right"></i></div>';
 
 			var temp = $.count;
 			var index = page_num;
