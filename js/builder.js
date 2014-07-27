@@ -77,7 +77,6 @@
 	    });
 
 			$('#movingslider'+index).simpleSlider(settings);
-			
 		}
 
 		$(document).click(function(e) {
@@ -117,7 +116,6 @@
 			if(outside_workspace_and_sidebar) {
 				$.last_selected = null;
 			}
-			
 		});
 
 		$('#workspace').click(function(e){
@@ -158,14 +156,21 @@
 
 		$('#property1').keypress(function(e){
 			if(e.which == 13) {
-				new_value = $(this).val();
-				new_value_array_version = $(this).val().split(',');
+				new_range = $(this).val();
+				new_range_array_version = $(this).val().split(',');
+
 
 				sldr_parent = $('.'+$.last_selected).closest('[id^="sldr"]');
 				sldr_input_field = sldr_parent.children('input');
-				sldr_input_field.attr('data-slider-range', new_value);
-				sldr_input_field.data('slider-range', new_value);
-				sldr_input_field.data('slider-object').settings.range = new_value_array_version;
+				sldr_span_element = sldr_input_field.siblings('span');
+				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
+				last_position_ratio = sldr_span_element.text()/last_range_array[1]; //type juggled automatically to integer
+
+				sldr_input_field.attr('data-slider-range', new_range);
+				sldr_input_field.data('slider-range', new_range);
+				sldr_input_field.data('slider-object').settings.range = new_range_array_version;
+
+				sldr_input_field.simpleSlider('setRatio',last_position_ratio);
 			}
 		});	
 
