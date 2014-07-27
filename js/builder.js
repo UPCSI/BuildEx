@@ -38,6 +38,48 @@
 			}
 		}
 
+		function setSlider(index) {
+			var $el, allowedValues, settings, x;
+
+			$("[data-slider]").each(function() {
+	      $.x = $el = $(this);
+	      settings = {};
+	      allowedValues = $el.data("slider-values");
+	      if (allowedValues) {
+	        settings.allowedValues = (function() {
+	          var _i, _len, _ref, _results;
+	          _ref = allowedValues.split(",");
+	          _results = [];
+	          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+	            x = _ref[_i];
+	            _results.push(parseFloat(x));
+	          }
+	          return _results;
+	        })();
+	      }
+	      if ($el.data("slider-range")) {
+	        settings.range = $el.data("slider-range").split(",");
+	      }
+	      if ($el.data("slider-step")) {
+	        settings.step = $el.data("slider-step");
+	      }
+	      settings.snap = $el.data("slider-snap");
+	      settings.equalSteps = $el.data("slider-equal-steps");
+	      if ($el.data("slider-theme")) {
+	        settings.theme = $el.data("slider-theme");
+	      }
+	      if ($el.attr("data-slider-highlight")) {
+	        settings.highlight = $el.data("slider-highlight");
+	      }
+	      if ($el.data("slider-animate") != null) {
+	        settings.animate = $el.data("slider-animate");
+	      }
+	    });
+
+			$('#movingslider'+index).simpleSlider(settings);
+			
+		}
+
 		$(document).click(function(e) {
 			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id^="sldr"], [class^="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
@@ -113,6 +155,19 @@
 
 			});				
 		});
+
+		$('#property1').keypress(function(e){
+			if(e.which == 13) {
+				new_value = $(this).val();
+				new_value_array_version = $(this).val().split(',');
+
+				sldr_parent = $('.'+$.last_selected).closest('[id^="sldr"]');
+				sldr_input_field = sldr_parent.children('input');
+				sldr_input_field.attr('data-slider-range', new_value);
+				sldr_input_field.data('slider-range', new_value);
+				sldr_input_field.data('slider-object').settings.range = new_value_array_version;
+			}
+		});	
 
 		$('#workspace').on('click', '.remove-icon', function(e){
 			answer = confirm("Are you sure you want to delete this?");
@@ -569,11 +624,11 @@
 				htmlData += 'style="height:25px; width:360px"';
 			}
 
-			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000" data-slider-step="100" data-slider-snap="true"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="1,1000" data-slider-snap="true"><i class="fi-x remove-icon pull-right"></i></div>';
 
 			var temp = $.count;
 			var index = page_num;
-			var $el, allowedValues, settings, x;
+
 
 			if(index <= 0){
 				$("#page" + $.current_page).append(htmlData);
@@ -583,42 +638,8 @@
 				$("#page" + index).append(htmlData);
 			}
 
-			$("[data-slider]").each(function() {
-	      $el = $(this);
-	      settings = {};
-	      allowedValues = $el.data("slider-values");
-	      if (allowedValues) {
-	        settings.allowedValues = (function() {
-	          var _i, _len, _ref, _results;
-	          _ref = allowedValues.split(",");
-	          _results = [];
-	          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-	            x = _ref[_i];
-	            _results.push(parseFloat(x));
-	          }
-	          return _results;
-	        })();
-	      }
-	      if ($el.data("slider-range")) {
-	        settings.range = $el.data("slider-range").split(",");
-	      }
-	      if ($el.data("slider-step")) {
-	        settings.step = $el.data("slider-step");
-	      }
-	      settings.snap = $el.data("slider-snap");
-	      settings.equalSteps = $el.data("slider-equal-steps");
-	      if ($el.data("slider-theme")) {
-	        settings.theme = $el.data("slider-theme");
-	      }
-	      if ($el.attr("data-slider-highlight")) {
-	        settings.highlight = $el.data("slider-highlight");
-	      }
-	      if ($el.data("slider-animate") != null) {
-	        settings.animate = $el.data("slider-animate");
-	      }
-	    });
+			setSlider(temp);
 
-			$('#movingslider'+temp).simpleSlider(settings);
 			$('#movingslider'+temp)
 				.after('<span id="sldrspan'+$.count+'" class="output">')
 		    .bind("slider:ready slider:changed", function (event, data) {

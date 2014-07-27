@@ -303,7 +303,7 @@ var __slice = [].slice,
     };
 
     return SimpleSlider;
-
+    
   })();
   $.extend($.fn, {
     simpleSlider: function() {
