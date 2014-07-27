@@ -17,6 +17,47 @@ function register_answer(qid,value){
 	answer_cache[qid] = value;
 }
 
+function setSlider(index) {
+	var $el, allowedValues, settings, x;
+
+	$("[data-slider]").each(function() {
+    $.x = $el = $(this);
+    settings = {};
+    allowedValues = $el.data("slider-values");
+    if (allowedValues) {
+      settings.allowedValues = (function() {
+        var _i, _len, _ref, _results;
+        _ref = allowedValues.split(",");
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          x = _ref[_i];
+          _results.push(parseFloat(x));
+        }
+        return _results;
+      })();
+    }
+    if ($el.data("slider-range")) {
+      settings.range = $el.data("slider-range").split(",");
+    }
+    if ($el.data("slider-step")) {
+      settings.step = $el.data("slider-step");
+    }
+    settings.snap = $el.data("slider-snap");
+    settings.equalSteps = $el.data("slider-equal-steps");
+    if ($el.data("slider-theme")) {
+      settings.theme = $el.data("slider-theme");
+    }
+    if ($el.attr("data-slider-highlight")) {
+      settings.highlight = $el.data("slider-highlight");
+    }
+    if ($el.data("slider-animate") != null) {
+      settings.animate = $el.data("slider-animate");
+    }
+  });
+
+	$('#movingslider'+index).simpleSlider(settings);
+}
+
 function draw_question(posX, posY, text_input, page_num, width, height, color, qid){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
@@ -127,10 +168,12 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 
 	var index = page_num;
 
-	if(index <= 0)
+	if(index <= 0) {
 		$("#page" + $.current_page).append(htmlData);
-	else
+	}
+	else {
 		$("#page" + index).append(htmlData);
+	}
 
 	$(document).click(function(e){
 		if($(e.target).attr('id') == ('btneditable'+temp)){
@@ -168,19 +211,21 @@ function draw_radio_button(posX, posY, text_input, page_num, width, height){
 	var temp = $.count;
 	var index = page_num;
 
-	if(index <= 0)
+	if(index <= 0) {
 		$("#page" + $.current_page).append(htmlData);
-	else
+	}
+	else {
 		$("#page" + index).append(htmlData);
+	}
 
-    $(document).click(function(e){
-    	if($(e.target).attr('id') == ('radbtn'+temp)){
-    		$(e.target).children('.default').click();
-    		$(e.target).children('.default').focus();
-    	}
-    });
-    
-    $.count++;
+  $(document).click(function(e){
+  	if($(e.target).attr('id') == ('radbtn'+temp)){
+  		$(e.target).children('.default').click();
+  		$(e.target).children('.default').focus();
+  	}
+  });
+  
+  $.count++;
 }
 
 function draw_checkbox(posX, posY, text_input, page_num, width, height){
@@ -211,17 +256,19 @@ function draw_checkbox(posX, posY, text_input, page_num, width, height){
 	var temp = $.count;
 	var index = page_num;
 
-	if(index <= 0)
+	if(index <= 0) {
 		$("#page" + $.current_page).append(htmlData);
-	else
+	}
+	else {
 		$("#page" + index).append(htmlData);
+	}
 
-    $(document).click(function(e){
-    	if($(e.target).attr('id') == ('chkbox'+temp)){
-    		$(e.target).children('.default').click();
-    		$(e.target).children('.default').focus();
-    	}
-    });
+  $(document).click(function(e){
+  	if($(e.target).attr('id') == ('chkbox'+temp)){
+  		$(e.target).children('.default').click();
+  		$(e.target).children('.default').focus();
+  	}
+  });
     
     $.count++;
 }
@@ -264,7 +311,6 @@ function draw_dropdown(posX, posY, page_num, options){
 	if(index <= 0){
 		$("#page" + $.current_page).append(htmlData);
 	}
-
 	else{
 		$("#page" + index).append(htmlData);
 	}
@@ -301,32 +347,27 @@ function draw_slider(posX, posY, page_num, min, max){
 		htmlData += 'style="height:25px; width:360px"';
 	}
 
-	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'"><span id="sliderspan'+$.count+'" class="output"></span></div>';
+	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'"></div>';
 
 	var temp = $.count;
 	var index = page_num;
 
-	if(index <= 0)
+	if(index <= 0) {
 		$("#page" + $.current_page).append(htmlData);
-	else
+	}
+	else {
 		$("#page" + index).append(htmlData);
+	}
 
-	$('#movingslider'+temp).simpleSlider();
-	$('#sliderspan'+temp).html($('#movingslider'+temp).data('slider-range').split(',')[0]);
+	setSlider(temp);
+
 	$('#movingslider'+temp)
+			.after('<span id="sliderspan'+$.count+'" class="output">'+min+'</span>')
 	    .bind("slider:ready slider:changed", function (event, data) {
+	      $(this).nextAll(".output:first").html(data.value.toFixed(3));
+	    });
 
-	    	var a = $(this).data('slider-range').split(',');
-	    	var base = 0;
-	    	if(data.value.toFixed(3) == 0){
-	    		base = parseInt(a[0]);
-	    	}
-	    	else{
-	    		base = data.value.toFixed(3) * parseInt(a[1]);
-	    	}
-	      	$(this).nextAll(".output:first").html(base);
-	});
-    $.count++;
+  $.count++;
 }
 
 function save_input(){
