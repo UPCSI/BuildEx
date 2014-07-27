@@ -362,7 +362,7 @@ function draw_slider(posX, posY, page_num, min, max){
 	setSlider(temp);
 
 	$('#movingslider'+temp)
-			.after('<span id="sliderspan'+$.count+'" class="output">'+min+'</span>')
+			.after('<span id="sliderspan'+$.count+'" class="output">'+min.toFixed(3)+'</span>')
 	    .bind("slider:ready slider:changed", function (event, data) {
 	      $(this).nextAll(".output:first").html(data.value.toFixed(3));
 	    });

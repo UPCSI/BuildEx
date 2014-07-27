@@ -80,10 +80,10 @@
 		}
 
 		$(document).click(function(e) {
-			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class^="track"], [class^="dragger"]')) {
+			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class*="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
 			}
-			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class^="track"], [class^="dragger"]')) {
+			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class*="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
 			}
 			else {
@@ -200,30 +200,38 @@
 			}
 
 			desired_state = $(this).is(':checked');
-			sldr_parent = el.closest('[id^="sldr"]');
-			sldr_input_field = sldr_parent.children('input');
+			$.z = sldr_parent = el.closest('[id^="sldr"]');
+			$.y = sldr_input_field = sldr_parent.children('input');
 			sldr_input_field.attr('data-slider-highlight', desired_state);
 			sldr_input_field.data('slider-highlight', desired_state);
 			sldr_input_field.data('slider-object').settings.highlight = desired_state;
 
-			var item = $("<div>").addClass('highlight-track').css({
-        position: "absolute",
-        top: "50%",
-        userSelect: "none",
-        cursor: "pointer",
-        width: "0",
-        marginTop: sldr_parent.find('[class="track"]').outerHeight() / -2,
-      });
+			if(desired_state) {
+				var item = $("<div>").addClass('highlight-track').css({
+	        position: "absolute",
+	        top: "50%",
+	        userSelect: "none",
+	        cursor: "pointer",
+	        width: "0",
+	        marginTop: sldr_parent.find('[class="track"]').outerHeight() / -2,
+	      });
+	      sldr_parent.find('[class="track"]').after(item);
 
-      sldr_parent.find('[class="track"]').after(item);
-      sldr_input_field.data('slider-object').highlightTrack = item
+	      highlight = sldr_parent.children('.slider').children('.highlight-track');
 
-      item.mousedown(function(e){
-				return sldr_input_field.data('slider-object').trackEvent(e);
-			});
+	      sldr_input_field.data('slider-object').highlightTrack = item
 
-			dragger_current_position = sldr_parent.find('[class="dragger"]').position().left;
-			item.width(dragger_current_position);
+	      highlight.mousedown(function(e){
+					return sldr_input_field.data('slider-object').trackEvent(e);
+				});
+
+				dragger_current_position = sldr_parent.find('[class="dragger"]').position().left;
+				highlight.width(dragger_current_position);
+			}
+			else {
+				sldr_parent.children('.slider').children('.highlight-track').remove();
+				sldr_input_field.data('slider-object').highlightTrack.remove();
+			}
 		});
 
 		$('#workspace').on('click', '.remove-icon', function(e){
@@ -686,7 +694,6 @@
 			var temp = $.count;
 			var index = page_num;
 
-
 			if(index <= 0){
 				$("#page" + $.current_page).append(htmlData);
 			}
@@ -698,7 +705,7 @@
 			setSlider(temp);
 
 			$('#movingslider'+temp)
-				.after('<span id="sliderspan'+$.count+'" class="output">'+min+'</span>')
+				.after('<span id="sliderspan'+$.count+'" class="output">'+min.toFixed(3)+'</span>')
 		    .bind("slider:ready slider:changed", function (event, data) {
 		      $(this).nextAll(".output:first").html(data.value.toFixed(3));
 		    });
