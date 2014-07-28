@@ -70,13 +70,15 @@
 		});
 
 		$('#workspace').on('click', '.remove-icon', function(e){
-			alert("Are you sure you want to delete this?");
-			var parent = $(this).parent('div');
-			if(parent.attr('id').substr(0,3) == 'qtn'){
-				$('#question').removeClass('disabled');
+			answer = confirm("Are you sure you want to delete this?");
+			if(answer) {
+				var parent = $(this).parent('div');
+				if(parent.attr('id').substr(0,3) == 'qtn'){
+					$('#question').removeClass('disabled');
+				}
+				
+				parent.remove();
 			}
-			
-			parent.remove();
 		});
 
 		$('#question')
@@ -798,30 +800,32 @@
 		});
 
 		$('.slides').on('click', '.remove-icon',function(e){
-			alert("Are you sure you want to delete this?");
-			id = $(this).parent().attr('id').substring(5);
-			$(this).parent('div').remove();
-			$('#page'+id).remove();
+			answer = confirm("Are you sure you want to delete this?");
+			if(answer) {
+				id = $(this).parent().attr('id').substring(5);
+				$(this).parent('div').remove();
+				$('#page'+id).remove();
 
-			id = parseInt(id);
-			for(i=id+1;i<=$.page;i++){
-				$('#slide'+i+' p').text('Slide '+(i-1));
-				$('#slide'+i).attr('id','slide'+(i-1));
-				$('#page'+i).attr('id','page'+(i-1));
-			}
+				id = parseInt(id);
+				for(i=id+1;i<=$.page;i++){
+					$('#slide'+i+' p').text('Slide '+(i-1));
+					$('#slide'+i).attr('id','slide'+(i-1));
+					$('#page'+i).attr('id','page'+(i-1));
+				}
 
-			if((id < $.current_page || $.current_page == $.page) && $.page != 1){
-				$.current_page--;
-			}
+				if((id < $.current_page || $.current_page == $.page) && $.page != 1){
+					$.current_page--;
+				}
 
-			if($.page != 1 && id == ($.current_page+1) || id == $.current_page){
-				$("#page" + $.current_page).css('visibility', "visible");
-				checkQuestion();
-				$("#slide"+$.current_page).css('background', '#2ecc71');
-			}
+				if($.page != 1 && id == ($.current_page+1) || id == $.current_page){
+					$("#page" + $.current_page).css('visibility', "visible");
+					checkQuestion();
+					$("#slide"+$.current_page).css('background', '#2ecc71');
+				}
 
-			if($.page != 1){
-				$.page--;
+				if($.page != 1){
+					$.page--;
+				}
 			}
 		});
 
