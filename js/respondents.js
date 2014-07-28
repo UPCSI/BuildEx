@@ -328,11 +328,13 @@ function draw_dropdown(posX, posY, page_num, options){
 	$.count++;
 }
 
-function draw_slider(posX, posY, page_num, min, max){
+function draw_slider(posX, posY, page_num, min, max, snap, highlight, step){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
-
+	snap = typeof snap !== 'undefined' ? snap : false;
+	highlight = typeof highlight !== 'undefined' ? highlight : false;
+	step = typeof step !== 'undefined' ? step : 0;
 	workspace_width = $('#workspace').width()/1024; //hardcoded
 	workspace_height = $('#workspace').height()/576; //hardcoded
 	new_font_size = Math.sqrt(Math.pow(workspace_width,2) * Math.pow(workspace_height,2));
@@ -347,7 +349,7 @@ function draw_slider(posX, posY, page_num, min, max){
 		htmlData += 'style="height:25px; width:360px"';
 	}
 
-	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'"></div>';
+	htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-step="'+step+'" data-slider-snap="'+snap+'" data-slider-highlight="'+highlight+'"></div>';
 
 	var temp = $.count;
 	var index = page_num;
