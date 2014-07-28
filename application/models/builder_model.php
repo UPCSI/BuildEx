@@ -86,6 +86,9 @@ class Builder_model extends MY_Model{
 				$slider = $this->get_input($object->oid, 'Sliders');
 				$new_obj['min'] = $slider->min_num;
 				$new_obj['max'] = $slider->max_num;
+				$new_obj['snap'] = $slider->snap === 't' ? true : false; //return string so needs to be converted to bool
+				$new_obj['highlight'] = $slider->highlight === 't' ? true : false; //return string so needs to be converted to bool
+				$new_obj['step'] = $slider->step;
 			}
 
 			array_push($data, $new_obj);

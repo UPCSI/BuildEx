@@ -2,7 +2,7 @@
 	<li><label><center><span style="color:#2ecc71">Object</span></center></label></li>
 	<li><label>Properties</label></li>
 	<li><input type="text" id="property1" class="settings" value="None"></li>
-	<li><input type="checkbox" id="property2" class="settings" checked><label for="property2">Snap</label></li>
+	<li><input type="checkbox" id="property2" class="settings"><label for="property2">Snap</label></li>
 	<li><input type="checkbox" id="property3" class="settings"><label for="property3">Highlight</label></li>
 	<li><input type="text" id="property4" class="settings" value="0"></li>
 	<li><label>Styling</label></li>

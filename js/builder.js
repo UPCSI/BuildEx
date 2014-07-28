@@ -202,8 +202,8 @@
 			}
 
 			desired_state = $(this).is(':checked');
-			$.z = sldr_parent = el.closest('[id^="sldr"]');
-			$.y = sldr_input_field = sldr_parent.children('input');
+			sldr_parent = el.closest('[id^="sldr"]');
+			sldr_input_field = sldr_parent.children('input');
 			sldr_input_field.attr('data-slider-highlight', desired_state);
 			sldr_input_field.data('slider-highlight', desired_state);
 			sldr_input_field.data('slider-object').settings.highlight = desired_state;
@@ -697,12 +697,16 @@
 		});
 
 		$('#slider')
-			.click(function(eventClick, posX, posY, page_num, min, max){
+			.click(function(eventClick, posX, posY, page_num, min, max, snap, highlight, step){
 			posX = typeof posX !== 'undefined' ? posX : 332;
 			posY = typeof posY !== 'undefined' ? posY : 275;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			min = typeof min !== 'undefined' ? min : 0;
 			max = typeof max !== 'undefined' ? max : 1;
+			snap = typeof snap !== 'undefined' ? snap : false;
+			highlight = typeof highlight !== 'undefined' ? highlight : false;
+			step = typeof step !== 'undefined' ? step : 0;
+
 
 			var htmlData='<div id="sldr'+$.count+'" class="draggable sldr-family" ';
 			if (posX != null && posY != null){
@@ -713,7 +717,7 @@
 				htmlData += 'style="height:25px; width:360px"';
 			}
 
-			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-step="0" data-slider-snap="true" data-slider-highlight="false"><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += '><input id="movingslider'+$.count+'" class="sldr" type="text" data-slider="true" data-slider-range="'+min+','+max+'" data-slider-step="'+step+'" data-slider-snap="'+snap+'" data-slider-highlight="'+highlight+'"><i class="fi-x remove-icon pull-right"></i></div>';
 
 			var temp = $.count;
 			var index = page_num;
@@ -745,10 +749,14 @@
 
 			$('#sldr' + temp).find('*').addBack().mousedown(function() {
 				slider_range = $('#sldr' + temp).find('input').attr('data-slider-range');
+				slider_snap = $('#sldr' + temp).find('input').attr('data-slider-snap');
+				slider_highlight = $('#sldr' + temp).find('input').attr('data-slider-highlight');
 				slider_step = $('#sldr' + temp).find('input').attr('data-slider-step');
-
+				
 				$('#property1').val(slider_range);
-				$('#property4').val(slider_step);				
+				$('#property2').prop('checked', (slider_snap === 'true'));
+				$('#property3').prop('checked', (slider_highlight === 'true'));
+				$('#property4').val(slider_step);		
 			});
 
 			$.count++;
@@ -901,8 +909,10 @@
 							'type'		:	 "slider",
 							'min'		:	 $('#movingslider'+i).data('slider-range').split(',')[0],
 							'max'	 	:	 $('#movingslider'+i).data('slider-range').split(',')[1],
+							'snap'	:  $('#movingslider'+i).data('slider-snap'),
+							'highlight' : $('#movingslider'+i).data('slider-highlight'),
+							'step'  :  $('#movingslider'+i).data('slider-step')
 						}
-
 						x.push(data);
 					 }
 				}
