@@ -156,8 +156,17 @@
 
 		$('#property1').keypress(function(e) {
 			if(e.which == 13) {
+				$.y = $(this);
+				console.log($.y);
 				new_range = $(this).val();
 				new_range_array_version = $(this).val().split(',');
+				new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
+				new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
+				if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
+					alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
+					return;
+				}
+
 				el = $('.'+$.last_selected);
 				if(el.attr('class') == undefined) {
 					el = $('#'+$.last_selected);
@@ -243,6 +252,11 @@
 		$('#property4').keypress(function(e) {
 			if(e.which == 13) {
 				new_step = $(this).val();
+				error_check = Number(new_step == '' ? undefined : new_step);
+				if(isNaN(error_check)) {
+					alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
+					return;
+				}
 				el = $('.'+$.last_selected);
 				if(el.attr('class') == undefined) {
 					el = $('#'+$.last_selected);
