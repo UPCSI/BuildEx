@@ -163,7 +163,8 @@
 					el = $('#'+$.last_selected);
 				}
 
-				sldr_parent = el.closest('[id^="sldr"]');
+				sldr_possible_parents = el.closest('[id^="sldr"]');
+				sldr_parent = $(sldr_possible_parents[0]); //get closest first
 				sldr_input_field = sldr_parent.children('input');
 				sldr_span_element = sldr_input_field.siblings('span');
 				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
@@ -187,7 +188,8 @@
 
 			desired_state = $(this).is(':checked');
 
-			sldr_parent = el.closest('[id^="sldr"]');
+			sldr_possible_parents = el.closest('[id^="sldr"]');
+			sldr_parent = $(sldr_possible_parents[0]); //get closest first
 			sldr_input_field = sldr_parent.children('input');
 
 			sldr_input_field.attr('data-slider-snap', desired_state);
@@ -202,14 +204,16 @@
 			}
 
 			desired_state = $(this).is(':checked');
-			sldr_parent = el.closest('[id^="sldr"]');
+			sldr_possible_parents = el.closest('[id^="sldr"]');
+			sldr_parent = $(sldr_possible_parents[0]); //get closest first
 			sldr_input_field = sldr_parent.children('input');
 			sldr_input_field.attr('data-slider-highlight', desired_state);
 			sldr_input_field.data('slider-highlight', desired_state);
 			sldr_input_field.data('slider-object').settings.highlight = desired_state;
 
 			if(desired_state) {
-				var item = $("<div>").addClass('highlight-track').css({
+				var item;
+				item = $("<div>").addClass('highlight-track').css({
 	        position: "absolute",
 	        top: "50%",
 	        userSelect: "none",
@@ -244,7 +248,8 @@
 					el = $('#'+$.last_selected);
 				}
 
-				sldr_parent = el.closest('[id^="sldr"]');
+				sldr_possible_parents = el.closest('[id^="sldr"]');
+				sldr_parent = $(sldr_possible_parents[0]); //get closest first
 				sldr_input_field = sldr_parent.children('input');
 				sldr_input_field.attr('data-slider-step', new_step);
 				sldr_input_field.data('slider-step', new_step);
@@ -753,6 +758,7 @@
 				slider_highlight = $('#sldr' + temp).find('input').attr('data-slider-highlight');
 				slider_step = $('#sldr' + temp).find('input').attr('data-slider-step');
 				
+				$('#settings-main1').text($('#sldr' + temp).attr('id'));
 				$('#property1').val(slider_range);
 				$('#property2').prop('checked', (slider_snap === 'true'));
 				$('#property3').prop('checked', (slider_highlight === 'true'));

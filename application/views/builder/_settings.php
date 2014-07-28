@@ -1,5 +1,5 @@
 <ul class="off-canvas-list">
-	<li><label><center><span style="color:#2ecc71">Object</span></center></label></li>
+	<li><label><center><span style="color:#2ecc71" id="settings-main1">Object</span></center></label></li>
 	<li><label>Properties</label></li>
 	<li><input type="text" id="property1" class="settings" value="None"></li>
 	<li><input type="checkbox" id="property2" class="settings"><label for="property2">Snap</label></li>
