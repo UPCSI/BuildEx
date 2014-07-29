@@ -42,7 +42,7 @@
 			var $el, allowedValues, settings, x;
 
 			$("[data-slider]").each(function() {
-	      $.x = $el = $(this);
+	      $el = $(this);
 	      settings = {};
 	      allowedValues = $el.data("slider-values");
 	      if (allowedValues) {
@@ -84,18 +84,31 @@
 			$(children[1]).attr('id', 'dragger'+index);
 		}
 
-		function setSliderSettings() {
+		function clearSettings() {
 			// delete all settings before the new ones
-			$('#property1').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
-			$('#property2').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
-			$('#property3').removeAttr('value').removeAttr('type').removeAttr('placeholder');
-			$('#property4').removeAttr('value').removeAttr('type').removeAttr('placeholder');
+			total_properties = $('[id^="property"]').length;
+			parent_element = $('#settings-main1').closest('ul');
+			for (i = 1; i <= total_properties; i++) {
+				property = '<input id="property'+i+'" class="settings" value="-">';
+				parent_element.children(':nth-child('+(i+2)+')').children().remove();
+				parent_element.children(':nth-child('+(i+2)+')').append(property);
+			}
+		}
+
+		function setSliderSettings() {
+			clearSettings();
 
 			// set the new settings
-			$('#property1').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
+			$('#property1').prop('type', 'checkbox').after('<label for="property1">Highlight</label>');
 			$('#property2').prop('type', 'checkbox').after('<label for="property2">Snap</label>');
 			$('#property3').prop('type', 'text').attr('placeholder', "Input Slider Range");
 			$('#property4').prop('type', 'text').attr('placeholder', "Input Slider Step");
+		}
+
+		function setButtonSettings() {
+			clearSettings();
+
+			$('#property1').prop('type', 'text').attr('placeholder', "Input Go To Slide");
 		}
 
 		$(document).click(function(e) {
@@ -439,13 +452,14 @@
 		});
 
 		$('#button')
-			.click(function(eventClick, posX, posY, text_input, page_num, width, height){
+			.click(function(eventClick, posX, posY, text_input, page_num, width, height, go_to){
 			posX = typeof posX !== 'undefined' ? posX : 437;
 			posY = typeof posY !== 'undefined' ? posY : 268;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
 			text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 			width = typeof width !== 'undefined' ? width : 150;
 			height = typeof height !== 'undefined' ? height : 40;
+			go_to = typeof go_to !== 'undefined' ? go_to : null;
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" btn-family ';
 
@@ -465,10 +479,12 @@
 			if(index <= 0){
 				$("#page" + $.current_page).append(htmlData);
 			}
-
 			else{
 				$("#page" + index).append(htmlData);
 			}
+
+			// add go_to data
+			$('#btneditable'+temp).data('go_to', go_to);
 
 			$('#btn'+temp).draggable({
 				containment: "#workspace",
@@ -490,14 +506,26 @@
 			});
 
 			$(document).click(function(e){
-				if($(e.target).attr('id') == ('btneditable'+temp)){
-					$(e.target).children().click();
-					$(e.target).children().focus();
+				if(e.target.id == ('btneditable'+temp)) {
+					$('#btneditable'+temp).children().click();
 				}
+				if(e.target.parentElement.id == ('btneditable'+temp)){
+					$.x = button = $('#btneditable'+temp);
+					console.log($.x);
+					button.children().focus();
 
+					//set up the settings
+					setButtonSettings();
+
+					btn_go_to = button.data('go_to');
+
+					$('#property1').attr('value', btn_go_to); // attr changes the html
+					$('#property1').val(btn_go_to); // val changes the property
+
+				}
 				else if(e.target.className != 'default' && e.target.id != 'btneditable'+temp){
-						$('#btn'+temp).draggable( 'option', 'disabled', false);
-						$('.default').attr('contenteditable','false');
+					$('#btn'+temp).draggable( 'option', 'disabled', false);
+					$('.default').attr('contenteditable','false');
 				}
 			});
 			
@@ -783,6 +811,7 @@
 				containment: "#workspace"
 			});
 
+			// set up the settings
 			$('#sldr' + temp).find('*').addBack().mousedown(function() {
 				slider_range = $('#sldr' + temp).find('input').attr('data-slider-range');
 				slider_snap = $('#sldr' + temp).find('input').attr('data-slider-snap');
@@ -1039,7 +1068,7 @@
 			}
 		});
 
-		$('.slides').on('click', '.remove-icon',function(e){
+		$('.slides').on('click', '.remove-icon', function(e){
 			answer = confirm("Are you sure you want to delete this?");
 			if(answer) {
 				id = $(this).parent().attr('id').substring(5);

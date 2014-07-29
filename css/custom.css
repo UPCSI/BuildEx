@@ -658,10 +658,18 @@ input[id^="property"] + label{
     
 }
 
-[class^=slider] { 
+.draggable > [id^="btneditable"] {
+  cursor: move;
+}
+
+.draggable > [id^="btneditable"] > .default {
+  cursor: pointer;
+}
+
+
+[class^="slider"] { 
     display: inline-block; 
-    margin-bottom: 
-    30px; 
+    margin-bottom: 30px; 
 }
 
 .output { 
