@@ -132,13 +132,14 @@ class Experiments extends MY_Controller{
 		$fp = fopen('php://output', 'w');
 		$fields = array(
 					'Timestamp',
-	        'Middle Name',
 	        'Last Name',
+	        'First Name',
+	        'Middle Name',
 	        'Email',
 	        'Age',
 	        'Address',
 	        'Nationality',
-	        'Birthdate',
+	        //'Birthdate',
 	        'Gender',
 	        'Civil Status',
 	        'IP Address',
@@ -152,14 +153,14 @@ class Experiments extends MY_Controller{
     foreach ($list as $respondent) {
     		$respondent_data = array(
     				$respondent->since,
+    				$respondent->last_name,
     				$respondent->first_name,
             $respondent->middle_name,
-            $respondent->last_name,
             $respondent->email_ad,
             $respondent->age,
             $respondent->address,
             $respondent->nationality,
-            $respondent->birthdate,
+            //$respondent->birthdate,
             $respondent->gender,
             $respondent->civil_status,
             $respondent->ip_addr,
