@@ -150,6 +150,9 @@ class Builder extends MY_Controller{
 
 				$slider['min_num'] = (int)$item['min'];
 				$slider['max_num'] = (int)$item['max'];
+				$slider['snap'] = $item['snap'];
+				$slider['highlight'] = $item['highlight'];
+				$slider['step'] = (double)$item['step'];
 
 				$slider_id = $this->add_slider($slider);
 				$this->bind($object['pid'], $input_id);

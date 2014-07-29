@@ -607,16 +607,12 @@ ul {
 }
 
 div.minicolors {
-   margin-top: 5px;
    display: block !important;
    width: 100% !important;
    height: 40px !important;
 }
 
 input.minicolors-input {
- background-color: rgba(0,0,0,0);
- color: rgba(255,255,255,0.7);
- border: 0px;
  width: 100% !important;
  height: 100% !important;
  display: block !important;
@@ -626,6 +622,27 @@ input.minicolors-input {
 
 input.minicolors-input:focus {
  background-color: rgba(255,255,255,0.1);
+}
+
+.settings {
+  background-color: rgba(0,0,0,0) !important;
+  color: rgba(255,255,255,0.7) !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  margin-left: 10px !important;
+  font-size: 1rem !important;
+}
+
+input[id^="property"] + label{
+  background-color: rgba(0,0,0,0) !important;
+  color: rgba(255,255,255,0.7) !important;
+  border: 0 !important;
+  font-family: 'Nexa' !important;
+  font-weight: normal !important;
+  text-transform: none !important;
+  font-size: 1rem !important;
 }
 
 .respondents {

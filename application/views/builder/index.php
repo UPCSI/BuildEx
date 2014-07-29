@@ -29,7 +29,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="large-1 medium-1 small-1 column" style="min-height:100%;height:100%;overflow-y:auto;background:#252525;padding:0px">
+	<div class="sidebar large-1 medium-1 small-1 column" style="min-height:100%;height:100%;overflow-y:auto;background:#252525;padding:0px">
 		<?php $this->load->view('builder/_settings'); ?>
 	</div>
 </div>

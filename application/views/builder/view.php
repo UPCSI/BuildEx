@@ -44,7 +44,7 @@
         }
         
         else if($obj['type'] == "slider"){
-          echo 'draw_slider('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].');';
+          echo 'draw_slider('.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'] .',' .json_encode($obj['snap']) .',' .json_encode($obj['highlight']) .',' .$obj['step'] .');';
         }
       }
 

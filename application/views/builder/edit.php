@@ -47,7 +47,7 @@
 			}
 
 			else if($obj['type'] == "slider"){
-				echo '$("#slider").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'].']);';
+				echo '$("#slider").trigger("click",['.$obj['xPos'].','.$obj['yPos'].',' .$obj['page'] .',' .$obj['min'] .',' .$obj['max'] .',' .json_encode($obj['snap']) .',' .json_encode($obj['highlight']) .',' .$obj['step'] .']);';
 			}
 		}
 
