@@ -81,15 +81,15 @@
 
 		function setSliderSettings() {
 			// delete all settings before the new ones
-			$('#property1').removeAttr('value').removeAttr('type').removeAttr('placeholder');
+			$('#property1').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
 			$('#property2').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
-			$('#property3').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
+			$('#property3').removeAttr('value').removeAttr('type').removeAttr('placeholder');
 			$('#property4').removeAttr('value').removeAttr('type').removeAttr('placeholder');
 
 			// set the new settings
-			$('#property1').prop('type', 'text').attr('placeholder', "Input Slider Range");
+			$('#property1').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
 			$('#property2').prop('type', 'checkbox').after('<label for="property2">Span</label>');
-			$('#property3').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
+			$('#property3').prop('type', 'text').attr('placeholder', "Input Slider Range");
 			$('#property4').prop('type', 'text').attr('placeholder', "Input Slider Step");
 		}
 
@@ -168,57 +168,7 @@
 			});				
 		});
 
-		$('#property1').keypress(function(e) {
-			if(e.which == 13) {
-				new_range = $(this).val();
-				new_range_array_version = $(this).val().split(',');
-				new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
-				new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
-				if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
-					alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
-					return;
-				}
-
-				el = $('.'+$.last_selected);
-				if(el.attr('class') == undefined) {
-					el = $('#'+$.last_selected);
-				}
-
-				sldr_possible_parents = el.closest('[id^="sldr"]');
-				sldr_parent = $(sldr_possible_parents[0]); //get closest first
-				sldr_input_field = sldr_parent.children('input');
-				sldr_span_element = sldr_input_field.siblings('span');
-				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
-				last_position_ratio = sldr_span_element.text()/last_range_array[1]; //type juggled automatically to integer
-
-				sldr_input_field.attr('data-slider-range', new_range);
-				sldr_input_field.data('slider-range', new_range);
-				sldr_input_field.data('slider-object').settings.range = new_range_array_version;
-
-				sldr_input_field.simpleSlider('setRatio',last_position_ratio);
-
-				$(this).blur();
-			}
-		});
-
-		$('#property2').click(function(e) {
-			el = $('.'+$.last_selected);
-			if(el.attr('class') == undefined) {
-				el = $('#'+$.last_selected);
-			}
-
-			desired_state = $(this).is(':checked');
-
-			sldr_possible_parents = el.closest('[id^="sldr"]');
-			sldr_parent = $(sldr_possible_parents[0]); //get closest first
-			sldr_input_field = sldr_parent.children('input');
-
-			sldr_input_field.attr('data-slider-snap', desired_state);
-			sldr_input_field.data('slider-snap', desired_state);
-			sldr_input_field.data('slider-object').settings.snap = desired_state;
-		});
-
-		$('#property3').click(function(e) {
+		$('#property1').click(function(e) {
 			el = $('.'+$.last_selected);
 			if(el.attr('class') == undefined) {
 				el = $('#'+$.last_selected);
@@ -258,6 +208,56 @@
 			else {
 				sldr_parent.children('.slider').children('.highlight-track').remove();
 				sldr_input_field.data('slider-object').highlightTrack.remove();
+			}
+		});
+
+		$('#property2').click(function(e) {
+			el = $('.'+$.last_selected);
+			if(el.attr('class') == undefined) {
+				el = $('#'+$.last_selected);
+			}
+
+			desired_state = $(this).is(':checked');
+
+			sldr_possible_parents = el.closest('[id^="sldr"]');
+			sldr_parent = $(sldr_possible_parents[0]); //get closest first
+			sldr_input_field = sldr_parent.children('input');
+
+			sldr_input_field.attr('data-slider-snap', desired_state);
+			sldr_input_field.data('slider-snap', desired_state);
+			sldr_input_field.data('slider-object').settings.snap = desired_state;
+		});
+
+		$('#property3').keypress(function(e) {
+			if(e.which == 13) {
+				new_range = $(this).val();
+				new_range_array_version = $(this).val().split(',');
+				new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
+				new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
+				if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
+					alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
+					return;
+				}
+
+				el = $('.'+$.last_selected);
+				if(el.attr('class') == undefined) {
+					el = $('#'+$.last_selected);
+				}
+
+				sldr_possible_parents = el.closest('[id^="sldr"]');
+				sldr_parent = $(sldr_possible_parents[0]); //get closest first
+				sldr_input_field = sldr_parent.children('input');
+				sldr_span_element = sldr_input_field.siblings('span');
+				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
+				last_position_ratio = sldr_span_element.text()/last_range_array[1]; //type juggled automatically to integer
+
+				sldr_input_field.attr('data-slider-range', new_range);
+				sldr_input_field.data('slider-range', new_range);
+				sldr_input_field.data('slider-object').settings.range = new_range_array_version;
+
+				sldr_input_field.simpleSlider('setRatio',last_position_ratio);
+
+				$(this).blur();
 			}
 		});
 
@@ -787,10 +787,10 @@
 				setSliderSettings();
 
 				$('#settings-main1').text($('#sldr' + temp).attr('id'));
-				$('#property1').attr('value', slider_range); // attr changes the html
-				$('#property1').val(slider_range); // val changes the property
+				$('#property1').prop('checked', (slider_highlight === 'true'));
 				$('#property2').prop('checked', (slider_snap === 'true'));
-				$('#property3').prop('checked', (slider_highlight === 'true'));
+				$('#property3').attr('value', slider_range); // attr changes the html
+				$('#property3').val(slider_range); // val changes the property
 				$('#property4').attr('value', slider_step); // attr changes the html
 				$('#property4').val(slider_step); // val changes the property
 			});
