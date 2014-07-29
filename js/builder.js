@@ -81,16 +81,16 @@
 
 		function setSliderSettings() {
 			// delete all settings before the new ones
-			$('#property1').removeAttr('value').removeAttr('type');
-			$('#property2').removeAttr('value').removeAttr('type').siblings().remove();
-			$('#property3').removeAttr('value').removeAttr('type').siblings().remove();
-			$('#property4').removeAttr('value').removeAttr('type');
+			$('#property1').removeAttr('value').removeAttr('type').removeAttr('placeholder');
+			$('#property2').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
+			$('#property3').removeAttr('value').removeAttr('placeholder').removeAttr('type').siblings().remove();
+			$('#property4').removeAttr('value').removeAttr('type').removeAttr('placeholder');
 
 			// set the new settings
-			$('#property1').prop('type', 'text');
+			$('#property1').prop('type', 'text').attr('placeholder', "Input Slider Range");
 			$('#property2').prop('type', 'checkbox').after('<label for="property2">Span</label>');
 			$('#property3').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
-			$('#property4').prop('type', 'text');
+			$('#property4').prop('type', 'text').attr('placeholder', "Input Slider Step");
 		}
 
 		$(document).click(function(e) {
@@ -170,8 +170,6 @@
 
 		$('#property1').keypress(function(e) {
 			if(e.which == 13) {
-				$.y = $(this);
-				console.log($.y);
 				new_range = $(this).val();
 				new_range_array_version = $(this).val().split(',');
 				new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
@@ -789,10 +787,12 @@
 				setSliderSettings();
 
 				$('#settings-main1').text($('#sldr' + temp).attr('id'));
-				$('#property1').attr('value', slider_range);
+				$('#property1').attr('value', slider_range); // attr changes the html
+				$('#property1').val(slider_range); // val changes the property
 				$('#property2').prop('checked', (slider_snap === 'true'));
 				$('#property3').prop('checked', (slider_highlight === 'true'));
-				$('#property4').attr('value', slider_step);		
+				$('#property4').attr('value', slider_step); // attr changes the html
+				$('#property4').val(slider_step); // val changes the property
 			});
 
 			$.count++;
