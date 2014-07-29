@@ -79,6 +79,20 @@
 			$('#movingslider'+index).simpleSlider(settings);
 		}
 
+		function setSliderSettings() {
+			// delete all settings before the new ones
+			$('#property1').removeAttr('value').removeAttr('type');
+			$('#property2').removeAttr('value').removeAttr('type').siblings().remove();
+			$('#property3').removeAttr('value').removeAttr('type').siblings().remove();
+			$('#property4').removeAttr('value').removeAttr('type');
+
+			// set the new settings
+			$('#property1').prop('type', 'text');
+			$('#property2').prop('type', 'checkbox').after('<label for="property2">Span</label>');
+			$('#property3').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
+			$('#property4').prop('type', 'text');
+		}
+
 		$(document).click(function(e) {
 			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class*="track"], [class^="dragger"]')) {
 				$('.settings').prop('disabled', false);
@@ -772,11 +786,13 @@
 				slider_highlight = $('#sldr' + temp).find('input').attr('data-slider-highlight');
 				slider_step = $('#sldr' + temp).find('input').attr('data-slider-step');
 				
+				setSliderSettings();
+
 				$('#settings-main1').text($('#sldr' + temp).attr('id'));
-				$('#property1').val(slider_range);
+				$('#property1').attr('value', slider_range);
 				$('#property2').prop('checked', (slider_snap === 'true'));
 				$('#property3').prop('checked', (slider_highlight === 'true'));
-				$('#property4').val(slider_step);		
+				$('#property4').attr('value', slider_step);		
 			});
 
 			$.count++;
