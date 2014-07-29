@@ -88,7 +88,7 @@
 
 			// set the new settings
 			$('#property1').prop('type', 'checkbox').after('<label for="property3">Highlight</label>');
-			$('#property2').prop('type', 'checkbox').after('<label for="property2">Span</label>');
+			$('#property2').prop('type', 'checkbox').after('<label for="property2">Snap</label>');
 			$('#property3').prop('type', 'text').attr('placeholder', "Input Slider Range");
 			$('#property4').prop('type', 'text').attr('placeholder', "Input Slider Step");
 		}
