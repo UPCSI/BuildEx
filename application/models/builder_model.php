@@ -48,6 +48,7 @@ class Builder_model extends MY_Model{
 			if ($new_obj['type'] == "button"){
 				$button = $this->get_object($object->oid, 'Buttons');
 				$new_obj['text'] = $button->text;
+				$new_obj['go_to'] = $button->go_to;
 			}
 
 			if ($new_obj['type'] == "radio"){
