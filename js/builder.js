@@ -244,9 +244,9 @@
 					var new_goto, error_check, el, possible_parents, parent, button_element, 
 
 					new_goto = $(this).val();
-					error_check = Number(new_goto == '' ? undefined : new_goto);
+					error_check = Number(new_goto == '' || new_goto < 1 || new_goto % 1 != 0 ? undefined : new_goto);
 					if(isNaN(error_check)) {
-						alert('Wrong format. Right format is purely 1 integer and starts with 1. No spaces. Example: 5');
+						alert('Wrong format/value. Right format is purely 1 integer and starts with 1. No decimal point. Example: 5');
 						return;
 					}
 
