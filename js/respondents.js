@@ -180,11 +180,10 @@ function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 	// add go_to data
 	$('#btneditable'+temp).data('go_to', go_to);
 
-	$(document).click(function(e){
-		if($(e.target).attr('id') == ('btneditable'+temp)){
-			$(e.target).children().click();
-			$(e.target).children().focus();
-		}
+	$('#btneditable'+temp).click(function() {
+		var slide = parseInt($(this).data('go_to'));
+		
+		$('#next_page').trigger('click',[slide]);
 	});
 	$.count++;
 }
@@ -529,7 +528,9 @@ function save_input(){
 			$.unload_flagger = false;
 		});
 		
-		$("#next_page").click(function(){
+		$("#next_page").click(function(eventClick, go_to){
+			go_to = typeof go_to !== 'undefined' ? go_to : null;
+
 			$.end_time = (Date.now()/1000);
 			$.times.push($.end_time - $.start_time);
 
@@ -544,8 +545,13 @@ function save_input(){
 
     	$("#page" + $.current_page).css('visibility','hidden');
 
-			if($.current_page < total_page){
+			if($.current_page < total_page) {
 				$.current_page++;
+			}
+
+			//go_to
+			if(go_to) {
+				$.current_page = go_to;
 			}
 
     	$("#page" + $.current_page).css('visibility','visible');		

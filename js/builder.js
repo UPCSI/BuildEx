@@ -214,7 +214,7 @@
 						alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
 						return;
 					}
-					el = getSelector()
+					el = getSelector();
 
 					possible_parents = el.closest('[id^="sldr"]');
 					parent = $(possible_parents[0]); //get closest first
@@ -501,7 +501,7 @@
 				htmlData += 'style="width:150px; height:60"';
 			}
 			
-			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default" btn-family style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><i class="fi-x remove-icon pull-right"></i></div>';
+			htmlData += 'style="width:150px; height:60"><button id="btneditable'+$.count+'" style="width:100%; height:100%; margin-bottom:0px; padding:0px"><div class="default'+$.count+'" btn-family style="width:100%; height:100%; display:inline; vertical-align:middle">'+text_input+'</div></button><i class="fi-x remove-icon pull-right"></i></div>';
 			
 			var temp = $.count;
 			var index = page_num;
@@ -526,7 +526,7 @@
 				containment: "#workspace"
 			});
 
-			$('.default').click(function(){
+			$('.default'+temp).click(function(){
 				if ($(this).is('.ui-draggable-dragging') ) {
 						return;
 				}
@@ -551,9 +551,9 @@
 					$('#property1').attr('value', btn_go_to); // attr changes the html
 					$('#property1').val(btn_go_to); // val changes the property
 				}
-				else if(e.target.className != 'default' && e.target.id != 'btneditable'+temp){
+				else if(e.target.className != 'default'+temp && e.target.id != 'btneditable'+temp){
 					$('#btn'+temp).draggable( 'option', 'disabled', false);
-					$('.default').attr('contenteditable','false');
+					$('.default'+temp).attr('contenteditable','false');
 				}
 			});
 			

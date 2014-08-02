@@ -109,7 +109,7 @@ class Builder extends MY_Controller{
 			if ($object['type'] == "button"){
 				$button['oid'] = $oid;
 				$button['text'] = $item['text'];
-				$button['go_to'] = $item['go_to'];
+				$button['go_to'] = (int)$item['go_to'];
 				$button_id = $this->add_button($button);
 			}
 
