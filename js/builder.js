@@ -103,6 +103,128 @@
 			$('#property2').prop('type', 'checkbox').after('<label for="property2">Snap</label>');
 			$('#property3').prop('type', 'text').attr('placeholder', "Input Slider Range");
 			$('#property4').prop('type', 'text').attr('placeholder', "Input Slider Step");
+
+			// add events to the properties
+			$('#property1').click(function(e) {
+				el = $('.'+$.last_selected);
+				if(el.attr('class') == undefined) {
+					el = $('#'+$.last_selected);
+				}
+
+				desired_state = $(this).is(':checked');
+				sldr_possible_parents = el.closest('[id^="sldr"]');
+				sldr_parent = $(sldr_possible_parents[0]); //get closest first
+				sldr_input_field = sldr_parent.children('input');
+				sldr_input_field.attr('data-slider-highlight', desired_state);
+				sldr_input_field.data('slider-highlight', desired_state);
+				sldr_input_field.data('slider-object').settings.highlight = desired_state;
+
+				if(desired_state) {
+					var item;
+					item = $("<div>").addClass('highlight-track').css({
+		        position: "absolute",
+		        top: "50%",
+		        userSelect: "none",
+		        cursor: "pointer",
+		        width: "0",
+		        marginTop: sldr_parent.find('[class="track"]').outerHeight() / -2,
+		      });
+		      sldr_parent.find('[class="track"]').after(item);
+
+		      highlight = sldr_parent.children('.slider').children('.highlight-track');
+
+		      sldr_input_field.data('slider-object').highlightTrack = item
+
+		      highlight.mousedown(function(e){
+						return sldr_input_field.data('slider-object').trackEvent(e);
+					});
+
+					dragger_current_position = sldr_parent.find('[class="dragger"]').position().left;
+					highlight.width(dragger_current_position);
+				}
+				else {
+					sldr_parent.children('.slider').children('.highlight-track').remove();
+					sldr_input_field.data('slider-object').highlightTrack.remove();
+				}
+			});
+
+			$('#property2').click(function(e) {
+				el = $('.'+$.last_selected);
+				if(el.attr('class') == undefined) {
+					el = $('#'+$.last_selected);
+				}
+
+				desired_state = $(this).is(':checked');
+
+				sldr_possible_parents = el.closest('[id^="sldr"]');
+				sldr_parent = $(sldr_possible_parents[0]); //get closest first
+				sldr_input_field = sldr_parent.children('input');
+
+				sldr_input_field.attr('data-slider-snap', desired_state);
+				sldr_input_field.data('slider-snap', desired_state);
+				sldr_input_field.data('slider-object').settings.snap = desired_state;
+			});
+
+			$('#property3').keypress(function(e) {
+				if(e.which == 13) {
+					new_range = $(this).val();
+					new_range_array_version = $(this).val().split(',');
+					new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
+					new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
+					if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
+						alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
+						return;
+					}
+
+					el = $('.'+$.last_selected);
+					if(el.attr('class') == undefined) {
+						el = $('#'+$.last_selected);
+					}
+
+					sldr_possible_parents = el.closest('[id^="sldr"]');
+					sldr_parent = $(sldr_possible_parents[0]); //get closest first
+					sldr_input_field = sldr_parent.children('input');
+					sldr_span_element = sldr_input_field.siblings('span');
+					last_range_array = sldr_input_field.attr('data-slider-range').split(',');
+					last_position_ratio = sldr_span_element.text()/last_range_array[1]; //type juggled automatically to integer
+
+					sldr_input_field.attr('data-slider-range', new_range);
+					sldr_input_field.data('slider-range', new_range);
+					sldr_input_field.data('slider-object').settings.range = new_range_array_version;
+
+					sldr_input_field.simpleSlider('setRatio',last_position_ratio);
+
+					$(this).blur();
+				}
+			});
+
+			$('#property4').keypress(function(e) {
+				if(e.which == 13) {
+					new_step = $(this).val();
+					error_check = Number(new_step == '' ? undefined : new_step);
+					if(isNaN(error_check)) {
+						alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
+						return;
+					}
+					el = $('.'+$.last_selected);
+					if(el.attr('class') == undefined) {
+						el = $('#'+$.last_selected);
+					}
+
+					sldr_possible_parents = el.closest('[id^="sldr"]');
+					sldr_parent = $(sldr_possible_parents[0]); //get closest first
+					sldr_input_field = sldr_parent.children('input');
+					sldr_input_field.attr('data-slider-step', new_step);
+					sldr_input_field.data('slider-step', new_step);
+					if(new_step <= 0) {
+						new_step = undefined;
+						$(this).val(0);
+					} 
+					sldr_input_field.data('slider-object').settings.step = new_step;
+
+					$(this).blur();
+				}
+			});
 		}
 
 		function setButtonSettings() {
@@ -184,127 +306,6 @@
 			theme: 'default'
 
 			});				
-		});
-
-		$('#property1').click(function(e) {
-			el = $('.'+$.last_selected);
-			if(el.attr('class') == undefined) {
-				el = $('#'+$.last_selected);
-			}
-
-			desired_state = $(this).is(':checked');
-			sldr_possible_parents = el.closest('[id^="sldr"]');
-			sldr_parent = $(sldr_possible_parents[0]); //get closest first
-			sldr_input_field = sldr_parent.children('input');
-			sldr_input_field.attr('data-slider-highlight', desired_state);
-			sldr_input_field.data('slider-highlight', desired_state);
-			sldr_input_field.data('slider-object').settings.highlight = desired_state;
-
-			if(desired_state) {
-				var item;
-				item = $("<div>").addClass('highlight-track').css({
-	        position: "absolute",
-	        top: "50%",
-	        userSelect: "none",
-	        cursor: "pointer",
-	        width: "0",
-	        marginTop: sldr_parent.find('[class="track"]').outerHeight() / -2,
-	      });
-	      sldr_parent.find('[class="track"]').after(item);
-
-	      highlight = sldr_parent.children('.slider').children('.highlight-track');
-
-	      sldr_input_field.data('slider-object').highlightTrack = item
-
-	      highlight.mousedown(function(e){
-					return sldr_input_field.data('slider-object').trackEvent(e);
-				});
-
-				dragger_current_position = sldr_parent.find('[class="dragger"]').position().left;
-				highlight.width(dragger_current_position);
-			}
-			else {
-				sldr_parent.children('.slider').children('.highlight-track').remove();
-				sldr_input_field.data('slider-object').highlightTrack.remove();
-			}
-		});
-
-		$('#property2').click(function(e) {
-			el = $('.'+$.last_selected);
-			if(el.attr('class') == undefined) {
-				el = $('#'+$.last_selected);
-			}
-
-			desired_state = $(this).is(':checked');
-
-			sldr_possible_parents = el.closest('[id^="sldr"]');
-			sldr_parent = $(sldr_possible_parents[0]); //get closest first
-			sldr_input_field = sldr_parent.children('input');
-
-			sldr_input_field.attr('data-slider-snap', desired_state);
-			sldr_input_field.data('slider-snap', desired_state);
-			sldr_input_field.data('slider-object').settings.snap = desired_state;
-		});
-
-		$('#property3').keypress(function(e) {
-			if(e.which == 13) {
-				new_range = $(this).val();
-				new_range_array_version = $(this).val().split(',');
-				new_range_array_version[0] = Number(new_range_array_version[0] == '' ? undefined : new_range_array_version[0]);
-				new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
-				if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
-					alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
-					return;
-				}
-
-				el = $('.'+$.last_selected);
-				if(el.attr('class') == undefined) {
-					el = $('#'+$.last_selected);
-				}
-
-				sldr_possible_parents = el.closest('[id^="sldr"]');
-				sldr_parent = $(sldr_possible_parents[0]); //get closest first
-				sldr_input_field = sldr_parent.children('input');
-				sldr_span_element = sldr_input_field.siblings('span');
-				last_range_array = sldr_input_field.attr('data-slider-range').split(',');
-				last_position_ratio = sldr_span_element.text()/last_range_array[1]; //type juggled automatically to integer
-
-				sldr_input_field.attr('data-slider-range', new_range);
-				sldr_input_field.data('slider-range', new_range);
-				sldr_input_field.data('slider-object').settings.range = new_range_array_version;
-
-				sldr_input_field.simpleSlider('setRatio',last_position_ratio);
-
-				$(this).blur();
-			}
-		});
-
-		$('#property4').keypress(function(e) {
-			if(e.which == 13) {
-				new_step = $(this).val();
-				error_check = Number(new_step == '' ? undefined : new_step);
-				if(isNaN(error_check)) {
-					alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
-					return;
-				}
-				el = $('.'+$.last_selected);
-				if(el.attr('class') == undefined) {
-					el = $('#'+$.last_selected);
-				}
-
-				sldr_possible_parents = el.closest('[id^="sldr"]');
-				sldr_parent = $(sldr_possible_parents[0]); //get closest first
-				sldr_input_field = sldr_parent.children('input');
-				sldr_input_field.attr('data-slider-step', new_step);
-				sldr_input_field.data('slider-step', new_step);
-				if(new_step <= 0) {
-					new_step = undefined;
-					$(this).val(0);
-				} 
-				sldr_input_field.data('slider-object').settings.step = new_step;
-
-				$(this).blur();
-			}
 		});
 
 		$('#workspace').on('click', '.remove-icon', function(e){
