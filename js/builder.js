@@ -540,8 +540,7 @@
 					$('#btneditable'+temp).children().click();
 				}
 				if(e.target.parentElement.id == ('btneditable'+temp)){
-					$.x = button = $('#btneditable'+temp);
-					console.log($.x);
+					button = $('#btneditable'+temp);
 					button.children().focus();
 
 					//set up the settings

@@ -138,13 +138,15 @@ function draw_text_input(posX, posY, text_input, page_num, width, height){
 	$.count++;
 }
 
-function draw_button(posX, posY, text_input, page_num, width, height){
+function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
 	text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 	width = typeof width !== 'undefined' ? width : 150;
 	height = typeof height !== 'undefined' ? height : 40;
+	go_to = typeof go_to !== 'undefined' ? go_to : null;
+
 
 	workspace_width = $('#workspace').width()/1024; //hardcoded
 	workspace_height = $('#workspace').height()/576; //hardcoded
@@ -174,6 +176,9 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 	else {
 		$("#page" + index).append(htmlData);
 	}
+
+	// add go_to data
+	$('#btneditable'+temp).data('go_to', go_to);
 
 	$(document).click(function(e){
 		if($(e.target).attr('id') == ('btneditable'+temp)){

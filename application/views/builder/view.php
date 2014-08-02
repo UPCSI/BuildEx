@@ -28,7 +28,7 @@
         }
 
         else if($obj['type'] == "button"){
-          echo 'draw_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'");';
+          echo 'draw_button('.$obj['xPos'].','.$obj['yPos'].',"' .$obj['text'] .'",'.$obj['page'].',"' .$obj['width'].'","' .$obj['height'].'","' .$obj['go_to'] .'");';
         }
 
         else if($obj['type'] == "radio"){
