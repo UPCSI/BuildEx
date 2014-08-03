@@ -182,7 +182,6 @@
 					new_range_array_version[1] = Number(new_range_array_version[1] == '' ? undefined : new_range_array_version[1]);
 					if(new_range_array_version.length != 2 || isNaN(new_range_array_version[0]) || isNaN(new_range_array_version[1])) {
 						alert('Wrong format. Right format is purely 2 numbers separated with a comma. No spaces. Example: 1,100');
-						$(this).val('');
 						return;
 					}
 
@@ -213,7 +212,6 @@
 					error_check = Number(new_step == '' ? undefined : new_step);
 					if(isNaN(error_check)) {
 						alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
-						$(this).val('');
 						return;
 					}
 					el = getSelector();
@@ -249,7 +247,9 @@
 					error_check = Number(new_goto == '' || new_goto < 1 || new_goto % 1 != 0 ? undefined : new_goto);
 					if(isNaN(error_check)) {
 						alert('Wrong format/value. Right format is purely 1 integer and starts with 1. No decimal point. Example: 5');
-						$(this).val('');
+						if($(this).data('go_to') == null) {
+							$(this).val('');
+						}
 						return;
 					}
 
