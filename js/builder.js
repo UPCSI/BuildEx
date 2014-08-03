@@ -77,6 +77,11 @@
 	    });
 
 			$('#movingslider'+index).simpleSlider(settings);
+
+			// put id in track and dragger
+			children = $('#movingslider'+index).siblings('div[id^="movingslider"]').children();
+			$(children[0]).attr('id', 'track'+index);
+			$(children[1]).attr('id', 'dragger'+index);
 		}
 
 		function setSliderSettings() {
