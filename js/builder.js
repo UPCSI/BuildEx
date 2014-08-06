@@ -247,9 +247,6 @@
 					error_check = Number(new_goto == '' || new_goto < 1 || new_goto % 1 != 0 ? undefined : new_goto);
 					if(isNaN(error_check)) {
 						alert('Wrong format/value. Right format is purely 1 integer and starts with 1. No decimal point. Example: 5');
-						if($(this).data('go_to') == null) {
-							$(this).val('');
-						}
 						return;
 					}
 
