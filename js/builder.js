@@ -209,9 +209,9 @@
 					var new_step, error_check, el, possible_parents, parent, input_element;
 
 					new_step = $(this).val();
-					error_check = Number(new_step == '' ? undefined : new_step);
+					error_check = Number(new_step);
 					if(isNaN(error_check)) {
-						alert('Wrong format. Right format is purely 1 number. No spaces. Example: 5');
+						alert('Wrong format. Right format is purely 1 number or entirely no input. No spaces. Example: 5');
 						return;
 					}
 					el = getSelector();
@@ -221,7 +221,7 @@
 					input_element = parent.children('input');
 					input_element.attr('data-slider-step', new_step);
 					input_element.data('slider-step', new_step);
-					if(new_step <= 0) {
+					if(parseInt(new_step) <= 0) {
 						new_step = undefined;
 						$(this).val(0);
 					} 
@@ -244,9 +244,10 @@
 					var new_goto, error_check, el, possible_parents, parent, button_element, 
 
 					new_goto = $(this).val();
-					error_check = Number(new_goto == '' || new_goto < 1 || new_goto % 1 != 0 ? undefined : new_goto);
+					error_check = Number(parseInt(new_goto) < 1 || parseInt(new_goto) % 1 != 0 ? undefined : new_goto);
+					error_check = Number(new_goto == '' ? new_goto : error_check);
 					if(isNaN(error_check)) {
-						alert('Wrong format/value. Right format is purely 1 integer and starts with 1. No decimal point. Example: 5');
+						alert('Wrong format/value. Right format is purely 1 integer and starts with 1 or entirely no input. No decimal point. Example: 5');
 						return;
 					}
 
