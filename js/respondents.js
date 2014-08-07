@@ -183,7 +183,9 @@ function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 	$('#btneditable'+temp).click(function() {
 		var slide = parseInt($(this).data('go_to'));
 		
-		$('#next_page').trigger('click',[slide]);
+		if(!isNaN(slide)) {
+			$('#next_page').trigger('click',[slide]);
+		}
 	});
 	$.count++;
 }
