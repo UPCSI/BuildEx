@@ -184,7 +184,7 @@ function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 		var slide = parseInt($(this).data('go_to'));
 		
 		if(!isNaN(slide)) {
-			$('#next_page').trigger('click',[slide]);
+			$('#next_page').trigger('click',[slide, 'goto']);
 		}
 	});
 	$.count++;
@@ -494,12 +494,7 @@ function save_input(){
 			}
 		}
 
-		function checkEndPage() {
-			if($.current_page+1 == total_page) {
-				$('#next_page').text('Done')
-				.css('padding-left',21).css('padding-right',21);
-			}		
-
+		function checkLastPage() {
 			if($.current_page == total_page) {
 				save_input();
 				window.location.href = js_site_url() + 'respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
@@ -529,9 +524,10 @@ function save_input(){
 		$("#debrief-btn").click(function() {
 			$.unload_flagger = false;
 		});
-		
-		$("#next_page").click(function(eventClick, go_to){
+
+		$("#next_page").click(function(eventClick, go_to, action){
 			go_to = typeof go_to !== 'undefined' ? go_to : null;
+			action = typeof go_to !== 'undefined' ? action : null;
 
 			$.end_time = (Date.now()/1000);
 			$.times.push($.end_time - $.start_time);
@@ -543,7 +539,9 @@ function save_input(){
 				$.unload_flagger = false;
 			}
 
-			checkEndPage();
+			if(!action) { // next button is clicked and action is null
+				checkLastPage();
+			}
 
     	$("#page" + $.current_page).css('visibility','hidden');
 
@@ -556,7 +554,7 @@ function save_input(){
 				$.current_page = go_to;
 			}
 
-    	$("#page" + $.current_page).css('visibility','visible');		
+    	$("#page" + $.current_page).css('visibility','visible');	
 		});
 	});
 })(jQuery);
