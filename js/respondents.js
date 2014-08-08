@@ -138,7 +138,7 @@ function draw_text_input(posX, posY, text_input, page_num, width, height){
 	$.count++;
 }
 
-function draw_button(posX, posY, text_input, page_num, width, height, go_to){
+function draw_button(posX, posY, text_input, page_num, width, height, go_to, type){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -146,7 +146,7 @@ function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 	width = typeof width !== 'undefined' ? width : 150;
 	height = typeof height !== 'undefined' ? height : 40;
 	go_to = typeof go_to !== 'undefined' ? go_to : null;
-
+	type = typeof type !== 'undefined' ? type : null;
 
 	workspace_width = $('#workspace').width()/1024; //hardcoded
 	workspace_height = $('#workspace').height()/576; //hardcoded
@@ -179,6 +179,7 @@ function draw_button(posX, posY, text_input, page_num, width, height, go_to){
 
 	// add go_to data
 	$('#btneditable'+temp).data('go_to', go_to);
+	$('#btneditable'+temp).data('type', type);
 
 	$('#btneditable'+temp).click(function() {
 		var slide = parseInt($(this).data('go_to'));

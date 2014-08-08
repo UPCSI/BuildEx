@@ -110,6 +110,9 @@ class Builder extends MY_Controller{
 				$button['oid'] = $oid;
 				$button['text'] = $item['text'];
 				$button['go_to'] = $item['go_to'] == "" ? NULL : $item['go_to'];
+				if($item['btn_type']) {
+					$button['type'] = $item['btn_type'];
+				}
 				$button_id = $this->add_button($button);
 			}
 

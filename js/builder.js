@@ -237,6 +237,7 @@
 
 			// set the new settings
 			$('#property1').prop('type', 'text').attr('placeholder', "Input Go To Slide");
+			$('#property2').prop('type', 'checkbox').after('<label for="property2">Submit</label>');
 
 			// add events to the properties
 			$('#property1').keypress(function(e) {
@@ -259,6 +260,25 @@
 					button_element.data('go_to', new_goto);
 
 					$(this).blur();
+				}
+			});
+
+			$('#property2').click(function(e) {
+				var desired_state, possible_parents, parent, input_element, el;
+
+				el = getSelector();
+
+				desired_state = $(this).is(':checked');
+
+				possible_parents = el.closest('div[id^="btn"]');
+				parent = $(possible_parents[0]); //get closest first
+				button_element = parent.children('button');
+
+				if(desired_state) {
+					button_element.data('type', 'submit');
+				}
+				else {
+					button_element.data('type', null);	
 				}
 			});
 		}
@@ -483,7 +503,7 @@
 		});
 
 		$('#button')
-			.click(function(eventClick, posX, posY, text_input, page_num, width, height, go_to){
+			.click(function(eventClick, posX, posY, text_input, page_num, width, height, go_to, type){
 			posX = typeof posX !== 'undefined' ? posX : 437;
 			posY = typeof posY !== 'undefined' ? posY : 268;
 			page_num = typeof page_num !== 'undefined' ? page_num : 0;
@@ -491,6 +511,7 @@
 			width = typeof width !== 'undefined' ? width : 150;
 			height = typeof height !== 'undefined' ? height : 40;
 			go_to = typeof go_to !== 'undefined' ? go_to : null;
+			type = typeof type !== 'undefined' ? type : null;
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" btn-family ';
 
@@ -516,6 +537,7 @@
 
 			// add go_to data
 			$('#btneditable'+temp).data('go_to', go_to);
+			$('#btneditable'+temp).data('type', type);
 
 			$('#btn'+temp).draggable({
 				containment: "#workspace",
@@ -548,9 +570,11 @@
 					setButtonSettings();
 
 					btn_go_to = button.data('go_to');
+					btn_type = button.data('type');
 
 					$('#property1').attr('value', btn_go_to); // attr changes the html
 					$('#property1').val(btn_go_to); // val changes the property
+					$('#property2').prop('checked', (btn_type === 'submit'));
 				}
 				else if(e.target.className != 'default'+temp && e.target.id != 'btneditable'+temp){
 					$('#btn'+temp).draggable( 'option', 'disabled', false);
@@ -933,7 +957,8 @@
 							'text'		:	 $('#btneditable'+i).text(),
 							'width'	 	:	 $('#btn'+i).css('width'),
 							'height'	:	 $('#btn'+i).css('height'),
-							'go_to'		:  $('#btneditable'+i).data('go_to')
+							'go_to'		:  $('#btneditable'+i).data('go_to'),
+							'btn_type'		:  $('#btneditable'+i).data('type')
 						}
 
 						x.push(data);
