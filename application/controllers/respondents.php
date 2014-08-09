@@ -84,7 +84,7 @@ class Respondents extends CI_Controller{
       $answer = array();
       $answer['rid'] = $rid;
       $answer['qid'] = $item['qid'];
-      $answer['duration'] = $time[$item['page']-1];
+      $answer['duration'] = $time[$item['page']-1] ? $time[$item['page']-1] : NULL;
 
       if($item['type'] == "text_input"){
         $answer['answer'] = $item['text'];

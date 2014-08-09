@@ -278,8 +278,9 @@
 					button_element.data('type', 'submit');
 				}
 				else {
-					button_element.data('type', null);	
+					button_element.data('type', 'default');
 				}
+
 			});
 		}
 
@@ -511,7 +512,7 @@
 			width = typeof width !== 'undefined' ? width : 150;
 			height = typeof height !== 'undefined' ? height : 40;
 			go_to = typeof go_to !== 'undefined' ? go_to : null;
-			type = typeof type !== 'undefined' ? type : null;
+			type = typeof type !== 'undefined' ? type : 'default';
 
 			var htmlData='<div id="btn'+$.count+'" class="draggable" btn-family ';
 
@@ -959,6 +960,11 @@
 							'height'	:	 $('#btn'+i).css('height'),
 							'go_to'		:  $('#btneditable'+i).data('go_to'),
 							'btn_type'		:  $('#btneditable'+i).data('type')
+						}
+
+						// notify user if the goto slide doesn't exist
+						if($('#btneditable'+i).data('go_to') > $.page) {
+							alert('Warning: One of the go to button\'s destination does not exist. Create the slide before publishing it. Your experiment will still be saved.');
 						}
 
 						x.push(data);
