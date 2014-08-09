@@ -46,8 +46,9 @@ class Builder extends MY_Controller{
 
 	public function save() {
 		$message = $this->input->post('msg');
-		if ($message == 'false')
+		if ($message == 'false') {
 			return;
+		}
 		
 		/* page */
 		$eid = $this->input->post('eid');
@@ -109,6 +110,8 @@ class Builder extends MY_Controller{
 			if ($object['type'] == "button"){
 				$button['oid'] = $oid;
 				$button['text'] = $item['text'];
+				$button['go_to'] = $item['go_to'] == "" ? NULL : $item['go_to'];
+				$button['type'] = $item['btn_type'];
 				$button_id = $this->add_button($button);
 			}
 
@@ -152,7 +155,7 @@ class Builder extends MY_Controller{
 				$slider['max_num'] = (int)$item['max'];
 				$slider['snap'] = $item['snap'];
 				$slider['highlight'] = $item['highlight'];
-				$slider['step'] = (double)$item['step'];
+				$slider['step'] = $item['step'] == "" ? NULL : $item['step'];;
 
 				$slider_id = $this->add_slider($slider);
 				$this->bind($object['pid'], $input_id);

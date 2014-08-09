@@ -138,13 +138,15 @@ function draw_text_input(posX, posY, text_input, page_num, width, height){
 	$.count++;
 }
 
-function draw_button(posX, posY, text_input, page_num, width, height){
+function draw_button(posX, posY, text_input, page_num, width, height, go_to, type){
 	posX = typeof posX !== 'undefined' ? posX : null;
 	posY = typeof posY !== 'undefined' ? posY : null;
 	page_num = typeof page_num !== 'undefined' ? page_num : 0;
 	text_input = typeof text_input !== 'undefined' ? text_input : "Button";
 	width = typeof width !== 'undefined' ? width : 150;
 	height = typeof height !== 'undefined' ? height : 40;
+	go_to = typeof go_to !== 'undefined' ? go_to : null;
+	type = typeof type !== 'undefined' ? type : null;
 
 	workspace_width = $('#workspace').width()/1024; //hardcoded
 	workspace_height = $('#workspace').height()/576; //hardcoded
@@ -175,10 +177,19 @@ function draw_button(posX, posY, text_input, page_num, width, height){
 		$("#page" + index).append(htmlData);
 	}
 
-	$(document).click(function(e){
-		if($(e.target).attr('id') == ('btneditable'+temp)){
-			$(e.target).children().click();
-			$(e.target).children().focus();
+	// add go_to data and type
+	$('#btneditable'+temp).data('go_to', go_to);
+	$('#btneditable'+temp).data('type', type);
+
+	$('#btneditable'+temp).click(function() {
+		var slide = parseInt($(this).data('go_to'));
+		var type = $(this).data('type');
+		
+		if(!isNaN(slide)) {
+			$('#next_page').trigger('click',[slide, 'goto']);
+		}
+		else if(type == 'submit') {
+			$('#next_page').trigger('click',[, 'submit']);
 		}
 	});
 	$.count++;
@@ -374,8 +385,8 @@ function draw_slider(posX, posY, page_num, min, max, snap, highlight, step){
 
 function save_input(){
 	var x = new Array();
-	console.log(total_page + " pages.");
-	console.log($.times);
+	// console.log(total_page + " pages.");
+	// console.log($.times);
 
 	x.push(total_page);
 	x.push($.times);
@@ -481,20 +492,8 @@ function save_input(){
 
 (function($){
 	$(function() {
-		function changeTextBtn(){
-			if(total_page == 1) {
-				$('#next_page').text('Done')
-				.css('padding-left',21).css('padding-right',21);
-			}
-		}
-
-		function checkEndPage() {
-			if($.current_page+1 == total_page) {
-				$('#next_page').text('Done')
-				.css('padding-left',21).css('padding-right',21);
-			}		
-
-			if($.current_page == total_page) {
+		function checkLastPage(action) {
+			if($.current_page == total_page || action == 'submit') { // override to go to last page if action is submit
 				save_input();
 				window.location.href = js_site_url() + 'respond/' + $('#workspace').attr('data-eid') + '/' + $('#workspace').attr('data-slug') + '/debrief';
 				$.unload_flagger = false;
@@ -516,17 +515,19 @@ function save_input(){
 		});
 
 		$(document).ready(function(){
-			changeTextBtn();
 			$.start_time = (Date.now())/1000;
 		});
 
 		$("#debrief-btn").click(function() {
 			$.unload_flagger = false;
 		});
-		
-		$("#next_page").click(function(){
+
+		$("#next_page").click(function(eventClick, go_to, action){
+			go_to = typeof go_to !== 'undefined' ? go_to : null;
+			action = typeof go_to !== 'undefined' ? action : null;
+
 			$.end_time = (Date.now()/1000);
-			$.times.push($.end_time - $.start_time);
+			$.times[$.current_page-1] = ($.end_time - $.start_time);
 
 			if($.current_page != total_page){
 				$.start_time = (Date.now())/1000;
@@ -535,15 +536,22 @@ function save_input(){
 				$.unload_flagger = false;
 			}
 
-			checkEndPage();
+			if(!action || action == 'submit') { // next button is clicked and action is null
+				checkLastPage(action);
+			}
 
     	$("#page" + $.current_page).css('visibility','hidden');
 
-			if($.current_page < total_page){
+			if($.current_page < total_page) {
 				$.current_page++;
 			}
 
-    	$("#page" + $.current_page).css('visibility','visible');		
+			//go_to
+			if(go_to) {
+				$.current_page = go_to;
+			}
+
+    	$("#page" + $.current_page).css('visibility','visible');	
 		});
 	});
 })(jQuery);
