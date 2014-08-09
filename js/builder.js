@@ -276,9 +276,13 @@
 
 				if(desired_state) {
 					button_element.data('type', 'submit');
+					button_element.data('go_to', '');
+					$('#property1').prop('disabled', true).val('');
+
 				}
 				else {
 					button_element.data('type', 'default');
+					$('#property1').prop('disabled', false);
 				}
 
 			});
@@ -286,10 +290,14 @@
 
 		$(document).click(function(e) {
 			if($('#'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class*="track"], [class^="dragger"]')) {
-				$('.settings').prop('disabled', false);
+				if($('.settings:disabled').length == $('.settings').length) {
+					$('.settings').prop('disabled', false);
+				}
 			}
 			else if($('.'+$.last_selected).is('[id^="qtn"], [id^="inp"], [btn-family], [id^="rad"], [id^="chk"], [id^="drop"], [id*="sldr"], [id*="slider"], [class*="track"], [class^="dragger"]')) {
-				$('.settings').prop('disabled', false);
+				if($('.settings:disabled').length == $('.settings').length) {
+					$('.settings').prop('disabled', false);
+				}
 			}
 			else {
 				$('.settings').prop('disabled', true);
