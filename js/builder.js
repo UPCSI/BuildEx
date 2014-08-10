@@ -221,7 +221,7 @@
 					input_element = parent.children('input');
 					input_element.attr('data-slider-step', new_step);
 					input_element.data('slider-step', new_step);
-					if(parseInt(new_step) <= 0) {
+					if(parseFloat(new_step) <= 0) {
 						new_step = undefined;
 						$(this).val(0);
 					} 
